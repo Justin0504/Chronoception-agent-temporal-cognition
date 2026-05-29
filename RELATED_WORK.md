@@ -41,30 +41,60 @@ The project's novelty audit (last refreshed 2026-05-29) flagged three concurrent
 
 ### 1.2 Ma et al. (2026) — *Timely Machine*
 
-**Citation**: Ma, Y., Li, L., Chen, Y., Li, P., Li, X., Guo, Q., Lin, D., Chen, K. (2026). *Timely Machine: Awareness of Time Makes Test-Time Scaling Agentic*. arXiv:2601.16486.
+**Citation**: Ma, Y., Li, L., Chen, Y., Li, P., Li, X., Guo, Q., Lin, D., Chen, K. (2026). *Timely Machine: Awareness of Time Makes Test-Time Scaling Agentic*. arXiv:2601.16486v1.
 
-**What it does**: Distinguishes wall-clock time from generation length in test-time scaling, introduces Timely-Eval benchmark and Timely-RL training. Reports that reasoning length expands with the time budget given to the model — explicitly showing the Parkinson behavior, but framed as an *adaptive* signal, not a pathology.
+**What it actually does** (read in detail, 2026-05-29):
 
-**Axis overlap**: $\tau_{\text{wall}}$ vs $\tau_{\text{step}}$ distinction; the L1 phenomenon observed but unnamed.
+- **Decomposes wall-clock** as $t_{\text{all}} = \sum_i t_{\text{gen}}(i) + \sum_i t_{\text{tool}}(i)$ — a two-component refinement of $\tau_{\text{wall}}$, separating model-side token generation from external tool latency. *This is a sub-structure of our $\tau_{\text{wall}}$ axis, not a competing ontology.*
+- **Defines three regimes** by latency ratio $m_i = t_{\text{tool}}(i)/t_{\text{gen}}(i)$: tools-dominate, models-dominate, middle ground.
+- **Trains Timely-RL** via SFT cold-start (1M distilled trajectories from Qwen3-235B) plus GRPO-variant RL with a three-component reward $r_f + r + \lambda U(t)$, where the **time-utilization bonus is** $U(t) = \sin\!\left(\tfrac{\pi}{2}\cdot\min\!\big(\tfrac{t}{T_{\max}},1\big)\right)$, **maximized at $t = T_{\max}$**.
+- **Instruments tasks with a `get_duration()` tool** that returns elapsed time (with a coefficient and noise). Models query elapsed time by tool call.
+- **Benchmark Timely-Eval** spans Jericho text games (4 used in evaluation), 4 ML competitions (Leaf Classification, Spaceship Titanic, RAOP, Detecting Insults), and 3 reasoning benchmarks (AIME, MATH, GPQA-diamond). Tested on Qwen3 series 0.6B–32B plus GPT-5.1, DeepSeek-V3.2, Gemini2.5-pro as baselines.
+- **Headline empirical findings**: (i) smaller models outperform larger ones under low tool latency (Fig. 2); (ii) TimelyLM exhibits *"significant increasing trend in reasoning length as the time budget increases"* (Fig. 3); (iii) reasoning models (DeepSeek-V3.2) *"cannot control the generation length and thus frequently fail to complete the task within the time budget at 0.75× or even larger time constraints"*.
 
-**Where it stops short**:
+**Three aspects of their work *support* our framework rather than challenge it**:
 
-- $\tau_{\text{self}}$ entirely absent.
-- The Parkinson effect is celebrated as a desirable engineering signal, not diagnosed as a pathology.
-- No coefficient $\alpha$ formalizing the expansion rate.
-- No Step-Clock Conflation (L2) — they treat wall-clock awareness as the *solution*, not a measurement axis.
-- No discussion of the Injection Tell or industry-side injection patterns.
+#### Support 1 — The Timely-RL reward function is trained-in Parkinson
 
-**Our differentiation**:
+The bonus $U(t) = \sin(\pi t / 2 T_{\max})$ is monotonically increasing on $[0, T_{\max}]$ and reaches its maximum precisely at $t = T_{\max}$. **An RL agent maximizing this reward is explicitly incentivized to use the entire wall-clock budget**, regardless of whether the additional time improves task accuracy. This is Agentic Parkinson's Law (our L1) *prescribed as a training objective*. We diagnose the same behavior in untrained agents as a representational failure; their prescription and our diagnosis are complementary views of the same underlying behavioral pattern.
 
-1. We invert the framing: the same decoupling that Ma et al. exploit for test-time scaling is *diagnostic* of the Augustine Problem when measured rather than trained on.
-2. We name the phenomenon **Agentic Parkinson's Law** and parameterize it via $\alpha(B)$.
-3. We add $\tau_{\text{self}}$ and unify the three axes.
-4. We identify Step-Clock Conflation (L2) as a complementary failure mode under large budgets, and unify L1 and L2 via the regime transition $B^*$ (FRAMING §5.2).
+**Recommended prose for Paper 1**:
 
-**Recommended prose**:
+> "Ma et al. (2026) propose a reward function $U(t) = \sin(\pi t/2T_{\max})$ maximized at $t = T_{\max}$, methodologically prescribing budget-filling behavior. We diagnose the same behavior, when observed in untrained agents, as Agentic Parkinson's Law (L1). The two views are complementary: their training objective and our diagnostic measurement converge on the same phenomenon."
 
-> "Concurrent work by Ma et al. (2026, *Timely Machine*) decouples wall-clock from generation length to enable time-aware test-time scaling. We invert the framing: the same decoupling, viewed diagnostically, exposes the Agentic Parkinson's Law (L1) — agent work expands to fill the wall-clock budget given. The phenomenon Ma et al. exploit as a feature is, under our measurement protocol, the signature of a representational gap."
+#### Support 2 — Their `get_duration()` tool is the Injection Tell at its most explicit
+
+Even after specialized training on $\sim 1$M chronoception-relevant trajectories plus GRPO RL, the Timely-RL agent **still requires an external `get_duration()` tool to perceive elapsed time**. The model does not acquire an internal wall-clock representation from training; it acquires the policy of *querying a tool that has the wall-clock*. This is the Injection Tell at maximum strength: a research team that controlled both training data and training objective could not avoid installing a clock-yielding function.
+
+**Recommended prose for Paper 1**:
+
+> "Even after specialized RL training designed expressly to instill wall-clock awareness, Ma et al.'s agents require an explicit `get_duration()` tool to perceive elapsed time. This is the Injection Tell at maximum strength: research teams that control both training data and training objective cannot avoid installing a clock-yielding function. The engineering necessity validates the structural diagnosis."
+
+#### Support 3 — Their DeepSeek-V3.2 finding is a Reverse-Scaling Theorem anchor
+
+The verbatim observation that reasoning models *"cannot control the generation length and thus frequently fail to complete the task within the time budget at 0.75× or even larger time constraints"* is a direct empirical instance of our Reverse-Scaling Theorem (FRAMING §5.4). Ma et al. report it as a limitation of current reasoning models to be patched by Timely-RL; we report it as the **structural consequence** of expanding test-time compute strictly in token-time, predicted by the framework before measurement.
+
+**Recommended prose for Paper 1**:
+
+> "Ma et al. (2026) report that DeepSeek-V3.2 fails to honor wall-clock budgets because *'it cannot control the generation length'*. Our Reverse-Scaling Theorem (§5.4) predicts this structurally: any reasoning method that operates strictly in token-time inflates $\tau_{\text{wall}}$ without corresponding adjustment in $\tau_{\text{self}}$, producing exactly the failure pattern reported. The empirical observation is concurrent corroboration of our pre-registered prediction."
+
+**Where they do not overlap with us at all**:
+
+- $\tau_{\text{self}}$ axis: agents in Ma et al. report elapsed time via the `get_duration()` tool. The agent's *internal* sense of duration is never measured; the agent only ever reports what the tool tells it. L3 (Temporal Confabulation) is untouched.
+- Three Times ontology: Ma et al. have $t_{\text{gen}}$ and $t_{\text{tool}}$, both inside $\tau_{\text{wall}}$. They do not introduce $\tau_{\text{step}}$ as a separate axis, do not introduce $\tau_{\text{self}}$, and do not formalize an implicit identity linking three axes.
+- Step-Clock Conflation (L2): not addressed. Their step-budget conditions (e.g., 30/50/100/200 steps for games) and their wall-budget conditions are run side by side without testing whether wall-budget execution silently degrades into step-count termination.
+- Retrospective vs prospective L3 asymmetry: not addressed.
+- Augustine threshold / paradigm boundary / tool-vs-agent distinction: not addressed.
+- Single scalar (analogue of $\varepsilon$): they propose time-utilization rate $U(t)$ as a reward signal, and on-time completion rate as a task metric, neither of which aggregates a multi-axis calibration error.
+- Injection Atlas: not addressed (we audit the industry; they instrument their own benchmark).
+- CCC (cost coupling): not addressed.
+- CES (unifying equation): not addressed.
+
+**Combined positioning for Paper 1**:
+
+> "Ma et al. (2026, *Timely Machine*) and the present work both observe that LLM agents do not natively perceive wall-clock time. The two papers respond to this observation in different ways. *Timely Machine* prescribes a training objective that rewards budget-filling and a tool that returns elapsed time; the resulting agent exhibits adaptive reasoning length but still requires the tool to perceive time. We instead measure the underlying gap, name it (the Augustine Problem), decompose it across three ontologically distinct projections of time (the Three Times), aggregate the failure modes into a single calibration scalar $\varepsilon$, and audit the closed-lab industry's analogous tool-injection patterns (the Injection Atlas). Their work supplies three pieces of independent empirical evidence that our framework is well-posed: (i) the necessity of the `get_duration()` tool even after training, (ii) the Parkinson-like behavior that emerges under their reward, and (iii) the failure of token-only reasoning models to honor wall-clock budgets, predicted by our Reverse-Scaling Theorem."
+
+**Net assessment**: After detailed reading, *Timely Machine* is **not a threat to novelty on any contribution of our framework**. It is the closest concurrent work on $\tau_{\text{wall}}$-vs-generation-length decoupling, but its method, benchmark, ontology, and measurement protocol are non-overlapping with ChronoBench. Three of its findings (the reward design, the tool necessity, the DeepSeek-V3.2 failure) become independent corroboration of our framing rather than competing claims.
 
 ### 1.3 Cheng et al. (2025) — *Your LLM Agents are Temporally Blind*
 
@@ -228,7 +258,7 @@ Papers that, if published before our arXiv preprint goes live, could absorb or s
 | Likely paper | Risk to our framework |
 |---|---|
 | Garikaparthi v2 extending to reasoning models | L3 reasoning wedge (Prediction P2) |
-| Timely Machine v2 reframing Parkinson as pathology | L1 framing contribution |
+| Timely Machine v2 reframing Parkinson as pathology | L1 framing contribution (lower risk after detailed reading — their reward function $U(t)$ explicitly prescribes Parkinson behavior, making any v2 reframe an admission rather than a scoop) |
 | METR HCAST-v2 adding self-reported-duration logging | Empirical ownership of $\tau_{\text{self}}$ on a large model panel |
 | Cheng et al. v2 (TicToc-v2) adding budget compliance | L2 Step-Clock Conflation |
 | Safety-team paper on wall-clock manipulation as scheming vector | Reframing chronoception as safety problem |
@@ -240,4 +270,5 @@ Papers that, if published before our arXiv preprint goes live, could absorb or s
 
 ## 6. Changelog
 
+- **v0.1 (2026-05-29)** — Detailed read of Ma et al. 2601.16486v1 (Timely Machine) integrated into §1.2. Verbatim quotes of (i) reward function $U(t) = \sin(\pi t/2T_{\max})$ maximized at $t = T_{\max}$, (ii) `get_duration()` tool dependency persisting after RL training, (iii) DeepSeek-V3.2 failure observation. Reclassified the paper from "direct overlap" to "supporting evidence on three distinct sub-claims" (Parkinson reward design, Injection Tell strong-form, Reverse-Scaling Theorem anchor). Ambush risk on Timely Machine v2 downgraded — their own reward function commits them to the Parkinson framing they would have to reframe away from. Recommended prose for Paper 1 added under each of the three support claims.
 - **v0 (2026-05-29)** — Initial related-work reference. Adds §1 direct concurrent threats (Garikaparthi, Timely Machine, Temporally Blind), §2 name-collision (Chronocept), §3 adjacent neighbors (Beyond pass@1, METR, Sehgal et al., Learning to Wait), §4 foundational citations, §5 ambush watch list.

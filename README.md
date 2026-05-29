@@ -13,7 +13,7 @@ This repository hosts the formal framework, diagnostic benchmark, and training s
 Three concurrent papers operate in the same neighborhood; each touches one axis of our framework. We are the first work to unify the three. Details in [`RELATED_WORK.md`](RELATED_WORK.md); summary:
 
 - **Garikaparthi (2026)** measures duration self-reports on **non-reasoning** models. We extend to reasoning-tuned models and find that reasoning training makes self-temporal honesty *worse*.
-- **Ma et al. (2026, *Timely Machine*)** decouples wall-clock from generation length to *enable* time-aware test-time scaling. We invert the framing: the same decoupling is the diagnostic signature of *Agentic Parkinson's Law*.
+- **Ma et al. (2026, *Timely Machine*)** decouples wall-clock from generation length and trains a reinforcement-learning policy with reward $U(t) = \sin(\pi t/2T_{\max})$ maximized at $t = T_{\max}$ — methodologically prescribing budget-filling behavior. Even after specialized training, their agent requires an explicit `get_duration()` tool to perceive elapsed time. We treat these as concurrent support for our framework: their reward design is trained-in Parkinson, and their tool dependency is the Injection Tell at maximum strength.
 - **Cheng et al. (2025, *Temporally Blind*)** note harness time-injection informally. We elevate this to the **Injection Tell** and supply a Closed-Lab Injection Atlas auditing wall-clock injection across ≥10 frontier harnesses.
 - **Goel et al. (2025, *Chronocept*)** use *chronoception* for the temporal validity of facts. We use it in its original cognitive-science sense (perception of one's own work duration).
 
