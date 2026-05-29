@@ -1,7 +1,7 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.2 (locked source of truth, 2026-05-29)
+**Status**: v1.3 (locked source of truth, 2026-05-29)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -13,6 +13,24 @@ This document is the canonical specification of the project's **research program
 - [`position-note/`](position-note/) — short arXiv position note carrying the full programme as flag-planting.
 
 Reviewers reading Paper 1 see the scoped subset; readers reading the position note or this file see the full programme. Both are kept in sync; the per-paper documents are strict subsets with softened claim strength where evidence is not yet present.
+
+---
+
+## 0. Concurrent Work and Differentiation
+
+Three contemporaneous papers operate in the same conceptual neighborhood. Each addresses a single axis of the three-times ontology developed here; none has unified them, named the failure modes, defined an aggregated calibration scalar, or formalized the Injection Tell. We state the relationship explicitly:
+
+- **Garikaparthi (2026), *Can LLMs Perceive Time? An Empirical Investigation*** (arXiv 2604.00010). Measures duration self-reports on four non-reasoning model families (GPT-5, GPT-4o, OLMo3-7B, Qwen3-8B), finding pre-task overshoot of 4–7× and post-hoc disconnection from reality. Subsumes only the $\tau_{\text{self}}$ axis (our L3) and only on non-reasoning models. Our framework (i) extends to reasoning-tuned models and predicts the reverse-scaling regime (§5.4), (ii) unifies $\tau_{\text{self}}$ with $\tau_{\text{wall}}$ and $\tau_{\text{step}}$, (iii) names the law (Temporal Confabulation) and defines the ratio $\rho$, (iv) connects to budget-following behavior through $\varepsilon$.
+
+- **Ma et al. (2026), *Timely Machine: Awareness of Time Makes Test-Time Scaling Agentic*** (arXiv 2601.16486). Distinguishes wall-clock from generation length, develops Timely-RL training, and empirically observes reasoning length expanding with time budget. The decoupling result is framed as a desirable engineering signal for test-time scaling. We invert the framing: the same decoupling is diagnostic of *Agentic Parkinson's Law* (L1) — work expands to fill the wall-clock budget given. Ma et al. do not introduce $\tau_{\text{self}}$, do not formalize $\alpha$ as a coefficient, do not identify Step-Clock Conflation (L2), and do not address self-narration.
+
+- **Cheng et al. (2025), *Your LLM Agents are Temporally Blind*** (arXiv 2510.23853). Coins *temporal blindness* in the context of tool-use timing decisions, ships TicToc-v1 (34 scenarios), notes informally that lab harnesses inject timestamps via tool outputs. The mention of harness injection stops short of an evidential argument. We elevate the observation to a formal evidential argument (§3.1 Injection Tell), generalize from tool-use to the three-axis ontology, and quantify the injection footprint across a closed-lab harness audit (§5.5).
+
+We additionally note the **name collision** with Goel et al. (2025), *Chronocept: Instilling a Sense of Time in Machines* (arXiv 2505.07637), which applies the cognitive-science term *chronoception* to the temporal validity of facts in retrieval-augmented generation. The application is orthogonal; we use *chronoception* in its original sense — perception of one's own work duration. We disambiguate at first mention in every downstream artifact.
+
+The fourth and closest empirical neighbor is **Anonymous (2026), *Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents*** (arXiv 2603.29231), which reports three time dimensions in parallel (human-estimated duration, agent steps, tokens) and observes that "human time and agent steps can diverge significantly across domains." This is the nearest formal precedent for a three-axis treatment of agent time, but the axes are *measurement* dimensions rather than a unified ontology with an implicit identity, the work does not introduce $\tau_{\text{self}}$, and no scalar aggregation is proposed.
+
+We retain the following novelty contributions, none of which is contested in the concurrent literature: (1) **The Augustine Problem** as a named structural diagnosis, (2) the **Three Times ontology** as a unified construct including $\tau_{\text{self}}$, (3) the **three named laws** with quantitative metrics, (4) the **chronoceptive calibration error $\varepsilon$** as an aggregated scalar, (5) the **Injection Tell** as a formal evidential argument and (when supported by §5.5) a quantitative finding, (6) the **Chronoception Upstream Hypothesis (CUH)**, (7) the **Reverse-Scaling Theorem** on reasoning models, and (8) the **regime transition $B^*$** unifying L1 and L2.
 
 ---
 
@@ -193,6 +211,21 @@ Sketch of the structural argument: reasoning training and test-time-compute scal
 
 The reverse-scaling of L3 is, on this reading, **not an empirical quirk of o-series or R1**; it is a structural consequence of expanding compute in token-time without grounding to wall-clock. Any future method that improves agent quality via token-only inference-time compute — without installing a wall-clock representation — inherits the reverse-scaling regime. The theorem is informal because the constants depend on the per-token cost and the self-narration distribution; we state it as a prediction (Prediction P2′ in §9) and pre-register that it will continue to hold on reasoning methods released after this paper.
 
+### 5.5 The Closed-Lab Injection Audit
+
+The Injection Tell (§3.1) is converted from a rhetorical argument into a **quantitative empirical contribution** through a systematic audit of frontier closed-lab agent harnesses. For each closed-lab agent product (ChatGPT, Claude.ai, Gemini app, Copilot, Devin, Cursor, Cline, and analogous harnessed deployments), we record:
+
+- Whether the harness injects wall-clock time via **system-prompt insertion** (presence of a `Current time:` string or equivalent).
+- Whether the harness exposes a **`get_current_time()` tool** or analogous time-yielding function that the model auto-invokes.
+- Whether **browser tool outputs include timestamps** that the model surfaces in its responses.
+- The format and granularity of the injected timestamp (date-only, ISO-8601, time-zone-aware).
+
+The audit produces an **Injection Atlas**: a table of $\geq 10$ closed-lab harnesses across the three columns above, accompanied by minimal reproducible prompts that elicit the injected information from each harness.
+
+**Pre-registered empirical claim (Prediction P6, §9)**: $\geq 80\%$ of surveyed closed-lab agent harnesses install at least one wall-clock injection mechanism. The argument of §3.1 is then not merely "this is engineering folk wisdom"; it is a measured industry footprint.
+
+The Injection Atlas is distinct from prior treatments: Cheng et al. (2025) note harness injection informally without auditing or quantifying it; engineering blog posts (Jeong 2026 and analogues) discuss individual cases without systematic survey. The audit converts the Injection Tell from a rhetorical move into a contribution.
+
 ## 6. Causal Upstream Hypothesis
 
 Let $L(A, \mathcal{T}, B)$ denote the long-horizon task success rate of agent $A$ on benchmark $\mathcal{T}$ under budget $B$.
@@ -255,8 +288,9 @@ We commit, in advance, to the following predictions. Failure of any prediction i
 - **P3.** ChronoStack-supervised agents (Paper 2) achieve $L$ improvements $\geq 15$ percentage points on SWE-Bench Verified under fixed wall-clock budget, relative to matched baselines.
 - **P4.** Across $\geq 3$ long-horizon benchmarks, $\varepsilon(A)$ correlates with $L(A)$ at Pearson $r \leq -0.5$ over a model panel of $\geq 25$.
 - **P5 (Augustine threshold, §6.1).** No foundation-model agent released as of 2026-05 satisfies $\varepsilon(A) < \varepsilon^* = 0.20$ on ChronoBench under Setting A. Of the $\geq 25$ model panel, the fraction reported as chronoceptively grounded is $0$.
+- **P6 (Closed-Lab Injection Audit, §5.5).** Of $\geq 10$ surveyed closed-lab frontier agent harnesses, $\geq 80\%$ install at least one of the three wall-clock injection mechanisms enumerated in §3.1. The Injection Tell is therefore a measurable industry footprint, not a rhetorical claim.
 
-These six predictions, made before large-scale empirical work, constitute the project's pre-registration commitment.
+These seven predictions, made before large-scale empirical work, constitute the project's pre-registration commitment.
 
 ## 10. Scope and Non-Goals
 
@@ -291,6 +325,7 @@ The following terms are the project's primary terminology. No alternative names 
 | $N_A$ (model invariant) | Per-model quantity | Step-count terminator that characterizes an agent's chronoceptive blindness, §5.3 |
 | Reverse-Scaling Theorem | Structural prediction | Token-only reasoning expansion monotonically increases $\mathbb{E}[\rho]$, §5.4 |
 | In-principle insufficiency of token-loss training | Structural diagnosis | §3 — wall-clock duration is not in the support of any token-only loss; chronoception cannot be learned, only installed |
+| Injection Atlas | Paper 1 empirical contribution | §5.5 — quantitative audit of closed-lab harness wall-clock injection mechanisms |
 | ChronoBench | Paper 1 artifact | Diagnostic benchmark over the three axes |
 | ChronoStack | Paper 2 artifact | Training and inference-time framework for closing $\varepsilon$ |
 
@@ -303,6 +338,7 @@ The following terms are the project's primary terminology. No alternative names 
 
 ## Changelog
 
+- **v1.3 (2026-05-29)** — Overlap-resolution and novelty-reclaim pass. Add §0 Concurrent Work and Differentiation explicitly addressing Garikaparthi (2604.00010), Ma et al. *Timely Machine* (2601.16486), Cheng et al. *Temporally Blind* (2510.23853), Goel et al. *Chronocept* (2505.07637), and *Beyond pass@1* (2603.29231), enumerating retained novelty contributions. Add §5.5 Closed-Lab Injection Audit as a new quantitative empirical contribution converting the Injection Tell from rhetoric into measured industry footprint. Add Prediction P6 (Injection Audit ≥80%). Extend §11 vocabulary with *Injection Atlas*.
 - **v1.2 (2026-05-29)** — Bold upgrade pass. §3 structural diagnosis rewritten as in-principle insufficiency of token-loss training (wall-clock is out of the loss support). §3.1 Injection Tell upgraded from "implicit acknowledgement" to "decisive non-experimental evidence". §5 extended with §5.2 (Regime Transition $B^*$ reconciling L1 and L2), §5.3 ($N_A$ as model invariant), §5.4 (Reverse-Scaling Theorem). §6 CUH recast as a structural claim from single-turn observability of $\varepsilon$. §6.1 introduces Augustine threshold $\varepsilon^* = 0.20$. §9 adds Prediction P2′ (Reverse-Scaling) and P5 (no released model crosses Augustine threshold). Locked vocabulary §11 extended with five new entries.
 - **v1.1 (2026-05-28)** — Add §3.1 The Injection Tell formalizing the role of closed-lab wall-clock injection as confirmatory evidence, and partitioning evaluation into Setting A (no-injection) / Setting B (with-injection). Replace P1 with a two-armed Injection Tell prediction (P1a, P1b) tied to T1.1 / T1.3 / T2.3 / T3.1.
 - **v1.0 (2026-05-28)** — Initial locked version. Establishes Three Times ontology, three named laws, $\varepsilon$ as central scalar, CUH, and four falsifiable predictions.

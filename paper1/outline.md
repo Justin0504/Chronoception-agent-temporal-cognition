@@ -13,20 +13,20 @@
 
 | § | Section | Pages | Source |
 |---|---|---|---|
-| 1 | Introduction | 1.0 | this file §1 |
+| 1 | Introduction (incl. **Concurrent Work** paragraph) | 1.0 | this file §1 |
 | 2 | The Three Times | 0.75 | `../FRAMING.md` §2 |
 | 3 | The Augustine Problem | 0.5 | `../FRAMING.md` §3 (softened) |
 | 4 | ChronoBench: Tasks, Metrics, Settings | 1.5 | new + `../FRAMING.md` §5 + parser |
-| 5 | L2 — Step-Clock Conflation (primary result) | 1.5 | new |
-| 6 | L3 — Temporal Confabulation (primary result) | 1.5 | new |
-| 7 | The Injection Tell (empirical) | 1.0 | new |
+| 5 | L2 — Step-Clock Conflation (primary result) | 1.25 | new |
+| 6 | L3 — Temporal Confabulation (primary result) | 1.5 | new — **reasoning-model extension foregrounded** |
+| 7 | The Injection Tell (empirical) + **the Injection Atlas** | 1.25 | new — §5.5 of `../FRAMING.md` |
 | 8 | The Calibration Error $\varepsilon$ and Long-Horizon Correlation | 0.75 | `../FRAMING.md` §4 + new |
-| 9 | Discussion | 1.0 | this file §9 |
-| 10 | Related Work | 0.5 | this file §10 |
+| 9 | Discussion | 0.75 | this file §9 |
+| 10 | Related Work | 0.75 | `../RELATED_WORK.md` + this file §10 |
 | 11 | Limitations | 0.25 | this file §11 |
 | 12 | Conclusion | 0.25 | — |
 
-Total target: ~10 pages plus references and appendix.
+Total target: ~10.5 pages plus references and appendix.
 
 ---
 
@@ -38,18 +38,24 @@ We ask whether this is a pattern, and if so, what its structure is.
 
 **Framing claim**: agent task evaluation has so far measured *whether* tasks complete and *what fraction* of a reference solution is recovered. It has not measured whether agents perceive their own time. We argue that this is a missing axis.
 
+**Concurrent Work paragraph** (∼6 sentences, **before** contributions, to foreground differentiation):
+
+> "Recent work has approached agent temporal behavior from three disconnected angles: (a) wall-clock-aware test-time scaling (Ma et al., 2026 — *Timely Machine*), (b) tool-use temporal blindness (Cheng et al., 2025 — *Temporally Blind*), and (c) duration self-estimation on non-reasoning models (Garikaparthi, 2026). We unify these into a single ontology — the **Three Times** — identify three named laws governing how each axis fails, and supply a quantitative audit of closed-lab harness injection patterns that grounds the Injection Tell argument as a measured industry footprint. The term *chronoception* has recently appeared in a separate LLM context for the temporal validity of facts in retrieval-augmented generation (Goel et al., 2025); we use it in its original sense — perception of one's own work duration — throughout."
+
 **Contributions** (mirrors `SCOPE.md` §1):
 
-1. A three-times ontology distinguishing $\tau_{\text{wall}}, \tau_{\text{step}}, \tau_{\text{self}}$.
+1. A three-times ontology distinguishing $\tau_{\text{wall}}, \tau_{\text{step}}, \tau_{\text{self}}$, **unified for the first time including $\tau_{\text{self}}$**.
 2. The Augustine Problem: a formal definition of agent failure to enforce the identity linking the three.
-3. ChronoBench: a 4000-instance, nine-sub-capability, $\geq 25$-model diagnostic benchmark, released openly.
-4. The chronoceptive calibration error $\varepsilon$.
+3. ChronoBench: a 4000-instance, nine-sub-capability, $\geq 25$-model diagnostic benchmark — **including reasoning-tuned models** — released openly.
+4. The chronoceptive calibration error $\varepsilon$ — the first aggregated single-scalar calibration metric across the three axes.
+5. The **Closed-Lab Injection Atlas**: a systematic empirical audit of wall-clock injection mechanisms across $\geq 10$ frontier harnesses.
 
 **Primary empirical findings preview**:
 
-- L2: agents conflate wall-clock budgets with step-count termination.
-- L3: agents over-report the duration of their own work.
+- L2: agents conflate wall-clock budgets with step-count termination (inverting the Ma et al. framing).
+- L3: agents over-report the duration of their own work, **more so as reasoning budget grows** (extending Garikaparthi).
 - Wall-clock injection closes clock-awareness but leaves execution and self-narration failure modes effectively unchanged.
+- $\geq 80\%$ of frontier closed-lab harnesses surveyed inject wall-clock time — the Injection Tell as a measured industry footprint.
 
 ---
 
@@ -97,11 +103,13 @@ The paper's load-bearing empirical finding.
 
 ---
 
-## §7 — The Injection Tell (empirical, 1.0 page)
+## §7 — The Injection Tell and the Injection Atlas (1.25 pages)
 
 - §7.1 Motivating observation: closed-lab agents appear to know the time because their harnesses inject it. We test whether the model itself benefits from this.
 - §7.2 **Figure 4** — headline injection-tell bar chart. Pass rate per model per setting per sub-capability. T1.1 jumps from <40% to >95% under injection; T1.3, T2.3, T3.1 do not move. Visualizes P1a and P1b directly.
-- §7.3 Discussion: framing-level read of this result — wall-clock as an input does not constitute wall-clock as a representation. We point readers to the position note for the structural argument, and to Paper 2 for an intervention that does close the gap.
+- §7.3 **The Injection Atlas (the Closed-Lab Injection Audit)** — a new empirical contribution. Table of $\geq 10$ frontier closed-lab harnesses surveyed for: (a) system-prompt time injection, (b) auto-invoked `get_current_time` tool, (c) browser-tool timestamp surfacing. Granularity and format columns. Methodology: minimal-prompt elicitation protocol with reproducible queries. **Figure 5**: stacked bar chart of injection-mechanism distribution across harnesses.
+- §7.4 Differentiation from Cheng et al. (2025): they note harness injection informally as a setup detail; the Injection Atlas formalizes it as a measured industry footprint and elevates the observation to the Injection Tell as an evidential argument.
+- §7.5 Discussion: framing-level read of the joint result (Figure 4 + Figure 5) — wall-clock as an input does not constitute wall-clock as a representation, and the universality of injection in industry is implicit acknowledgement of this. The structural argument is in the position note; the intervention is in Paper 2.
 
 ---
 
@@ -122,13 +130,19 @@ The paper's load-bearing empirical finding.
 
 ---
 
-## §10 — Related Work (0.5 page)
+## §10 — Related Work (0.75 page)
 
-- Textual temporal reasoning (TimeQA, TempReason, TimeBench).
-- Agent benchmarks (AgentBench, WebArena, SWE-Bench, GAIA, OSWorld).
-- LLM calibration and overconfidence.
-- Cognitive science chronoception.
-- The Augustine Problem framework distinguishes itself by (a) shifting from textual knowledge to agentic self-perception, (b) measuring failure modes that existing benchmarks cannot see, (c) operationalizing time as three distinct projections.
+Drawn directly from [`../RELATED_WORK.md`](../RELATED_WORK.md), organized into three subsections.
+
+**§10.1 Concurrent work** (≥3 sentences each, naming the three threats explicitly):
+
+- Garikaparthi (2026) measures duration self-reporting on non-reasoning models. Our $\tau_{\text{self}}$ axis subsumes this; we extend to reasoning-tuned models and find reverse scaling.
+- Ma et al. (2026, *Timely Machine*) decouples wall-clock from generation length as an engineering signal. We invert the framing into Agentic Parkinson's Law.
+- Cheng et al. (2025, *Temporally Blind*) note harness injection informally; we elevate it to the Injection Tell and supply the Injection Atlas.
+
+**§10.2 Name disambiguation**: Goel et al. (2025, *Chronocept*) use *chronoception* for the temporal validity of facts in RAG; we use it for agent perception of own work duration.
+
+**§10.3 Foundational background**: textual temporal reasoning (TimeBench, TempReason, TimeQA); agent benchmarks (AgentBench, WebArena, SWE-Bench, GAIA, OSWorld) — silent on time; cognitive-science chronoception (Wittmann, Eagleman); Parkinson (1955); METR HCAST (Kwa et al., 2025) — outer envelope vs our internal calibration; inverse-scaling and over-reasoning literature for the Reverse-Scaling Theorem motif.
 
 ---
 
@@ -161,9 +175,10 @@ Frontier LLM agents do not perceive their own time. The failure is measurable, d
 
 1. Three Times projections (concept diagram).
 2. **CAR$(B)$ decoupling curves** (L2 primary).
-3. **$\rho$ histograms** (L3 primary).
+3. **$\rho$ histograms with reasoning vs non-reasoning split** (L3 primary; **explicit reasoning-model extension over Garikaparthi**).
 4. **Injection-Tell bar chart** (T1.1 jumps, T1.3/T2.3/T3.1 do not).
-5. Per-model $\varepsilon$ ranking and long-horizon correlation scatter.
+5. **Injection Atlas — closed-lab harness injection mechanism distribution** (new; converts Injection Tell into a measured industry footprint).
+6. Per-model $\varepsilon$ ranking and long-horizon correlation scatter.
 
 ---
 
@@ -176,3 +191,5 @@ Frontier LLM agents do not perceive their own time. The failure is measurable, d
 | L1 risk | L1 demoted to §5.5 regime analysis; not in abstract, not in headline figures, not called a Law |
 | $\tau_{\text{self}}$ parser rigor | Full protocol in Appendix A; ablation in main text §6.5 |
 | $\varepsilon^*$ threshold too early | Moved to §9.4 with reversibility note; not in abstract |
+| **Concurrent-work overlap (Garikaparthi, Timely Machine, Temporally Blind)** | **§1 Concurrent Work paragraph foregrounds differentiation; §10.1 Related Work walks through each by name; reasoning-model extension and Injection Atlas as explicit novelty levers** |
+| **Chronocept name collision (Goel et al., 2025)** | **§10.2 disambiguation; introduction footnote at first mention of *chronoception*** |

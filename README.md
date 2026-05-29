@@ -4,6 +4,15 @@ LLM agents inhabit *token-time* but act in *wall-clock time*. They speak fluentl
 
 This repository hosts the formal framework, diagnostic benchmark, and training stack of a two-paper arc on temporal cognition in LLM agents.
 
+## Differentiation from Concurrent Work
+
+Three concurrent papers operate in the same neighborhood; each touches one axis of our framework. We are the first work to unify the three. Details in [`RELATED_WORK.md`](RELATED_WORK.md); summary:
+
+- **Garikaparthi (2026)** measures duration self-reports on **non-reasoning** models. We extend to reasoning-tuned models and find that reasoning training makes self-temporal honesty *worse*.
+- **Ma et al. (2026, *Timely Machine*)** decouples wall-clock from generation length to *enable* time-aware test-time scaling. We invert the framing: the same decoupling is the diagnostic signature of *Agentic Parkinson's Law*.
+- **Cheng et al. (2025, *Temporally Blind*)** note harness time-injection informally. We elevate this to the **Injection Tell** and supply a Closed-Lab Injection Atlas auditing wall-clock injection across ≥10 frontier harnesses.
+- **Goel et al. (2025, *Chronocept*)** use *chronoception* for the temporal validity of facts. We use it in its original cognitive-science sense (perception of one's own work duration).
+
 ## The Framework
 
 The gap is structural, not engineering. Foundation models are optimized under losses that are functionals of token sequences alone; the wall-clock duration over which each token is generated is not in the support of any of these losses. Wall-clock chronoception cannot emerge from token-only training, regardless of scale. **It must be installed.**
@@ -44,16 +53,18 @@ A four-component training and inference-time framework: temporal pretraining cor
 
 ```
 .
-├── FRAMING.md              Source of truth — definitions, laws, predictions
+├── FRAMING.md              Source of truth — research programme definitions, laws, predictions
+├── RELATED_WORK.md         Concurrent-work survey and differentiation rationale
 ├── notation.tex            LaTeX macros mirroring FRAMING §11
 ├── pyproject.toml          Python package metadata
 ├── chronoception/          Python package (import chronoception)
 │   ├── bench/              Paper 1 — ChronoBench (metrics, trajectories, task schema)
 │   └── stack/              Paper 2 — ChronoStack (placeholder in v0.0.1)
 ├── position-note/          Phase 1 arXiv position note draft
+├── paper1/                 Paper 1 scope, abstract, outline, annotation protocol
 ├── tests/                  Unit tests for metrics and registry
 ├── leaderboard/            Cross-model results, public submission interface
-└── paper1/, paper2/        LaTeX sources
+└── paper2/                 Paper 2 LaTeX sources (forthcoming)
 ```
 
 ## Install (development)

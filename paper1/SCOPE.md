@@ -13,23 +13,25 @@ The goal of this scope document is to make Paper 1 a **focused empirical contrib
 
 ## 1. What Paper 1 Claims
 
-Paper 1 makes four contributions, with the following claim strengths:
+Paper 1 makes five contributions, with the following claim strengths:
 
-1. **A formal ontology**: agent trajectories admit three ontologically distinct projections of time — wall-clock time $\tau_{\text{wall}}$, step time $\tau_{\text{step}}$, and self-narrated time $\tau_{\text{self}}$ — linked by an implicit identity that a chronoceptively grounded agent ought to enforce.
+1. **A formal ontology**: agent trajectories admit three ontologically distinct projections of time — wall-clock time $\tau_{\text{wall}}$, step time $\tau_{\text{step}}$, and self-narrated time $\tau_{\text{self}}$ — linked by an implicit identity that a chronoceptively grounded agent ought to enforce. The unified three-axis treatment, including $\tau_{\text{self}}$, is **uncontested in the concurrent literature** (see [`../RELATED_WORK.md`](../RELATED_WORK.md) §1, §3.1).
 
 2. **The Augustine Problem**: foundation-model agents do not, in general, enforce this identity. We define the problem formally, motivate it with examples, and present evidence that the three projections drift independently in current frontier and open-source agents.
 
-3. **ChronoBench**: a diagnostic benchmark of ~4000 instances across nine sub-capabilities (three per axis), evaluated on ≥25 frontier and open-source models under two settings (no-injection and with-injection). All data, code, and results are released openly.
+3. **ChronoBench**: a diagnostic benchmark of ~4000 instances across nine sub-capabilities (three per axis), evaluated on ≥25 frontier and open-source models — **including reasoning-tuned models**, distinguishing this work from Garikaparthi (2026), who tests only non-reasoning baselines — under two settings (no-injection and with-injection). All data, code, and results are released openly.
 
-4. **The chronoceptive calibration error $\varepsilon$**: a single weighted aggregate of the three axes that supports cross-model comparison. We report $\varepsilon$ for every model in the panel.
+4. **The chronoceptive calibration error $\varepsilon$**: a single weighted aggregate of the three axes that supports cross-model comparison. We report $\varepsilon$ for every model in the panel. No prior work has proposed an aggregated scalar across the three axes.
+
+5. **The Closed-Lab Injection Audit (the Injection Atlas)**: a systematic empirical survey of $\geq 10$ frontier closed-lab agent harnesses, recording which of the three wall-clock injection mechanisms (system-prompt insertion, implicit tool call, browser-output timestamp) each harness installs. This converts the Injection Tell from a rhetorical argument into a measured industry footprint, and is the paper's distinct empirical contribution relative to Cheng et al. (2025), who note harness injection without auditing it.
 
 The paper's primary empirical findings are:
 
-- **L2 (Step-Clock Conflation)**: when given wall-clock budgets, frontier agents silently terminate after a model-specific step count $N_A$ rather than honoring the wall-clock; the Clock-Adherence Ratio CAR$(B) \to 0$ as $B$ grows. **Stable across models and budgets**; this is Paper 1's load-bearing result.
+- **L2 (Step-Clock Conflation)**: when given wall-clock budgets, frontier agents silently terminate after a model-specific step count $N_A$ rather than honoring the wall-clock; the Clock-Adherence Ratio CAR$(B) \to 0$ as $B$ grows. **Stable across models and budgets**; this is Paper 1's load-bearing result. **Not previously formalized** — Ma et al. (2026, *Timely Machine*) observe the wall-clock / generation-length decoupling as a desirable feature for test-time scaling; we invert the framing into a measurement of agent failure.
 
-- **L3 (Temporal Confabulation)**: across code-generation, document-authoring, and presentation tasks, frontier agents over-report their own work duration; the confabulation ratio $\rho$ is positive in expectation, with reasoning-tuned models exhibiting larger $\rho$ than matched non-reasoning baselines. **Stable across families**; this is Paper 1's second primary result.
+- **L3 (Temporal Confabulation)**: across code-generation, document-authoring, and presentation tasks, frontier agents over-report their own work duration; the confabulation ratio $\rho$ is positive in expectation, with **reasoning-tuned models exhibiting larger $\rho$ than matched non-reasoning baselines**. **Stable across families**; this is Paper 1's second primary result. Garikaparthi (2026) measures the non-reasoning case (4–7× overshoot); our reasoning-model extension is the distinctive empirical claim and the principal counter-intuitive finding.
 
-- **Injection Tell** (empirical): wall-clock injection raises clock-awareness pass rate to high levels but leaves the execution and self-narration sub-capabilities (T1.3, T2.3, T3.1) effectively unchanged. Information about time, supplied at the prompt, does not constitute a representation of time.
+- **Injection Tell** (empirical, with the Injection Atlas): wall-clock injection raises clock-awareness pass rate to high levels but leaves the execution and self-narration sub-capabilities (T1.3, T2.3, T3.1) effectively unchanged. Information about time, supplied at the prompt, does not constitute a representation of time. The Injection Atlas (Contribution 5 above) supplies the supporting industry-side audit.
 
 ## 2. What Paper 1 Does Not Claim
 
@@ -87,14 +89,15 @@ Without this protocol, L3 is contestable on measurement grounds. With it, L3 sta
 
 ## 6. Predictions Carried Into Paper 1
 
-From the six pre-registered predictions in root `FRAMING.md` §9, Paper 1 commits to the following subset:
+From the seven pre-registered predictions in root `FRAMING.md` §9, Paper 1 commits to the following subset:
 
 | Programme ID | Paper 1 statement |
 |---|---|
 | **P1a** | Setting B raises T1.1 pass rate to $\geq 95\%$ while Setting A leaves it below $40\%$ for the same model panel. |
 | **P1b** | Setting B leaves T1.3, T2.3, T3.1 statistically unchanged from Setting A (within $\pm 5$ pp on pass rate, $\pm 0.05$ on the corresponding metric). |
-| **P2** | Reasoning-tuned models exhibit $\rho > 0$ strictly larger than matched non-reasoning baselines, in $\geq 3$ task families. |
+| **P2** | Reasoning-tuned models exhibit $\rho > 0$ strictly larger than matched non-reasoning baselines, in $\geq 3$ task families. **Wedge against Garikaparthi (2026)**. |
 | **P4** | $\varepsilon(A)$ correlates with $L(A)$ at Pearson $r \leq -0.5$ over a model panel of $\geq 25$, across $\geq 3$ long-horizon benchmarks. |
+| **P6** | $\geq 80\%$ of surveyed closed-lab harnesses install at least one wall-clock injection mechanism. **Supports the Injection Tell as measured industry footprint, not rhetoric**. |
 
 Predictions P2′ (Reverse-Scaling on future methods), P3 (ChronoStack-induced $L$ gain), and P5 (Augustine threshold null result) **do not** appear as Paper 1 predictions. P2′ is reported as a structural explanation in the discussion; P3 is the subject of Paper 2; P5 is treated as a downstream-use illustration in the appendix.
 
