@@ -6,6 +6,8 @@ This repository hosts the formal framework, diagnostic benchmark, and training s
 
 ## The Framework
 
+The gap is structural, not engineering. Foundation models are optimized under losses that are functionals of token sequences alone; the wall-clock duration over which each token is generated is not in the support of any of these losses. Wall-clock chronoception cannot emerge from token-only training, regardless of scale. **It must be installed.**
+
 Three ontologically distinct times that agents systematically conflate:
 
 | Symbol | Name | What it measures |
@@ -17,12 +19,12 @@ Three ontologically distinct times that agents systematically conflate:
 Three named empirical laws, one per axis:
 
 - **L1 — Agentic Parkinson's Law** — agents inflate work to fill the wall-clock budget given to them (coefficient α).
-- **L2 — Step-Clock Conflation** — agents silently translate wall-clock budgets into step-count terminators (Clock-Adherence Ratio CAR → 0 as budget grows).
-- **L3 — Temporal Confabulation** — agents systematically over-report the duration of their own work by 10–100× (ratio ρ ≈ +1.5); reasoning-tuned models exhibit *more* confabulation, not less.
+- **L2 — Step-Clock Conflation** — agents silently translate wall-clock budgets into step-count terminators (Clock-Adherence Ratio CAR → 0 as budget grows). L1 and L2 are reconciled via the *regime transition* B*: L1-dominant below, L2-dominant above.
+- **L3 — Temporal Confabulation** — agents systematically over-report the duration of their own work by 10–100× (ratio ρ ≈ +1.5). The **Reverse-Scaling Theorem** (§5.4): any token-only expansion of test-time compute monotonically increases ρ — reasoning training, by construction, makes self-temporal honesty strictly worse.
 
-A single scalar **ε** aggregates the three failure modes into a chronoceptive calibration error.
+A single scalar **ε** aggregates the three failure modes. Agents satisfying ε < ε* = 0.20 are *chronoceptively grounded*; we pre-register that no foundation-model agent released as of 2026-05 satisfies this threshold.
 
-The full formal specification — including the central **Chronoception Upstream Hypothesis** (∂L/∂ε < 0, causally) and four pre-registered falsifiable predictions — lives in [`FRAMING.md`](FRAMING.md). All downstream work derives from that document.
+The full formal specification — including the central **Chronoception Upstream Hypothesis** (∂L/∂ε < 0, causally — a structural claim grounded in the single-turn observability of ε), the Reverse-Scaling Theorem, the regime transition B*, the model invariant N_A, the Augustine threshold ε*, and six pre-registered predictions — lives in [`FRAMING.md`](FRAMING.md). All downstream work derives from that document.
 
 ## The Two Papers
 
