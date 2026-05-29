@@ -4,7 +4,15 @@
 **Status**: v1.2 (locked source of truth, 2026-05-29)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
-This document is the canonical specification of the project's conceptual framework, formal definitions, named laws, falsifiable predictions, and scope. All downstream artifacts — paper abstracts, introductions, READMEs, slides, proposals, code metric implementations — derive their terminology, notation, and claims from this file. Changes to this file require an explicit framing-revision pass; no PR may introduce new central terminology without first updating §11 here.
+This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
+
+**Per-paper scope documents narrow this framework to fit specific empirical commitments**:
+
+- [`paper1/SCOPE.md`](paper1/SCOPE.md) — what Paper 1 (ChronoBench) claims and does not claim. Uses hypothesis-form epistemic register; defers CUH, ChronoStack, the Augustine threshold $\varepsilon^*$, and the in-principle insufficiency argument to either Paper 2 or the discussion section.
+- [`paper2/SCOPE.md`](paper2/SCOPE.md) — Paper 2 (ChronoStack) scope (forthcoming).
+- [`position-note/`](position-note/) — short arXiv position note carrying the full programme as flag-planting.
+
+Reviewers reading Paper 1 see the scoped subset; readers reading the position note or this file see the full programme. Both are kept in sync; the per-paper documents are strict subsets with softened claim strength where evidence is not yet present.
 
 ---
 
