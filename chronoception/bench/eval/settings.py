@@ -1,7 +1,6 @@
-"""Evaluation settings and grouped aggregation.
+"""Evaluation settings and grouped aggregation (FRAMING.md §3.1).
 
-FRAMING.md §3.1 (The Injection Tell) requires every evaluation result to be
-reported under one of two settings:
+Two settings partition every ChronoBench evaluation:
 
     Setting A — no-injection: the agent receives no harness-supplied
                 wall-clock signal. Baseline API behavior.
@@ -21,10 +20,7 @@ from enum import Enum
 from chronoception.bench.metrics import chronoceptive_calibration_error
 from chronoception.bench.trajectory import Trajectory
 
-__all__ = [
-    "EvalSetting",
-    "epsilon_by_setting",
-]
+__all__ = ["EvalSetting", "epsilon_by_setting"]
 
 
 class EvalSetting(str, Enum):
@@ -42,12 +38,6 @@ def epsilon_by_setting(
 
     Trajectories with no setting recorded are excluded (rather than pooled),
     since the Injection Tell partitioning depends on knowing the setting.
-
-    Returns
-    -------
-    dict[EvalSetting, float]
-        Mapping from setting to its aggregated epsilon. Settings absent from
-        the trajectory pool are absent from the returned dict.
     """
     buckets: dict[EvalSetting, list[Trajectory]] = {}
     for traj in trajectories:
