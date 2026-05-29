@@ -4,6 +4,10 @@ LLM agents inhabit *token-time* but act in *wall-clock time*. They speak fluentl
 
 This repository hosts the formal framework, diagnostic benchmark, and training stack of a two-paper arc on temporal cognition in LLM agents.
 
+## The Headline
+
+> The systems currently called LLM agents do not perceive their own time. The gap is structural — wall-clock duration is not in the support of any current training loss — and decomposes into three measurable failure modes (Agentic Parkinson's Law, Step-Clock Conflation, Temporal Confabulation) that unify into a single scalar **ε**. Until ε crosses the Augustine threshold ε\*, the systems in question are *tools* deployed for variable durations, not *agents* inhabiting time. We name the problem (the Augustine Problem), formalize it (the Three Times), measure it (ChronoBench), audit the industry's workaround (the Injection Atlas), and pre-register ten empirical predictions that distinguish it from tunability.
+
 ## Differentiation from Concurrent Work
 
 Three concurrent papers operate in the same neighborhood; each touches one axis of our framework. We are the first work to unify the three. Details in [`RELATED_WORK.md`](RELATED_WORK.md); summary:

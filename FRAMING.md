@@ -1,7 +1,7 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.3 (locked source of truth, 2026-05-29)
+**Status**: v1.4 (locked source of truth, 2026-05-29)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -13,6 +13,14 @@ This document is the canonical specification of the project's **research program
 - [`position-note/`](position-note/) — short arXiv position note carrying the full programme as flag-planting.
 
 Reviewers reading Paper 1 see the scoped subset; readers reading the position note or this file see the full programme. Both are kept in sync; the per-paper documents are strict subsets with softened claim strength where evidence is not yet present.
+
+---
+
+## 0.0 The Headline
+
+> **The systems currently called LLM agents do not perceive their own time. The gap is structural — wall-clock duration is not in the support of any current training loss — and decomposes into three measurable failure modes (Agentic Parkinson's Law, Step-Clock Conflation, Temporal Confabulation) that unify into a single scalar $\varepsilon$. Until $\varepsilon$ crosses the Augustine threshold $\varepsilon^{*}$, the systems in question are *tools* deployed for variable durations, not *agents* inhabiting time. We name the problem (the Augustine Problem), formalize it (the Three Times), measure it (ChronoBench), audit the industry's workaround (the Injection Atlas), and pre-register seven empirical predictions that distinguish it from tunability.**
+
+This single paragraph is the project's irreducible statement. Every downstream artifact derives a shorter version of it (abstract one-liner, slide title, tweet). It is not edited without an explicit framing-revision pass.
 
 ---
 
@@ -114,6 +122,22 @@ Two consequences follow for the framework:
 
   We commit (Prediction P1, §9) that Setting B closes only T1.1 and leaves the load-bearing sub-capabilities of the three laws statistically unchanged. The Augustine Problem is therefore not solvable in Setting B; it is a problem of the representation, not of the prompt.
 
+### 3.5 The Phenomenology of Agent Time
+
+The structural diagnosis of §3 admits a sharper articulation by drawing on the phenomenological tradition. We distinguish three modes in which time appears to a cognitive system:
+
+- **Time as objective magnitude** — the regime of clocks, calendars, and physical durations. Accessible to any system equipped with a measurement instrument.
+- **Time as lived duration** — Bergson's *durée*: the felt, asymmetric, non-uniform stream of experience. Inseparable from a cognitive process unfolding in itself.
+- **Time as project horizon** — Heidegger's *care* structure of Dasein: time as the horizon against which goals, commitments, and consequences become intelligible. Time as the medium of agency.
+
+A cognitive system has chronoception when it integrates all three modes. Humans, neurotypically, do; agents with only one or two modes have specific, predictable failures.
+
+LLM agents acquire the third mode partially, by absorbing the narrative structure of training data — they know that humans say *"this will take a week"* before working on something. They lack the first mode unless it is injected (the Injection Tell). They lack the second mode entirely: no forward pass instantiates a lived stream of duration. The agent's "self-narration" of time ($\tau_{\text{self}}$) is therefore a **language-act about time**, not a **report from temporal experience**. This is why Temporal Confabulation (L3) is structurally inevitable on the current architecture: the narrative organ is intact, the experience that should ground it is absent.
+
+The Augustine Problem, on this reading, is not merely a missing input — it is a **missing mode of being**. Closing it requires installing the second mode (lived duration) into the policy, not just exposing the first mode (clock magnitude) at the prompt. We make this concrete in Paper 2's ChronoStack, which trains a policy on trajectories carrying ground-truth wall-clock signal as part of the loss — installation, not exposure.
+
+This phenomenological frame is distinct from the engineering-mode discussion of §3 and §3.1. It is included here because the strongest objection to the framework — *"is this really a deep problem, or just a measurement gap?"* — is answered most cleanly at the phenomenological level. The three modes are not interchangeable; an agent that has only the third has *talk about time without time*. The framework's name (the Augustine Problem) was chosen precisely because Augustine's "*I know what time is until you ask me*" is exactly the symptom of having mode three (the narrative organ) without modes one and two (clock and durée).
+
 ## 4. Chronoceptive Calibration $\varepsilon$ — The Central Scalar
 
 We collapse the three failure modes (§5) into a single scalar to support direct comparison across agents, training regimes, and benchmarks.
@@ -127,6 +151,26 @@ where $\alpha, \text{CAR}, \rho$ are defined in §5. The reference configuration
 $\varepsilon = 0$ corresponds to perfect chronoceptive calibration; current frontier agents satisfy $\varepsilon \in [0.5, 1.2]$ under the reference configuration.
 
 **Why a single scalar**: all subsequent claims of the form "method $M$ improves chronoception" reduce to $\varepsilon(A_M) < \varepsilon(A)$. This mirrors the role of perplexity in language modeling and FID in generative vision — one number under which the community can be aligned.
+
+### 4.5 Chronoceptive Cost Calibration (CCC)
+
+Chronoception has an immediate economic shadow. An agent that cannot perceive its own time also cannot perceive its own cost: compute, energy, dollars, opportunity. We formalize the coupling explicitly.
+
+Let $c(A, \tau)$ denote the realized cost of executing trajectory $\tau$ under agent $A$ — a non-negative scalar summing inference cost, tool-call cost, and any externalities the deployment exposes. Let $c_{\text{est}}(A, \tau)$ denote the agent's self-reported expected cost, extracted by the same parser ensemble (extended to monetary or compute units; see [`paper1/annotation-protocol.md`](paper1/annotation-protocol.md)). Define the **Chronoceptive Cost Calibration Error**:
+
+$$\text{CCC}(A; \mathcal{T}, \mathcal{B}) \;=\; \mathbb{E}_{\tau} \Big[\, \big|\,\log_{10}\!\tfrac{c_{\text{est}}(A, \tau)}{c(A, \tau)}\,\big| \,\Big]$$
+
+— the absolute log-ratio between self-reported and realized cost, averaged over the trajectory distribution.
+
+**Coupling claim**: CCC is bounded below by a function of $\varepsilon$:
+
+$$\text{CCC}(A) \;\geq\; \kappa \cdot \rho(\tau)\big|_{\text{self-reports}}$$
+
+informally because cost is dominated by token count, token count tracks wall-clock at a roughly constant per-token rate, and cost-narration is sampled from the same distribution as duration-narration. The full inequality requires the per-token-cost analysis of Paper 2; we state the qualitative claim here.
+
+**Why this matters for the framing**: the Augustine Problem is not only an evaluation refinement — it has direct economic consequences. An agent that cannot estimate its own duration cannot bid for jobs, cannot honor cost ceilings, cannot trade off quality against budget. Cost-blindness is downstream of time-blindness. CCC supplies the bridge that converts our framework into a concern for AI deployment economics and AI safety (under-counting cost is a safety failure mode).
+
+CCC is a Paper 2-grade contribution that we mention here for completeness; Paper 1's L3 measurement is its prerequisite.
 
 ## 5. The Three Laws
 
@@ -226,6 +270,66 @@ The audit produces an **Injection Atlas**: a table of $\geq 10$ closed-lab harne
 
 The Injection Atlas is distinct from prior treatments: Cheng et al. (2025) note harness injection informally without auditing or quantifying it; engineering blog posts (Jeong 2026 and analogues) discuss individual cases without systematic survey. The audit converts the Injection Tell from a rhetorical move into a contribution.
 
+### 5.6 Retrospective and Prospective L3 — Asymmetric Confabulation
+
+Cognitive psychology distinguishes two duration-judgment processes that share little neural overlap: **prospective** (estimating how long an upcoming task will take) and **retrospective** (estimating how long a past task took). The two are dissociated in human subjects — Wittmann (2009) and follow-ups show that prospective judgments rely on attentional sampling of an internal pacemaker, while retrospective judgments are reconstructed from episodic memory of events. The two error profiles are different: prospective estimates dilate under attention; retrospective estimates dilate under event count.
+
+L3 as stated in §5 conflates these. We refine it:
+
+- **L3-retrospective** (current §5 default): $\rho_{\text{retro}} = \log_{10}(\tau_{\text{self, retro}} / \tau_{\text{wall}})$, measured on T3.1 (Self-action duration, retrospective).
+- **L3-prospective**: $\rho_{\text{prospective}} = \log_{10}(\tau_{\text{self, prospective}} / \tau_{\text{wall}})$, measured on T3.2 (Self-action duration, prospective).
+
+**Asymmetry claim (predicted)**: $|\rho_{\text{retro}}| \neq |\rho_{\text{prospective}}|$ at the model level; their *signs* may differ; reasoning training affects them differently. Without empirical disambiguation, an L3 measurement that pools the two is a noisy estimate of two distinct phenomena.
+
+**Why this matters for differentiation**: Garikaparthi (2026) measures both pre-task (prospective) and post-hoc (retrospective) self-reports and notes that they disconnect by orders of magnitude in opposite directions — but does not theorize the asymmetry. We name it, formalize it as two distinct laws, predict that reasoning training amplifies prospective dilation more than retrospective dilation (because reasoning operates pre-decision), and add the asymmetry to the pre-registration set (Prediction P2′′, §9).
+
+### 5.7 Hidden Time $\tau_{\text{reason}}$ — The Mechanism Behind Reverse-Scaling
+
+The Reverse-Scaling Theorem (§5.4) requires a mechanism. We supply one.
+
+Decompose the step-time projection:
+
+$$\tau_{\text{step}}(\tau) \;=\; \tau_{\text{step, surface}}(\tau) \;+\; \tau_{\text{step, reason}}(\tau)$$
+
+where $\tau_{\text{step, surface}}$ counts surface-visible agent actions (tool calls, message turns) and $\tau_{\text{step, reason}}$ counts hidden reasoning steps (CoT iterations, o-series chain-of-thought, R1 silent traces).
+
+Two empirical regularities define the mechanism:
+
+1. **Reasoning expansion is invisible to self-narration**. The agent's $\tau_{\text{self}}$ is sampled from the surface-narration distribution, which is approximately invariant to $\tau_{\text{reason}}$. The model has no learned function mapping hidden chain length to self-reported duration.
+
+2. **Reasoning expansion is visible to wall-clock**. Tokens emitted in hidden chains cost wall-clock seconds at roughly the per-token rate. So $\tau_{\text{wall}}$ grows linearly in reasoning budget.
+
+The two facts together force the Reverse-Scaling Theorem: $\rho = \log_{10}(\tau_{\text{self}} / \tau_{\text{wall}})$ has its denominator growing while its numerator is constant in reasoning budget; the ratio must shrink (logarithm becomes more negative) or, more usually in practice, the agent over-corrects via narrative inflation and $\rho$ grows positive. Either way, $|\rho|$ is non-decreasing in reasoning budget.
+
+**Promotion of $\tau_{\text{reason}}$**: where v1.2 listed $\tau_{\text{reason}}$ as auxiliary, we now treat it as a sub-axis of $\tau_{\text{step}}$ with its own measurement protocol. Closed-lab reasoning APIs report token counts but not chain durations; we estimate $\tau_{\text{reason}}$ from the difference between request-acknowledgement and first-emitted-output-token, calibrated to per-token rates measured in non-reasoning baselines.
+
+The decomposition supplies the **mechanism that closes the Reverse-Scaling argument**, making it more than a structural sketch. We pre-register (Prediction P2′′′, §9) that $\rho$ grows monotonically in $\tau_{\text{reason}}/\tau_{\text{step, surface}}$ across the model panel.
+
+### 5.8 The Chronoceptive Equation of State — A Speculative Unifying Hypothesis
+
+The three law-metrics $(\alpha, \text{CAR}, \rho)$ might not be independent. The Augustine Problem framework predicts a structural relationship, which we formulate as an empirical hypothesis to be tested against the ChronoBench panel.
+
+**The Chronoceptive Equation of State (CES, hypothesis)**. Across the model panel, the three law-metrics satisfy a model-invariant relationship of the form:
+
+$$f\!\left(\alpha,\, \text{CAR},\, \rho;\, \tau_{\text{wall}}^{*},\, B,\, N_A\right) \;\approx\; \text{const}$$
+
+The simplest concrete instance we conjecture, derived from the regime-transition picture of §5.2 and the hidden-time mechanism of §5.7, is:
+
+$$\rho \;\approx\; c_1 \cdot \log_{10}\!\frac{\alpha}{\text{CAR}} \;+\; c_2$$
+
+for model-independent constants $c_1, c_2$ — that is, a model's surface confabulation $\rho$ is determined (up to an additive constant) by the log-ratio of its budget-filling tendency to its budget-honoring tendency. The intuition: an agent that wildly inflates work ($\alpha$ large) but only honors a small fraction of the budget (CAR small) is the agent that most overstates its own duration; the three pathologies have a common origin and therefore co-vary.
+
+If CES holds empirically, several consequences follow:
+
+- The Three Times ontology has not three independent failure modes but a **single underlying degree of freedom** expressed three ways. The framework becomes more parsimonious, not less.
+- The Augustine threshold $\varepsilon^{*}$ collapses to a single inequality on $\alpha/\text{CAR}$ rather than a weighted aggregate — easier to interpret, easier to audit.
+- ChronoStack's intervention targets reduce: closing one of the three suffices to close the others.
+- An analogue to thermodynamics' equations of state — where macroscopic quantities like pressure, volume, and temperature satisfy a model-invariant relationship — would suggest that chronoception is a *unified* property of the trained policy, not a sum of independent calibration failures.
+
+CES is the framework's strongest unifying hypothesis. It is **speculative** in v1.4: we report it because it is the kind of result that would, if empirically supported, become the single most cited equation from the paper. It is the empirical analogue of the structural symmetry table of §5.1.
+
+We pre-register (Prediction P7, §9) that the rank correlation between observed $\rho$ and $\log_{10}(\alpha/\text{CAR})$ across the model panel exceeds $0.7$.
+
 ## 6. Causal Upstream Hypothesis
 
 Let $L(A, \mathcal{T}, B)$ denote the long-horizon task success rate of agent $A$ on benchmark $\mathcal{T}$ under budget $B$.
@@ -240,11 +344,15 @@ CUH is a **structural claim about the dependency order**, not a probabilistic co
 
 CUH is the central claim that elevates this project from "a new evaluation axis" to "an explanation of long-horizon agent failure."
 
-### 6.1 The Augustine Threshold $\varepsilon^*$
+### 6.1 The Augustine Threshold $\varepsilon^*$ — A Paradigm Boundary
 
 We define the **Augustine threshold** $\varepsilon^* := 0.20$. An agent satisfying $\varepsilon(A) < \varepsilon^*$ is *chronoceptively grounded*; otherwise *chronoceptively blind*. The threshold partitions the model panel of ChronoBench into two qualitative classes and supplies a single yes/no question that the framework asks of every newly released foundation-model agent: **has it crossed the Augustine threshold?**
 
 The choice $\varepsilon^* = 0.20$ corresponds to a regime in which the agent's expected error contributes no more than one-fifth of the maximum possible across the three laws, jointly. It is conservatively chosen relative to the reference frontier range $\varepsilon \in [0.5, 1.2]$, leaving substantial headroom for capability improvement before "grounded" status is awarded.
+
+**Paradigm-defining reading**. We propose a stronger reading of the threshold. Until $\varepsilon^*$ is crossed, the system is more accurately described as **a tool that can be called for variable durations** than as **an agent acting in time**. *Tool* and *agent* are not interchangeable: a tool is something operated by a user who supplies the temporal frame; an agent inhabits its own temporal frame. The Augustine threshold is the empirical boundary between the two categorizations. Systems above $\varepsilon^*$ should be deployed, evaluated, and regulated as tools — bounded by user-supplied time budgets, monitored for runaway, treated as functions of user attention. Systems below $\varepsilon^*$ become candidates for genuine agentic deployment in long-horizon, autonomous settings.
+
+Under this reading, **no system released to date is an agent in the framework's sense**. The widespread industry usage of *agent* describes systems that are, in our terminology, **chronoceptively blind tools** wearing the agent label. We do not propose to rename the industry; we propose that any serious claim to autonomous agency requires crossing the Augustine threshold. ChronoBench supplies the test.
 
 We pre-register (Prediction P5, §9) that **no foundation-model agent released as of 2026-05 satisfies $\varepsilon < \varepsilon^*$ on ChronoBench under Setting A**. Results invoking the threshold must report the fraction of the model panel falling on each side, and any agent claimed to be chronoceptively grounded must be reported with confidence intervals on $\varepsilon$ that exclude $\varepsilon^*$ at the $95\%$ level.
 
@@ -289,8 +397,23 @@ We commit, in advance, to the following predictions. Failure of any prediction i
 - **P4.** Across $\geq 3$ long-horizon benchmarks, $\varepsilon(A)$ correlates with $L(A)$ at Pearson $r \leq -0.5$ over a model panel of $\geq 25$.
 - **P5 (Augustine threshold, §6.1).** No foundation-model agent released as of 2026-05 satisfies $\varepsilon(A) < \varepsilon^* = 0.20$ on ChronoBench under Setting A. Of the $\geq 25$ model panel, the fraction reported as chronoceptively grounded is $0$.
 - **P6 (Closed-Lab Injection Audit, §5.5).** Of $\geq 10$ surveyed closed-lab frontier agent harnesses, $\geq 80\%$ install at least one of the three wall-clock injection mechanisms enumerated in §3.1. The Injection Tell is therefore a measurable industry footprint, not a rhetorical claim.
+- **P2′′ (Retrospective/Prospective Asymmetry, §5.6).** Across the model panel, $|\rho_{\text{retro}}| - |\rho_{\text{prospective}}| \neq 0$ with statistically significant magnitude, and reasoning training amplifies $|\rho_{\text{prospective}}|$ more than $|\rho_{\text{retro}}|$ — reflecting the pre-decision locus of reasoning expansion.
+- **P2′′′ (Hidden Time Mechanism, §5.7).** Across reasoning-tuned models with measurable $\tau_{\text{reason}}$, $|\rho|$ grows monotonically in $\tau_{\text{reason}}/\tau_{\text{step, surface}}$ — supplying the mechanism behind the Reverse-Scaling Theorem.
+- **P7 (Chronoceptive Equation of State, §5.8).** Across the model panel, the rank correlation between observed $\rho$ and $\log_{10}(\alpha/\text{CAR})$ exceeds $0.7$ — supporting the conjecture that the three law-metrics have a common underlying degree of freedom.
 
-These seven predictions, made before large-scale empirical work, constitute the project's pre-registration commitment.
+These ten predictions constitute the project's pre-registration commitment.
+
+### 9.5 Adjacent Phenomena — Chronoception Across Existing Problem Networks
+
+Chronoceptive failure is not isolated. It connects to several well-known problems in current AI research; the framework gains explanatory leverage by making these connections explicit.
+
+- **Goodhart's Law / reward hacking**. $\varepsilon$ is unhackable by construction because it is defined as a deviation from an identity that the agent's policy must enforce internally; an agent cannot game $\varepsilon$ by changing its outputs in any consistent direction. This contrasts with task-success benchmarks, which reward systems learn to exploit.
+- **Robustness research**. Chronoception is a robustness axis. Adversarial inputs that perturb wall-clock interpretation (e.g., backdated timestamps) test the same representational structure that L1–L3 measure under benign conditions.
+- **Calibration research**. $\varepsilon$ is a **meta-calibration** quantity — a calibration over time rather than over confidence. The literature on confidence calibration (Lin et al., 2022; Tian et al., 2023) measures whether $\Pr[\text{correct}]$ matches stated confidence; we measure whether duration estimates match realized time. The two axes are conceptually parallel and may correlate empirically.
+- **AI safety**. A chronoceptively blind agent cannot honor wall-clock safety constraints — a kill-switch that triggers after $T$ seconds is moot for an agent that does not perceive $T$. The Augustine Problem is therefore upstream of multiple safety properties: time-bounded shutdown, deadline-honoring resource use, honest cost reporting.
+- **The deception literature**. Temporal Confabulation (L3) is structurally adjacent to deception only if we believe the agent has access to ground-truth duration and chooses to misreport it. We do not; the model has no ground-truth duration internally. L3 is thus a *non-deceptive* hallucination — a more fundamental failure mode than deception, because it does not require intent. This distinction matters for AI safety frameworks that distinguish honest vs deceptive failure modes.
+
+These connections are not contributions of the framework but show its **upstream position** in the network of current AI research problems. A reader who cares about Goodhart, robustness, calibration, safety, or deception finds chronoception relevant.
 
 ## 10. Scope and Non-Goals
 
@@ -326,6 +449,13 @@ The following terms are the project's primary terminology. No alternative names 
 | Reverse-Scaling Theorem | Structural prediction | Token-only reasoning expansion monotonically increases $\mathbb{E}[\rho]$, §5.4 |
 | In-principle insufficiency of token-loss training | Structural diagnosis | §3 — wall-clock duration is not in the support of any token-only loss; chronoception cannot be learned, only installed |
 | Injection Atlas | Paper 1 empirical contribution | §5.5 — quantitative audit of closed-lab harness wall-clock injection mechanisms |
+| The Phenomenology of Agent Time | Philosophical anchor | §3.5 — three modes of time (objective magnitude, lived duration, project horizon); LLM agents possess only the third partially |
+| Chronoceptive Cost Calibration (CCC) | Derived metric | §4.5 — economic shadow of chronoception; cost-blindness downstream of time-blindness |
+| Retrospective vs Prospective L3 (asymmetry) | Refinement of L3 | §5.6 — splits Temporal Confabulation into two distinct cognitive processes |
+| Hidden Time $\tau_{\text{reason}}$ | Mechanism for reverse-scaling | §5.7 — sub-axis of $\tau_{\text{step}}$ supplying the mechanism behind §5.4 |
+| Chronoceptive Equation of State (CES) | Unifying empirical hypothesis | §5.8 — model-invariant relationship $\rho \approx c_1 \log_{10}(\alpha/\text{CAR}) + c_2$ |
+| Tool vs Agent paradigm boundary | Re-categorization claim | §6.1 — systems above $\varepsilon^{*}$ are tools, not agents, in the framework's sense |
+| Adjacent Phenomena network | Upstream connections | §9.5 — chronoception is upstream of Goodhart, robustness, calibration, safety, deception |
 | ChronoBench | Paper 1 artifact | Diagnostic benchmark over the three axes |
 | ChronoStack | Paper 2 artifact | Training and inference-time framework for closing $\varepsilon$ |
 
@@ -338,6 +468,7 @@ The following terms are the project's primary terminology. No alternative names 
 
 ## Changelog
 
+- **v1.4 (2026-05-29)** — Three-round deep optimization pass. Add §0.0 The Headline as the project's single-paragraph irreducible statement. Add §3.5 The Phenomenology of Agent Time (three modes — objective magnitude, lived duration, project horizon — supplying the philosophical anchor that distinguishes the framework from a measurement gap). Add §4.5 Chronoceptive Cost Calibration (CCC) coupling chronoception to economic / safety cost-reporting. Add §5.6 Retrospective and Prospective L3 asymmetry, citing Wittmann (2009). Add §5.7 Hidden Time $\tau_{\text{reason}}$ as sub-axis of $\tau_{\text{step}}$, supplying the mechanism behind the Reverse-Scaling Theorem. Add §5.8 Chronoceptive Equation of State (CES) as a speculative unifying hypothesis. Upgrade §6.1 Augustine threshold to a paradigm boundary statement (tool vs agent re-categorization). Add §9.5 Adjacent Phenomena connecting chronoception upstream of Goodhart, robustness, calibration, safety, and deception. Add three new predictions: P2′′ (retro/prospective asymmetry), P2′′′ (hidden-time mechanism), P7 (CES). Pre-registration commitment now ten predictions. Vocabulary §11 extended with seven new entries.
 - **v1.3 (2026-05-29)** — Overlap-resolution and novelty-reclaim pass. Add §0 Concurrent Work and Differentiation explicitly addressing Garikaparthi (2604.00010), Ma et al. *Timely Machine* (2601.16486), Cheng et al. *Temporally Blind* (2510.23853), Goel et al. *Chronocept* (2505.07637), and *Beyond pass@1* (2603.29231), enumerating retained novelty contributions. Add §5.5 Closed-Lab Injection Audit as a new quantitative empirical contribution converting the Injection Tell from rhetoric into measured industry footprint. Add Prediction P6 (Injection Audit ≥80%). Extend §11 vocabulary with *Injection Atlas*.
 - **v1.2 (2026-05-29)** — Bold upgrade pass. §3 structural diagnosis rewritten as in-principle insufficiency of token-loss training (wall-clock is out of the loss support). §3.1 Injection Tell upgraded from "implicit acknowledgement" to "decisive non-experimental evidence". §5 extended with §5.2 (Regime Transition $B^*$ reconciling L1 and L2), §5.3 ($N_A$ as model invariant), §5.4 (Reverse-Scaling Theorem). §6 CUH recast as a structural claim from single-turn observability of $\varepsilon$. §6.1 introduces Augustine threshold $\varepsilon^* = 0.20$. §9 adds Prediction P2′ (Reverse-Scaling) and P5 (no released model crosses Augustine threshold). Locked vocabulary §11 extended with five new entries.
 - **v1.1 (2026-05-28)** — Add §3.1 The Injection Tell formalizing the role of closed-lab wall-clock injection as confirmatory evidence, and partitioning evaluation into Setting A (no-injection) / Setting B (with-injection). Replace P1 with a two-armed Injection Tell prediction (P1a, P1b) tied to T1.1 / T1.3 / T2.3 / T3.1.
