@@ -1,0 +1,62 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "chronoception"
+version = "0.0.1"
+description = "Diagnosing and fixing temporal cognition failures in LLM agents — the Augustine Problem."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Aojie (Justin) Yuan", email = "aojieyua@usc.edu" },
+]
+keywords = [
+    "llm-agents",
+    "temporal-cognition",
+    "chronoception",
+    "benchmark",
+    "augustine-problem",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.24",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "pytest-cov>=4",
+    "ruff>=0.4",
+    "mypy>=1.8",
+]
+
+[project.urls]
+Repository = "https://github.com/Justin0504/Chronoception-agent-temporal-cognition"
+Framework = "https://github.com/Justin0504/Chronoception-agent-temporal-cognition/blob/main/FRAMING.md"
+
+[tool.setuptools.packages.find]
+include = ["chronoception*"]
+exclude = ["tests*", "paper1*", "paper2*", "position-note*", "leaderboard*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N"]

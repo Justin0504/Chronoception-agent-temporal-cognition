@@ -41,13 +41,27 @@ A four-component training and inference-time framework: temporal pretraining cor
 ## Repository Layout
 
 ```
-chronoception/
-├── FRAMING.md         Source of truth — definitions, laws, predictions
-├── notation.tex       LaTeX macros mirroring FRAMING §11
-├── bench/             Paper 1 — ChronoBench (tasks, metrics, eval harness)
-├── stack/             Paper 2 — ChronoStack (data, training, inference critic)
-├── leaderboard/       Cross-model results, public submission interface
-└── paper1/, paper2/   LaTeX sources
+.
+├── FRAMING.md              Source of truth — definitions, laws, predictions
+├── notation.tex            LaTeX macros mirroring FRAMING §11
+├── pyproject.toml          Python package metadata
+├── chronoception/          Python package (import chronoception)
+│   ├── bench/              Paper 1 — ChronoBench (metrics, trajectories, task schema)
+│   └── stack/              Paper 2 — ChronoStack (placeholder in v0.0.1)
+├── position-note/          Phase 1 arXiv position note draft
+├── tests/                  Unit tests for metrics and registry
+├── leaderboard/            Cross-model results, public submission interface
+└── paper1/, paper2/        LaTeX sources
+```
+
+## Install (development)
+
+```bash
+git clone https://github.com/Justin0504/Chronoception-agent-temporal-cognition
+cd Chronoception-agent-temporal-cognition
+python3 -m venv .venv
+.venv/bin/pip install -e ".[dev]"
+.venv/bin/pytest -q
 ```
 
 ## Status
