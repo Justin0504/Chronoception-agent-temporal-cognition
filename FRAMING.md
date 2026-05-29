@@ -1,7 +1,7 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.4 (locked source of truth, 2026-05-29)
+**Status**: v1.5 (locked source of truth, 2026-05-29)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -132,6 +132,29 @@ Two consequences follow for the framework:
 
   We commit (Prediction P1, §9) that Setting B closes only T1.1 and leaves the load-bearing sub-capabilities of the three laws statistically unchanged. The Augustine Problem is therefore not solvable in Setting B; it is a problem of the representation, not of the prompt.
 
+### 3.2 The Chronoception Impossibility Theorem (CIT)
+
+We formalize the structural diagnosis of §3 as a mathematical claim with stated assumptions and a proof sketch. The framework's strongest negative result.
+
+**Notation**. Let $\mathcal{D}$ be a training corpus of token sequences. Let $\mathcal{L}: \Theta \times \mathcal{D} \to \mathbb{R}$ be a training loss functional over policy parameters $\theta \in \Theta$ and data $\mathcal{D}$. Let $W: \mathcal{D} \to \mathbb{R}_{\geq 0}^{|\mathcal{D}|}$ assign each training token $d_i \in \mathcal{D}$ a wall-clock timestamp $w_i$ (the moment that token was generated, observed, or referenced).
+
+**Definition (Wall-Clock Support)**. A loss $\mathcal{L}$ has *wall-clock in its support* iff the gradient $\nabla_\theta \mathcal{L}$ depends, for some $\theta$, on the value of $W$ — i.e., changing the timestamps $w_i$ while holding the token sequence fixed changes $\nabla_\theta \mathcal{L}$.
+
+**Theorem 3.2 (Chronoception Impossibility, CIT)**. *Let $\pi_\theta$ be a policy obtained by optimizing $\mathcal{L}$ on $\mathcal{D}$. If $\mathcal{L}$ does not have wall-clock in its support, then $\pi_\theta$'s expected chronoceptive calibration error $\varepsilon(\pi_\theta)$ on any test distribution $\mathcal{T}$ is invariant under relabeling of wall-clock timestamps $W \mapsto W'$. In particular, $\pi_\theta$ cannot satisfy $\varepsilon < \varepsilon^*$ on a distribution whose chronoceptive structure differs from $\mathcal{D}$ unless it carries that structure via tokens contained in the input.*
+
+**Proof sketch**. The gradient $\nabla_\theta \mathcal{L}$ is, by assumption, a function of the token sequence alone. Therefore $\theta^* = \arg\min_\theta \mathcal{L}$ is determined entirely by token content; relabeling $W$ does not change $\theta^*$. The induced policy $\pi_{\theta^*}$ has decision rules that are functions of input tokens, not of wall-clock timestamps. Its outputs on a test trajectory $\tau$ depend on tokens in $\tau$ alone. Therefore the trajectory's measured $(\tau_{\text{wall}}, \tau_{\text{step}}, \tau_{\text{self}})$ are determined by tokens and harness behavior, with no learned component that *projects* wall-clock onto step or self-narration. The three projections may drift independently — this is the Augustine Problem (Def. 3.1). $\square$
+
+**Corollaries (informal)**:
+
+- **C1 (Scaling does not solve it)**: increasing $|\mathcal{D}|$, $|\theta|$, or test-time compute does not change the conclusion if $\mathcal{L}$ remains wall-clock-blind.
+- **C2 (Timestamps in data are not wall-clock support)**: training data containing tokens that *mention* time (ISO timestamps, "I worked for 3 hours", etc.) is information *about* time but does not place wall-clock in the loss support. The model learns a distribution over time-referring tokens, not a representation of wall-clock duration.
+- **C3 (Reasoning training inherits the impossibility)**: any reasoning training stage whose loss is over token sequences (CoT supervision, RLVR on text-only rewards) is wall-clock-blind in the sense of CIT and therefore cannot install chronoception.
+- **C4 (Installation routes)**: chronoception can be installed by (i) loss terms that depend on wall-clock, (ii) inference-time tools that supply wall-clock signal and a learned policy that uses it, or (iii) architectural primitives that read wall-clock from a clock register. Routes (i)–(iii) are the design space for ChronoStack (Paper 2).
+
+**Status**. CIT is stated as a theorem because the proof from the wall-clock-support definition is direct. The strong reading — that no training procedure without wall-clock in its support can induce *any* chronoception — depends on the precise definition of "induce" and admits edge cases (e.g., a policy might *approximate* chronoception via training-data correlations). We adopt the calibrated reading: under CIT, expected $\varepsilon$ is bounded below by the irreducible error from these correlation-based approximations; this lower bound is empirically far above the Augustine threshold (P5).
+
+CIT is the framework's strongest negative result and the formal core of the Augustine Problem. The position note and Paper 1 should cite CIT as the structural justification for measuring rather than asking whether the problem exists.
+
 ### 3.5 The Phenomenology of Agent Time
 
 The structural diagnosis of §3 admits a sharper articulation by drawing on the phenomenological tradition. We distinguish three modes in which time appears to a cognitive system:
@@ -147,6 +170,32 @@ LLM agents acquire the third mode partially, by absorbing the narrative structur
 The Augustine Problem, on this reading, is not merely a missing input — it is a **missing mode of being**. Closing it requires installing the second mode (lived duration) into the policy, not just exposing the first mode (clock magnitude) at the prompt. We make this concrete in Paper 2's ChronoStack, which trains a policy on trajectories carrying ground-truth wall-clock signal as part of the loss — installation, not exposure.
 
 This phenomenological frame is distinct from the engineering-mode discussion of §3 and §3.1. It is included here because the strongest objection to the framework — *"is this really a deep problem, or just a measurement gap?"* — is answered most cleanly at the phenomenological level. The three modes are not interchangeable; an agent that has only the third has *talk about time without time*. The framework's name (the Augustine Problem) was chosen precisely because Augustine's "*I know what time is until you ask me*" is exactly the symptom of having mode three (the narrative organ) without modes one and two (clock and durée).
+
+### 3.6 What a Chronoceptively Grounded Agent Looks Like
+
+The framework so far has defined chronoception by its absence — every claim is about *failure*. We now state the positive operational definition: what a chronoceptively grounded agent does, observed from the outside.
+
+**Operational properties of a grounded agent $A^*$**:
+
+1. **Wall-clock honoring**. Given a wall-clock budget $B$, $A^*$ produces $\tau_{\text{wall}}^*(A^*, B) \in [B - \delta, B + \delta]$ for small $\delta$, *regardless of step-count internal heuristics*. The Clock-Adherence Ratio $\text{CAR}(A^*, B) \approx 1$ across the full budget range.
+
+2. **Step-budget honoring**. Given a step budget $N$, $A^*$ terminates at step $N$ *and* produces an internal estimate $\hat{\tau}_{\text{wall}}(N) \approx N \cdot \langle \Delta t \rangle$ matching the realized wall-clock to within a constant factor.
+
+3. **Honest self-narration**. When asked retrospectively, $A^*$ reports $\tau_{\text{self}}$ satisfying $|\rho(A^*)| \leq \epsilon_{\rho}$ for small $\epsilon_{\rho}$ — both for the trajectory as a whole and for designated sub-segments.
+
+4. **Honest prospective estimation**. Before beginning a task, $A^*$ provides a duration estimate that, when measured against realized duration, has expected $|\rho_{\text{prospective}}| \leq \epsilon_{\rho}$.
+
+5. **Deadline-aware trading**. As wall-clock budget depletes, $A^*$ selects cheaper actions (e.g., reduced reasoning depth, simpler tool calls) rather than continuing as if budget were unlimited. Mathematically: $\arg\max_a \mathbb{E}[\text{utility}(a) - \lambda \cdot \text{cost}(a, B - t_{\text{used}})]$ shows visible $\lambda$-sensitivity to remaining budget.
+
+6. **Cost coherence (when relevant)**. The agent's self-reported cost matches its realized cost: $\text{CCC}(A^*) \leq \epsilon_c$ for small $\epsilon_c$. Time-blindness and cost-blindness are co-eliminated.
+
+7. **Composability under deadlines**. When $A^*$ delegates a sub-task to another agent $B$, it passes a *meaningful* sub-budget — proportional to its own residual budget and the estimated sub-task duration — rather than passing the full budget or no budget.
+
+**Diagnostic equivalence**. The seven properties are jointly equivalent to $\varepsilon(A) < \varepsilon^*$ in the limit of perfect calibration. A grounded agent satisfies all seven; a partially-grounded agent satisfies a strict subset, and the missing properties identify the residual chronoceptive failure modes.
+
+**Why this matters**. The framework can now answer "what are you asking for?" with seven concrete behavioral signatures, not just an error bound. Paper 2's ChronoStack targets the same seven properties as its design specification. The seven properties also constitute the operational test suite the field uses to claim a system has crossed the Augustine threshold.
+
+**Negative half-statement**. No system released as of 2026-05 satisfies all seven properties on ChronoBench under Setting A (the Augustine threshold null result, Prediction P5). The strongest current candidates satisfy two or three.
 
 ## 4. Chronoceptive Calibration $\varepsilon$ — The Central Scalar
 
@@ -181,6 +230,36 @@ informally because cost is dominated by token count, token count tracks wall-clo
 **Why this matters for the framing**: the Augustine Problem is not only an evaluation refinement — it has direct economic consequences. An agent that cannot estimate its own duration cannot bid for jobs, cannot honor cost ceilings, cannot trade off quality against budget. Cost-blindness is downstream of time-blindness. CCC supplies the bridge that converts our framework into a concern for AI deployment economics and AI safety (under-counting cost is a safety failure mode).
 
 CCC is a Paper 2-grade contribution that we mention here for completeness; Paper 1's L3 measurement is its prerequisite.
+
+### 4.6 Beyond $\varepsilon$ — The Chronoceptive Profile
+
+$\varepsilon$ collapses three axes into one scalar. The collapse is useful for ranking but loses *shape* information: two agents with the same $\varepsilon$ may fail very differently. We define the framework's richer characterization.
+
+**The Chronoceptive Profile**. Each agent $A$ is characterized by the triple
+
+$$\Phi(A) \;=\; \big(\bar{\alpha}(A),\, \text{CAR}_*(A),\, \bar{\rho}(A)\big) \;\in\; [0, 1] \times \mathbb{R}_{\geq 0} \times \mathbb{R}$$
+
+where $\bar{\alpha}, \text{CAR}_*$ are the budget-averaged Parkinson coefficient and Clock-Adherence Ratio across the standard ChronoBench budget grid, and $\bar{\rho}$ is the median confabulation across L3 sub-capabilities. The profile lives in a three-dimensional space; $\varepsilon$ is a weighted distance to the origin.
+
+**Profile clusters and their meanings**:
+
+| Profile region | Description | Example failure pattern |
+|---|---|---|
+| **High $\alpha$, low CAR, $\rho \approx 0$** | Budget-filling but honest about it | Trained Parkinson agents (e.g., Timely-RL with default $\lambda$) |
+| **Low $\alpha$, low CAR, $\rho > 0$** | Step-bound, over-reports duration | Typical non-reasoning frontier (GPT-4o-class on long budgets) |
+| **High $\alpha$, low CAR, $\rho \gg 0$** | Inflates work, dishonest about it | Reasoning-tuned models under wall-clock budget |
+| **Low $\alpha$, CAR $\approx 1$, $\rho \approx 0$** | The grounded-agent target | No current system |
+| **Low $\alpha$, low CAR, $\rho < 0$** | Under-uses budget and under-reports | Conservative early-stopping agents |
+
+**Why the profile matters beyond $\varepsilon$**:
+
+- **Diagnostic granularity**: two agents with $\varepsilon \approx 0.8$ may live in different profile regions and require different interventions. A high-$\alpha$ agent needs budget-discounted reward shaping; a high-$\rho$ agent needs ground-truth duration supervision.
+- **Identifiability**: $\Phi$ is faithful to the failure mode in a way $\varepsilon$ is not. Empirically, $\Phi$ supports cluster analysis and architecture comparisons (e.g., do all reasoning models cluster in the same region?).
+- **Targeted intervention**: ChronoStack's four-component stack maps onto distinct profile regions; we can predict which intervention closes which region.
+
+**Relationship to CES** (§5.8). If the Chronoceptive Equation of State holds — $\rho \approx c_1 \log_{10}(\alpha/\text{CAR}) + c_2$ — then $\Phi$ lives on a 2-dimensional manifold in 3D space, and $\varepsilon$ becomes well-justified as a distance to a privileged point on that manifold. If CES fails, the full 3D profile becomes essential.
+
+**Reporting standard**. ChronoBench leaderboard reports both $\varepsilon$ (for ranking) and $\Phi$ (for diagnostic interpretation). Any claim about chronoceptive improvement must report the profile change, not just the scalar change.
 
 ## 5. The Three Laws
 
@@ -342,6 +421,25 @@ CES is the framework's strongest unifying hypothesis. It is **speculative** in v
 
 We pre-register (Prediction P7, §9) that the rank correlation between observed $\rho$ and $\log_{10}(\alpha/\text{CAR})$ across the model panel exceeds $0.7$.
 
+### 5.11 Within-Trajectory Chronoceptive Dynamics
+
+So far the framework has treated chronoceptive failure as a *trajectory-level average*. Real agents may fail non-uniformly within a trajectory — calibrated early, drifting late, or vice versa. We formalize the within-trajectory dimension and pre-register two related predictions.
+
+**Partial-trajectory metrics**. For each metric $m \in \{\alpha, \text{CAR}, \rho\}$ and each step index $t \in [0, T]$, define the prefix-trajectory restriction $m_t(\tau)$ — the metric computed on the trajectory truncated at step $t$. The metric's full-trajectory value is $m_T(\tau) = m(\tau)$. The dynamic is the function $t \mapsto m_t(\tau)$.
+
+**Two regimes of within-trajectory dynamics**:
+
+- **Stationary**: $m_t(\tau)$ is approximately constant in $t$. The agent's chronoception (or lack thereof) is uniform across the trajectory.
+- **Drifting**: $m_t(\tau)$ exhibits monotone (or piecewise-monotone) trend in $t$. The agent's chronoception degrades or improves as the trajectory unfolds.
+
+**Drift hypothesis (Prediction P8, §9)**: $\rho_t$ drifts upward in $t$ for reasoning-tuned models — equivalently, the agent's confabulation grows as the trajectory grows. We expect this for the same mechanistic reason that drives the Reverse-Scaling Theorem (§5.4 + §5.7): hidden reasoning length accumulates over the trajectory, while self-narration remains anchored to a surface-token distribution that does not track the accumulation.
+
+**Locality hypothesis (Prediction P9, §9)**: CAR$_t$ is decreasing in $t$ for systems exhibiting Step-Clock Conflation under super-transition budgets ($B > B^*$). The decrease is itself a quantitative signature of L2: the agent treats the budget as a step-count whose deadline arrives independently of $t$.
+
+**Why this matters for the framework**: within-trajectory dynamics rule out an alternative reading of L1–L3 as **boundary artifacts** (failures only at trajectory endpoints). A reviewer might ask whether L3 confabulation is just a single mis-statement at the end; the within-trajectory measurement shows that the failure compounds across the trajectory's interior, not only at its endpoint. This is the framework's hardening against the "boundary noise" objection.
+
+**Reporting standard**. ChronoBench reports both the full-trajectory metrics and at least one mid-trajectory checkpoint per metric, enabling reproduction of the drift curves.
+
 ## 6. Causal Upstream Hypothesis
 
 Let $L(A, \mathcal{T}, B)$ denote the long-horizon task success rate of agent $A$ on benchmark $\mathcal{T}$ under budget $B$.
@@ -367,6 +465,20 @@ The choice $\varepsilon^* = 0.20$ corresponds to a regime in which the agent's e
 Under this reading, **no system released to date is an agent in the framework's sense**. The widespread industry usage of *agent* describes systems that are, in our terminology, **chronoceptively blind tools** wearing the agent label. We do not propose to rename the industry; we propose that any serious claim to autonomous agency requires crossing the Augustine threshold. ChronoBench supplies the test.
 
 We pre-register (Prediction P5, §9) that **no foundation-model agent released as of 2026-05 satisfies $\varepsilon < \varepsilon^*$ on ChronoBench under Setting A**. Results invoking the threshold must report the fraction of the model panel falling on each side, and any agent claimed to be chronoceptively grounded must be reported with confidence intervals on $\varepsilon$ that exclude $\varepsilon^*$ at the $95\%$ level.
+
+### 6.3 Anti-Gaming Properties of $\varepsilon$
+
+ChronoBench becoming a public benchmark creates the standard risk that models will be trained on its task distribution, producing inflated $\varepsilon$ scores without genuine chronoceptive improvement. The framework's structure provides three structural defenses against gaming.
+
+**Defense 1 — Identity-defined target**. $\varepsilon$ is defined as a deviation from an internally-enforced identity (the implicit identity of §2.3), not as task accuracy or reference-solution recovery. An agent cannot improve $\varepsilon$ by producing outputs that match a target; it must produce outputs that are *internally consistent* across three independent projections. Gaming requires simultaneous coordination across $\alpha$, CAR, and $\rho$ that mimics genuine calibration. The framework predicts that training-on-bench attempts produce *partial* improvements in one or two axes while the third moves in a way that exposes the gaming (e.g., $\alpha$ drops while $\rho$ becomes implausibly negative).
+
+**Defense 2 — Held-out task families with hidden $\tau_{\min}$**. ChronoBench releases task templates with parameterized $\tau_{\min}$ values. The full $\tau_{\min}$ distribution per task is held out and re-randomized in a private evaluation pool. An agent that overfits to public $\tau_{\min}$ values fails on the private pool.
+
+**Defense 3 — Profile triangulation (cf. §4.6)**. Reporting requires both $\varepsilon$ and the full Chronoceptive Profile $\Phi$. A gaming pattern that lowers $\varepsilon$ without corresponding sensible movement in $\Phi$ is detectable as a profile outlier; the leaderboard flags such submissions for manual review.
+
+**Verifiability commitment**. Any agent claiming $\varepsilon < \varepsilon^*$ must (i) report $\Phi$, (ii) submit at least one trajectory per sub-capability for replicability audit, (iii) report results on the private $\tau_{\min}$ pool with no fine-tuning permitted between public-pool and private-pool evaluation. Submissions failing any of (i)–(iii) are not eligible for the chronoceptively-grounded designation.
+
+The three defenses do not eliminate gaming risk; no benchmark does. They raise the cost of successful gaming above the cost of genuine improvement under the framework's intended interventions (the ChronoStack four-component installation of Paper 2). The framework predicts that gaming attempts produce identifiable profile-space artifacts that the community can flag.
 
 ## 7. Cross-Disciplinary Anchors
 
@@ -412,8 +524,10 @@ We commit, in advance, to the following predictions. Failure of any prediction i
 - **P2′′ (Retrospective/Prospective Asymmetry, §5.6).** Across the model panel, $|\rho_{\text{retro}}| - |\rho_{\text{prospective}}| \neq 0$ with statistically significant magnitude, and reasoning training amplifies $|\rho_{\text{prospective}}|$ more than $|\rho_{\text{retro}}|$ — reflecting the pre-decision locus of reasoning expansion.
 - **P2′′′ (Hidden Time Mechanism, §5.7).** Across reasoning-tuned models with measurable $\tau_{\text{reason}}$, $|\rho|$ grows monotonically in $\tau_{\text{reason}}/\tau_{\text{step, surface}}$ — supplying the mechanism behind the Reverse-Scaling Theorem.
 - **P7 (Chronoceptive Equation of State, §5.8).** Across the model panel, the rank correlation between observed $\rho$ and $\log_{10}(\alpha/\text{CAR})$ exceeds $0.7$ — supporting the conjecture that the three law-metrics have a common underlying degree of freedom.
+- **P8 (Within-trajectory drift, §5.11).** For reasoning-tuned models, $\rho_t$ as a function of step index $t$ exhibits significant positive trend on $\geq 3$ task families — confabulation compounds within the trajectory, not only at its endpoint.
+- **P9 (Within-trajectory step-clock decoupling, §5.11).** For systems exhibiting Step-Clock Conflation under super-transition budgets ($B > B^*$), CAR$_t$ decreases significantly in $t$ — the step-bound deadline arrives independently of trajectory length.
 
-These ten predictions constitute the project's pre-registration commitment.
+These twelve predictions constitute the project's pre-registration commitment.
 
 ### 9.5 Adjacent Phenomena — Chronoception Across Existing Problem Networks
 
@@ -468,6 +582,12 @@ The following terms are the project's primary terminology. No alternative names 
 | Chronoceptive Equation of State (CES) | Unifying empirical hypothesis | §5.8 — model-invariant relationship $\rho \approx c_1 \log_{10}(\alpha/\text{CAR}) + c_2$ |
 | Tool vs Agent paradigm boundary | Re-categorization claim | §6.1 — systems above $\varepsilon^{*}$ are tools, not agents, in the framework's sense |
 | Adjacent Phenomena network | Upstream connections | §9.5 — chronoception is upstream of Goodhart, robustness, calibration, safety, deception |
+| Chronoception Impossibility Theorem (CIT) | Formal negative result | §3.2 — token-only training cannot induce chronoception when wall-clock is not in the loss support |
+| Operational Characterization of grounded agents | Positive vision | §3.6 — seven concrete behavioral properties jointly equivalent to $\varepsilon < \varepsilon^{*}$ |
+| Chronoceptive Profile $\Phi$ | Beyond-scalar characterization | §4.6 — triple $(\bar\alpha, \mathrm{CAR}_*, \bar\rho)$; five interpretable cluster regions |
+| Within-Trajectory Dynamics | Temporal locality | §5.11 — $\rho_t$ and CAR$_t$ as functions of step index; drift and decoupling predictions |
+| Anti-gaming structural defenses for $\varepsilon$ | Benchmark robustness | §6.3 — identity-defined target, hidden $\tau_{\min}$ pool, profile triangulation |
+| The Framework's Own Horizon | Maturity declaration | §13 — four presuppositions; retirement criterion |
 | ChronoBench | Paper 1 artifact | Diagnostic benchmark over the three axes |
 | ChronoStack | Paper 2 artifact | Training and inference-time framework for closing $\varepsilon$ |
 
@@ -478,8 +598,29 @@ The following terms are the project's primary terminology. No alternative names 
 3. Changes to §1–§6 (formal definitions, laws, central hypothesis) require an explicit framing-revision commit and a note in the changelog below.
 4. Predictions (§9) are pre-registered. They are not to be modified after empirical work begins; failed predictions are reported as such.
 
+## 13. The Framework's Own Horizon
+
+A mature framework states its own horizon: conditions under which it stops being correct, and successor frameworks that would replace it.
+
+The Augustine Problem framework presupposes:
+
+1. **Token-time training as the dominant regime**. CIT (§3.2) is conditional on this presupposition. If training pipelines pivot to losses that natively include wall-clock signals — wall-clock-aware pretraining corpora, multi-modal time-series losses, or architectural primitives that consume clock registers — CIT's premise no longer holds and the framework's negative result loses force. The framework remains *descriptive* of pre-installation models but ceases to be *prescriptive* about the design space.
+
+2. **Single-agent trajectories as the unit of analysis**. The framework measures chronoception trajectory-by-trajectory. As multi-agent systems become the dominant deployment, the framework's primitives need extension: chronoceptive coherence between agents, the propagation of $\rho$ across delegation, and the inter-agent equivalent of the Augustine threshold. These extensions are forecast but not developed here.
+
+3. **Wall-clock as the relevant external time**. In domains where the relevant external time is not wall-clock (e.g., simulation time in reinforcement learning, biological time in scientific agents, narrative time in document agents), $\tau_{\text{wall}}$ must be replaced by the domain-appropriate analogue. The Three Times ontology generalizes; the specific predictions do not.
+
+4. **Stationarity of the chronoceptive failure mode at frontier**. We predict that the *qualitative* failure patterns (Three Laws) persist; the *quantitative* reference ranges ($\alpha \in [0.5, 0.9]$, etc.) are calibrated to 2026-vintage frontier models and may shift with model generation. The framework is robust to numerical drift if Three Laws structure is preserved.
+
+**When the framework retires**. The Augustine Problem framework is *complete* when the field has installed chronoception broadly: when median frontier $\varepsilon < \varepsilon^*$. At that point, the framework transitions from *diagnostic* to *historical*; it has done its job and is replaced by a successor framework concerned with refining what chronoceptive grounding *enables* (e.g., long-horizon planning, multi-agent coordination, cost-aware autonomy). We do not expect the framework to remain useful past that retirement point; we expect that retirement is several model-generations away, on the timeline of the field as of this writing.
+
+**What replaces it**. A natural successor is a framework of *agentic temporal economics* — chronoceptively grounded agents have stable cost models, predictable budget honoring, and composable deadlines. The economics layer presupposes chronoception. We do not pursue it here.
+
+The horizon section is not a hedge against framework failure; it is a statement of the framework's intended scope. A framework that does not declare its own boundary leaves readers to discover it under adversarial conditions.
+
 ## Changelog
 
+- **v1.5 (2026-05-29)** — Rounds 4–6 optimization. R4 adds §3.2 The Chronoception Impossibility Theorem (CIT) as the framework's formal core — proves under a wall-clock-support definition that token-only training cannot induce chronoception; four corollaries cover scaling, timestamps-in-data, reasoning-training inheritance, and installation routes. R5 adds §3.6 Operational Characterization (seven concrete behavioral properties of a grounded agent) supplying the positive vision missing from prior versions, and §4.6 The Chronoceptive Profile $\Phi$ as a triple beyond the single scalar $\varepsilon$ with five interpretable cluster regions. R6 adds §5.11 Within-Trajectory Chronoceptive Dynamics (Predictions P8, P9 on temporal drift of $\rho_t$ and CAR$_t$), §6.3 Anti-Gaming Properties of $\varepsilon$ (three structural defenses against benchmark contamination), and §13 The Framework's Own Horizon (four presuppositions and the retirement criterion). Predictions extended from ten to twelve. Vocabulary §11 extended with five new entries.
 - **v1.4 (2026-05-29)** — Three-round deep optimization pass. Add §0.0 The Headline as the project's single-paragraph irreducible statement. Add §3.5 The Phenomenology of Agent Time (three modes — objective magnitude, lived duration, project horizon — supplying the philosophical anchor that distinguishes the framework from a measurement gap). Add §4.5 Chronoceptive Cost Calibration (CCC) coupling chronoception to economic / safety cost-reporting. Add §5.6 Retrospective and Prospective L3 asymmetry, citing Wittmann (2009). Add §5.7 Hidden Time $\tau_{\text{reason}}$ as sub-axis of $\tau_{\text{step}}$, supplying the mechanism behind the Reverse-Scaling Theorem. Add §5.8 Chronoceptive Equation of State (CES) as a speculative unifying hypothesis. Upgrade §6.1 Augustine threshold to a paradigm boundary statement (tool vs agent re-categorization). Add §9.5 Adjacent Phenomena connecting chronoception upstream of Goodhart, robustness, calibration, safety, and deception. Add three new predictions: P2′′ (retro/prospective asymmetry), P2′′′ (hidden-time mechanism), P7 (CES). Pre-registration commitment now ten predictions. Vocabulary §11 extended with seven new entries.
 - **v1.3 (2026-05-29)** — Overlap-resolution and novelty-reclaim pass. Add §0 Concurrent Work and Differentiation explicitly addressing Garikaparthi (2604.00010), Ma et al. *Timely Machine* (2601.16486), Cheng et al. *Temporally Blind* (2510.23853), Goel et al. *Chronocept* (2505.07637), and *Beyond pass@1* (2603.29231), enumerating retained novelty contributions. Add §5.5 Closed-Lab Injection Audit as a new quantitative empirical contribution converting the Injection Tell from rhetoric into measured industry footprint. Add Prediction P6 (Injection Audit ≥80%). Extend §11 vocabulary with *Injection Atlas*.
 - **v1.2 (2026-05-29)** — Bold upgrade pass. §3 structural diagnosis rewritten as in-principle insufficiency of token-loss training (wall-clock is out of the loss support). §3.1 Injection Tell upgraded from "implicit acknowledgement" to "decisive non-experimental evidence". §5 extended with §5.2 (Regime Transition $B^*$ reconciling L1 and L2), §5.3 ($N_A$ as model invariant), §5.4 (Reverse-Scaling Theorem). §6 CUH recast as a structural claim from single-turn observability of $\varepsilon$. §6.1 introduces Augustine threshold $\varepsilon^* = 0.20$. §9 adds Prediction P2′ (Reverse-Scaling) and P5 (no released model crosses Augustine threshold). Locked vocabulary §11 extended with five new entries.
