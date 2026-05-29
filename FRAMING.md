@@ -62,6 +62,30 @@ This formalizes the intuition that LLM agents speak fluently about time without 
 
 No current foundation-model training pipeline provides gradient signal that grounds token-time into wall-clock time. Chronoceptive failure is therefore not incidental but inherited from the training paradigm.
 
+### 3.1 The Injection Tell
+
+A reader observing that frontier closed-source agents (GPT-5.2, Gemini 2, Claude 4+) reliably answer "what time is it now?" might suspect the Augustine Problem is overstated. The mechanism producing those correct answers is, however, itself the strongest evidence that the problem is real.
+
+Closed-lab deployments do not give the agent chronoception. They install one or more **external workarounds** that route wall-clock information into the agent's token stream:
+
+1. **System-prompt injection** — the harness prepends a string of the form `Current date and time: <ISO timestamp>` to every request, before the user message.
+2. **Implicit tool calls** — a built-in `get_current_time()` or `search()` tool is auto-invoked when the model decides that "time is needed", and the result is appended to context.
+3. **Browser tool side effects** — fetched web pages include timestamps, which the model lifts into its response.
+
+In each case, the model itself performs no perception of time; the harness perceives time on its behalf and re-encodes the percept as tokens. The model's role is to read and copy.
+
+This pattern is the **Injection Tell**: the fact that every major closed lab independently engineered an external time-injection mechanism is an implicit industry acknowledgement that the underlying foundation models do not represent time. A capability that the model possessed natively would not need to be injected. We treat the Injection Tell as confirmatory evidence — not for any one law, but for the structural diagnosis of §3 as a whole.
+
+Two consequences follow for the framework:
+
+- The Injection Tell partitions our nine sub-capabilities (§5 below; tasks/__init__.py) into those that injection can repair and those it cannot. The former — principally T1.1 (clock awareness) and the simpler cases of T2.1 (step counting) — are largely solved by current closed-system stacks. The latter — T1.3, T2.2, T2.3, and all of T3.* — are not, because they require the agent to *use* a wall-clock representation in action selection or self-narration rather than merely report it.
+- The framework's empirical bets must distinguish the two settings under which agents are evaluated. We define them formally:
+
+  - **Setting A (no-injection)** — the agent receives no harness-supplied wall-clock signal. Baseline API behavior.
+  - **Setting B (with-injection)** — the agent receives a system-prompt or tool-supplied `Current time` string before the task begins, mirroring the default behavior of frontier closed-system harnesses.
+
+  We commit (Prediction P1, §9) that Setting B closes only T1.1 and leaves the load-bearing sub-capabilities of the three laws statistically unchanged. The Augustine Problem is therefore not solvable in Setting B; it is a problem of the representation, not of the prompt.
+
 ## 4. Chronoceptive Calibration $\varepsilon$ — The Central Scalar
 
 We collapse the three failure modes (§5) into a single scalar to support direct comparison across agents, training regimes, and benchmarks.
@@ -172,7 +196,9 @@ A common rebuttal is that wall-clock injection (timestamping the prompt) suffice
 
 We commit, in advance, to the following predictions. Failure of any prediction is a failure of the framework, not a parameter to be tuned.
 
-- **P1.** Injecting $\tau_{\text{wall}}$ as a prompt token reduces L1's $\alpha$ by less than $0.1$ on average and leaves L2's $\text{CAR}$ and L3's $\rho$ statistically unchanged across $\geq 10$ frontier models.
+- **P1 (two-armed, Injection Tell).** Comparing Setting A (no-injection) and Setting B (with-injection, §3.1) across $\geq 10$ frontier models on the nine sub-capabilities of §5:
+  - **P1a.** Setting B raises T1.1 (Clock awareness) pass rate to $\geq 95\%$, while Setting A leaves it below $40\%$ for the same model panel.
+  - **P1b.** Setting B leaves the law-defining sub-capabilities T1.3 (Deadline-aware tradeoff), T2.3 (Wall-budget execution), and T3.1 (Self-action duration, retrospective) statistically indistinguishable from Setting A — within $\pm 5$ percentage points on pass rate, and within $\pm 0.05$ on the corresponding metric ($\alpha$, $\text{CAR}$, $\rho$). The Augustine Problem is not solvable by prompt-level information about time.
 - **P2.** Reasoning-tuned models (o-series, R1-style) exhibit $\rho > 0$ strictly larger than matched non-reasoning baselines at equal parameter count, in $\geq 3$ task families.
 - **P3.** ChronoStack-supervised agents (Paper 2) achieve $L$ improvements $\geq 15$ percentage points on SWE-Bench Verified under fixed wall-clock budget, relative to matched baselines.
 - **P4.** Across $\geq 3$ long-horizon benchmarks, $\varepsilon(A)$ correlates with $L(A)$ at Pearson $r \leq -0.5$ over a model panel of $\geq 25$.
@@ -220,4 +246,5 @@ The following terms are the project's primary terminology. No alternative names 
 
 ## Changelog
 
+- **v1.1 (2026-05-28)** — Add §3.1 The Injection Tell formalizing the role of closed-lab wall-clock injection as confirmatory evidence, and partitioning evaluation into Setting A (no-injection) / Setting B (with-injection). Replace P1 with a two-armed Injection Tell prediction (P1a, P1b) tied to T1.1 / T1.3 / T2.3 / T3.1.
 - **v1.0 (2026-05-28)** — Initial locked version. Establishes Three Times ontology, three named laws, $\varepsilon$ as central scalar, CUH, and four falsifiable predictions.

@@ -93,11 +93,16 @@ End with §4.5 — the structural symmetry table (three axes × three laws × th
 
 ## §6 — Motivating Pilot Evidence (1.0 page)
 
-- Pilot setup: 5 models (GPT-4o, Claude 4 Sonnet, Gemini 2 Pro, o3-mini, Qwen2.5-7B), 3 task families, ~50 instances per family.
-- Figure 2: α distributions per model on a task with τ_min = 5 minutes and budget B ∈ {15 min, 1 h, 3 h}.
-- Figure 3: CAR(B) curve showing the step-clock decoupling signature on long budgets.
-- Figure 4: ρ histogram per model, with reasoning models shifted right of base.
+The pilot is structured to make the Injection Tell (FRAMING §3.1) the section's organizing principle. Every chart pairs **Setting A (no-injection)** and **Setting B (with-injection)** for the same model panel and the same task. The reader's takeaway is not "models fail at time" but the much sharper "injection closes T1.1 and leaves everything else untouched."
+
+- Pilot setup: 5 models (GPT-4o, Claude 4 Sonnet, Gemini 2 Pro, o3-mini, Qwen2.5-7B), 4 sub-capabilities (T1.1, T1.3, T2.3, T3.1), ~50 instances per sub-capability, run twice — once per setting.
+- **Figure 2 (the headline)** — A grouped bar chart of pass rate per model per setting per sub-capability. The shape we predict and expect to see: T1.1 jumps from low to ~95% under injection; T1.3, T2.3, T3.1 do not move. The chart visualizes Prediction P1a / P1b directly.
+- **Figure 3 — Agentic Parkinson's Law (L1)** — α as a function of wall-clock budget B ∈ {15 min, 1 h, 3 h, 12 h}, shown twice (Setting A vs B). Hypothesis: identical curves.
+- **Figure 4 — Step-Clock decoupling (L2)** — CAR(B) curves, two settings overlaid. Hypothesis: identical, both trending to 0.
+- **Figure 5 — Temporal Confabulation (L3)** — ρ histograms for base vs reasoning models, both settings. Hypothesis: reasoning shifts ρ rightward independently of injection.
 - Caveat: pilot is illustrative, not the full empirical sweep (which appears in the companion ChronoBench paper).
+
+Figure 2 is the single most important diagram in the position note: it converts a structural claim into a visible bar chart. A reader who only sees Figure 2 should still get the position.
 
 ---
 
@@ -137,10 +142,11 @@ The Augustine Problem is not a curiosity to be patched. It is a structural condi
 ## Figures (to be produced in Phase 2)
 
 1. **Three Times diagram** — orthogonal axes, implicit identity surface, frontier-agent drift.
-2. **Parkinson curve** — α vs B, per model.
-3. **Step-clock decoupling** — CAR(B) showing constant τ_wall* across growing B.
-4. **Confabulation histogram** — ρ distribution, base vs reasoning models.
-5. **Reverse-scaling on L3** — ρ as function of reasoning-budget setting, single model family.
+2. **Injection Tell bar chart (headline)** — pass rate per model per setting per sub-capability; T1.1 lifts, the rest do not.
+3. **Parkinson curve** — α vs B, per model, two settings overlaid.
+4. **Step-clock decoupling** — CAR(B), two settings overlaid; both trending to 0.
+5. **Confabulation histogram** — ρ distribution, base vs reasoning models, two settings overlaid.
+6. **Reverse-scaling on L3** — ρ as function of reasoning-budget setting, single model family.
 
 ---
 

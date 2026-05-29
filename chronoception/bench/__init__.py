@@ -3,6 +3,7 @@
 Re-exports the public API. All definitions trace back to FRAMING.md.
 """
 
+from chronoception.bench.eval import EvalSetting, epsilon_by_setting
 from chronoception.bench.metrics import (
     car,
     chronoceptive_calibration_error,
@@ -25,4 +26,7 @@ __all__ = [
     "confabulation_ratio",
     "chronoceptive_calibration_error",
     "epsilon",  # alias
+    # evaluation settings
+    "EvalSetting",
+    "epsilon_by_setting",
 ]
