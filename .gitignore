@@ -11,3 +11,15 @@ dist/
 .DS_Store
 .coverage
 htmlcov/
+
+# secrets — never commit
+.env
+.env.*
+!.env.example
+*.key
+secrets/
+credentials.json
+
+# pilot results — large data files (keep .gitignore-free but be careful)
+# Uncomment if you want to exclude from git:
+# pilot-results/
