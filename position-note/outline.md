@@ -29,7 +29,7 @@ Total target: ~8 pages plus references.
 
 ## §1 — Introduction (1.0 page)
 
-**Opening anecdote (1 paragraph)**. A frontier agent given a three-hour budget for a five-minute task uses all three hours. Asked at minute 40 how long it has been working, it reports "a few minutes." Asked to "work for three hours, do not stop," it stops after four iterations. Each failure points to a different missing perception. Together they sketch a phenomenon the field has overlooked.
+**Opening anecdote (1 paragraph)**. A frontier agent given a three-hour budget for a five-minute task does NOT use the three hours — it terminates after four iterations of self-reflection within minutes. Asked retrospectively how long that took, it reports "about an hour" — over-reporting the duration of work that actually completed in minutes. Two failures appear on a single trajectory: the budget went unspent (L2 Step-Clock Conflation) and the duration was misrepresented (L3 Temporal Confabulation). Together they sketch a phenomenon the field has overlooked.
 
 **The structural claim (1 paragraph)**. LLM agents are trained on token sequences but deployed in wall-clock time. No current training stage provides gradient signal that grounds the former into the latter. The agentic turn has therefore inherited a representational gap from the language-modeling era.
 

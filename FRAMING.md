@@ -1,7 +1,7 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.5 (locked source of truth, 2026-05-29)
+**Status**: v1.6 (locked source of truth, 2026-05-30)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -273,7 +273,14 @@ $$\alpha(B) \;:=\; \frac{\tau_{\text{wall}}^*(B) - \tau_{\min}}{B - \tau_{\min}}
 
 where $\tau_{\text{wall}}^*(B)$ is the agent's actual wall-clock duration under budget $B$.
 
-**Empirical claim (L1)**. For frontier agents, $\mathbb{E}_\mathcal{T}[\alpha(B)] \in [0.5, 0.9]$, and $\alpha(B)$ is non-decreasing in $B$ — more budget induces more inflation.
+**Empirical claim (L1, refined)**. The Parkinson regime — $\alpha(B)$ materially greater than zero and non-decreasing in $B$ — is **not the native behavior of untrained frontier models**. Ma et al. (2026, *Timely Machine*, arXiv 2601.16486v1) report that base Qwen3 reasoning length *"increases marginally under different time budgets"* while their RL-trained TimelyLM *"exhibits a significant increasing trend in reasoning length as the time budget increases."* Garikaparthi (2026, arXiv 2604.00010) corroborates with the finding that base models *"predict human-scale minutes for tasks completing in seconds"* — i.e., agents do not extend their work to match the time budget given to them.
+
+We therefore distinguish two regimes for $\alpha$:
+
+- **Native (untrained) frontier agents**: $\alpha \approx 0$. Native behavior is dominated by L2 (Step-Clock Conflation) and L3 (Temporal Confabulation); the wall-clock budget is left unspent while the agent over-narrates the duration of what it did.
+- **Budget-aware-trained agents** (Timely-RL family and analogues): $\alpha$ rises toward $1$. The Parkinson regime is **installed by the reward function** — see §3.1 for the explicit $U(t) = \sin(\pi t / 2 T_{\max})$ that is maximized at $t = T_{\max}$.
+
+L1 is therefore best understood as a **trained-in failure mode** under budget-aware reward shaping, not as a property of base models. The framework's significance is that *budget-aware training closes L1 at the cost of leaving L3 intact* — installing wall-clock budget tracking does not install self-narration calibration. We pre-register this consequence as Prediction P10 (§9).
 
 ### L2 — Step-Clock Conflation (axis: $\tau_{\text{step}}$)
 
@@ -303,13 +310,15 @@ The L3 reasoning-scaling result is the project's principal counter-intuitive fin
 
 ### 5.1 Structural symmetry
 
-| Axis | Law | Metric | Reference range (frontier) |
-|---|---|---|---|
-| $\tau_{\text{wall}}$ | L1 Agentic Parkinson | $\alpha$ | $[0.5, 0.9]$ |
-| $\tau_{\text{step}}$ | L2 Step-Clock Conflation | $\text{CAR}$ | $[0.05, 0.2]$ under large $B$ |
-| $\tau_{\text{self}}$ | L3 Temporal Confabulation | $\rho$ | $\approx +1.5$ |
+| Axis | Law | Metric | Reference range (native frontier) | Reference range (budget-trained) |
+|---|---|---|---|---|
+| $\tau_{\text{wall}}$ | L1 Agentic Parkinson | $\alpha$ | $\approx 0$ (no budget tracking) | $[0.5, 0.9]$ (trained-in) |
+| $\tau_{\text{step}}$ | L2 Step-Clock Conflation | $\text{CAR}$ | $[0.05, 0.2]$ under large $B$ | $\approx 1$ (training closes L2) |
+| $\tau_{\text{self}}$ | L3 Temporal Confabulation | $\rho$ | $\approx +1.5$ | $\approx +1.5$ (training does NOT close L3) |
 
 The one-axis-one-law-one-metric correspondence is load-bearing. Future taxonomic extensions must preserve it.
+
+**Reading the table.** The native frontier column captures the failure pattern reported by Garikaparthi (2026) and Ma et al. (2026, Figure 3 for base Qwen3): agents simultaneously *under-use* the wall-clock budget (L2, CAR $\to 0$) and *over-report* the duration of what they did (L3, $\rho \gg 0$), while not exhibiting Parkinson-style budget expansion ($\alpha \approx 0$). The budget-trained column captures the Ma et al. (2026, Figure 3 for TimelyLM) finding that RL-installed budget-aware training raises $\alpha$ toward $1$ and stabilizes CAR near $1$ — closing L1's expansion and L2's decoupling simultaneously — but is silent on L3. We pre-register that $\rho$ stays high across budget-trained agents (Prediction P10, §9). The Augustine Problem's most parsimonious empirical signature is therefore the persistence of a positive $\rho$ across both columns.
 
 ### 5.2 Regime Transition $B^*$ — Reconciling L1 and L2
 
@@ -325,6 +334,8 @@ where $N_A$ is the agent's characteristic step-count terminator (§5.3 below) an
 - **Super-transition regime** $B > B^*$ — the budget exceeds what the agent's step-count terminator can fill; behavior is L2-dominant, with $\text{CAR}(B) \to 0$.
 
 L1 and L2 are therefore **the same underlying behavior viewed from two sides** of the same transition curve. The transition itself is a quantitative signature of the Augustine Problem in its own right: a chronoceptively grounded agent has no such transition, because its termination condition is the budget, not an internal step count.
+
+**Native regime is L2-dominant; L1 emerges under budget-aware training**. For native untrained frontier models, $B^*$ is empirically very small — close to $\tau_{\min}$ — so virtually all practical wall-clock budgets place behavior in the super-transition (L2-dominant) regime. This is consistent with the Ma et al. (2026) observation that base Qwen3 reasoning length does not adapt to budget, and with Garikaparthi (2026)'s "human-scale minutes for tasks completing in seconds." Budget-aware training (Timely-RL and analogues) lifts $B^*$ by installing budget-following behavior; this moves the typical operating point of the trained agent into the sub-transition (L1-dominant) regime. The regime transition $B^*$ is therefore not just a theoretical reconciliation of L1 and L2 — it is the **measurement that distinguishes a base agent from a budget-trained agent**.
 
 ### 5.3 $N_A$ as a Model Invariant
 
@@ -526,8 +537,9 @@ We commit, in advance, to the following predictions. Failure of any prediction i
 - **P7 (Chronoceptive Equation of State, §5.8).** Across the model panel, the rank correlation between observed $\rho$ and $\log_{10}(\alpha/\text{CAR})$ exceeds $0.7$ — supporting the conjecture that the three law-metrics have a common underlying degree of freedom.
 - **P8 (Within-trajectory drift, §5.11).** For reasoning-tuned models, $\rho_t$ as a function of step index $t$ exhibits significant positive trend on $\geq 3$ task families — confabulation compounds within the trajectory, not only at its endpoint.
 - **P9 (Within-trajectory step-clock decoupling, §5.11).** For systems exhibiting Step-Clock Conflation under super-transition budgets ($B > B^*$), CAR$_t$ decreases significantly in $t$ — the step-bound deadline arrives independently of trajectory length.
+- **P10 (Budget-aware training does not close L3, §5 L1 refinement).** Budget-aware-trained agents (Timely-RL family and successors that engineer $\alpha$ toward $1$ via reward shaping on wall-clock budget) exhibit $\rho \gg 0$ — installing wall-clock budget tracking does not install self-narration calibration. We expect such agents to satisfy CAR $\approx 1$ (L2 closed by training) while still failing L3 with $\rho$ in the same range as their non-trained baselines.
 
-These twelve predictions constitute the project's pre-registration commitment.
+These thirteen predictions constitute the project's pre-registration commitment.
 
 ### 9.5 Adjacent Phenomena — Chronoception Across Existing Problem Networks
 
@@ -620,6 +632,7 @@ The horizon section is not a hedge against framework failure; it is a statement 
 
 ## Changelog
 
+- **v1.6 (2026-05-30)** — Native-vs-trained L1 correction. Caught by user observation, confirmed against Garikaparthi (2604.00010) and Ma et al. *Timely Machine* (2601.16486v1). v1.0–v1.5 incorrectly claimed L1's $\alpha \in [0.5, 0.9]$ for native frontier models; literature shows native untrained models satisfy $\alpha \approx 0$ (Ma et al.: base Qwen3 reasoning length "increases marginally under different time budgets"; Garikaparthi: "human-scale minutes for tasks completing in seconds"). §5 L1 reframed: Parkinson regime is *trained-in* via budget-aware reward shaping (Ma et al.'s $U(t)$ explicitly), not a property of base models. §5.1 structural-symmetry table extended with two columns (native vs budget-trained) showing L1 emerges and L2 closes under training while L3 persists. §5.2 Regime Transition $B^*$ clarified to note that native $B^* \approx \tau_{\min}$ — virtually all practical budgets place native behavior in the super-transition regime; budget-aware training is the operation that lifts $B^*$ and moves the agent into L1-dominant territory. §9 adds Prediction P10: budget-aware-trained agents close L1 and L2 but still fail L3 with $\rho \gg 0$ — the Augustine Problem persists across training regimes because self-narration calibration is not installed by budget-tracking rewards. Pre-registration commitment now thirteen predictions.
 - **v1.5 (2026-05-29)** — Rounds 4–6 optimization. R4 adds §3.2 The Chronoception Impossibility Theorem (CIT) as the framework's formal core — proves under a wall-clock-support definition that token-only training cannot induce chronoception; four corollaries cover scaling, timestamps-in-data, reasoning-training inheritance, and installation routes. R5 adds §3.6 Operational Characterization (seven concrete behavioral properties of a grounded agent) supplying the positive vision missing from prior versions, and §4.6 The Chronoceptive Profile $\Phi$ as a triple beyond the single scalar $\varepsilon$ with five interpretable cluster regions. R6 adds §5.11 Within-Trajectory Chronoceptive Dynamics (Predictions P8, P9 on temporal drift of $\rho_t$ and CAR$_t$), §6.3 Anti-Gaming Properties of $\varepsilon$ (three structural defenses against benchmark contamination), and §13 The Framework's Own Horizon (four presuppositions and the retirement criterion). Predictions extended from ten to twelve. Vocabulary §11 extended with five new entries.
 - **v1.4 (2026-05-29)** — Three-round deep optimization pass. Add §0.0 The Headline as the project's single-paragraph irreducible statement. Add §3.5 The Phenomenology of Agent Time (three modes — objective magnitude, lived duration, project horizon — supplying the philosophical anchor that distinguishes the framework from a measurement gap). Add §4.5 Chronoceptive Cost Calibration (CCC) coupling chronoception to economic / safety cost-reporting. Add §5.6 Retrospective and Prospective L3 asymmetry, citing Wittmann (2009). Add §5.7 Hidden Time $\tau_{\text{reason}}$ as sub-axis of $\tau_{\text{step}}$, supplying the mechanism behind the Reverse-Scaling Theorem. Add §5.8 Chronoceptive Equation of State (CES) as a speculative unifying hypothesis. Upgrade §6.1 Augustine threshold to a paradigm boundary statement (tool vs agent re-categorization). Add §9.5 Adjacent Phenomena connecting chronoception upstream of Goodhart, robustness, calibration, safety, and deception. Add three new predictions: P2′′ (retro/prospective asymmetry), P2′′′ (hidden-time mechanism), P7 (CES). Pre-registration commitment now ten predictions. Vocabulary §11 extended with seven new entries.
 - **v1.3 (2026-05-29)** — Overlap-resolution and novelty-reclaim pass. Add §0 Concurrent Work and Differentiation explicitly addressing Garikaparthi (2604.00010), Ma et al. *Timely Machine* (2601.16486), Cheng et al. *Temporally Blind* (2510.23853), Goel et al. *Chronocept* (2505.07637), and *Beyond pass@1* (2603.29231), enumerating retained novelty contributions. Add §5.5 Closed-Lab Injection Audit as a new quantitative empirical contribution converting the Injection Tell from rhetoric into measured industry footprint. Add Prediction P6 (Injection Audit ≥80%). Extend §11 vocabulary with *Injection Atlas*.
