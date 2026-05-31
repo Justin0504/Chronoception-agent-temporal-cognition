@@ -101,6 +101,9 @@ def _build_backend(args: argparse.Namespace):
             temperature=args.temperature,
             max_output_tokens=args.max_output_tokens,
             extra_body=_json_or_none(args.extra_body),
+            base_url=args.base_url,
+            agent_id_override=args.agent_id_override,
+            timeout=args.timeout,
         )
     if args.backend == "anthropic":
         from chronoception.bench.eval.agents import AnthropicBackend
@@ -358,6 +361,30 @@ def _build_parser() -> argparse.ArgumentParser:
         "--extra-body",
         default=None,
         help="JSON string passed to provider backends (e.g. reasoning_effort).",
+    )
+    parser.add_argument(
+        "--base-url",
+        default=None,
+        help=(
+            "OpenAI-compatible endpoint URL (e.g. http://10.136.20.188:8000/v1) "
+            "for routing through vLLM / Ollama / Together AI etc. When set, the "
+            "OpenAI backend uses base_url and the agent_id is prefixed with oss/ "
+            "instead of openai/."
+        ),
+    )
+    parser.add_argument(
+        "--agent-id-override",
+        default=None,
+        help=(
+            "Explicit agent_id, e.g. oss/qwen3-8b-vllm-jetstream. Overrides the "
+            "auto-generated identifier and determines the pilot-results/ subdir."
+        ),
+    )
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=None,
+        help="Per-request timeout in seconds (provider backends).",
     )
     parser.add_argument(
         "--fixed-response",
