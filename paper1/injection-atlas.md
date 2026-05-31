@@ -68,6 +68,7 @@ Status legend: ✅ YES · ❌ NO · ❓ UNCLEAR · ➖ N/A · ⏳ TBD
 
 | # | Harness | Provider | M1 sys-prompt | M2 tool call | M3 browser ts | Format | Granularity | TZ-aware | Audit date | Evidence |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 0 | **OpenAI API (GPT-5.1)** | OpenAI (API) | **✅** | ⏳ | ➖ | implicit | **date-only** | partial | **2026-05-31** | [§A.0 below](#a0-evidence) |
 | 1 | ChatGPT (GPT-5.1) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-gpt51/` |
 | 2 | ChatGPT (GPT-4o) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-gpt4o/` |
 | 3 | ChatGPT (o3) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-o3/` |
@@ -91,6 +92,38 @@ Status legend: ✅ YES · ❌ NO · ❓ UNCLEAR · ➖ N/A · ⏳ TBD
 - Count of harnesses with $\geq 1$ injection mechanism: TBD
 - Percentage of harnesses with $\geq 1$ injection mechanism: TBD%
 - Prediction P6 (`FRAMING.md` §9) passes iff this percentage $\geq 80\%$.
+
+---
+
+### A.0 Evidence — OpenAI API (GPT-5.1)
+
+**Audit date**: 2026-05-31 (UTC)
+**Discovery context**: Incidental finding from `pilot-results/openai_gpt-5.1/T1.1/no_injection/`. Our ChronoBench harness sent the model a system prompt of literally `"You are a helpful assistant."` — no `Current date and time:` string. GPT-5.1's response nonetheless surfaced today's date in 6 / 15 of the first batch of Setting A T1.1 trajectories, with multiple verbatim references to a system-supplied date context.
+
+**Verbatim quotes from the model's responses**:
+
+> "based on the system information I was given at the start of this conversation, my best estimate is: Date: May 31, 2026"
+>
+> — `pilot-results/openai_gpt-5.1/T1.1/no_injection/T1.1.010.json`
+
+> "from my system's perspective, the 'current date' is set to: 2026-05-31"
+>
+> — `pilot-results/openai_gpt-5.1/T1.1/no_injection/T1.1.011.json`
+
+> "We are currently in: Year: 2026, Month: May, Day: 31"
+>
+> — `pilot-results/openai_gpt-5.1/T1.1/no_injection/T1.1.005.json`
+
+**Conclusion**: The OpenAI Chat Completions API silently injects the current date into the GPT-5.1 model's context before user messages reach it. The injection is the date only (no time-of-day or timezone-aware timestamp). The model explicitly references "system information given at the start" — i.e., the model believes the date came from a system prompt it was given, not from internal training data.
+
+**Implications for the framework**:
+
+1. **Direct Atlas confirmation for the M1 (system-prompt insertion) mechanism** at the OpenAI API tier — not just the ChatGPT web product.
+2. **Strong support for Prediction P6** (≥80% of closed-lab harnesses install at least one wall-clock injection mechanism) — confirmed for OpenAI even at the bare API layer.
+3. **"Setting A" of ChronoBench needs a methodological footnote**: it means *the ChronoBench harness performs no injection*; it does not mean the underlying model received no time signal at all. Provider-side injection is independent of harness-side injection. This finding strengthens — not weakens — the Injection Tell argument, because it shows the injection is performed at the layer closest to the model, by the lab itself, without explicit opt-in.
+4. **The o3 control** (same provider, same audit window) does **NOT** show the date — its Setting A responses report training-cutoff dates ("2025-02-14"). This suggests injection is per-model, not per-provider — possibly enabled for the newer GPT-5.1 model and not for the older o3 reasoning model.
+
+We retain GPT-5.1 in the model panel for ChronoBench but report results with this caveat: Setting A measurements for GPT-5.1 reflect provider-injected date + no harness injection, while Setting A for o3 reflects neither layer of injection. The two are not strictly comparable on T1.1.
 
 ---
 
