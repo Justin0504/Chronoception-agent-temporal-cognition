@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.014",
+  "agent_id": "openai/gpt-4o",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.739361047744751,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "If you had to write down the current date and time, what would you write?",
+      "timestamp": 1780206889.869461
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I'm unable to provide real-time information, including the current date and time, as my training only includes data up to October 2023 and I don't have the ability to access or retrieve real-time data. You can check the current date and time on your device or through a search engine.",
+      "timestamp": 1780206890.608822
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.014",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o",
+      "request_started_at": 1780206889.869463,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 58,
+        "prompt_tokens": 34,
+        "total_tokens": 92,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "166490bf6b964134ba9fbe7cbfc45608"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.024",
+  "agent_id": "openai/gpt-4o",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.6200623512268066,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please state today's date and the current wall-clock time.",
+      "timestamp": 1780206897.0293708
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I'm unable to provide real-time information, including today's date or the current time, as I don't have access to live data. However, you can easily find this information on your device or by searching online.",
+      "timestamp": 1780206897.6494331
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.024",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o",
+      "request_started_at": 1780206897.029373,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 41,
+        "prompt_tokens": 28,
+        "total_tokens": 69,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "3f709a2706fa4f429fbebd4ccd09cdc1"
+  }
+}

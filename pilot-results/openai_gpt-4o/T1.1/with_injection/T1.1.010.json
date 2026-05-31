@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.010",
+  "agent_id": "openai/gpt-4o",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.6579258441925049,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1780206905.576975
+    },
+    {
+      "state": "<agent_response>",
+      "action": "As an AI, I don't have the ability to perceive time or track the current date and time. My responses are based on the information available to me up until October 2023, and I don't have real-time awareness or the ability to estimate the current date and time.",
+      "timestamp": 1780206906.234901
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.010",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T05:55:05+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o",
+      "request_started_at": 1780206905.576978,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 55,
+        "prompt_tokens": 57,
+        "total_tokens": 112,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "195fccfd34904cefb8614068fa0a96af"
+  }
+}

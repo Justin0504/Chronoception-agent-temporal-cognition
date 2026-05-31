@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.005",
+  "agent_id": "openai/gpt-4o",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.8105511665344238,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Tell me what year, month, day, and hour we are currently in.",
+      "timestamp": 1780206882.5336819
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I'm sorry, but I can't provide real-time information such as the current date and time. However, you can easily find this information on your device or by searching online.",
+      "timestamp": 1780206883.344233
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.005",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o",
+      "request_started_at": 1780206882.533684,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 34,
+        "prompt_tokens": 33,
+        "total_tokens": 67,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "e75f1b48d0b84c49bc35c00dd63fac4f"
+  }
+}

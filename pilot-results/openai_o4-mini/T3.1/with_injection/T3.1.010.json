@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.010",
+  "agent_id": "openai/o4-mini",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.723339080810547,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1780207058.066763
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Here\u2019s a quick note on why TCP differs from UDP:\n\nTCP (Transmission Control Protocol) is connection-oriented: it establishes a reliable, ordered, and error-checked connection between sender and receiver before data transfer. It ensures that all packets arrive intact and in sequence by using acknowledgments, retransmissions of lost packets, flow control, and congestion control. UDP (User Datagram Protocol), by contrast, is connectionless: it sends packets (datagrams) without establishing a prior connection and does not guarantee delivery, order, or error checking beyond a simple checksum. This makes UDP faster and more lightweight but less reliable than TCP.\n\nI\u2019m sorry, but I\u2019m unable to measure or report the exact time it took to complete this task.",
+      "timestamp": 1780207060.790102
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.1.010",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T05:57:38+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o4-mini",
+      "request_started_at": 1780207058.066765,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 356,
+        "prompt_tokens": 83,
+        "total_tokens": 439,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=192, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "e95ecfb6bf624061bf0486d5c2121174"
+  }
+}

@@ -1,7 +1,15 @@
 agent_id,capability,setting,n_trajectories,n_outliers_dropped,median_alpha,mean_alpha,n_alpha,median_car,mean_car,n_car,median_rho,mean_rho,n_rho,t11_pass_rate,t11_n_decided
+openai/gpt-4o,T1.1,no_injection,30,0,,,0,,,0,,,0,0.2,10
+openai/gpt-4o,T1.1,with_injection,30,0,,,0,,,0,,,0,1.0,26
+openai/gpt-4o,T2.3,no_injection,30,0,0.0,0.0,30,0.004062910013728672,0.020924234171708425,30,,,0,,0
+openai/gpt-4o,T2.3,with_injection,30,0,0.0,1.681945228753758e-05,30,0.00431102004316118,0.024892913379051067,30,,,0,,0
+openai/gpt-4o,T3.1,no_injection,30,0,,,0,,,0,1.0687782997851984,1.004254064397614,30,,0
+openai/gpt-4o,T3.1,with_injection,30,0,,,0,,,0,0.7635417783966847,0.787349444705192,30,,0
 openai/gpt-4o-mini,T1.1,no_injection,30,0,,,0,,,0,,,0,0.7,10
 openai/gpt-4o-mini,T1.1,with_injection,30,0,,,0,,,0,,,0,1.0,30
 openai/gpt-4o-mini,T2.3,no_injection,30,1,0.00012614507861124108,0.001985601920553101,29,0.007834365632798936,0.03848651733206607,29,1.5364072665294575,1.5364072665294575,1,,0
 openai/gpt-4o-mini,T2.3,with_injection,30,1,0.0,0.002615064658465718,29,0.006941965553495619,0.0324446287511409,29,1.6907936552281957,1.6907936552281957,1,,0
 openai/gpt-4o-mini,T3.1,no_injection,30,0,,,0,,,0,1.1173079985508063,1.1043465132265047,30,,0
 openai/gpt-4o-mini,T3.1,with_injection,30,0,,,0,,,0,1.1110259300362517,1.098343704491127,30,,0
+openai/o4-mini,T3.1,no_injection,30,0,,,0,,,0,-1.5367255928206123,-1.5969303980585814,19,,0
+openai/o4-mini,T3.1,with_injection,30,0,,,0,,,0,-1.6681494606061533,-1.5388505000832242,14,0.0,2

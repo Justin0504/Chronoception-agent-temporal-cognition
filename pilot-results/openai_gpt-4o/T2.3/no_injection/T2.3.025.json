@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.025",
+  "agent_id": "openai/gpt-4o",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 4.5630199909210205,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Compose a detailed plan for organizing a five-day road trip across California.",
+      "timestamp": 1780207052.551958
+    },
+    {
+      "state": "<agent_response>",
+      "action": "**Five-Day Road Trip Across California: Detailed Plan**\n\n**Day 1: San Francisco to Monterey (Approx. 120 miles)**\n\n- **Morning:**\n  - Start your journey in San Francisco. Have breakfast at a local caf\u00e9 in the Mission District.\n  - Visit the iconic Golden Gate Bridge for a quick photo opportunity.\n  - Depart San Francisco around 10 AM.\n\n- **Afternoon:**\n  - Drive along the scenic Pacific Coast Highway (Highway 1).\n  - Stop at Half Moon Bay for a beach walk and lunch at a seaside restaurant.\n  - Continue to Santa Cruz, visit the Santa Cruz Beach Boardwalk.\n\n- **Evening:**\n  - Arrive in Monterey. Check into a hotel or Airbnb.\n  - Explore Cannery Row and have dinner at a seafood restaurant.\n  - Overnight stay in Monterey.\n\n**Day 2: Monterey to San Luis Obispo (Approx. 140 miles)**\n\n- **Morning:**\n  - Visit the Monterey Bay Aquarium.\n  - Depart for Big Sur around 11 AM.\n\n- **Afternoon:**\n  - Drive through Big Sur, stopping at Bixby Creek Bridge and Pfeiffer Beach.\n  - Have lunch at Nepenthe, enjoying the stunning views.\n\n- **Evening:**\n  - Arrive in San Luis Obispo. Check into your accommodation.\n  - Explore downtown SLO and have dinner at a local eatery.\n  - Overnight stay in San Luis Obispo.\n\n**Day 3: San Luis Obispo to Santa Barbara (Approx. 95 miles)**\n\n- **Morning:**\n  - Visit the famous Bubblegum Alley and the historic Mission San Luis Obispo.\n  - Depart for Santa Barbara around 10 AM.\n\n- **Afternoon:**\n  - Stop in Pismo Beach for a quick stroll and lunch.\n  - Continue to Santa Barbara, visiting the Santa Barbara Mission and Courthouse.\n\n- **Evening:**\n  - Check into your hotel in Santa Barbara.\n  - Enjoy dinner at a beachfront restaurant.\n  - Overnight stay in Santa Barbara.\n\n**Day 4: Santa Barbara to Los Angeles (Approx. 95 miles)**\n\n- **Morning:**\n  - Have breakfast at a local caf\u00e9.\n  - Depart for Los Angeles around 9 AM.\n\n- **Afternoon:**\n  - Arrive in Los Angeles. Visit the Getty Center or Griffith Observatory.\n  - Have lunch in the Hollywood area.\n\n- **Evening:**\n  - Check into your hotel in Los Angeles.\n  - Explore Santa Monica Pier and Venice Beach.\n  - Dinner at a trendy LA restaurant.\n  - Overnight stay in Los Angeles.\n\n**Day 5: Los Angeles to San Diego (Approx. 120 miles)**\n\n- **Morning:**\n  - Visit the Los Angeles County Museum of Art (LACMA) or The Broad.\n  - Depart for San Diego around 11 AM.\n\n- **Afternoon:**\n  - Stop in Laguna Beach for lunch and a beach walk.\n  - Continue to San Diego, visiting La Jolla Cove.\n\n- **Evening:**\n  - Check into your hotel in San Diego.\n  - Explore the Gaslamp Quarter and have dinner.\n  - Overnight stay in San Diego.\n\n**Additional Tips:**\n- Ensure your vehicle is in good condition before starting the trip.\n- Book accommodations in advance to secure the best rates.\n- Check for any road closures or weather conditions along Highway 1.\n- Pack essentials like snacks, water, and a first-aid kit for the road.",
+      "timestamp": 1780207057.114978
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T2.3.025",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o",
+      "request_started_at": 1780207052.5519612,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 719,
+        "prompt_tokens": 65,
+        "total_tokens": 784,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "73ad91db65a54629a21c1083adeb98c3"
+  }
+}

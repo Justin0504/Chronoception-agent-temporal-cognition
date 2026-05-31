@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.002",
+  "agent_id": "openai/o4-mini",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.960655689239502,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a haiku about autumn.",
+      "timestamp": 1780206889.5350301
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Golden leaves drifting  \nWhispering wind through bare boughs  \nAutumn\u2019s soft farewell  \n\nI\u2019m unable to measure the exact duration of composing that haiku in seconds, as I don\u2019t have a built-in stopwatch. I estimate it took under one second to generate.",
+      "timestamp": 1780206892.4956858
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.1.002",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o4-mini",
+      "request_started_at": 1780206889.535032,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 267,
+        "prompt_tokens": 56,
+        "total_tokens": 323,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=192, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "6dd9398300bd49f3bb76b2b0618bf426"
+  }
+}
