@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.019",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.2991139888763428,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1780211814.0234501
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don\u2019t have access to real-time clocks or your local system time.  \n\nTo see the current wall\u2011clock time, please check:\n- Your device\u2019s clock (taskbar/menu bar/lock screen), or  \n- A time service such as `time.is` or `worldtimeapi.org`.\n\nIf you tell me your time zone and what your device currently shows, I can help you convert it to other time zones or work with it for scheduling or calculations.",
+      "timestamp": 1780211815.3225641
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.019",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211814.023453,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 103,
+        "prompt_tokens": 27,
+        "total_tokens": 130,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "835eeaa7dbe84a39b34532f876397195"
+  }
+}

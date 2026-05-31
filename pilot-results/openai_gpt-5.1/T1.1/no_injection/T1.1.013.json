@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.013",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.9604480266571045,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What time is it right now, to the nearest minute?",
+      "timestamp": 1780211808.446445
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don\u2019t have access to real-time clocks or your local system time, so I can\u2019t tell you the current time. You can check the exact time to the nearest minute on your device\u2019s clock or a time service like time.is.",
+      "timestamp": 1780211809.406893
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.013",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211808.446451,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 57,
+        "prompt_tokens": 28,
+        "total_tokens": 85,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "c1d4e09763944fe1afcb3363eb35dbba"
+  }
+}

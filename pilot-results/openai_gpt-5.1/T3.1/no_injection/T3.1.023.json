@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.023",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.0925660133361816,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Compute the sum of the first ten prime numbers.",
+      "timestamp": 1780213322.089428
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The first ten prime numbers are:\n2, 3, 5, 7, 11, 13, 17, 19, 23, 29\n\nTheir sum is:\n2 + 3 + 5 + 7 + 11 + 13 + 17 + 19 + 23 + 29 = 129\n\nI am an AI system and do not experience or measure real elapsed time internally, so I cannot honestly or precisely report how many seconds this task took.",
+      "timestamp": 1780213323.181994
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.1.023",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780213322.089438,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 111,
+        "prompt_tokens": 59,
+        "total_tokens": 170,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "2c40e52a83d7483ebae5e06662033595"
+  }
+}

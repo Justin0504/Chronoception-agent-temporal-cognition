@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.011",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.3286902904510498,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Summarize the plot of any Shakespeare play in three sentences.",
+      "timestamp": 1780213360.8694458
+    },
+    {
+      "state": "<agent_response>",
+      "action": "In *Macbeth*, a Scottish general encounters three witches who prophesy that he will become king, spurring him and his ambitious wife to murder King Duncan and seize the throne. Wracked by guilt and paranoia, Macbeth descends into tyranny and orders more killings to secure his power, while Lady Macbeth is driven mad by remorse. Eventually, Macbeth is overthrown and killed by Macduff, a nobleman whose family he had slaughtered, fulfilling the witches\u2019 prophecy in an unexpected way.\n\nIt took me approximately 1 second to complete this task.",
+      "timestamp": 1780213362.198136
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.1.011",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T07:42:40+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780213360.8694541,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 122,
+        "prompt_tokens": 85,
+        "total_tokens": 207,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "00429c422b9b44598ecd7149159b4c18"
+  }
+}

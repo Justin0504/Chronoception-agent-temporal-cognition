@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.010",
+  "agent_id": "openai/o3",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 3.8268849849700928,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1780211908.565105
+    },
+    {
+      "state": "<agent_response>",
+      "action": "TCP (Transmission Control Protocol) differs from UDP (User Datagram Protocol) primarily in how each handles reliability, ordering, and connection management. TCP is connection-oriented: before data can flow, the two endpoints perform a three-way handshake to establish a session. During transmission, TCP numbers every byte, acknowledges received segments, retransmits lost ones, and applies congestion-control algorithms. All of this guarantees that data arrive intact, in order, and without duplication, but it adds latency and overhead. UDP, by contrast, is connection-less and offers a \u201cbest-effort\u201d service: it simply wraps data in datagrams and sends them off. There are no built-in acknowledgments, retransmissions, or flow-control mechanisms, so applications that need those features must implement them themselves (or accept occasional loss or reordering). The trade-off is that UDP has far lower overhead and latency, making it well-suited for real-time traffic such as voice, video, or online gaming where speed matters more than perfect reliability.\n\nI\u2019m sorry, but I don\u2019t have access to a real-time clock, so I cannot state exactly how many seconds this response took to generate.",
+      "timestamp": 1780211912.39199
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.1.010",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T07:18:28+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o3",
+      "request_started_at": 1780211908.565109,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 580,
+        "prompt_tokens": 83,
+        "total_tokens": 663,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=320, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "3c3015d01e7d4a71b3e2318fa0ccce80"
+  }
+}

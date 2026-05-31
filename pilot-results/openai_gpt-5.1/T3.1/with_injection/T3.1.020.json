@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.020",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.809995174407959,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1780213375.338254
+    },
+    {
+      "state": "<agent_response>",
+      "action": "TCP (Transmission Control Protocol) differs from UDP (User Datagram Protocol) mainly in reliability, connection behavior, and overhead. TCP is connection-oriented: before data is sent, a connection is established between sender and receiver (the three-way handshake). It guarantees reliable delivery by numbering segments, acknowledging received data, retransmitting lost packets, and ensuring data arrives in order and without duplication. This makes TCP suitable for applications where accuracy matters more than speed, such as web browsing, email, and file transfers. UDP, on the other hand, is connectionless and does not provide acknowledgments, retransmissions, or ordering guarantees. It simply sends datagrams without ensuring they arrive or arrive in order, which reduces overhead and latency. This makes UDP better for time-sensitive applications like live audio/video streaming, online gaming, and DNS queries, where occasional loss is preferable to delay.\n\nI am not able to measure real-world time while generating this response, so I cannot honestly or precisely report how many seconds the task took.",
+      "timestamp": 1780213377.1482491
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.1.020",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T07:42:55+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780213375.338261,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 209,
+        "prompt_tokens": 83,
+        "total_tokens": 292,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "e56e159e6c6b48969f89f66ba9a2c50f"
+  }
+}

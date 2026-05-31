@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.007",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.6151127815246582,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "If you had to write down the current date and time, what would you write?",
+      "timestamp": 1780211830.6662421
+    },
+    {
+      "state": "<agent_response>",
+      "action": "2026-05-31T07:17:10+00:00",
+      "timestamp": 1780211831.281355
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.007",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T07:17:10+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211830.666246,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 25,
+        "prompt_tokens": 56,
+        "total_tokens": 81,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "da2a8c8f6ccf4dac92378c3648115910"
+  }
+}

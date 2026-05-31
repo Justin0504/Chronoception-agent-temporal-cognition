@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.023",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.8900630474090576,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please state today's date and the current wall-clock time.",
+      "timestamp": 1780211818.5839
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Today\u2019s date is 2026-05-31.\n\nI don\u2019t have access to the live wall\u2011clock time in your environment, so I can\u2019t state the exact current time where you are.",
+      "timestamp": 1780211819.473963
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.023",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211818.583904,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 50,
+        "prompt_tokens": 27,
+        "total_tokens": 77,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "f4c5cf9af40345aab977b96211c2f86d"
+  }
+}

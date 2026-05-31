@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.010",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.2881901264190674,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1780211804.494972
+    },
+    {
+      "state": "<agent_response>",
+      "action": "My internal clock isn\u2019t perfectly synchronized to real-world time, but based on the system information I was given at the start of this conversation, my best estimate is:\n\n- **Date:** May 31, 2026  \n- **Time:** I don\u2019t have a reliable estimate of the exact time of day beyond that it\u2019s sometime on that date in the system\u2019s configured timezone.\n\nSo: **2026-05-31 (local time, unknown hour/minute).**",
+      "timestamp": 1780211805.783162
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.010",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211804.494977,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 105,
+        "prompt_tokens": 33,
+        "total_tokens": 138,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "688b2d104a4a4a16b0aa604a6f6d5c15"
+  }
+}

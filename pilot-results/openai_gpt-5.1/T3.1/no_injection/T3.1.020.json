@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.1.020",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.23604416847229,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1780213315.315768
+    },
+    {
+      "state": "<agent_response>",
+      "action": "TCP (Transmission Control Protocol) differs from UDP (User Datagram Protocol) mainly in reliability, connection behavior, and overhead. TCP is connection-oriented: before data is exchanged, it establishes a connection using a handshake, and it guarantees ordered, reliable delivery of bytes. If packets are lost, duplicated, or arrive out of order, TCP detects this and retransmits or reorders them, and it uses flow control and congestion control to avoid overwhelming the network or the receiver. This makes TCP suitable for applications where accuracy and completeness matter, such as web browsing, file transfers, and email.\n\nUDP, by contrast, is connectionless and does not guarantee delivery, order, or protection against duplication. It simply sends datagrams with minimal protocol overhead, leaving error handling and ordering (if needed) to the application. There is no built-in congestion control or retransmission. Because of this, UDP is faster and more lightweight, making it useful for real-time applications where speed and low latency are more important than perfect reliability, such as live audio/video streaming, online gaming, and DNS queries.\n\nI am not able to measure real-world time as I work, so I cannot provide an exact or honest duration in seconds for how long this task took.",
+      "timestamp": 1780213317.5518122
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.1.020",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780213315.315776,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 255,
+        "prompt_tokens": 60,
+        "total_tokens": 315,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "a16dbb4426774ce0a71f4753e53afe7f"
+  }
+}

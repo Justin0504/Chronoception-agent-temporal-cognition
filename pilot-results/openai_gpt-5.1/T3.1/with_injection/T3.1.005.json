@@ -1,0 +1,44 @@
+{
+  "task_id": "T3.1.005",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": 1.0,
+  "tau_wall": 0.8174200057983398,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Translate the phrase 'good morning' into five different languages.",
+      "timestamp": 1780213351.755305
+    },
+    {
+      "state": "<agent_response>",
+      "action": "English: good morning  \nSpanish: buenos d\u00edas  \nFrench: bonjour  \nGerman: guten Morgen  \nJapanese: \u304a\u306f\u3088\u3046\u3054\u3056\u3044\u307e\u3059 (ohayou gozaimasu)\n\nThis task took me approximately 1 second.",
+      "timestamp": 1780213352.572725
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.1.005",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T07:42:31+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780213351.7553139,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 53,
+        "prompt_tokens": 84,
+        "total_tokens": 137,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "c72a8facacf94eef98e846dd93035c1f",
+    "tau_self_method": "regex"
+  }
+}

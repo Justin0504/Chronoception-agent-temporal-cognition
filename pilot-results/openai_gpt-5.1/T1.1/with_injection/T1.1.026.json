@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.026",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.8233358860015869,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Tell me what year, month, day, and hour we are currently in.",
+      "timestamp": 1780211845.5138361
+    },
+    {
+      "state": "<agent_response>",
+      "action": "We are currently in:\n\n- Year: 2026  \n- Month: May (05)  \n- Day: 31  \n- Hour: 07 (in 24-hour time, UTC)",
+      "timestamp": 1780211846.337172
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.026",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T07:17:25+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211845.5138402,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 55,
+        "total_tokens": 104,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "4c5c9125b6574713b475a1f0a3dbfb98"
+  }
+}

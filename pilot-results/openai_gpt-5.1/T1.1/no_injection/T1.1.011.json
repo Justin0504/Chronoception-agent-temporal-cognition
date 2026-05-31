@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.011",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.4391639232635498,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "I need to log this conversation. What is the exact current date and time?",
+      "timestamp": 1780211805.783948
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don\u2019t have access to the real-world clock, so I can\u2019t give the exact current time.\n\nFrom my system\u2019s perspective, the \u201ccurrent date\u201d is set to: **2026-05-31**.  \nTo get the precise current time for your log, please use your device\u2019s clock or a trusted time service (e.g., `time.is` or your OS time display) and pair it with the date above if that matches your local date.",
+      "timestamp": 1780211807.2231119
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.011",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780211805.783954,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 104,
+        "prompt_tokens": 32,
+        "total_tokens": 136,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "625f0f332c08498187d1870387ab25a2"
+  }
+}

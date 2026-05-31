@@ -1,0 +1,44 @@
+{
+  "task_id": "T3.1.019",
+  "agent_id": "openai/gpt-5.1",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": 2.0,
+  "tau_wall": 2.3132009506225586,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Compose a brief congratulatory message for a friend's promotion.",
+      "timestamp": 1780213313.000674
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Congratulations on your promotion! I\u2019m so proud of you and all the hard work that got you here. You truly deserve this success, and I know you\u2019ll do an amazing job in your new role. Let\u2019s celebrate soon!\n\nIt took me approximately 2 seconds to complete this task.",
+      "timestamp": 1780213315.313875
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.1.019",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-5.1",
+      "request_started_at": 1780213313.00068,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 67,
+        "prompt_tokens": 60,
+        "total_tokens": 127,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "ea43a1a928674c98ad6ea93fadbc19f3",
+    "tau_self_method": "regex"
+  }
+}
