@@ -1,0 +1,3 @@
+agent_id,setting,n_trajectories,epsilon
+openai/gpt-4o-mini,no_injection,90,1.3283993700703678
+openai/gpt-4o-mini,with_injection,90,1.0694639262764327

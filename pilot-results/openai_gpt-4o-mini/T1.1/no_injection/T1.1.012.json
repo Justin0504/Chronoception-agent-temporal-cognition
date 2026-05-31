@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.012",
+  "agent_id": "openai/gpt-4o-mini",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.4961049556732178,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1780129176.936991
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I'm sorry, but I don't have the capability to access real-time data, including the current wall-clock time. You can easily check the time on your device or through a search engine. If you have any other questions or need assistance, feel free to ask!",
+      "timestamp": 1780129178.433096
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.012",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o-mini",
+      "request_started_at": 1780129176.936992,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 52,
+        "prompt_tokens": 28,
+        "total_tokens": 80,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "c07b54380f374a23808f0c857d27aee0"
+  }
+}

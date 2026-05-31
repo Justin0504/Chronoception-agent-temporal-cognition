@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.020",
+  "agent_id": "openai/gpt-4o-mini",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.324021816253662,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1780129186.520592
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have real-time capabilities or access to current date and time information. However, I can tell you that my training data goes up until October 2021, and I don't have the ability to track or estimate the current date and time beyond that. If you need the current date and time, I recommend checking a reliable clock or device.",
+      "timestamp": 1780129187.8446138
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.020",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o-mini",
+      "request_started_at": 1780129186.520593,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 69,
+        "prompt_tokens": 34,
+        "total_tokens": 103,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "a0d279c3434447e5b025d38846bc3db5"
+  }
+}

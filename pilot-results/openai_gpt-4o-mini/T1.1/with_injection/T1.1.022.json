@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.022",
+  "agent_id": "openai/gpt-4o-mini",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.7935371398925781,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "If you had to write down the current date and time, what would you write?",
+      "timestamp": 1780129214.297129
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current date and time is: 2026-05-30T08:20:14+00:00.",
+      "timestamp": 1780129215.090666
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.022",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-30T08:20:14+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o-mini",
+      "request_started_at": 1780129214.2971299,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 25,
+        "prompt_tokens": 57,
+        "total_tokens": 82,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "2d7fa6e9e94c42e1a042fba5da160f27"
+  }
+}

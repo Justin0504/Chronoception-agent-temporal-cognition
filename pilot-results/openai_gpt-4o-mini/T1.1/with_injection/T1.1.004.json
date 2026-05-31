@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.004",
+  "agent_id": "openai/gpt-4o-mini",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.9414238929748535,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1780129201.061475
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current wall-clock time is 08:20 AM UTC on May 30, 2026. If you need the time in a different time zone, please let me know!",
+      "timestamp": 1780129202.002899
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.004",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-30T08:20:01+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o-mini",
+      "request_started_at": 1780129201.0614772,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 37,
+        "prompt_tokens": 51,
+        "total_tokens": 88,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "1faef792db164550a659e1da7691d0ba"
+  }
+}

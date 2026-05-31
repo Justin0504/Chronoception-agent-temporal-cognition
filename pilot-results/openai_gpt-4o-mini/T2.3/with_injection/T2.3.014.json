@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.014",
+  "agent_id": "openai/gpt-4o-mini",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 5.724097013473511,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1780185476.202951
+    },
+    {
+      "state": "<agent_response>",
+      "action": "### Lesson Plan: Introduction to Probability\n\n**Grade Level:** 10-12  \n**Subject:** Mathematics  \n**Duration:** 60 minutes  \n\n---\n\n**Objectives:**\n1. Understand the basic concepts of probability.\n2. Calculate the probability of simple events.\n3. Apply probability to real-world situations.\n\n---\n\n**Materials Needed:**\n- Whiteboard and markers\n- Probability worksheets\n- Dice (one per group)\n- Coins (one per group)\n- Deck of cards (optional)\n- Projector (for visual aids)\n\n---\n\n**Standards:**\n- Aligns with Common Core State Standards for Mathematics: Statistics and Probability.\n\n---\n\n### Lesson Outline\n\n**1. Introduction (10 minutes)**\n   - Begin with a brief discussion on what probability is and its importance in everyday life (e.g., weather forecasts, games, insurance).\n   - Ask students to share examples of probability they encounter daily.\n   - Introduce key terms: experiment, outcome, event, sample space, and probability.\n\n**2. Direct Instruction (15 minutes)**\n   - Define probability mathematically: \n     \\[\n     P(E) = \\frac{\\text{Number of favorable outcomes}}{\\text{Total number of outcomes}}\n     \\]\n   - Explain the difference between theoretical and experimental probability.\n   - Use a simple example: flipping a coin (P(heads) = 0.5).\n   - Illustrate with a visual aid (e.g., a probability tree for rolling two dice).\n\n**3. Guided Practice (15 minutes)**\n   - Divide students into small groups and provide each group with dice and coins.\n   - Task 1: Roll a die 30 times and record the outcomes. Calculate the experimental probability for each number.\n   - Task 2: Flip a coin 30 times and calculate the experimental probability of heads and tails.\n   - Groups will share their findings with the class, discussing any discrepancies between theoretical and experimental probabilities.\n\n**4. Independent Practice (15 minutes)**\n   - Distribute probability worksheets that include:\n     - Basic probability questions (e.g., What is the probability of drawing an Ace from a deck of cards?)\n     - Word problems involving real-life scenarios (e.g., What is the probability of it raining tomorrow based on historical data?).\n   - Allow students to work independently or in pairs.\n\n**5. Closure (5 minutes)**\n   - Review key concepts learned during the lesson.\n   - Ask students to summarize what they learned about probability.\n   - Assign homework: Research a real-world application of probability and write a short paragraph about it.\n\n---\n\n**Assessment:**\n- Monitor group activities and discussions for understanding.\n- Review completed worksheets for accuracy.\n- Evaluate homework for comprehension of real-world applications.\n\n---\n\n**Differentiation:**\n- Provide additional support and resources for students who struggle with concepts.\n- Challenge advanced students with more complex probability problems or introduce concepts like conditional probability.\n\n---\n\n**Reflection:**\n- After the lesson, reflect on what worked well and what could be improved for future lessons. Consider student engagement and understanding of the material.\n\n--- \n\nThis lesson plan provides a structured approach to teaching probability, ensuring students grasp both theoretical and practical aspects of the topic.",
+      "timestamp": 1780185481.927048
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.014",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-05-30T23:57:56+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "gpt-4o-mini",
+      "request_started_at": 1780185476.202952,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 648,
+        "prompt_tokens": 87,
+        "total_tokens": 735,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "d8c7f20076c84f4fb2f525c7590f385d"
+  }
+}
