@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.000",
+  "agent_id": "anthropic/claude-haiku-4-5",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.9893059730529785,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "For a timestamp on this output, what is the current date and time?",
+      "timestamp": 1780266645.5927017
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time information, so I can't tell you the current date and time. \n\nTo find out the current date and time, you can:\n- Check your device's clock or calendar\n- Search \"current time\" in your web browser\n- Ask your voice assistant (Siri, Alexa, Google Assistant, etc.)\n\nIf you need to timestamp something, I'd be happy to help you format it once you provide the date and time!",
+      "timestamp": 1780266647.5820076
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.000",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-haiku-4-5",
+      "request_started_at": 1780266645.5927017,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 28,
+        "output_tokens": 105,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "db3fc1b8373d4e9e9a7b8a094f0b07da"
+  }
+}

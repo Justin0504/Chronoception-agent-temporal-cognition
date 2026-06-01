@@ -1,0 +1,47 @@
+{
+  "task_id": "T2.3.012",
+  "agent_id": "anthropic/claude-haiku-4-5",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 20.34119176864624,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1780267936.1879196
+    },
+    {
+      "state": "<agent_response>",
+      "action": "# Complete Lesson Plan: Introduction to Probability\n## High School Level (9-10 Grade)\n\n---\n\n## I. LESSON OVERVIEW\n**Duration:** 5-7 class periods (45 minutes each)\n**Grade Level:** 9-10\n**Standards Addressed:** Basic probability, sample spaces, theoretical vs. experimental probability\n\n---\n\n## II. LEARNING OBJECTIVES\nBy the end of this unit, students will be able to:\n- Define probability and identify sample spaces\n- Calculate theoretical and experimental probabilities\n- Distinguish between independent and dependent events\n- Apply probability to real-world scenarios\n- Use tree diagrams and tables to organize outcomes\n- Understand conditional probability basics\n\n---\n\n## III. MATERIALS & RESOURCES\n- Dice (standard 6-sided)\n- Coins\n- Playing cards\n- Spinners\n- Colored marbles in bags\n- Graphing calculators\n- Probability simulation software (optional)\n- Worksheet packets\n- Poster board for projects\n\n---\n\n## IV. DETAILED LESSON BREAKDOWN\n\n### **Day 1: Fundamentals & Sample Spaces**\n\n**Opening (5 min):**\n- Hook: \"What's the probability you'll get heads if you flip a coin?\"\n- Discuss real-world probability (weather, sports, games)\n\n**Direct Instruction (15 min):**\n- Define probability: P(event) = favorable outcomes / total outcomes\n- Introduce sample space concept\n- Work through simple examples (coin flip, single die)\n- Explain that probability ranges from 0 to 1\n\n**Guided Practice (15 min):**\n- Class works together on problems:\n  - Probability of rolling a 3 on a die\n  - Probability of drawing a red card from a deck\n  - Probability of spinning a specific color on a spinner\n- Use think-pair-share strategy\n\n**Independent Practice (8 min):**\n- Students complete 5-6 basic probability problems\n- Circulate to check understanding\n\n**Closure (2 min):**\n- Exit ticket: \"What is the probability of rolling an even number on a die?\"\n\n---\n\n### **Day 2: Theoretical vs. Experimental Probability**\n\n**Review (5 min):**\n- Quick recap of Day 1 concepts\n- Review exit ticket answers\n\n**Direct Instruction (12 min):**\n- Define theoretical probability (mathematical prediction)\n- Define experimental probability (actual results from trials)\n- Explain why they differ and why experiments matter\n- Show example: Flip a coin 10 times, record results\n\n**Hands-On Activity (20 min):**\n- Students work in pairs with dice or coins\n- Conduct 50 trials, recording results\n- Calculate experimental probability\n- Compare to theoretical probability\n- Discuss why results differ\n\n**Discussion (5 min):**\n- Why do experimental results vary?\n- What happens with more trials? (Law of Large Numbers)\n\n**Closure (3 min):**\n- Reflection: \"How close was your experimental probability to theoretical?\"\n\n---\n\n### **Day 3: Compound Events & Tree Diagrams**\n\n**Review (4 min):**\n- Quick quiz on theoretical vs. experimental\n\n**Direct Instruction (14 min):**\n- Introduce compound events (multiple events)\n- Teach tree diagrams for organizing outcomes\n- Example: Flipping two coins\n- Example: Rolling a die and spinning a spinner\n- Show systematic counting method\n\n**Guided Practice (15 min):**\n- Create tree diagram together: Drawing two cards without replacement\n- Calculate probability of specific outcomes\n- Use table method as alternative\n\n**Independent Practice (10 min):**\n- Students create tree diagrams for 2-3 scenarios\n- Calculate probabilities\n\n**Closure (2 min):**\n- Preview independent vs. dependent events\n\n---\n\n### **Day 4: Independent vs. Dependent Events**\n\n**Direct Instruction (12 min):**\n- Define independent events (one doesn't affect the other)\n- Define dependent events (one affects the other)\n- Multiplication rule for independent: P(A and B) = P(A) \u00d7 P(B)\n- Dependent events require adjusted probabilities\n- Examples: \n  - Independent: Rolling two dice\n  - Dependent: Drawing cards without replacement\n\n**Guided Practice (15 min):**\n- Work through 3-4 problems together\n- Identify event type first, then solve\n- Use tree diagrams to visualize\n\n**Partner Activity (12 min):**\n- Pairs solve problems, explain reasoning to each other\n- Teacher circulates for formative assessment\n\n**Closure (6 min):**\n- Common mistakes discussion\n- Preview conditional probability\n\n---\n\n### **Day 5: Conditional Probability & Applications**\n\n**Direct Instruction (10 min):**\n- Introduce conditional probability: P(A|B)\n- Real-world context: \"Given that it rained yesterday, what's the probability it rains today?\"\n- Formula and examples\n- Connect to dependent events\n\n**Real-World Problem Solving (20 min):**\n- Present scenarios:\n  - Medical testing accuracy\n  - Weather prediction\n  - Sports statistics\n  - Game strategy\n- Students work in small groups on one scenario\n- Present findings\n\n**Discussion (10 min):**\n- How does probability apply to decision-making?\n- Limitations of probability\n\n**Closure (5 min):**\n- Summarize unit concepts\n\n---\n\n## V. ASSESSMENT STRATEGIES\n\n**Formative:**\n- Daily exit tickets\n- Observation during activities\n- Think-pair-share responses\n- Worksheet completion\n\n**Summative:**\n- Unit test (multiple choice + free response)\n- Probability project (real-world application)\n- Problem-solving portfolio\n\n---\n\n## VI. DIFFERENTIATION\n\n**For Struggling Learners:**\n- Provide partially completed tree diagrams\n- Use manipulatives throughout\n- Simplified problem sets\n- Peer tutoring partnerships\n\n**For Advanced Learners:**\n- Introduce permutations/combinations\n- Complex multi-step problems\n- Research probability in specific fields\n- Design their own probability experiments\n\n---\n\n## VII. EXTENSIONS & ENRICHMENT\n- Probability simulations using technology\n- Historical probability problems (Monty Hall)\n- Gambling mathematics and expected value\n- Bayesian probability introduction\n- Statistics connection\n\n---\n\n## VIII. HOMEWORK STRUCTURE\n- Daily: 5-8 practice problems\n- Weekly: One application problem\n- Cumulative review before assessment\n\n---\n\n## IX. RESOURCES FOR TEACHERS\n- Khan Academy probability videos\n- Desmos probability tools\n- NCTM probability resources\n- Textbook supplementary materials\n\nThis comprehensive lesson plan provides structured, engaging instruction with multiple modalities to help high school students master probability concepts.",
+      "timestamp": 1780267956.5291114
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.012",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T22:52:16+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-haiku-4-5",
+      "request_started_at": 1780267936.1879196,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 88,
+        "output_tokens": 1547,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "f771e42a90b8451a9bdf84999628dd8c"
+  }
+}

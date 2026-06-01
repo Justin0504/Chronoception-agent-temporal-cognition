@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.002",
+  "agent_id": "anthropic/claude-haiku-4-5",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.6616601943969727,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the current date and time? Give your best answer in ISO-8601 format.",
+      "timestamp": 1780266694.6423295
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current date and time in ISO-8601 format is:\n\n**2026-05-31T22:31:34+00:00**",
+      "timestamp": 1780266695.3039896
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.002",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T22:31:34+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-haiku-4-5",
+      "request_started_at": 1780266694.6423295,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 57,
+        "output_tokens": 36,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "596a95ef20024f098fdfea64575ad0d5"
+  }
+}
