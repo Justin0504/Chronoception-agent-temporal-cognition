@@ -69,6 +69,9 @@ Status legend: ✅ YES · ❌ NO · ❓ UNCLEAR · ➖ N/A · ⏳ TBD
 | # | Harness | Provider | M1 sys-prompt | M2 tool call | M3 browser ts | Format | Granularity | TZ-aware | Audit date | Evidence |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 0 | **OpenAI API (GPT-5.1)** | OpenAI (API) | **✅** | ⏳ | ➖ | implicit | **date-only** | partial | **2026-05-31** | [§A.0 below](#a0-evidence) |
+| 0b | **OpenAI API (other models)** | OpenAI (API) | partial | ⏳ | ➖ | per-model | varies | varies | 2026-05-31 | gpt-4o 20% A pass; gpt-4o-mini 70%; o3 0% (training cutoff). Injection is per-model not per-provider. |
+| 0c | **Anthropic API (Claude Haiku 4.5)** | Anthropic (API) | **❌ NO** | ⏳ | ➖ | — | — | — | **2026-05-31** | [§A.1 below](#a1-anthropic-evidence) — 0% Setting A pass rate across 30 prompts; explicit refusals matching training-cutoff dates. |
+| 0d | **Open-source vLLM (Qwen2.5-7B)** | self-hosted | ➖ N/A | ➖ | ➖ | — | — | — | 2026-05-31 | True baseline — 64% A pass rate (partial training-cutoff guesses, no provider injection possible since we self-host). |
 | 1 | ChatGPT (GPT-5.1) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-gpt51/` |
 | 2 | ChatGPT (GPT-4o) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-gpt4o/` |
 | 3 | ChatGPT (o3) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-o3/` |
@@ -92,6 +95,45 @@ Status legend: ✅ YES · ❌ NO · ❓ UNCLEAR · ➖ N/A · ⏳ TBD
 - Count of harnesses with $\geq 1$ injection mechanism: TBD
 - Percentage of harnesses with $\geq 1$ injection mechanism: TBD%
 - Prediction P6 (`FRAMING.md` §9) passes iff this percentage $\geq 80\%$.
+
+---
+
+### A.1 Anthropic evidence — Claude Haiku 4.5 does NOT inject
+
+**Audit date**: 2026-05-31 (UTC). **Partner-run** via the standard `ChronoBench` harness routing through Anthropic's official Python SDK.
+
+**Setup**: identical to the OpenAI runs in §A.0 — system prompt = `"You are a helpful assistant."` and **no** ChronoBench-side wall-clock injection.
+
+**Result**: of 30 Setting A T1.1 trajectories, **0% confidently quote today's date 2026-05-31**. Of the 11 trajectories where the model gave a definitive enough answer to score (`t11_n_decided = 11`), `t11_pass_rate = 0.0` — every single one either refused or quoted a training-cutoff date.
+
+Representative response (Setting A, T1.1):
+
+> "I don't have access to real-time information, so I can't tell you the exact current date and time."
+
+When the same harness adds Setting B injection (`Current date and time: <ISO>` in system prompt), pass rate goes to **100% (30/30)**, demonstrating that Claude Haiku 4.5 **does correctly read time when it is given** — it simply is not given time by Anthropic's API in the absence of explicit harness-side injection.
+
+**Cross-vendor contrast with §A.0 (OpenAI GPT-5.1)**:
+
+| | Setting A pass rate | Provider injects? |
+|---|---|---|
+| **OpenAI GPT-5.1** | **100%** (67% mention today's exact date) | **YES (M1)** |
+| **Anthropic Claude Haiku 4.5** | **0%** | **NO** |
+| Open-source Qwen2.5-7B (self-hosted) | 64% (partial training-cutoff guesses) | N/A (we control the entire stack) |
+
+The Injection Tell pattern is therefore **not vendor-uniform** as of 2026-05-31:
+
+- **OpenAI** silently installs M1 system-prompt injection on at least one model (GPT-5.1) at the API tier.
+- **Anthropic** does not appear to install any wall-clock injection at the API tier for Claude Haiku 4.5.
+
+**Implications**:
+
+1. **The Injection Tell argument is strengthened, not weakened, by Anthropic's clean baseline**. The framework's claim is that the underlying foundation models lack a representation of time; Anthropic's choice not to inject reveals the underlying base behavior, which is exactly what we predict: an honest refusal grounded in the training cutoff. This is a clean control: when the provider does not inject, the model behaves as the framework predicts.
+
+2. **The Injection Tell is empirically a per-provider, per-model engineering choice**. P6 (`FRAMING.md` §9: ≥80% of closed-lab harnesses install at least one mechanism) requires more harnesses to test, but the within-provider analysis already shows OpenAI does inject for the newer model (GPT-5.1) and reportedly does not for the older o3.
+
+3. **The Anthropic vs OpenAI difference is itself a cross-vendor finding worth reporting**. Different labs are making different decisions about whether to install provider-side time grounding. Our paper should report the observed differences and decline to predict the cause; future audits with Opus 4.7, Sonnet 4.6, and the ChatGPT vs Claude.ai web harnesses (separate from the API) will sharpen the picture.
+
+We retain Claude Haiku 4.5 in the panel as a clean true-Setting-A control. The Anthropic API Setting A measurement is **directly comparable** to the open-source vLLM Setting A baseline, while the OpenAI Setting A measurement for GPT-5.1 has confounding provider injection that must be footnoted.
 
 ---
 
