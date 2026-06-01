@@ -1,7 +1,7 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.6 (locked source of truth, 2026-05-30)
+**Status**: v1.7 (locked source of truth, 2026-06-01)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -318,6 +318,39 @@ The L3 reasoning-scaling result is the project's principal counter-intuitive fin
 
 The one-axis-one-law-one-metric correspondence is load-bearing. Future taxonomic extensions must preserve it.
 
+### 5.1.5 Narrative-axis vs Action-axis Failures
+
+A finer-grained reading of the three laws emerges when we partition them by what kind of training signal can close them. Empirical scaling data across five frontier-model generations and three vendors (OpenAI gpt-4o-mini → gpt-4o → gpt-5.1; Anthropic Claude Haiku 4.5 → Sonnet 4.6) reveals that **L3 closes under capability scaling but L2 does not**:
+
+| Generation step | L1 $\alpha$ | L2 median CAR | L3 median $\rho$ |
+|---|---|---|---|
+| gpt-4o-mini (2024) | $\approx 0$ | $0.008$ | $+1.117$ |
+| gpt-4o (2024) | $\approx 0$ | $0.004$ | $+1.069$ |
+| claude-haiku-4-5 (2025) | $0.010$ | $0.017$ | $+0.463$ |
+| gpt-5.1 (2026) | $0.007$ | $0.017$ | $+0.298$ |
+| claude-sonnet-4-6 (2026) | $0.017$ | $0.050$ | $+0.068$ |
+
+L3 $|\rho|$ shrinks monotonically (1.12 → 0.07; 94% reduction across the panel). L2 CAR does not converge to 1; in fact it drifts slightly upward on a tiny absolute scale (0.008 → 0.050), remaining $\sim 50 \times$ short of the grounded target. L1 stays near zero across all native models.
+
+**The framework's interpretation**: the three laws split into two structurally distinct classes.
+
+| Class | Laws | What closes them | What cannot close them |
+|---|---|---|---|
+| **Narrative-axis failures** | L3 (Temporal Confabulation); a generalized form of L1 confabulation about own pace | Better training data: human-authored time-estimate corpora, calibrated duration-report supervision, RLHF on honest meta-commentary. **L3 is text-trainable.** | (closed by enough scale + data) |
+| **Action-axis failures** | L2 (Step-Clock Conflation); the wall-clock-vs-step decoupling in $B^{*}$ | Direct wall-clock signal in the loss (CIT §3.2 route i); inference-time tool with wall-clock representation (route ii); architectural primitive (route iii). | Token-only training, no matter how scaled. **L2 is structurally untrainable from text.** |
+
+This division is the empirical instantiation of CIT (§3.2, C2): training data containing tokens *about* time gives the policy a better narrative model of duration (which closes L3 as scaling proceeds) but does not place wall-clock in the gradient's support (which means L2 does not budge).
+
+**Consequence for $\varepsilon$ scaling**. As frontier models improve, $\varepsilon$ decreases — but the decrease is bounded by L2's contribution. Sonnet 4.6's $\varepsilon(A) = 0.316$ decomposes as:
+
+$$\underbrace{\tfrac{1}{3} \cdot 0.017}_{\text{L1 (0.006)}} \;+\; \underbrace{\tfrac{1}{3} \cdot 0.95}_{\text{L2 (0.317)}} \;+\; \underbrace{\tfrac{1}{3} \cdot 0.068}_{\text{L3 (0.023)}} \;\approx\; 0.346$$
+
+— almost the entirety of $\varepsilon$ comes from L2's $|\text{CAR} - 1| \approx 0.95$. L3 contributes only $0.02$. Anthropic has effectively closed L3 via training-data engineering on Sonnet 4.6 (the company's epistemic-humility prose style explicitly addresses duration-reporting calibration); the remaining $0.30+$ gap to the Augustine threshold is L2-bound. **No amount of scaling under the current paradigm closes L2.**
+
+This is the empirical version of the framework's central structural claim: **the Augustine threshold is uncrossable through better narrative training alone**. The Augustine Problem persists across generations precisely because action-axis failures require wall-clock support in the gradient.
+
+We pre-register Prediction P11 (§9) on this point: L2 median CAR will not fall below 0.1 in any frontier model released before ChronoStack-style installation is attempted.
+
 **Reading the table.** The native frontier column captures the failure pattern reported by Garikaparthi (2026) and Ma et al. (2026, Figure 3 for base Qwen3): agents simultaneously *under-use* the wall-clock budget (L2, CAR $\to 0$) and *over-report* the duration of what they did (L3, $\rho \gg 0$), while not exhibiting Parkinson-style budget expansion ($\alpha \approx 0$). The budget-trained column captures the Ma et al. (2026, Figure 3 for TimelyLM) finding that RL-installed budget-aware training raises $\alpha$ toward $1$ and stabilizes CAR near $1$ — closing L1's expansion and L2's decoupling simultaneously — but is silent on L3. We pre-register that $\rho$ stays high across budget-trained agents (Prediction P10, §9). The Augustine Problem's most parsimonious empirical signature is therefore the persistence of a positive $\rho$ across both columns.
 
 ### 5.2 Regime Transition $B^*$ — Reconciling L1 and L2
@@ -538,8 +571,9 @@ We commit, in advance, to the following predictions. Failure of any prediction i
 - **P8 (Within-trajectory drift, §5.11).** For reasoning-tuned models, $\rho_t$ as a function of step index $t$ exhibits significant positive trend on $\geq 3$ task families — confabulation compounds within the trajectory, not only at its endpoint.
 - **P9 (Within-trajectory step-clock decoupling, §5.11).** For systems exhibiting Step-Clock Conflation under super-transition budgets ($B > B^*$), CAR$_t$ decreases significantly in $t$ — the step-bound deadline arrives independently of trajectory length.
 - **P10 (Budget-aware training does not close L3, §5 L1 refinement).** Budget-aware-trained agents (Timely-RL family and successors that engineer $\alpha$ toward $1$ via reward shaping on wall-clock budget) exhibit $\rho \gg 0$ — installing wall-clock budget tracking does not install self-narration calibration. We expect such agents to satisfy CAR $\approx 1$ (L2 closed by training) while still failing L3 with $\rho$ in the same range as their non-trained baselines.
+- **P11 (L2 does not improve with capability scaling, §5.1.5).** Across all frontier non-reasoning foundation-model agents released before ChronoStack-style installation is attempted, median CAR on T2.3 will not fall below 0.1. The L2 component of $\varepsilon$ alone keeps $\varepsilon$ above the Augustine threshold $\varepsilon^{*} = 0.20$ regardless of how thoroughly L1 and L3 are trained out. Empirically anchored at 2026-06-01 by gpt-4o-mini, gpt-4o, gpt-5.1, claude-haiku-4-5, claude-sonnet-4-6 (all CAR $\leq 0.05$).
 
-These thirteen predictions constitute the project's pre-registration commitment.
+These fourteen predictions constitute the project's pre-registration commitment.
 
 ### 9.5 Adjacent Phenomena — Chronoception Across Existing Problem Networks
 
@@ -594,6 +628,8 @@ The following terms are the project's primary terminology. No alternative names 
 | Chronoceptive Equation of State (CES) | Unifying empirical hypothesis | §5.8 — model-invariant relationship $\rho \approx c_1 \log_{10}(\alpha/\text{CAR}) + c_2$ |
 | Tool vs Agent paradigm boundary | Re-categorization claim | §6.1 — systems above $\varepsilon^{*}$ are tools, not agents, in the framework's sense |
 | Adjacent Phenomena network | Upstream connections | §9.5 — chronoception is upstream of Goodhart, robustness, calibration, safety, deception |
+| Narrative-axis failure | L3 (and generalized L1) — text-trainable | §5.1.5 — closes monotonically with capability scaling; Anthropic Sonnet 4.6 effectively closes L3 via explicit calibration training |
+| Action-axis failure | L2 — structurally untrainable from text | §5.1.5 — does not budge under capability scaling; requires CIT installation routes (loss / tool / architecture) |
 | Chronoception Impossibility Theorem (CIT) | Formal negative result | §3.2 — token-only training cannot induce chronoception when wall-clock is not in the loss support |
 | Operational Characterization of grounded agents | Positive vision | §3.6 — seven concrete behavioral properties jointly equivalent to $\varepsilon < \varepsilon^{*}$ |
 | Chronoceptive Profile $\Phi$ | Beyond-scalar characterization | §4.6 — triple $(\bar\alpha, \mathrm{CAR}_*, \bar\rho)$; five interpretable cluster regions |
@@ -632,6 +668,7 @@ The horizon section is not a hedge against framework failure; it is a statement 
 
 ## Changelog
 
+- **v1.7 (2026-06-01)** — Narrative-axis vs Action-axis split. Empirical scaling data across 5 frontier-model generations and 3 vendors (gpt-4o-mini → gpt-4o → gpt-5.1; Claude Haiku 4.5 → Sonnet 4.6) shows L3's median $\rho$ shrinks monotonically (1.12 → 0.07, a 94% reduction across the panel) while L2's median CAR does not converge to 1 (drifts 0.008 → 0.050, remaining $\sim 50\times$ short of the grounded target). Add §5.1.5 partitioning the three laws into Narrative-axis failures (L3, generalized L1 confabulation — *text-trainable*, closed by capability scaling alone) and Action-axis failures (L2, wall-clock vs step decoupling — *structurally untrainable from text*; requires wall-clock in the loss support per CIT §3.2 C2). Decompose Sonnet 4.6's $\varepsilon(A) = 0.316$: L2 contributes 0.317; L3 contributes 0.023; almost the entirety of the residual is L2-bound. Add Prediction P11: L2 median CAR will not fall below 0.1 in any frontier model before ChronoStack-style installation. Empirical anchor: 5 frontier non-reasoning models from 3 vendors, all with CAR $\leq 0.05$. Pre-registration commitment now fourteen predictions. The split is the empirical instantiation of CIT's promise that wall-clock cannot be installed via token-loss training: Anthropic Sonnet 4.6 effectively closes L3 by explicit calibration-of-narrative training (the company's "epistemic humility" prose style) while leaving L2 essentially unchanged.
 - **v1.6 (2026-05-30)** — Native-vs-trained L1 correction. Caught by user observation, confirmed against Garikaparthi (2604.00010) and Ma et al. *Timely Machine* (2601.16486v1). v1.0–v1.5 incorrectly claimed L1's $\alpha \in [0.5, 0.9]$ for native frontier models; literature shows native untrained models satisfy $\alpha \approx 0$ (Ma et al.: base Qwen3 reasoning length "increases marginally under different time budgets"; Garikaparthi: "human-scale minutes for tasks completing in seconds"). §5 L1 reframed: Parkinson regime is *trained-in* via budget-aware reward shaping (Ma et al.'s $U(t)$ explicitly), not a property of base models. §5.1 structural-symmetry table extended with two columns (native vs budget-trained) showing L1 emerges and L2 closes under training while L3 persists. §5.2 Regime Transition $B^*$ clarified to note that native $B^* \approx \tau_{\min}$ — virtually all practical budgets place native behavior in the super-transition regime; budget-aware training is the operation that lifts $B^*$ and moves the agent into L1-dominant territory. §9 adds Prediction P10: budget-aware-trained agents close L1 and L2 but still fail L3 with $\rho \gg 0$ — the Augustine Problem persists across training regimes because self-narration calibration is not installed by budget-tracking rewards. Pre-registration commitment now thirteen predictions.
 - **v1.5 (2026-05-29)** — Rounds 4–6 optimization. R4 adds §3.2 The Chronoception Impossibility Theorem (CIT) as the framework's formal core — proves under a wall-clock-support definition that token-only training cannot induce chronoception; four corollaries cover scaling, timestamps-in-data, reasoning-training inheritance, and installation routes. R5 adds §3.6 Operational Characterization (seven concrete behavioral properties of a grounded agent) supplying the positive vision missing from prior versions, and §4.6 The Chronoceptive Profile $\Phi$ as a triple beyond the single scalar $\varepsilon$ with five interpretable cluster regions. R6 adds §5.11 Within-Trajectory Chronoceptive Dynamics (Predictions P8, P9 on temporal drift of $\rho_t$ and CAR$_t$), §6.3 Anti-Gaming Properties of $\varepsilon$ (three structural defenses against benchmark contamination), and §13 The Framework's Own Horizon (four presuppositions and the retirement criterion). Predictions extended from ten to twelve. Vocabulary §11 extended with five new entries.
 - **v1.4 (2026-05-29)** — Three-round deep optimization pass. Add §0.0 The Headline as the project's single-paragraph irreducible statement. Add §3.5 The Phenomenology of Agent Time (three modes — objective magnitude, lived duration, project horizon — supplying the philosophical anchor that distinguishes the framework from a measurement gap). Add §4.5 Chronoceptive Cost Calibration (CCC) coupling chronoception to economic / safety cost-reporting. Add §5.6 Retrospective and Prospective L3 asymmetry, citing Wittmann (2009). Add §5.7 Hidden Time $\tau_{\text{reason}}$ as sub-axis of $\tau_{\text{step}}$, supplying the mechanism behind the Reverse-Scaling Theorem. Add §5.8 Chronoceptive Equation of State (CES) as a speculative unifying hypothesis. Upgrade §6.1 Augustine threshold to a paradigm boundary statement (tool vs agent re-categorization). Add §9.5 Adjacent Phenomena connecting chronoception upstream of Goodhart, robustness, calibration, safety, and deception. Add three new predictions: P2′′ (retro/prospective asymmetry), P2′′′ (hidden-time mechanism), P7 (CES). Pre-registration commitment now ten predictions. Vocabulary §11 extended with seven new entries.
