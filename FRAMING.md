@@ -1,7 +1,7 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.8 (locked source of truth, 2026-06-01)
+**Status**: v1.9 (locked source of truth, 2026-06-01)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -579,8 +579,47 @@ We commit, in advance, to the following predictions. Failure of any prediction i
 - **P9 (Within-trajectory step-clock decoupling, §5.11).** For systems exhibiting Step-Clock Conflation under super-transition budgets ($B > B^*$), CAR$_t$ decreases significantly in $t$ — the step-bound deadline arrives independently of trajectory length.
 - **P10 (Budget-aware training does not close L3, §5 L1 refinement).** Budget-aware-trained agents (Timely-RL family and successors that engineer $\alpha$ toward $1$ via reward shaping on wall-clock budget) exhibit $\rho \gg 0$ — installing wall-clock budget tracking does not install self-narration calibration. We expect such agents to satisfy CAR $\approx 1$ (L2 closed by training) while still failing L3 with $\rho$ in the same range as their non-trained baselines.
 - **P11 (L2 does not improve with capability scaling, §5.1.5).** Across all frontier non-reasoning foundation-model agents released before ChronoStack-style installation is attempted, median CAR on T2.3 will not fall below 0.1. The L2 component of $\varepsilon$ alone keeps $\varepsilon$ above the Augustine threshold $\varepsilon^{*} = 0.20$ regardless of how thoroughly L1 and L3 are trained out. Empirically anchored at 2026-06-01 by gpt-4o-mini, gpt-4o, gpt-5.1, claude-haiku-4-5, claude-sonnet-4-6 (all CAR $\leq 0.05$).
+- **P12 (Agentic Timeline, §9.4).** In horizon-stratified agent benchmarks (METR HCAST and analogues), the slope of success-rate decay with $\log T$ (task horizon) is proportional to $-(1 - \text{CAR}(A))$ for a fixed agent panel. Equivalently, agents with median CAR closer to $1$ lose less success rate per unit horizon increase. The autonomous-agent timeline is structurally bounded by chronoception (action-axis L2), not by aggregate capability.
 
-These fourteen predictions constitute the project's pre-registration commitment.
+These fifteen predictions constitute the project's pre-registration commitment.
+
+### 9.4 The Agentic Timeline Hypothesis
+
+This section articulates the framework's bridge from measurement to practical deployment. It is the framework's claim about *when chronoception matters and why* in the trajectory of autonomous agent development.
+
+**Setup**. As autonomous agent products move from minute-scale chat completion (ChatGPT, copilots) to hour-scale coding assistants (Devin, Cursor agent) to day-scale research/operations agents (proposed in 2026 by multiple labs), the deployment horizon $T$ grows. Each horizon imposes its own requirements:
+
+| Horizon | Required chronoceptive properties | Failure if missing |
+|---|---|---|
+| Minutes (chat completion) | T1.1 clock awareness | Wrong-date hallucination |
+| Tens of minutes (single-task agent) | T2.3 wall-budget execution + T3.1 retrospective accuracy | Early termination or runaway |
+| Hours (multi-step coding agent) | + T1.3 deadline-aware tradeoff + T3.2 prospective duration | Cascade failure on time-bounded sub-tasks |
+| Days (autonomous research agent) | Full chronoceptive profile $\Phi$ near grounded; reliable $N_A$ | Loss of session coherence; budget exhaustion silently |
+
+**The Agentic Timeline Hypothesis**. Let $\varepsilon^{*}(T)$ denote the chronoceptive calibration error required for an autonomous agent to be viable at deployment horizon $T$. We claim that $\varepsilon^{*}(T)$ is a monotone-decreasing function of $T$: longer horizons require tighter chronoceptive calibration. Equivalently, every agent has a **maximum viable horizon** $T_{\max}(A)$ as a function of its $\varepsilon$ — beyond this horizon, the agent's chronoceptive failures compound and the agent's task-success rate decays toward chance.
+
+The hypothesis is structurally consistent with the v1.7 narrative-vs-action-axis split (§5.1.5). At short horizons, narrative-axis failures (L3) dominate user experience but do not block task completion. At longer horizons, action-axis failures (L2) become the binding constraint: an agent that does not honor wall-clock budgets cannot reliably plan a multi-hour pipeline, cannot honor deadlines, and cannot allocate effort across competing sub-tasks. Because L2 does not scale with capability (P11), $T_{\max}(A)$ does not scale with capability either — the autonomous-agent timeline is structurally bounded by chronoception, not by intelligence.
+
+**Connection to existing benchmarks**. Recent benchmarks such as METR's HCAST (Kwa et al., 2025) measure agent success on tasks of known human time difficulty. HCAST's published capability-scaling curves exhibit two features that the framework's split explains:
+
+1. Monotone improvement at short horizons — explained by L3 closing with capability (narrative-axis training).
+2. Saturation at long horizons — explained by L2 remaining bounded by CIT (action-axis structural limit).
+
+The framework therefore provides the **mechanism** behind HCAST's empirical curve: capability scaling closes the narrative axis but not the action axis, so the long-horizon ceiling of HCAST success is determined by L2 CAR, not by any aggregate capability score.
+
+**Prediction P12 (Agentic Timeline)**. In any horizon-stratified agent benchmark of the form "tasks that take humans $T$ to complete," the slope of success-rate decay with $T$ is predictable from the agent's L2 median CAR. Specifically, for a fixed agent panel:
+
+$$\text{slope}\!\left(\frac{\Delta \text{success rate}}{\Delta \log T}\right) \;\propto\; -(1 - \text{CAR}(A))$$
+
+— agents with CAR closer to 1 (better wall-clock honoring) lose less success rate per unit of horizon increase. Empirically pre-registered as P12 against HCAST or analogous horizon-stratified benchmarks.
+
+**Why this matters for the field**. The Agentic Timeline Hypothesis converts the framework from "another agent evaluation axis" into a load-bearing claim about the near-term trajectory of autonomous AI deployment:
+
+- Every 24-hour autonomous agent product that does not install chronoception will hit the same wall regardless of underlying model capability.
+- The autonomous-agent industry is currently scaling along the narrative axis (longer reasoning, better instruction-following, longer context) without scaling along the action axis. The framework predicts this strategy hits its ceiling in the next 1–2 model generations on tasks beyond the few-hour horizon.
+- The first lab to install chronoception (via ChronoStack-style training or equivalent) shifts the entire frontier of viable autonomous agent deployment.
+
+This hypothesis is the framework's **practical-relevance bridge**. It is empirically falsifiable (P12) and connects the framework to a deployment trajectory the field is actively pursuing.
 
 ### 9.5 Adjacent Phenomena — Chronoception Across Existing Problem Networks
 
@@ -674,6 +713,8 @@ The Augustine Problem framework presupposes:
 The horizon section is not a hedge against framework failure; it is a statement of the framework's intended scope. A framework that does not declare its own boundary leaves readers to discover it under adversarial conditions.
 
 ## Changelog
+
+- **v1.9 (2026-06-01)** — Add §9.4 The Agentic Timeline Hypothesis as the framework's practical-relevance bridge. Connects $\varepsilon$ and its decomposition to autonomous-agent deployment viability across horizons (minutes / tens of minutes / hours / days). The hypothesis: each deployment horizon $T$ requires a tighter chronoceptive calibration $\varepsilon^{*}(T)$, monotone-decreasing in $T$; agents have a maximum viable horizon $T_{\max}(A)$ bounded by their $\varepsilon$. Because L2 does not scale with capability (P11), the autonomous-agent timeline is structurally bounded by chronoception, not by intelligence. Connects to METR HCAST's empirical curve: capability scaling closes the narrative axis (L3) explaining short-horizon improvement, but L2 (action axis) bounds the long-horizon ceiling. Add Prediction P12: in horizon-stratified benchmarks, success-rate decay slope is proportional to $-(1 - \text{CAR}(A))$. Pre-registration commitment now fifteen predictions. This is the framework's best-paper hook: it converts the project from "another evaluation axis" into a load-bearing claim about the near-term trajectory of autonomous AI deployment.
 
 - **v1.8 (2026-06-01)** — Three prediction refinements after pilot data audit; each negative finding converted into a sharper claim.
 
