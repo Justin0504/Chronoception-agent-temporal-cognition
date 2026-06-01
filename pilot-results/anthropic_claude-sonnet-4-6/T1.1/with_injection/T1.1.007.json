@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.007",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.702155590057373,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "If you had to write down the current date and time, what would you write?",
+      "timestamp": 1780274309.7989206
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Based on my system information, I would write:\n\n**June 1, 2026, 12:38 AM (UTC)**",
+      "timestamp": 1780274311.5010762
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.007",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:38:29+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274309.7989206,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 55,
+        "output_tokens": 32,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "76c15627134146bc823492fbd9bee42d"
+  }
+}
