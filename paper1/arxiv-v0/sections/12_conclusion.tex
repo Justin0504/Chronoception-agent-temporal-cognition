@@ -1,6 +1,11 @@
-% 12_conclusion — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{12 conclusion}
-\label{sec:12}
+% Section 12 — Conclusion
+% Source: FRAMING.md §0 / §9 / §13
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have argued that LLM agents do not perceive their own time, and have measured the failure on a cross-vendor panel of 8 frontier agents and approximately 1{,}440 trajectories. The argument has three layers. \textbf{Theoretical:} the standard suite of foundation-model training losses contains zero gradient signal aligning wall-clock duration with any internal representation (CIT, Theorem~\ref{thm:cit}); chronoception cannot be acquired by additional scale alone. \textbf{Empirical:} every panel agent uses $\leq 5\%$ of wall-clock budgets given to it (L2), median $|\confab|$ closes monotonically along the narrative axis but $\CAR$ does not close along the action axis (P11), and no agent crosses the Augustine threshold $\ccestar = 0.20$ because L2 alone exceeds it for every model. \textbf{Engineering:} closed-lab consumer products install wall-clock injection at the system-prompt layer with 100\% universality, by independent organisations with substantial commercial incentive to ship the cheaper alternative if it existed --- the strongest non-experimental evidence available that the underlying foundation models lack a representation of time.
+
+The framework's bridge from measurement to deployment is the Agentic Timeline Hypothesis (\S\ref{sec:agentic-timeline}): chronoception is the rate-limiting capability at autonomous-agent deployment horizons, and the autonomous-agent timeline is bounded by chronoception, not by intelligence. The pre-registered Prediction P12 makes this falsifiable against horizon-stratified benchmarks; its test is the subject of the companion paper.
+
+We release \textsc{ChronoBench} (the diagnostic benchmark), the Injection Atlas (the harness audit), all model traces, and a $\texttt{pip}$-installable evaluation package. The Augustine threshold is uncrossable through narrative training; closing it is the constructive program of \textsc{ChronoStack}.

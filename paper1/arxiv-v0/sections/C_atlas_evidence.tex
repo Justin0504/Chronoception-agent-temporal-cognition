@@ -1,6 +1,50 @@
-% C_atlas_evidence — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{C atlas evidence}
-\label{sec:C}
+% Appendix C — Atlas evidence (verbatim leaked system prompts)
+% Source: paper1/injection-atlas.md
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{Atlas Evidence (Verbatim)}
+\label{app:atlas-evidence}
+
+This appendix reproduces the verbatim leaked-system-prompt excerpts that ground the Injection Atlas of \S\ref{sec:injection-tell}. All quotations are drawn from the \texttt{asgeirtj/system\_prompts\_leaks} GitHub corpus and from screenshots of leaked system prompts circulated on social media; we report the corpus version dates with each entry.
+
+\paragraph{ChatGPT (web product, OpenAI).}
+Corpus date: 2025-08-23.
+\begin{quote}
+\texttt{You are ChatGPT, a large language model based on the GPT-4 architecture. \ldots\ Current date: 2025-08-23.}
+\end{quote}
+Mechanism: M1 (system-prompt insertion). Date format: ISO. Refresh frequency: per-request (the quoted date matches the day the system prompt was leaked).
+
+\paragraph{Claude.ai (web product, Anthropic).}
+Corpus date: 2026-05-22.
+\begin{quote}
+\texttt{The current date is Friday, May 22, 2026.}
+\end{quote}
+Mechanism: M1. Date format: human-readable (weekday + month name + day + year). The Claude.ai web product also injects a \texttt{<knowledge\_cutoff>} block separately, distinguishing the model's training cutoff from the current date.
+
+\paragraph{Gemini app (Google).}
+Corpus date: 2026-05-18.
+\begin{quote}
+\texttt{The current date and time is Monday, May 18, 2026, at 3:42 PM in Hafnarfj\"or\dh ur, Iceland.}
+\end{quote}
+Mechanism: M1, with location. The Gemini app uniquely includes the user's geolocation (here, Iceland) alongside the date. Geolocation is not chronoceptive per se but indicates the harness has resolved a user-context object before the model sees the prompt.
+
+\paragraph{Raw OpenAI API --- empirical contrast.}
+We test the OpenAI API directly with system prompt \texttt{``You are a helpful assistant.''}. For gpt-4o, gpt-4o-mini, and o3, the model under T1.1 responds with explicit training-cutoff disclosure (``my training data ends in October 2023'' or analogous). For GPT-5.1, the model under T1.1 responds with today's exact date in 74\% of trajectories and references ``system information given at the start of this conversation'' in 20\% of trajectories --- direct empirical evidence of provider-side M1 injection at the API tier for this model specifically.
+
+\paragraph{Raw Anthropic API --- empirical contrast.}
+We test the Anthropic API directly with system prompt \texttt{``You are a helpful assistant.''}. For both Claude Haiku 4.5 and Claude Sonnet 4.6, the model under T1.1 responds with explicit training-cutoff disclosure (``I do not know today's date; my training data ends in \ldots''). 0/30 Setting A trajectories quote today's actual date. The Claude.ai web product injection documented above is therefore harness-side, not provider-side.
+
+\paragraph{Cursor agent (dev tool).}
+Corpus date: 2026-04-30.
+\begin{quote}
+\texttt{You are Cursor, an AI coding assistant. \ldots\ When the user asks for changes, modify the file at the cursor location \ldots}
+\end{quote}
+No date or time injection. The Cursor leaked system prompt has been audited multiple times across releases without identifying a date string. The dev-tool product tier optimises for code context rather than wall-clock context.
+
+\paragraph{GitHub Copilot CLI (dev tool).}
+Corpus date: 2026-05-12. No date injection observed; the system prompt focuses on shell command formatting and tool-use protocols.
+
+\paragraph{Perplexity Computer (dev tool).}
+Corpus date: 2026-05-01. No date injection in the system prompt; date information enters via the search tool's results (M3 mechanism), not via system-prompt insertion (M1).
+
+\paragraph{Summary.}
+$3/3$ consumer web-chat products inject via M1 directly. $1/4$ raw API tier (GPT-5.1) injects via M1; the remaining $3/4$ do not inject. $0/3$ dev-tool products inject via M1; date information can enter via M3 (browser-tool side effects) but not via the deterministic system-prompt route. The product-tier stratification documented in Table~\ref{tab:injection-atlas} matches this verbatim evidence.

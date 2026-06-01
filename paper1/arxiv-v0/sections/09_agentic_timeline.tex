@@ -1,6 +1,67 @@
-% 09_agentic_timeline — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{09 agentic timeline}
-\label{sec:09}
+% Section 9 — The Agentic Timeline Hypothesis (best-paper hook)
+% Source: FRAMING.md §9.4 (v1.9)
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{The Agentic Timeline Hypothesis}
+\label{sec:agentic-timeline}
+
+The empirical results in \S\ref{sec:l2}--\S\ref{sec:injection-tell} establish that the Augustine Problem is real, measurable, and structurally bounded by L2. This section articulates the framework's bridge from measurement to deployment: \emph{why chronoception is the rate-limiting capability for the autonomous-agent trajectory the field is actively pursuing}.
+
+\paragraph{Horizon-dependent chronoceptive requirements.}
+As autonomous agent products move from minute-scale chat completion to hour-scale coding agents to day-scale autonomous research agents, each horizon $T$ imposes its own chronoceptive demands. Table~\ref{tab:horizon-requirements} summarises the requirement structure.
+
+\begin{table}[h]
+\centering
+\caption{Chronoceptive requirements scale with deployment horizon $T$. Each row adds capabilities the previous tier could ignore.}
+\label{tab:horizon-requirements}
+\small
+\begin{tabular}{lp{4.5cm}p{4.5cm}}
+\toprule
+Horizon $T$ & Required chronoceptive property & Failure mode if missing \\
+\midrule
+Minutes (chat) & T1.1 clock awareness & Wrong-date hallucination \\
+Tens of minutes (single-task agent) & + T2.3 wall-budget execution + T3.1 retrospective $\confab$ & Early termination or runaway \\
+Hours (multi-step coding agent) & + T1.3 deadline-aware tradeoff + T3.2 prospective $\confab$ & Cascade failure on time-bounded sub-tasks \\
+Days (autonomous research agent) & Full $\Phi$ near grounded; stable $\NA$ & Loss of session coherence; silent budget exhaustion \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The Agentic Timeline Hypothesis.}
+Let $\ccestar(T)$ denote the chronoceptive calibration error required for an autonomous agent to be viable at deployment horizon $T$. We hypothesise that $\ccestar(T)$ is monotone-decreasing in $T$. Equivalently, every agent has a \textbf{maximum viable horizon} $T_{\max}(\agent)$, beyond which its chronoceptive failures compound and task success decays to chance.
+
+\begin{hypothesis}[Agentic Timeline Hypothesis]
+\label{hyp:agentic-timeline}
+For an agent $\agent$ with chronoceptive calibration error $\cce(\agent)$ and median Clock-Adherence Ratio $\CAR(\agent)$, the maximum viable deployment horizon $T_{\max}(\agent)$ satisfies
+\[
+T_{\max}(\agent) \;\propto\; \frac{1}{\cce(\agent)} \;\cdot\; f(\CAR(\agent)),
+\]
+where $f$ is monotonically increasing in $\CAR$.
+\end{hypothesis}
+
+The structural consequence of Hypothesis~\ref{hyp:agentic-timeline} combined with our empirical Prediction P11 (\S\ref{sec:l2}: L2 does not scale with capability) is that \textbf{$T_{\max}$ does not scale with capability either}. Capability scaling closes the narrative axis (L3) but leaves the action axis (L2) untouched, so the action-axis component of $\cce$ remains the binding constraint at deployment-relevant horizons.
+
+\paragraph{Connection to METR HCAST.}
+\citet{kwa2025metrhorizons}'s HCAST benchmark measures agent success rate on tasks stratified by human time difficulty. The published capability-scaling curve exhibits two features that prior work has not jointly explained: (i) monotone improvement at short horizons; (ii) saturation at long horizons. The narrative-axis vs action-axis split (\S\ref{sec:l2}) supplies the mechanism: capability scaling closes L3 (driving short-horizon improvement) but leaves L2 bounded by the chronoception impossibility of \S\ref{sec:augustine-problem} (capping long-horizon ceiling).
+
+\paragraph{Pre-registered Prediction P12.}
+We formalise the connection as a falsifiable claim against horizon-stratified benchmarks.
+
+\begin{quote}
+\textbf{P12 (Agentic Timeline).} For an agent panel evaluated on horizon-stratified tasks (METR HCAST or analogues), the slope of success-rate decay with $\log T$ is proportional to $-(1 - \CAR(\agent))$ at fixed parameter count:
+\[
+\mathrm{slope}\!\left(\frac{\Delta\,\text{success rate}}{\Delta\log T}\right) \;\propto\; -(1 - \CAR(\agent)).
+\]
+Agents with $\CAR$ closer to $1$ lose less success rate per unit of horizon increase.
+\end{quote}
+
+P12 is the framework's deployment-relevant falsifiable claim. If P12 holds, chronoception (specifically the L2 component of $\cce$) is the explanatory variable for the slope of the autonomous-agent capability curve at long horizons. If P12 fails, the framework's deployment-relevance claim weakens.
+
+\paragraph{Implications for the field.}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{The narrative-axis ceiling is not the deployment ceiling.} The industry is scaling along the narrative axis (longer reasoning, better instruction-following, longer context). This strategy improves short-horizon experience but hits a ceiling on tasks beyond the few-hour horizon. Capability scaling alone will not save the autonomous-agent product line.
+    \item \textbf{Provider injection is a consumer-tier band-aid.} The Injection Tell (\S\ref{sec:injection-tell}) closes T1.1 at the consumer product layer but leaves the deeper L2/L3 failure modes intact. Injection scales user trust at the chat tier; it does not scale autonomy at the agent tier.
+    \item \textbf{The first lab to install chronoception shifts the deployment frontier.} CIT (\S\ref{sec:augustine-problem}) identifies three installation routes: loss terms with wall-clock support, inference-time tools with learned policy interfaces, and architectural primitives. We propose all three in a companion paper (\textsc{ChronoStack}); any lab that executes any of the three before competitors does so at the timing of a deployment-frontier shift.
+\end{enumerate}
+
+\paragraph{What this section claims, and what it does not.}
+Hypothesis~\ref{hyp:agentic-timeline} and P12 connect $\cce$ to deployment viability. They do not claim (a) that $T_{\max}$ has a closed-form analytic expression, (b) that no other capability matters, or (c) that \textsc{ChronoStack} is the unique route to chronoceptive installation. The claim is that \emph{chronoception is the binding constraint at deployment-relevant horizons}, falsifiable by failure of P12 on a sufficiently large agent panel.

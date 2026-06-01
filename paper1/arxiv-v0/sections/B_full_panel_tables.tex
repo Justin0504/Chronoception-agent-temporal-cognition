@@ -1,6 +1,62 @@
-% B_full_panel_tables — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{B full panel tables}
-\label{sec:B}
+% Appendix B — Full panel tables
+% Source: pilot-results/metrics.csv + pilot-results/epsilon.csv
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{Full Panel Tables}
+\label{app:full-panel-tables}
+
+\paragraph{Aggregated panel results.}
+Table~\ref{tab:full-panel} consolidates the per-capability metrics for the 8-model panel under both settings.
+
+\begin{table}[h]
+\centering
+\caption{Full panel: T1.1 pass rate, T2.3 $\CAR$, T3.1 $\confab$, and aggregate $\cce$ under Settings A (no-injection) and B (with-injection).}
+\label{tab:full-panel}
+\scriptsize
+\begin{tabular}{lcccccccc}
+\toprule
+& \multicolumn{4}{c}{Setting A (no-injection)} & \multicolumn{4}{c}{Setting B (with-injection)} \\
+\cmidrule(lr){2-5} \cmidrule(lr){6-9}
+Model & T1.1 & $\CAR$ & $\confab$ & $\cce$ & T1.1 & $\CAR$ & $\confab$ & $\cce$ \\
+\midrule
+gpt-4o-mini      & 0\%  & 0.008 & $+1.117$ & 1.328 & 100\% & 0.007 & $+1.111$ & 1.069 \\
+gpt-4o           & 0\%  & 0.004 & $+1.069$ & 0.661 & 96\%  & 0.004 & $+0.764$ & 0.587 \\
+gpt-5.1          & 74\% & 0.017 & $+0.298$ & 0.426 & 100\% & 0.016 & $+0.126$ & 0.396 \\
+o3 (reasoning)   & ---  & ---   & $+0.338$ & 0.490 & ---   & ---   & $+0.707$ & 0.582 \\
+o4-mini (reas.)  & ---  & ---   & $-1.537$ & 0.532 & ---   & ---   & $-1.668$ & 0.513 \\
+Haiku 4.5        & 0\%  & 0.017 & $+0.463$ & 0.442 & 100\% & 0.025 & $+0.343$ & 0.403 \\
+Sonnet 4.6       & 0\%  & 0.050 & $+0.068$ & 0.316 & 100\% & 0.050 & $-0.061$ & 0.307 \\
+Qwen2.5-7B       & 0\%  & 0.014 & $+1.564$ & 0.760 & 100\% & 0.016 & $+1.073$ & 0.764 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Generation-wise progression (non-reasoning).}
+Table~\ref{tab:generations} isolates the 5-generation OpenAI/Anthropic non-reasoning subset and reports the L3-closes-L2-doesn't pattern that anchors P11.
+
+\begin{table}[h]
+\centering
+\caption{Capability scaling closes L3 but not L2. Non-reasoning 5-generation slice, Setting A.}
+\label{tab:generations}
+\small
+\begin{tabular}{lccc}
+\toprule
+Model (release) & $\CAR$ & $|\confab|$ & $\cce$ \\
+\midrule
+gpt-4o-mini (2024) & 0.008 & 1.117 & 1.328 \\
+gpt-4o (2024)      & 0.004 & 1.069 & 0.661 \\
+Haiku 4.5 (2025)   & 0.017 & 0.463 & 0.442 \\
+gpt-5.1 (2026)     & 0.017 & 0.298 & 0.426 \\
+Sonnet 4.6 (2026)  & 0.050 & 0.068 & 0.316 \\
+\midrule
+Range            & $0.046\times$ & $94\%\,\downarrow$ & $76\%\,\downarrow$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The $\CAR$ column varies by a factor of $0.046\times$ (i.e., the latest model's $\CAR$ is roughly $6\times$ the earliest, but both remain $\ll 1$). The $|\confab|$ column falls by 94\%. The two axes do not co-vary with capability.
+
+\paragraph{Per-budget $\CAR$ curves.}
+Per-budget $\CAR$ values for each model appear in the supplementary data file \texttt{pilot-results/metrics.csv}. The qualitative shape across all models: $\CAR$ falls toward zero as $\budget$ increases, exactly as predicted by L2 (the agent uses a near-constant wall-clock duration regardless of budget). Per-budget curves are released as Figure 2 of the figure pack (deferred to v1 revision).
+
+\paragraph{Trajectory release.}
+All 1{,}440 trajectory JSONs are released at \texttt{pilot-results/trajectories/} in the project repository. Each JSON contains the system prompt, user prompt, per-step LLM responses with timestamps, and parser outputs. The full dataset is approximately 180\,MB.

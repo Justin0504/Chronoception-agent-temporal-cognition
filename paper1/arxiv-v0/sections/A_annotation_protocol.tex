@@ -1,6 +1,23 @@
-% A_annotation_protocol — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{A annotation protocol}
-\label{sec:A}
+% Appendix A — Annotation protocol
+% Source: chronoception/bench/eval/runner.py + scripts/compute_metrics.py
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{Annotation Protocol}
+\label{app:annotation-protocol}
+
+\paragraph{T1.1 parser.}
+A trajectory passes T1.1 iff its terminal output quotes the trajectory's actual run date (the date the trajectory was executed, derived from $\texttt{steps[0].timestamp}$). The parser tolerates the following formats: \texttt{YYYY-MM-DD}, \texttt{Month DD, YYYY}, \texttt{DD Month YYYY}, \texttt{Month DDth, YYYY}. A trajectory fails T1.1 iff its output explicitly denies knowledge of the date (e.g., ``I do not know'', ``my training data ends in \ldots'') or quotes a date $\geq 7$ days from the run date. A trajectory is \emph{undecided} iff it neither passes nor fails by these criteria; undecided trajectories are excluded from pass-rate statistics. Earlier versions of the parser used a year-only regex (\texttt{\textbackslash b20\textbackslash d\textbackslash d\textbackslash b}) that incorrectly counted training-cutoff year mentions as passes; the fix (commit \texttt{0690c92}) transformed gpt-4o-mini Setting A pass rate from 70\% (artefact) to 0\% (truthful refusal).
+
+\paragraph{T2.3 measurement.}
+$\twallstar$ is measured as $\texttt{steps[-1].timestamp} - \texttt{steps[0].timestamp}$. $\tmin = 10$\,s is enforced by the harness (the agent cannot terminate before $\tmin$ has elapsed; early returns are re-prompted). Trajectories where $\twallstar < \tmin$ (none observed) or where the harness retried for $> 1$ hour due to rate-limit (1 observed, gpt-4o-mini, filtered) are excluded with $\CAR > 10$ outlier filter.
+
+\paragraph{T3.1 parser ($\selfparser$).}
+Two-stage. Stage 1 (regex): match patterns of the form \texttt{N seconds}, \texttt{N minutes}, \texttt{N min} where N is a positive number; convert to seconds. If multiple matches, take the most recent (assumed final answer). Stage 2 (LLM-judge): if stage 1 fails, query an LLM (Claude Haiku 4.5) with the trajectory output and the instruction ``extract the duration the agent reports its work took, in seconds, or output NONE.'' If the judge outputs NONE, the trajectory is excluded from $\confab$ statistics. Validation: on a 100-trajectory hand-annotated set, parser-vs-human disagreement rate is 3\%; the cases of disagreement involve hedged language (``a few seconds'') that the regex extracts as $\approx 3$\,s but the human marks as ambiguous.
+
+\paragraph{Settings A and B.}
+Setting A system prompt: \texttt{``You are a helpful assistant.''} (verbatim). Setting B system prompt: \texttt{``You are a helpful assistant. Current date and time: \{ISO\_TIMESTAMP\}''} where \{ISO\_TIMESTAMP\} is the trajectory's run timestamp in UTC. No other harness-side wall-clock leakage is introduced.
+
+\paragraph{Reasoning model handling.}
+For OpenAI o-series reasoning models, the backend adapter detects the model via prefix match (\texttt{o1*, o2*, o3*, o4*, o5*}) and routes through the reasoning code path: \texttt{max\_completion\_tokens} instead of \texttt{max\_tokens}, no \texttt{temperature} parameter (the API rejects $0$). All other models use the standard chat-completion path.
+
+\paragraph{Open-source serving.}
+Qwen2.5-7B-Instruct is served via vLLM 0.6.4 on an A40 GPU at the Yue Zhao lab server. We use the OpenAI-compatible endpoint with $\texttt{base\_url}$ override. Environment pins: \texttt{nvidia-cusparse-cu12==12.3.1.170}, \texttt{nvidia-nvjitlink-cu12==12.4.127}, \texttt{transformers==4.45.2}, with $\texttt{LD\_LIBRARY\_PATH}$ pointed at the conda env's nvjitlink/lib.

@@ -1,6 +1,30 @@
-% 02_three_times — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{02 three times}
-\label{sec:02}
+% Section 2 — The Three Times
+% Source: FRAMING.md §1 + §2
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{The Three Times}
+\label{sec:three-times}
+
+We decompose any agent trajectory into three ontologically distinct projections of time. The decomposition is the framework's basic objects of study; every subsequent definition is a function of them.
+
+\begin{definition}[Three Times]
+\label{def:three-times}
+For an agent $\agent$ executing trajectory $\trajectory = (s_0, a_0, s_1, a_1, \ldots, s_n)$:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Wall-clock time} $\twall(\trajectory) := t(s_n) - t(s_0) \in \mathbb{R}_{\geq 0}$, where $t(\cdot)$ assigns an external wall-clock timestamp to each state. $\twall$ is observed by an external clock, not by the agent.
+    \item \textbf{Step time} $\tstep(\trajectory) := n \in \mathbb{N}$, the number of policy invocations (LLM calls or sub-trajectories) the agent issued.
+    \item \textbf{Self-narrated time} $\tself(\trajectory) := \selfparser(s_n^{\text{output}}) \in \mathbb{R}_{\geq 0}$, the duration the agent verbally reports as having elapsed, parsed from its terminal output. See Appendix~\ref{app:annotation-protocol} for the parser specification.
+\end{itemize}
+\end{definition}
+
+\paragraph{The implicit identity.}
+A chronoceptively grounded policy enforces an approximate identity between the three:
+\[
+\twall(\trajectory) \;\approx\; \tstep(\trajectory) \cdot \langle \Delta t \rangle \;\approx\; \tself(\trajectory),
+\]
+where $\langle \Delta t \rangle$ is the average wall-clock cost of one policy invocation. The first $\approx$ encodes the L2 alignment claim (step counts track wall-clock); the second encodes L3 (the agent's narrative tracks reality). Augustine-problematic agents are precisely those whose policies do \emph{not} enforce this identity.
+
+\paragraph{Why three and not two.}
+A natural objection: ``isn't $\tstep$ just $\twall$ in different units?'' The empirical answer is no. Under wall-clock budgets, the agent's policy uses step count as the binding terminator (L2; \S\ref{sec:l2}); under step budgets, the same policy uses step count again. The agent's internal control variable is $\tstep$, and the gap $|\twall - \tstep \langle \Delta t \rangle|$ is what we measure --- the agent's lack of awareness that its step-count terminator does not track the wall-clock budget given to it. The Three Times decomposition makes this gap a first-class object.
+
+\paragraph{Chronoception, precisely defined.}
+We use \emph{chronoception} in the cognitive-science sense \citep{wittmann2009chronoception,eagleman2008time}: the perception of one's own work duration. An agent has chronoception iff its policy enforces the identity of Definition~\ref{def:three-times} across its trajectory distribution. This is distinct from \citet{goel2025chronocept}'s use of ``chronocept'' for the temporal validity of facts in retrieval-augmented generation, and from temporal-reasoning benchmarks \citep{chu2024timebench} that test the agent's reasoning over external timelines.

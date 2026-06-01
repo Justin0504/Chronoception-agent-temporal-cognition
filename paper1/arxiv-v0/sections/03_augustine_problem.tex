@@ -1,6 +1,38 @@
-% 03_augustine_problem — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{03 augustine problem}
-\label{sec:03}
+% Section 3 — The Augustine Problem and CIT
+% Source: FRAMING.md §3 + §3.2
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{The Augustine Problem}
+\label{sec:augustine-problem}
+
+\begin{definition}[Augustine Problem]
+\label{def:augustine-problem}
+An agent $\agent$ exhibits the \emph{Augustine Problem} if its policy fails to enforce the implicit identity of Definition~\ref{def:three-times} across its trajectory distribution. Formally, $\agent$ is Augustine-problematic on task family $\tasks$ if
+\[
+\mathbb{E}_{\trajectory \sim \pi_\agent}\!\left[\,
+\big|\twall(\trajectory) - \tstep(\trajectory) \langle \Delta t \rangle \big|
+\,+\,
+\big|\twall(\trajectory) - \tself(\trajectory)\big|
+\right] \;>\; \cce_0,
+\]
+for some calibration tolerance $\cce_0$. The agent perceives durations through its policy's projection; if the projection is mis-aligned, the agent ``speaks fluently about durations it cannot perceive'' (Augustine, \emph{Confessions} XI).
+\end{definition}
+
+\paragraph{Why text-only losses cannot close the gap.}
+We argue, and formalise as a theorem, that the standard suite of foundation-model training objectives cannot produce a chronoceptive policy.
+
+\begin{theorem}[Chronoception Impossibility Theorem (CIT)]
+\label{thm:cit}
+Let $\loss$ be a training loss of the form $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}\!\left[\ell\big(f_\theta(x_{<i}), x_i\big)\right]$, where $\mathcal{D}$ is a distribution over token sequences and neither the loss $\ell$ nor the data $\mathcal{D}$ contains wall-clock support. Then $\nabla_\theta \loss$ contains zero gradient signal aligning $\twall$ with any internal representation of $\agent$. Equivalently, $\agent$'s policy enforces no implicit identity between $\twall$ and either $\tstep$ or $\tself$.
+\end{theorem}
+
+\begin{proof}[Sketch]
+The chain rule gives $\nabla_\theta \loss = \mathbb{E}\!\left[\partial \ell / \partial f_\theta \cdot \nabla_\theta f_\theta\right]$. Neither factor is a function of the wall-clock time at which the sample was generated; tokens are observed without timestamps. Therefore $\nabla_\theta \loss$ is invariant to any reparameterisation of $\twall$, including arbitrary scaling. A policy trained against $\loss$ cannot acquire a representation of $\twall$ in any sense that distinguishes one wall-clock duration from another.
+\end{proof}
+
+Theorem~\ref{thm:cit} covers the dominant losses in current practice: next-token cross-entropy, supervised fine-tuning, RLHF, RL with verifiable rewards (RLVR), and reasoning-supervision training. All five are functionals of token sequences alone. The empirical predictions of CIT --- L2 does not close under capability scaling (\S\ref{sec:l2}), and L2 is unmoved by prompt-level wall-clock information (\S\ref{sec:injection-tell}) --- are confirmed in the panel.
+
+\paragraph{What CIT does and does not preclude.}
+CIT is a statement about losses, not about agents. It does not preclude that a sufficiently elaborate harness, tool-use scaffolding, or post-training intervention installs effective chronoception (we discuss three routes in \S\ref{sec:agentic-timeline} and the companion \textsc{ChronoStack} paper). It does preclude that the foundation model alone, trained on token-only losses, will close the gap by virtue of additional scale, additional reasoning compute, or additional context.
+
+\paragraph{The Augustine threshold.}
+We adopt $\ccestar = 0.20$ as the operational threshold separating Augustine-problematic from chronoceptively grounded agents. The threshold is calibrated against human chronoceptive performance: humans introspecting on their own work duration produce $\cce \approx 0.10$ on analogous tasks \citep{wittmann2009chronoception}, and the threshold is set at $2\times$ human error as the boundary of deployment viability. The threshold is not the framework's claim --- it is a benchmark target that no panel agent currently meets (\S\ref{sec:epsilon}).

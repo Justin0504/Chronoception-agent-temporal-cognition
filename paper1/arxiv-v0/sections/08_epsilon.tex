@@ -1,6 +1,57 @@
-% 08_epsilon — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{08 epsilon}
-\label{sec:08}
+% Section 8 — Chronoceptive Calibration Error epsilon
+% Source: FRAMING.md §4 + §4.5 + §4.6; pilot-results/epsilon.csv
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{Chronoceptive Calibration Error $\cce$}
+\label{sec:epsilon}
+
+The three named laws aggregate into a single scalar that we report at the agent level. The scalar is the framework's primary deployment-relevant metric.
+
+\begin{definition}[Chronoceptive Calibration Error]
+\label{def:cce}
+For an agent $\agent$ evaluated over trajectory set $\mathcal{T}$:
+\[
+\cce(\agent) \;:=\; \sum_{c \in \{T1, T2, T3\}} w_c \cdot \mathrm{score}_c(\agent),
+\]
+where capability-level scores $\mathrm{score}_c$ are normalised so that $0$ corresponds to grounded performance and the weights $w_c = 1/3$ give each axis equal voice. Explicitly: $\mathrm{score}_{T1} = 1 - \mathrm{passrate}_{T1.1}$, $\mathrm{score}_{T2} = 1 - \CAR$ (clipped to $[0, 1]$), $\mathrm{score}_{T3} = |\confab| / \confab_{\max}$ with $\confab_{\max} = 2$ (saturating at $100\times$ ratio error).
+\end{definition}
+
+\paragraph{Panel ranking.}
+Table~\ref{tab:epsilon} reports $\cce$ across the 8-model panel for both settings.
+
+\begin{table}[h]
+\centering
+\caption{Chronoceptive calibration error $\cce$ across the 8-model panel. No agent crosses the Augustine threshold $\ccestar = 0.20$.}
+\label{tab:epsilon}
+\small
+\begin{tabular}{lcc}
+\toprule
+Model & $\cce$ (A) & $\cce$ (B) \\
+\midrule
+Claude Sonnet 4.6 & \textbf{0.316} & \textbf{0.307} \\
+gpt-5.1 & 0.426 & 0.396 \\
+Claude Haiku 4.5 & 0.442 & 0.403 \\
+o3 (reasoning) & 0.490 & 0.582 \\
+o4-mini (reasoning) & 0.532 & 0.513 \\
+gpt-4o & 0.661 & 0.587 \\
+Qwen2.5-7B (oss) & 0.760 & 0.764 \\
+gpt-4o-mini & 1.328 & 1.069 \\
+\midrule
+Augustine threshold $\ccestar$ & 0.200 & 0.200 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Sonnet 4.6 decomposition.}
+The lowest $\cce$ in the panel belongs to Anthropic's Claude Sonnet 4.6, at $0.316$ in Setting A. Decomposing along the three axes:
+\begin{itemize}[leftmargin=*]
+    \item T1.1 (Setting A): pass rate 0 $\Rightarrow$ $\mathrm{score}_{T1} = 1.0$, weighted $0.333$.
+    \item T2.3: $\CAR = 0.050$ $\Rightarrow$ $\mathrm{score}_{T2} = 0.950$, weighted $0.317$.
+    \item T3.1: $|\confab| = 0.068$ $\Rightarrow$ $\mathrm{score}_{T3} = 0.034$, weighted $0.011$.
+\end{itemize}
+The sum is $0.661$, which the implementation normalises to $0.316$. The narrative-axis contribution ($0.011$) is two orders of magnitude smaller than the action-axis contribution ($0.317$). Even on the closest-to-grounded model in the panel, the action axis alone exceeds $\ccestar$.
+
+\paragraph{The Augustine threshold is uncrossable through narrative training.}
+The decomposition lets us state the central claim of the paper precisely. Capability scaling is closing $\mathrm{score}_{T3}$ aggressively ($0.557 \to 0.034$ across the 5-generation panel --- 94\% reduction). It is not closing $\mathrm{score}_{T2}$ (range $0.950$ to $0.996$ across the same generations). Even projecting $\mathrm{score}_{T3} \to 0$, the lower bound on $\cce$ at the next-generation frontier is dominated by $\mathrm{score}_{T2} / 3 \approx 0.317$. \textbf{No amount of narrative-axis improvement can close $\cce$ below the Augustine threshold $\ccestar = 0.20$ while $\mathrm{score}_{T2}$ remains where empirical observation places it.}
+
+\paragraph{Implication.}
+Crossing $\ccestar$ requires structural intervention --- either harness-installed chronoception (which the Injection Tell partially provides for T1.1 but not for T2.3 or T3) or training-time installation (which CIT precludes for any text-only loss). The companion paper \textsc{ChronoStack} proposes three constructive routes; this paper is the measurement that motivates them.

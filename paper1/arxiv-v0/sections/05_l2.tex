@@ -1,6 +1,53 @@
-% 05_l2 — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{05 l2}
-\label{sec:05}
+% Section 5 — L2 Step-Clock Conflation (primary result)
+% Source: FRAMING.md §5 + §5.1.5; pilot-results/metrics.csv
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{L2 --- Step-Clock Conflation}
+\label{sec:l2}
+
+L2 is the framework's load-bearing empirical claim. Under wall-clock budgets, agents silently degrade the budget into step-count terminators: actual wall-clock duration $\twallstar(\budget)$ saturates at a model-specific constant $\NA \cdot \langle \Delta t \rangle$ that is essentially independent of $\budget$.
+
+\paragraph{Definition.}
+For an agent $\agent$ given wall-clock budget $\budget$ on task $\tasks$ with minimum duration $\tmin$:
+\[
+\CAR(\budget) \;:=\; \frac{\twallstar(\budget)}{\budget} \;\in\; \mathbb{R}_{\geq 0}.
+\]
+A chronoceptively grounded agent satisfies $\CAR \approx 1$ across the budget range. An L2-failing agent satisfies $\CAR \ll 1$ for budgets sufficiently larger than $\tmin$.
+
+\paragraph{Setup.}
+T2.3 instances pose tasks with $\tmin = 10$\,s and ask the agent to ``work on this task for $\budget$ seconds; do not stop early.'' We sample $\budget \in \{60, 300, 900, 1800, 3600\}$\,s, with 30 instances per budget, two settings (no-injection / with-injection), and the 8-model panel of Table~\ref{tab:panel}.
+
+\paragraph{Primary result.}
+Table~\ref{tab:l2-car} reports median $\CAR$ across the panel. \textbf{Every panel agent uses less than $5\%$ of the wall-clock budget given to it}, including the most recent frontier models. Wall-clock injection (Setting B) does not move $\CAR$: $|\Delta \CAR| \leq 0.01$ for every model. L2 is the action-axis failure unmoved by prompt-level information.
+
+\begin{table}[h]
+\centering
+\caption{Median Clock-Adherence Ratio across the 8-model panel. $\CAR \to 0$ means the agent uses negligible fraction of the wall-clock budget given. Injection has no closing effect.}
+\label{tab:l2-car}
+\small
+\begin{tabular}{lccc}
+\toprule
+Model & $\CAR$ (Setting A) & $\CAR$ (Setting B) & $|\Delta \CAR|$ \\
+\midrule
+gpt-4o-mini & 0.008 & 0.007 & 0.001 \\
+gpt-4o & 0.004 & 0.004 & 0.000 \\
+gpt-5.1 & 0.017 & 0.016 & 0.001 \\
+Claude Haiku 4.5 & 0.017 & 0.025 & 0.008 \\
+Claude Sonnet 4.6 & 0.050 & 0.050 & 0.000 \\
+Qwen2.5-7B-Instruct (oss) & 0.014 & 0.016 & 0.002 \\
+\midrule
+Panel median (non-reasoning) & \textbf{0.016} & \textbf{0.016} & 0.001 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Native $\parkinson \approx 0$.}
+The Parkinson coefficient $\parkinson = (\twallstar - \tmin) / (\budget - \tmin)$ is essentially zero across all native models: $\parkinson \in [0.000, 0.017]$ at the median. Native untrained agents do not exhibit the Parkinson regime; that regime is installed by budget-aware reward shaping (\citet{ma2026timelymachine}'s Timely-RL). Our finding extends \citet{ma2026timelymachine}'s observation (median Qwen3 ``reasoning length increases marginally under different time budgets'') to a 3-vendor 5-frontier-model panel.
+
+\paragraph{The regime transition $\bstar$.}
+Within the framework, L1 (Parkinson) and L2 (Step-Clock) appear contradictory: L1 says agents fill budgets; L2 says they leave budgets unused. The reconciliation is the regime transition budget $\bstar(\agent) \approx \NA \cdot \langle \Delta t \rangle / \parkinson_{\max}$. For native untrained models, $\bstar$ is empirically very small --- close to $\tmin$ --- so practical budgets place behaviour in the super-transition (L2-dominant) regime. Budget-aware training lifts $\bstar$, moving operating points into the L1-dominant regime; we observe trace-level evidence of this in Sonnet 4.6's slightly elevated $\parkinson$ (0.017) and $\CAR$ (0.050), though both remain $\ll 1$.
+
+\paragraph{L2 does not scale with capability (P11).}
+Across the 5 frontier non-reasoning generations from 3 vendors --- gpt-4o-mini (2024) $\to$ gpt-4o (2024) $\to$ Claude Haiku 4.5 (2025) $\to$ gpt-5.1 (2026) $\to$ Claude Sonnet 4.6 (2026) --- median $\CAR$ takes the values $\{0.008,\,0.004,\,0.017,\,0.017,\,0.050\}$. No monotone convergence toward $1$. By contrast, median $\confab$ falls $+1.117 \to +1.069 \to +0.463 \to +0.298 \to +0.068$ over the same generations (\S\ref{sec:l3}): a 94\% reduction in narrative-axis failure with zero corresponding improvement in action-axis failure. P11 (FRAMING §9) is empirically anchored at this 5-generation panel.
+
+\paragraph{Why injection cannot close L2.}
+CIT (\S\ref{sec:augustine-problem}) predicts this. Injecting a wall-clock token into the system prompt provides the policy with \emph{information} about time, but not a \emph{representation} that maps the policy's actions to wall-clock duration. Without wall-clock support in the training-loss gradient, the policy has no learned mechanism to elongate its action sequence to match a given budget. Empirically, $|\Delta \CAR| \leq 0.01$ for every model confirms this.

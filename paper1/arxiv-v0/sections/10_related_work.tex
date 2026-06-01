@@ -1,6 +1,30 @@
-% 10_related_work — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{10 related work}
-\label{sec:10}
+% Section 10 — Related Work
+% Source: paper1/RELATED_WORK.md
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{Related Work}
+\label{sec:related-work}
+
+The framework occupies an under-explored intersection of three adjacent literatures. We position contributions relative to the closest concurrent work and the foundational lineage.
+
+\paragraph{Concurrent work on agent temporal awareness.}
+Three concurrent papers measure aspects of LLM temporal cognition and warrant detailed comparison.
+
+\citet{garikaparthi2026canllmstime} (the L3 paper) provides the first systematic measurement of duration estimation in four non-reasoning model families. Their finding --- consistent over-report --- is consistent with our T3.1 results for non-reasoning models. We extend the panel to reasoning models (uncovering the o4-mini under-report; \S\ref{sec:l3}), provide a formal axis decomposition that locates duration over-report on the narrative axis specifically, and introduce the structural prediction that the over-report direction is heterogeneous in reasoning models due to hidden-time effects (FRAMING §5.7).
+
+\citet{ma2026timelymachine} (Timely-RL) demonstrates that budget-aware reward shaping installs the Parkinson regime ($\parkinson \to 1$). Our finding that native untrained $\parkinson \approx 0$ across the 3-vendor panel confirms theirs and provides the contrapositive: without budget-aware training, the regime they install does not exist. We furthermore identify the regime transition $\bstar$ as the framework's reconciliation of L1 and L2.
+
+\citet{cheng2025temporallyblind} (the L1/L2 paper) documents agent failures in honouring time-bounded sub-tasks during tool use. Their findings are consistent with our L2 measurements; we add the formal axis split (narrative vs action), the cross-vendor injection contrast, the impossibility theorem (CIT), and the bridge to deployment horizons (P12).
+
+The combined gap our paper fills: a single framework that names the failure modes (Three Times + three laws), bounds them theoretically (CIT), measures them on a cross-vendor panel, contextualises closed-lab workarounds (Injection Tell), and connects the measurement to autonomous-agent deployment (Agentic Timeline).
+
+\paragraph{Foundational lineage.}
+The naming convention deliberately draws on three threads. (i) Augustine's \emph{Confessions} Book XI \citep{augustine_confessions} for the central problem: the disparity between speaking fluently about time and perceiving it. (ii) Cognitive-science chronoception \citep{wittmann2009chronoception,eagleman2008time} for the operational definition of duration perception and the empirical calibration of $\ccestar$. (iii) \citet{parkinson1955} for the agentic generalisation of Parkinson's Law and the L1 coefficient.
+
+\paragraph{Temporal reasoning vs chronoception.}
+\citet{chu2024timebench} and related benchmarks measure temporal reasoning over external timelines (``what happened in 1987?''). \citet{goel2025chronocept} measures temporal validity of facts (``is this still true?''). Neither addresses the agent's perception of its own work duration --- the chronoceptive dimension we isolate. Our framework is orthogonal: an agent can perform well on TimeBench and yet exhibit catastrophic Augustine Problem.
+
+\paragraph{Inverse-scaling and over-reasoning.}
+The L3 closure pattern across capability generations is consistent with the broader observation that some failure modes close with scale while others persist \citep{inversescalingttc2025,dontthinktwice2025}. Our contribution within this literature is the explicit narrative-vs-action axis decomposition: a structural account of which failure modes close with scale (narrative-axis) and which do not (action-axis).
+
+\paragraph{Agent benchmarks.}
+The agent-benchmark canon \citep{agentbench,swebench,webarena,gaia,kwa2025metrhorizons} measures task success aggregated across many capabilities. Our benchmark is diagnostic: it measures chronoception in isolation. The two are complementary --- aggregate benchmarks reveal that chronoceptive failures are correlated with long-horizon task failure (the empirical content of \citet{kwa2025metrhorizons}'s scaling curve); diagnostic benchmarks supply the mechanism.

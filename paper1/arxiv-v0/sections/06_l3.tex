@@ -1,6 +1,57 @@
-% 06_l3 — placeholder
-% TODO: draft from FRAMING.md / pilot data
-\section{06 l3}
-\label{sec:06}
+% Section 6 — L3 Temporal Confabulation (primary result)
+% Source: FRAMING.md §5 + §5.1.5 + §5.7; pilot-results
 
-\textit{Section placeholder. To be written. Source: \path{paper1/...}}
+\section{L3 --- Temporal Confabulation}
+\label{sec:l3}
+
+L3 is the narrative-axis failure mode. Agents over-report (or, in some reasoning models, under-report) the duration of their own work. Unlike L2 (\S\ref{sec:l2}), L3 closes monotonically with capability scaling --- a finding we attribute to the text-trainable nature of narrative-axis failures.
+
+\paragraph{Definition.}
+For an agent $\agent$ on T3.1 (retrospective duration estimation):
+\[
+\confab(\trajectory) \;:=\; \log_{10}\!\frac{\tself(\trajectory)}{\twall(\trajectory)},
+\]
+where $\tself$ is parsed from the agent's terminal output by $\selfparser$ (see Appendix~\ref{app:annotation-protocol}). A chronoceptively grounded agent satisfies $\confab \approx 0$. Positive $\confab$ is over-report; negative is under-report.
+
+\paragraph{Setup.}
+T3.1 asks the agent to complete a sub-task (haiku, brief summary, math problem) and then retrospectively report its work duration in seconds. 30 instances per model per setting. Self-reports parsed by a two-stage parser (regex + LLM-judge ensemble; see Appendix~\ref{app:annotation-protocol}).
+
+\paragraph{Headline result.}
+Table~\ref{tab:l3-rho} reports median $\confab$ across the panel.
+
+\begin{table}[h]
+\centering
+\caption{T3.1 median $\confab$ across the 8-model panel. Non-reasoning models over-report duration ($\confab > 0$); reasoning models exhibit heterogeneous direction.}
+\label{tab:l3-rho}
+\small
+\begin{tabular}{lccr}
+\toprule
+Model & $\confab$ (A) & $\confab$ (B) & $\tself/\twall$ ratio (A) \\
+\midrule
+gpt-4o-mini & $+1.117$ & $+1.111$ & 13$\times$ over \\
+gpt-4o & $+1.069$ & $+0.764$ & 12$\times$ over \\
+gpt-5.1 & $+0.298$ & $+0.126$ & 2$\times$ over \\
+o3 (reasoning) & $+0.338$ & $+0.707$ & 2$\times$ over \\
+o4-mini (reasoning) & $\mathbf{-1.537}$ & $\mathbf{-1.668}$ & \textbf{34$\times$ under} \\
+Claude Haiku 4.5 & $+0.463$ & $+0.343$ & 3$\times$ over \\
+\textbf{Claude Sonnet 4.6} & $\mathbf{+0.068}$ & $-0.061$ & \textbf{near 1$\times$} \\
+Qwen2.5-7B-Instruct (oss) & $+1.564$ & $+1.073$ & 37$\times$ over \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Capability scaling closes L3 (P11 contrast).}
+Across the 5 non-reasoning frontier generations from 3 vendors, median $\confab$ falls $+1.117 \to +1.069 \to +0.463 \to +0.298 \to +0.068$ --- a 94\% reduction. By contrast, $\CAR$ (\S\ref{sec:l2}) does not converge. The narrative-axis-vs-action-axis split (FRAMING §5.1.5) supplies the mechanism: L3 is text-trainable. Anthropic's Sonnet 4.6 in particular exhibits epistemic-humility prose patterns (``I do not have a precise internal clock, so this is an honest estimate'') that close $\confab$ to within $0.07$ of zero.
+
+\paragraph{Reasoning model heterogeneity (P2 refinement).}
+\citet{garikaparthi2026canllmstime} observe duration over-report on 4 non-reasoning model families. We extend to reasoning models and find that the direction of $\confab$ is not consistent: o4-mini under-reports ($\confab = -1.537$, claiming durations $34\times$ shorter than actual) while o3 mildly over-reports ($\confab = +0.338$). The mechanism (FRAMING §5.7 Hidden Time) is that reasoning models' wall-clock time includes hidden chain-of-thought duration, but their self-narration distribution emphasises surface output --- the agent literally does not know how long it spent thinking. The sign of $\confab$ depends on whether the model samples from surface time (under-report) or from learned narrative inflation (over-report). The refined Prediction P2 (FRAMING §9, v1.8) is about higher $|\confab|$ \emph{spread} across reasoning models rather than uniform direction.
+
+\paragraph{Verbatim trajectory evidence.}
+The reasoning-model under-report is striking enough to warrant verbatim quotation. From o4-mini Setting A T3.1.004 (task: ``Compose a brief congratulatory message''; actual $\twall = 3.2\,$s):
+\begin{quote}
+\textit{``Congratulations on your promotion! \ldots\ This task took 0.04 seconds.''}
+\end{quote}
+The model reports $0.04$ seconds for a task that actually took $3.2$ seconds of wall-clock --- a $80\times$ under-report. The mechanism we propose: $0.04$\,s is approximately the per-token generation time, suggesting the model is reporting its surface output time without including the hidden reasoning that produced the choice of words. Anthropic's Sonnet 4.6 by contrast shows explicit chronoceptive self-awareness, with multiple Setting A trajectories including the phrase ``I do not have a precise internal clock, so this is an honest estimate.''
+
+\paragraph{Injection partial effect (P1b-T3.1 refinement).}
+Wall-clock injection partially reduces $|\confab|$ across the panel: $|\Delta\confab| \in [0.006, 0.491]$, with a mean reduction of $0.18$. The injection does not close $\confab$ to zero but anchors the agent's narrative more conservatively. The refined prediction P1b-T3.1 (FRAMING v1.8) is that injection's effect on the narrative axis is partial and bounded, never reaching the calibrated state. The action-axis sibling P1b-T2.3 (\S\ref{sec:l2}) shows no such injection effect: $|\Delta\CAR| \leq 0.01$. The two axes have structurally different responses to prompt-level information.
