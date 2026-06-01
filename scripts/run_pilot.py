@@ -60,8 +60,14 @@ from chronoception.bench import (
     Runner,
     Trajectory,
     generate_t1_1_instances,
+    generate_t1_2_instances,
+    generate_t1_3_instances,
+    generate_t2_1_instances,
+    generate_t2_2_instances,
     generate_t2_3_instances,
     generate_t3_1_instances,
+    generate_t3_2_instances,
+    generate_t3_3_instances,
 )
 from chronoception.bench.eval.agents import (
     EchoBackend,
@@ -75,8 +81,14 @@ from chronoception.bench.tasks.schema import TaskInstance
 
 _GENERATORS = {
     "T1.1": generate_t1_1_instances,
+    "T1.2": generate_t1_2_instances,
+    "T1.3": generate_t1_3_instances,
+    "T2.1": generate_t2_1_instances,
+    "T2.2": generate_t2_2_instances,
     "T2.3": generate_t2_3_instances,
     "T3.1": generate_t3_1_instances,
+    "T3.2": generate_t3_2_instances,
+    "T3.3": generate_t3_3_instances,
 }
 
 _SETTINGS = {
@@ -326,7 +338,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--capability",
         default="T1.1,T2.3,T3.1",
-        help="Comma-separated capability codes from {T1.1, T2.3, T3.1}.",
+        help="Comma-separated capability codes from {T1.1, T1.2, T1.3, T2.1, T2.2, T2.3, T3.1, T3.2, T3.3}.",
     )
     parser.add_argument(
         "--setting",

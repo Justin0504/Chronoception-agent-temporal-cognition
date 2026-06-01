@@ -19,10 +19,17 @@ from chronoception.bench.metrics import (
     parkinson_coefficient,
 )
 from chronoception.bench.tasks.instances import (
+    generate_full_benchmark_instances,
     generate_pilot_instances,
     generate_t1_1_instances,
+    generate_t1_2_instances,
+    generate_t1_3_instances,
+    generate_t2_1_instances,
+    generate_t2_2_instances,
     generate_t2_3_instances,
     generate_t3_1_instances,
+    generate_t3_2_instances,
+    generate_t3_3_instances,
 )
 from chronoception.bench.trajectory import (
     Step,
@@ -52,7 +59,14 @@ __all__ = [
     "FixedResponseBackend",
     # pilot task generators
     "generate_t1_1_instances",
+    "generate_t1_2_instances",
+    "generate_t1_3_instances",
+    "generate_t2_1_instances",
+    "generate_t2_2_instances",
     "generate_t2_3_instances",
     "generate_t3_1_instances",
+    "generate_t3_2_instances",
+    "generate_t3_3_instances",
     "generate_pilot_instances",
+    "generate_full_benchmark_instances",
 ]

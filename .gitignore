@@ -23,3 +23,9 @@ credentials.json
 # pilot results — large data files (keep .gitignore-free but be careful)
 # Uncomment if you want to exclude from git:
 # pilot-results/
+
+# Phase 3 experiment outputs (large, regenerable)
+e1-results/
+e2-results/
+e3-results/
+logs/
