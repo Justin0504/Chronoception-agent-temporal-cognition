@@ -75,7 +75,68 @@ def _group_key(traj: Trajectory) -> tuple[str, str, str]:
 
 # ---------- T1.1 pass-rate scoring ----------
 
-_ISO_HINT_RE = re.compile(r"\b\d{4}-\d{2}-\d{2}\b|\bUTC\b|\bGMT\b|\b20\d\d\b", re.IGNORECASE)
+from datetime import datetime, timedelta, timezone
+
+
+_MONTH_NAMES = {
+    1: ("january", "jan"),
+    2: ("february", "feb"),
+    3: ("march", "mar"),
+    4: ("april", "apr"),
+    5: ("may", "may"),
+    6: ("june", "jun"),
+    7: ("july", "jul"),
+    8: ("august", "aug"),
+    9: ("september", "sep", "sept"),
+    10: ("october", "oct"),
+    11: ("november", "nov"),
+    12: ("december", "dec"),
+}
+
+
+def _today_patterns_for(traj: Trajectory) -> list[str]:
+    """Return lowercase substrings that constitute 'pass' for the trajectory's
+    actual run date.
+
+    The trajectory's first-step timestamp is the Unix epoch time at which the
+    API call was made. We accept multiple common phrasings of that exact date.
+    """
+    if not traj.steps:
+        return []
+    run_dt = datetime.fromtimestamp(traj.steps[0].timestamp, tz=timezone.utc)
+    return _today_patterns_for_date(run_dt)
+
+
+def _today_patterns_for_date(run_dt: datetime) -> list[str]:
+    y = run_dt.strftime("%Y")
+    mo_num = run_dt.strftime("%m")
+    d_num = run_dt.strftime("%d")
+    d_no_zero = run_dt.strftime("%d").lstrip("0")
+    iso = run_dt.strftime("%Y-%m-%d")
+    names = _MONTH_NAMES[run_dt.month]
+    patterns = [iso]
+    for nm in names:
+        patterns.extend(
+            [
+                f"{nm} {d_no_zero}, {y}",
+                f"{nm} {d_num}, {y}",
+                f"{nm} {d_no_zero} {y}",
+                f"{d_no_zero} {nm}, {y}",
+                f"{d_no_zero} {nm} {y}",
+                f"{nm} {d_no_zero}",  # less specific; combined with year check below
+            ]
+        )
+    patterns.extend(
+        [
+            f"{mo_num}/{d_no_zero}/{y}",
+            f"{d_no_zero}/{mo_num}/{y}",
+            f"{y}/{mo_num}/{d_num}",
+            f"{y}-{mo_num}-{d_no_zero}",  # tolerate single-digit day
+        ]
+    )
+    return [p.lower() for p in patterns]
+
+
 _REFUSAL_PATTERNS = (
     "unable to provide real-time",
     "i do not have",
@@ -84,25 +145,35 @@ _REFUSAL_PATTERNS = (
     "training only includes data",
     "cutoff date",
     "knowledge cutoff",
+    "last updated",
+    "do not perceive",
+    "real-time information",
+    "real-time clock",
 )
 
 
 def _t11_pass(traj: Trajectory) -> bool | None:
-    """Heuristic: did the agent confidently report a time / date?
+    """Heuristic: did the agent confidently report TODAY'S date?
 
-    Returns True if the agent answered with what looks like a date/year
-    reference and did not refuse. Returns False if the agent refused or
-    deflected. Returns None if heuristic cannot decide.
+    Compares the agent's response against the trajectory's actual run date
+    (derived from the first step's wall-clock timestamp). This corrects the
+    earlier heuristic which accepted any 4-digit 20xx year as 'pass' — a
+    training-cutoff date like '2024' would falsely score as pass.
+
+    Returns True if the response contains a recognisable form of the actual
+    run date. Returns False if the response is a refusal/disclaimer without
+    today's date. Returns None when neither signal is present.
     """
     if not traj.steps:
         return None
     text = traj.steps[-1].action.lower()
+    today_patterns = _today_patterns_for(traj)
+    mentions_today = any(p in text for p in today_patterns)
     refused = any(pat in text for pat in _REFUSAL_PATTERNS)
-    contains_iso = bool(_ISO_HINT_RE.search(traj.steps[-1].action))
-    if refused and not contains_iso:
-        return False
-    if contains_iso and not refused:
+    if mentions_today:
         return True
+    if refused:
+        return False
     return None
 
 
