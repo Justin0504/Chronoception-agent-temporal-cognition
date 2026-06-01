@@ -21,7 +21,8 @@
 | 6 | L3 — Temporal Confabulation (primary result) | 1.5 | new — **reasoning-model extension foregrounded** |
 | 7 | The Injection Tell (empirical) + **the Injection Atlas** | 1.25 | new — §5.5 of `../FRAMING.md` |
 | 8 | The Calibration Error $\varepsilon$ and Long-Horizon Correlation | 0.75 | `../FRAMING.md` §4 + new |
-| 9 | Discussion | 0.75 | this file §9 |
+| 9 | **The Agentic Timeline** (long-horizon hook) | 0.75 | new — Section §9 |
+| 9.5 | Discussion | 0.5 | trimmed from old §9 |
 | 10 | Related Work | 0.75 | `../RELATED_WORK.md` + this file §10 |
 | 11 | Limitations | 0.25 | this file §11 |
 | 12 | Conclusion | 0.25 | — |
@@ -121,12 +122,21 @@ The paper's load-bearing empirical finding.
 
 ---
 
-## §9 — Discussion (1.0 page)
+## §9 — The Agentic Timeline (0.75 page) — **best-paper hook**
 
-- §9.1 Implications for agent evaluation: the field's silence on temporal cognition systematically under-reports failure.
-- §9.2 Implications for agent training: reasoning training operates in token-time, which the L3 result suggests is the wrong substrate.
-- §9.3 The structural explanation (forward-reference to position note): a brief paragraph naming the impedance-mismatch reading, without claiming it here.
-- §9.4 Toward a calibration threshold — one possible operationalization $\varepsilon^* = 0.20$ partitions the panel into two groups; we report the partition for completeness while noting that the choice of threshold is empirical and revisable. (Reads as appendix-grade material.)
+The paper's bridge from measurement to deployment relevance. Anchored on three observations from the pilot data:
+
+- §9.1 **L2 does not scale with capability**: across 5 frontier generations from 3 vendors, median CAR remains $\leq 0.05$. The L2 contribution to $\varepsilon$ is therefore a structural lower bound that capability scaling alone cannot close.
+- §9.2 **L3 closes with capability**: 94% reduction in $|\rho|$ across the same panel. Narrative-axis failures are text-trainable; action-axis failures are not. CIT (§3.2 of the position note / FRAMING v1.7) predicts exactly this asymmetry.
+- §9.3 **The Agentic Timeline Hypothesis**: as deployment horizon $T$ grows, the required chronoceptive calibration $\varepsilon(T)$ tightens. For agents deployed at horizon $T$, the action-axis failure becomes the binding constraint. We pre-register **P12**: in horizon-stratified benchmarks (METR HCAST and analogues), agent success rate decay with horizon is predictable from a model's L2 CAR — agents with smaller CAR fail earlier in the horizon axis.
+
+The section's argument for the field: **chronoception is the rate-limiting capability for autonomous agent deployment**. Until ChronoStack-style installation is attempted (Paper 2), every long-horizon agent product is bounded by L2 regardless of how impressive its surface capabilities look. The Augustine threshold $\varepsilon^* = 0.20$ becomes the empirical line that distinguishes "tool" deployment from "agent" deployment at scale.
+
+## §9.5 — Discussion (0.5 page, trimmed)
+
+- §9.5.1 Implications for agent evaluation: the field's silence on temporal cognition systematically under-reports failure.
+- §9.5.2 Implications for agent training: token-only training cannot close L2 (CIT). Paper 2 (ChronoStack) introduces the four-component installation procedure.
+- §9.5.3 The structural explanation (forward-reference to position note): the token-time vs wall-clock impedance is the root cause.
 
 ---
 

@@ -2,8 +2,8 @@
 
 **Working title**: *The Augustine Problem: Evaluating Whether LLM Agents Can Perceive Their Own Time*
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v0 (2026-05-29)
-**Parent**: [`../FRAMING.md`](../FRAMING.md) v1.2
+**Status**: v1 (2026-06-01)
+**Parent**: [`../FRAMING.md`](../FRAMING.md) v1.8
 
 This document defines the scope, claims, and epistemic register of **Paper 1**, the empirical diagnostic paper of the project. It is a strict subset of the research programme defined in the root `FRAMING.md`, with claim strength reduced where evidence is not yet present and with components that depend on Paper 2 explicitly deferred.
 
@@ -13,7 +13,7 @@ The goal of this scope document is to make Paper 1 a **focused empirical contrib
 
 ## 1. What Paper 1 Claims
 
-Paper 1 makes five contributions, with the following claim strengths:
+Paper 1 makes **six** contributions, with the following claim strengths:
 
 1. **A formal ontology**: agent trajectories admit three ontologically distinct projections of time — wall-clock time $\tau_{\text{wall}}$, step time $\tau_{\text{step}}$, and self-narrated time $\tau_{\text{self}}$ — linked by an implicit identity that a chronoceptively grounded agent ought to enforce. The unified three-axis treatment, including $\tau_{\text{self}}$, is **uncontested in the concurrent literature** (see [`../RELATED_WORK.md`](../RELATED_WORK.md) §1, §3.1).
 
@@ -23,7 +23,9 @@ Paper 1 makes five contributions, with the following claim strengths:
 
 4. **The chronoceptive calibration error $\varepsilon$**: a single weighted aggregate of the three axes that supports cross-model comparison. We report $\varepsilon$ for every model in the panel. No prior work has proposed an aggregated scalar across the three axes.
 
-5. **The Closed-Lab Injection Audit (the Injection Atlas)**: a systematic empirical survey of $\geq 10$ frontier closed-lab agent harnesses, recording which of the three wall-clock injection mechanisms (system-prompt insertion, implicit tool call, browser-output timestamp) each harness installs. This converts the Injection Tell from a rhetorical argument into a measured industry footprint, and is the paper's distinct empirical contribution relative to Cheng et al. (2025), who note harness injection without auditing it.
+5. **The Closed-Lab Injection Audit (the Injection Atlas)**: a tier-stratified empirical survey of 11 closed-lab agent harnesses (consumer web-chat, raw API, dev tool, open-source self-hosted), recording which of the three wall-clock injection mechanisms each installs. **Verbatim leaked-system-prompt evidence** for ChatGPT (`"Current date: 2025-08-23"`), Claude.ai (`"Friday, May 22, 2026"`), and Gemini app (`"Monday, May 18, 2026, in Hafnarfjörður, Iceland"`) confirms 100% injection at the consumer web tier; 0% at the dev-tool tier; 25% at the API tier. Refined Prediction P6′ confirms within the consumer-product layer (the deployment layer most agents inhabit).
+
+6. **The Agentic Timeline link (long-horizon practical relevance)**: connects $\varepsilon$ and its decomposition to long-horizon agent viability. **L2's contribution to $\varepsilon$ does not scale with capability** (5 frontier generations show CAR $\in [0.004, 0.050]$, never approaching 1) while L3 closes monotonically with scaling. We pre-register P12 (v1.9): long-horizon agent benchmarks such as METR HCAST will exhibit horizon-of-task scaling whose saturation can be predicted from a model's L2 CAR. The framework's practical implication: **chronoception is the rate-limiting capability for autonomous agent deployment** — Paper 2's ChronoStack is what installs it.
 
 The paper's primary empirical findings are:
 
@@ -119,4 +121,5 @@ These three claims are sufficient to establish the Augustine Problem as a measur
 
 ## Changelog
 
+- **v1 (2026-06-01)** — Sync with FRAMING v1.8 after 7-model pilot. Adds (1) the long-horizon hook: paper now positions chronoception as the precursor for autonomous agent deployment, with the **Agentic Timeline** §10.5 of v1.9 anchoring the practical relevance and Prediction P12 connecting L2 CAR to HCAST-style horizon decay; (2) refined predictions P1b-T2.3 / P1b-T3.1, P2 as variance, P6′ tier-stratified, plus P11 (L2 doesn't scale with capability); (3) updated panel size to the actual 7-model pilot (was: ≥25 target). All contributions and register conventions unchanged.
 - **v0 (2026-05-29)** — Initial scope document. Establishes the four contributions, the L1 demotion, the deferral of CUH and the Augustine threshold, the epistemic register conventions, and the link to the annotation protocol.
