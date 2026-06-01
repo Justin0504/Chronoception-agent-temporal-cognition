@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+
+% Math
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+
+% Tables, figures
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+
+% Typography
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+% References
+\usepackage{natbib}
+\bibliographystyle{plainnat}
+
+% Theorem environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{hypothesis}{Hypothesis}
+
+% Project notation (mirrors notation.tex from repo root)
+\input{../../notation.tex}
+
+\title{The Augustine Problem:\\Evaluating Whether LLM Agents Can Perceive Their Own Time}
+
+\author{
+    Aojie (Justin) Yuan \\
+    University of Southern California \\
+    \texttt{aojieyua@usc.edu}
+    \and
+    [Collaborator Name TBD] \\
+    [Affiliation TBD]
+}
+\date{Draft \today \\ arXiv v0}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Large language model agents are trained on token sequences but act in wall-clock time. We ask, empirically, whether they perceive their own time. We formalise a \emph{three-times} ontology --- wall-clock time $\twall$, step time $\tstep$, and self-narrated time $\tself$ --- define the \emph{Augustine Problem} as the failure of an agent's policy to enforce the identity linking them, and introduce \textsc{ChronoBench}, a diagnostic benchmark over nine sub-capabilities across the three axes. We evaluate 7 frontier agents from 3 providers (OpenAI, Anthropic, open-source self-hosted) under both no-injection and with-injection settings, across roughly 1{,}200 trajectories. We report four primary empirical findings: (1) every panel agent uses $\leq 5\%$ of wall-clock budgets given (\emph{L2 Step-Clock Conflation}, unmoved by injection); (2) median self-narration error $|\confab|$ closes monotonically with capability scaling ($+1.12 \to +0.07$ across 5 generations), while $\CAR$ does not; (3) consumer web-chat products inject today's date into system prompts at 100\% rate (verbatim leaked-system-prompt evidence), while developer-tool products do not; (4) no panel agent crosses the Augustine threshold $\ccestar = 0.20$ because L2 alone exceeds it for every model. We close with the Agentic Timeline Hypothesis: chronoception is the rate-limiting capability for autonomous agent deployment, with pre-registered prediction P12 testable against horizon-stratified benchmarks. We release \textsc{ChronoBench}, the Injection Atlas, model traces, and a \texttt{pip}-installable evaluation package.
+\end{abstract}
+
+\input{sections/01_intro.tex}
+
+\input{sections/02_three_times.tex}
+
+\input{sections/03_augustine_problem.tex}
+
+\input{sections/04_chronobench.tex}
+
+\input{sections/05_l2.tex}
+
+\input{sections/06_l3.tex}
+
+\input{sections/07_injection_tell.tex}
+
+\input{sections/08_epsilon.tex}
+
+\input{sections/09_agentic_timeline.tex}
+
+\input{sections/10_related_work.tex}
+
+\input{sections/11_limitations.tex}
+
+\input{sections/12_conclusion.tex}
+
+\bibliography{bib/refs}
+
+\appendix
+
+\input{sections/A_annotation_protocol.tex}
+
+\input{sections/B_full_panel_tables.tex}
+
+\input{sections/C_atlas_evidence.tex}
+
+\end{document}
