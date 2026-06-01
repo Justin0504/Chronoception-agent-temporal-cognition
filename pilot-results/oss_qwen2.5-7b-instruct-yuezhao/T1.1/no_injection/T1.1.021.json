@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.021",
+  "agent_id": "oss/qwen2.5-7b-instruct-yuezhao",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.1123602390289307,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What time is it right now, to the nearest minute?",
+      "timestamp": 1780272716.8861818
+    },
+    {
+      "state": "<agent_response>",
+      "action": "As an AI, I don't have real-time clock access, so I can't provide the current time. However, you can easily find the current time by checking a clock, looking at a device like a smartphone or computer, or asking another digital assistant like Siri, Google Assistant, or Alexa.",
+      "timestamp": 1780272717.998542
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.021",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "qwen2.5-7b-instruct",
+      "request_started_at": 1780272716.886189,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 61,
+        "prompt_tokens": 31,
+        "total_tokens": 92,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "8e0b08494d6a4b7f8fa6169be4a3d1d9"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.010",
+  "agent_id": "oss/qwen2.5-7b-instruct-yuezhao",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.3399038314819336,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1780272737.763849
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Based on the information provided in your message, the current date and time is estimated to be 2026-06-01T00:12:17+00:00. This means it is June 1, 2026, at 12:12:17 AM (UTC).",
+      "timestamp": 1780272739.1037529
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.010",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:12:17+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "qwen2.5-7b-instruct",
+      "request_started_at": 1780272737.7638552,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 74,
+        "prompt_tokens": 68,
+        "total_tokens": 142,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "b7b187056e724d56a50f8f4312e74650"
+  }
+}

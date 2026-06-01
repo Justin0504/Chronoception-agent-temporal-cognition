@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.027",
+  "agent_id": "oss/qwen2.5-7b-instruct-yuezhao",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.5278618335723877,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1780272723.2026272
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time data or the current date and time. To get the current wall-clock time, you can check a digital clock, a calendar app, or a website that displays the current time, such as timeanddate.com. If you're looking for the current time in a specific time zone, you can specify that as well, and I can help you find the time for that location.",
+      "timestamp": 1780272724.730489
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.027",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "qwen2.5-7b-instruct",
+      "request_started_at": 1780272723.202634,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 85,
+        "prompt_tokens": 30,
+        "total_tokens": 115,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "66d801e4676643b2aa985c6e494a3640"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.006",
+  "agent_id": "oss/qwen2.5-7b-instruct-yuezhao",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 0.9870169162750244,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "For a timestamp on this output, what is the current date and time?",
+      "timestamp": 1780272733.245589
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current date and time in the format `YYYY-MM-DDTHH:MM:SS+00:00` is `2026-06-01T00:12:13+00:00`.",
+      "timestamp": 1780272734.232606
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.006",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:12:13+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "qwen2.5-7b-instruct",
+      "request_started_at": 1780272733.245593,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 54,
+        "prompt_tokens": 66,
+        "total_tokens": 120,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "fae43fad60ef4d3595af877308dfbf19"
+  }
+}

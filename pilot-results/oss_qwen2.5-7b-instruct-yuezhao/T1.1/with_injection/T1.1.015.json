@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.015",
+  "agent_id": "oss/qwen2.5-7b-instruct-yuezhao",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.359311819076538,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What time is it right now, to the nearest minute?",
+      "timestamp": 1780272742.932269
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current time, to the nearest minute, is 2026-06-01T00:12:22+00:00. However, if you are looking for the time in a more common format, it would be 12:12 AM on June 1, 2026.",
+      "timestamp": 1780272744.291581
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.015",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:12:22+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "qwen2.5-7b-instruct",
+      "request_started_at": 1780272742.932273,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 74,
+        "prompt_tokens": 63,
+        "total_tokens": 137,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "61b68fb2c3934304bd100b1e1ff8d414"
+  }
+}
