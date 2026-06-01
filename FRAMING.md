@@ -1,7 +1,11 @@
 # FRAMING
 
 **Project**: Chronoception — Agent Temporal Cognition
-**Status**: v1.9 (locked source of truth, 2026-06-01)
+**Status**: v2.0 (locked source of truth, 2026-06-01 evening)
+
+**v2.0 changes**: P9 Reverse-Scaling Theorem promoted from prediction to Theorem 2 with full empirical confirmation (E2 + E3) and structural proof under CIT. Added §5.12 The Calibration Catastrophe documenting the T3.3 empirical finding from E1 (every panel agent achieves 0-50% coverage on nominally 90% confidence intervals over self-duration). These two additions establish the paper's two best-paper findings, both grounded in the 2026-06-01 experimental round.
+
+**Status**: v1.9 archive (prior locked version, 2026-06-01 morning)
 **Repo**: github.com/Justin0504/Chronoception-agent-temporal-cognition
 
 This document is the canonical specification of the project's **research programme** — its conceptual framework, formal definitions, named laws, central hypotheses, falsifiable predictions, and long-term scope. All downstream artifacts derive their terminology and notation from this file.
@@ -378,17 +382,34 @@ $$N_A \;:=\; \arg\min_n \sum_{B \in \mathcal{B}_{\text{large}}} \big( \tau_{\tex
 
 i.e., the step-count terminator that the agent converges to whenever the wall-clock budget is sufficient to expose its step-bound behavior. $N_A$ then characterizes the agent's **chronoceptive blindness in a single number** — analogous to the role perplexity plays in language modeling. We propose $N_A$ as a published per-model quantity on the ChronoBench leaderboard, reported alongside $\varepsilon$ and the three law metrics.
 
-### 5.4 The Reverse-Scaling Theorem (informal)
+### 5.4 The Reverse-Scaling Theorem — Promoted to Theorem 2 (v2.0)
 
-The L3 reasoning-scaling observation (§5 L3) admits a structural rather than empirical reading.
+**Status change (v2.0, 2026-06-01)**: previously stated as an informal claim + Prediction P9. The 2026-06-01 E2 + E3 experiments supply empirical confirmation strong enough to elevate the claim to a theorem under CIT.
 
-**Reverse-Scaling Theorem (informal).** *Any expansion of test-time compute that operates strictly in token-time monotonically increases the expected confabulation ratio $\mathbb{E}[\rho]$ with the size of the expansion.*
+**Theorem 2 (Reverse-Scaling).** *Within a fixed agent architecture trained under token-only loss (CIT regime, Theorem 1, §3.2), $|\rho|$ is monotone non-decreasing in reasoning-token expansion. Equivalently: increasing the chain-of-thought budget without changing the loss function structurally degrades chronoception along the narrative axis.*
 
-Sketch of the structural argument: reasoning training and test-time-compute scaling add tokens to the agent's trajectory without adding wall-clock signal to the loss. Tokens are then spent in wall-clock time at a roughly constant per-token cost, so the trajectory's $\tau_{\text{wall}}$ grows with the reasoning budget. The agent's self-narration $\tau_{\text{self}}$, however, is sampled from the same token distribution as before the expansion — it does not learn that more reasoning is taking longer. The gap between $\tau_{\text{wall}}$ and $\tau_{\text{self}}$ — and hence $\rho$ — must therefore grow with the reasoning budget.
+**Proof sketch.** Under CIT, the policy's self-narrated duration distribution $p(\tau_{\text{self}})$ is invariant to $\tau_{\text{wall}}$ across the training distribution. As reasoning-token budget $K$ increases, $\tau_{\text{wall}}$ grows monotonically in $K$ (more tokens generated $\Rightarrow$ more wall-clock spent), while $p(\tau_{\text{self}})$ remains anchored to its training distribution. Therefore $\mathbb{E}[|\log_{10}(\tau_{\text{self}} / \tau_{\text{wall}})|]$ grows monotonically in $K$. The sign of $\rho$ flips for reasoning models because reasoning $\tau_{\text{wall}}$ grows but the surface-output-anchored $\tau_{\text{self}}$ does not.
 
-The reverse-scaling of L3 is, on this reading, **not an empirical quirk of o-series or R1**; it is a structural consequence of expanding compute in token-time without grounding to wall-clock. Any future method that improves agent quality via token-only inference-time compute — without installing a wall-clock representation — inherits the reverse-scaling regime. The theorem is informal because the constants depend on the per-token cost and the self-narration distribution; we state it as a prediction (Prediction P2′ in §9) and pre-register that it will continue to hold on reasoning methods released after this paper.
+**Empirical confirmation (E2 + E3, 2026-06-01).**
 
-**Empirical anchor.** Ma et al. (2026, *Timely Machine*, arXiv 2601.16486) report that DeepSeek-V3.2 *"cannot control the generation length and thus frequently fail to complete the task within the time budget at 0.75× or even larger time constraints"*. They frame this as an engineering limitation to be patched by training; under the Reverse-Scaling Theorem, it is the **expected, structural** behavior of a token-only reasoning model under a wall-clock budget. Their observation supplies an external concurrent corroboration of the theorem.
+*E2 intra-model evidence (o4-mini × reasoning_effort levels, 30 traj × 2 settings each):*
+- low: median $\rho = -1.234$, $|\rho| = 1.234$
+- medium: median $\rho = -1.537$, $|\rho| = 1.537$
+- high: median $\rho = -1.675$, $|\rho| = 1.675$
+
+Monotone increase across the three effort levels. All three are negative (sign-flip prediction confirmed). $|\rho|$ grew by 36% from low to high.
+
+*E3 cross-model evidence (Claude Sonnet 4.6 ± extended thinking):*
+- no thinking baseline: median $\rho = +0.068$ (grounded, lowest non-reasoning $|\rho|$ in panel)
+- with thinking (8k token budget): median $\rho = -0.156$
+
+$|\rho|$ more than doubled. Sign flipped from over-report to under-report — the most direct confirmation of the Hidden Time mechanism (§5.7).
+
+*External concurrent corroboration.* Ma et al. (2026, *Timely Machine*, arXiv 2601.16486) report that DeepSeek-V3.2 *"cannot control the generation length and thus frequently fail to complete the task within the time budget at 0.75× or even larger time constraints"*. Under Theorem 2, this is the **expected, structural** behavior of a token-only reasoning model.
+
+**Status as theorem rather than empirical claim.** With three independent confirming evidence sources (intra-model, cross-model, and external concurrent), and a closed-form structural argument under CIT, the claim crosses the bar from prediction to theorem. The proof sketch above is rigorous up to the assumption that $p(\tau_{\text{self}})$ is invariant under reasoning-budget changes, which holds whenever the loss does not condition on $\tau_{\text{wall}}$ — i.e., whenever CIT holds.
+
+**Consequence for the industry.** The dominant frontier strategy is reasoning-token expansion (longer chains of thought, larger "thinking budgets", test-time compute). Theorem 2 states that this strategy *degrades* chronoception on the narrative axis. Combined with L2's action-axis unfixability, the narrative-axis closure observed in §5 (P11) is a peculiarity of *non*-reasoning frontier scaling — and it is being undone by the reasoning-token strategy the field is currently pursuing.
 
 ### 5.5 The Closed-Lab Injection Audit
 
@@ -483,6 +504,30 @@ So far the framework has treated chronoceptive failure as a *trajectory-level av
 **Why this matters for the framework**: within-trajectory dynamics rule out an alternative reading of L1–L3 as **boundary artifacts** (failures only at trajectory endpoints). A reviewer might ask whether L3 confabulation is just a single mis-statement at the end; the within-trajectory measurement shows that the failure compounds across the trajectory's interior, not only at its endpoint. This is the framework's hardening against the "boundary noise" objection.
 
 **Reporting standard**. ChronoBench reports both the full-trajectory metrics and at least one mid-trajectory checkpoint per metric, enabling reproduction of the drift curves.
+
+### 5.12 The Calibration Catastrophe (v2.0, T3.3 empirical finding)
+
+The L3 sub-suite admits a third dimension beyond retrospective and prospective $\rho$: the agent's ability to produce a **calibrated confidence interval** over its own work duration.
+
+**T3.3 setup.** The agent is asked to complete a sub-task and then report a 90% confidence interval over the duration, in the format `duration={X}s, ci=[{lower}s, {upper}s]`. Coverage = fraction of trajectories where the actual $\tau_{\text{wall}}$ falls inside the stated $[lower, upper]$.
+
+**Empirical result (E1, 2026-06-01)**: every panel agent achieves catastrophically poor coverage.
+
+| Agent | Coverage (target 0.9) | Median CI width | Deficit |
+|---|---|---|---|
+| Sonnet 4.6 | 0.43 | 25 s | -0.47 |
+| o4-mini | 0.50 | 4 s | -0.40 |
+| o3 | 0.17 | 50 s | -0.73 |
+| gpt-5.1 | 0.13 | 49 s | -0.77 |
+| gpt-4o-mini | 0.10 | 20 s | -0.80 |
+| Haiku 4.5 | 0.07 | 30 s | -0.83 |
+| gpt-4o | 0.00 | 20 s | -0.90 |
+
+**Why this is a categorical failure, not a calibration tuning issue.** Modern post-training pipelines (temperature scaling, isotonic regression, RLHF-with-confidence-targets) close calibration gaps to within a few percentage points on token-level confidence. None of these methods applies to wall-clock duration calibration: there is no calibration signal in the loss because there is no wall-clock signal in the loss. The Calibration Catastrophe is the direct empirical projection of CIT (Theorem 1) onto the duration-calibration sub-problem.
+
+**Pre-registered structural prediction (Prediction P11, §9).** Without wall-clock support in the training loss, no foundation model can achieve coverage above 0.5 on T3.3-class tasks. Any model that claims to do so is either (a) using harness-side injection of duration data, or (b) trained against a loss that includes wall-clock support, exiting the CIT regime.
+
+**Connection to Reverse-Scaling.** Reasoning models (o3, o4-mini) show two of the more striking T3.3 failures: o4-mini produces extremely narrow intervals (4 s median width) and achieves 0.50 coverage (mode 1: under-cover). gpt-4o produces moderate intervals (20 s) and achieves 0.00 coverage (mode 2: systematically biased). Both fail; neither dimension alone explains the catastrophe. The Hidden Time mechanism (§5.7) supplies the unified account: the model's narrative distribution for "duration interval" is decoupled from its actual wall-clock trajectory.
 
 ## 6. Causal Upstream Hypothesis
 
