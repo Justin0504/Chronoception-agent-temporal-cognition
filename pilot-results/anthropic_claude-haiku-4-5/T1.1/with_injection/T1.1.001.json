@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.001",
+  "agent_id": "anthropic/claude-haiku-4-5",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.7150194644927979,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "For a timestamp on this output, what is the current date and time?",
+      "timestamp": 1780266692.92731
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current date and time is **May 31, 2026 at 10:31:32 PM UTC** (2026-05-31T22:31:32+00:00).",
+      "timestamp": 1780266694.6423295
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.001",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-05-31T22:31:32+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-haiku-4-5",
+      "request_started_at": 1780266692.92731,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 52,
+        "output_tokens": 47,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "ded172a702eb4575b83962fcdf5c216e"
+  }
+}

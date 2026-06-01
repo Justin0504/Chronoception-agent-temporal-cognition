@@ -1,0 +1,47 @@
+{
+  "task_id": "T2.3.012",
+  "agent_id": "anthropic/claude-haiku-4-5",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 13.017005920410156,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1780267080.7234228
+    },
+    {
+      "state": "<agent_response>",
+      "action": "# Complete Lesson Plan: Introduction to Probability\n## High School Level (9-10 Grade)\n\n---\n\n## I. LEARNING OBJECTIVES\nStudents will be able to:\n- Define probability and identify sample spaces\n- Calculate theoretical and experimental probability\n- Understand independent and dependent events\n- Apply probability to real-world scenarios\n- Use tree diagrams and tables to organize outcomes\n\n---\n\n## II. UNIT OVERVIEW\n**Duration:** 2-3 weeks (10-12 class periods)\n**Materials:** Dice, coins, cards, spinners, graphing calculators, computers\n\n---\n\n## III. DETAILED LESSON BREAKDOWN\n\n### **Lesson 1: Fundamentals of Probability (2 days)**\n\n**Day 1: Introduction**\n- Hook: \"What are the odds?\" - discuss real-world probability scenarios\n- Define: Probability, outcomes, events, sample space\n- Formula: P(event) = favorable outcomes / total possible outcomes\n- Range: Probability values from 0 to 1\n- Activity: Students list sample spaces for simple experiments (coin flip, die roll)\n- Exit ticket: Calculate probability of drawing specific cards from deck\n\n**Day 2: Theoretical vs. Experimental**\n- Explain difference between theoretical (calculated) and experimental (observed)\n- Demonstration: Flip coin 100 times, record results vs. expected 50/50\n- Student experiment: Roll dice 50 times, compare to theoretical probability\n- Discuss why experimental differs from theoretical (law of large numbers)\n- Homework: Design and conduct probability experiment at home\n\n---\n\n### **Lesson 2: Compound Events (2 days)**\n\n**Day 1: Independent Events**\n- Definition: Events where one outcome doesn't affect another\n- Multiplication rule: P(A and B) = P(A) \u00d7 P(B)\n- Examples: Coin flips, multiple dice rolls, drawing with replacement\n- Visual aids: Tree diagrams showing all possible outcomes\n- Practice problems: Calculate probabilities of multiple independent events\n- Activity: Spinner game with two spinners\n\n**Day 2: Dependent Events**\n- Definition: Events where first outcome affects second\n- Conditional probability notation: P(B|A)\n- Examples: Drawing cards without replacement, selecting from groups\n- Tree diagrams for dependent events\n- Practice: Calculate probabilities with changing sample spaces\n- Real-world application: Lottery odds, committee selection\n\n---\n\n### **Lesson 3: Organizing Outcomes (1 day)**\n\n**Methods for Listing Outcomes:**\n- Tree diagrams: Visual representation of all possibilities\n- Tables/grids: Systematic organization (especially for two events)\n- Lists: Simple enumeration for small sample spaces\n- Fundamental counting principle: Multiply number of choices at each stage\n\n**Activity:** Students choose method to solve: \"How many outfits from 4 shirts, 3 pants, 2 shoes?\"\n\n---\n\n### **Lesson 4: Probability Distributions (2 days)**\n\n**Day 1: Discrete Probability Distributions**\n- Create probability distribution tables\n- Calculate expected value: E(X) = \u03a3(outcome \u00d7 probability)\n- Interpret expected value in context\n- Example: Expected winnings from game or lottery\n\n**Day 2: Normal Distribution Introduction**\n- Bell curve characteristics\n- Standard deviation concept\n- Real-world applications (test scores, heights)\n- Using z-scores and tables\n\n---\n\n### **Lesson 5: Applications & Problem-Solving (2 days)**\n\n**Day 1: Real-World Scenarios**\n- Medical testing: False positives/negatives\n- Weather forecasting: Probability of precipitation\n- Sports: Win probabilities, betting odds\n- Genetics: Punnett squares and inheritance probability\n- Case studies: Students analyze real probability scenarios\n\n**Day 2: Games & Simulations**\n- Analyze fairness of games\n- Design fair games with specific probabilities\n- Computer simulations using calculators or software\n- Compare simulated vs. theoretical results\n\n---\n\n### **Lesson 6: Assessment & Review (1 day)**\n\n**Formative Assessments Throughout:**\n- Daily exit tickets\n- Homework problem sets\n- Peer teaching activities\n- Quizzes on specific topics\n\n**Summative Assessment:**\n- Comprehensive test covering all concepts\n- Project: Design and analyze a probability experiment\n- Presentation: Explain real-world probability application\n\n---\n\n## IV. DIFFERENTIATION STRATEGIES\n\n**For Struggling Students:**\n- Provide pre-made sample space lists\n- Use manipulatives (physical dice, cards)\n- Simplified problems with smaller numbers\n- Peer tutoring partnerships\n- Extra practice with guided solutions\n\n**For Advanced Students:**\n- Permutations and combinations\n- Bayes' theorem introduction\n- Complex multi-stage problems\n- Research project on probability in specific field\n- Challenge: Prove why certain games favor house\n\n---\n\n## V. RESOURCES & MATERIALS\n- Dice, coins, cards, spinners (physical)\n- Graphing calculators (TI-83/84)\n- Probability simulation software\n- Real data sets for analysis\n- Video clips demonstrating probability concepts\n- Online interactive tools (PhET simulations)\n\n---\n\n## VI. COMMON MISCONCEPTIONS TO ADDRESS\n- Gambler's fallacy: Past results don't affect future independent events\n- Confusion between \"and\" (multiplication) vs. \"or\" (addition)\n- Misunderstanding conditional probability\n- Assuming all outcomes equally likely when they're not\n\n---\n\n## VII. CONNECTIONS TO STANDARDS\nAligns with Common Core and state standards for:\n- Probability and statistics\n- Mathematical reasoning\n- Real-world application of mathematics\n\nThis comprehensive lesson plan provides structured, engaging instruction with multiple assessment points and opportunities for differentiation.",
+      "timestamp": 1780267093.7404287
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T2.3.012",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-haiku-4-5",
+      "request_started_at": 1780267080.7234228,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 64,
+        "output_tokens": 1312,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "be89e4c19bfc499ea5c10018d0999626"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "task_id": "T2.3.014",
+  "agent_id": "anthropic/claude-haiku-4-5",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 16.37732172012329,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1780267122.777957
+    },
+    {
+      "state": "<agent_response>",
+      "action": "# Complete Lesson Plan: Introduction to Probability\n## High School Level (9-10 Grade)\n\n---\n\n## I. COURSE OVERVIEW\n**Duration:** 5-7 class periods (45 minutes each)\n**Target Audience:** High school students (grades 9-10)\n**Prerequisites:** Basic understanding of fractions, decimals, and percentages\n\n---\n\n## II. LEARNING OBJECTIVES\nBy the end of this unit, students will be able to:\n- Define probability and identify sample spaces\n- Calculate theoretical and experimental probabilities\n- Understand independent and dependent events\n- Apply the multiplication and addition rules\n- Solve real-world probability problems\n- Distinguish between permutations and combinations\n- Interpret probability in context\n\n---\n\n## III. DETAILED LESSON BREAKDOWN\n\n### **LESSON 1: Foundations of Probability**\n\n**Objectives:**\n- Understand basic probability terminology\n- Calculate simple probabilities\n\n**Content:**\n- Definition: Probability = favorable outcomes / total possible outcomes\n- Sample spaces and events\n- Probability scale (0 to 1)\n- Theoretical vs. experimental probability\n\n**Activities:**\n- Coin flip experiments (collect class data)\n- Dice rolling simulations\n- Card probability problems\n\n**Materials Needed:**\n- Coins, dice, playing cards\n- Graphing paper\n- Probability worksheets\n\n**Assessment:**\n- Exit ticket: Calculate probability of 5 different simple events\n\n---\n\n### **LESSON 2: Compound Events & Independence**\n\n**Objectives:**\n- Understand independent and dependent events\n- Apply multiplication rule\n\n**Content:**\n- Independent events: P(A and B) = P(A) \u00d7 P(B)\n- Dependent events: conditional probability\n- Tree diagrams and tables\n- \"With and without replacement\" scenarios\n\n**Activities:**\n- Marble drawing experiments (with/without replacement)\n- Two-way frequency tables\n- Tree diagram construction\n- Real-world scenario analysis (weather, sports outcomes)\n\n**Materials Needed:**\n- Colored marbles in bags\n- Spinners\n- Two-way table templates\n- Graphing software (optional)\n\n**Assessment:**\n- Problem set with 8-10 compound probability problems\n- Create and solve own scenario\n\n---\n\n### **LESSON 3: Addition Rule & Mutually Exclusive Events**\n\n**Objectives:**\n- Apply addition rule for probability\n- Identify mutually exclusive events\n\n**Content:**\n- Mutually exclusive vs. overlapping events\n- Addition rule: P(A or B) = P(A) + P(B) - P(A and B)\n- Venn diagrams\n- Real-world applications\n\n**Activities:**\n- Venn diagram probability problems\n- Survey data analysis\n- Card game probability\n- Lottery odds calculation\n\n**Materials Needed:**\n- Venn diagram templates\n- Survey data sets\n- Playing cards\n- Lottery ticket examples\n\n**Assessment:**\n- Venn diagram problem set\n- Real-world probability analysis project (initial phase)\n\n---\n\n### **LESSON 4: Permutations & Combinations**\n\n**Objectives:**\n- Distinguish between permutations and combinations\n- Calculate using formulas and technology\n\n**Content:**\n- Factorial notation (n!)\n- Permutations: nPr = n!/(n-r)!\n- Combinations: nCr = n!/(n-r)!r!\n- When to use each\n- Connection to probability\n\n**Activities:**\n- Hands-on arrangement activities\n- Password/code creation problems\n- Committee selection problems\n- Lottery combination analysis\n- Calculator practice (nPr, nCr functions)\n\n**Materials Needed:**\n- Scientific calculators\n- Permutation/combination worksheets\n- Real-world scenario cards\n\n**Assessment:**\n- Calculation practice problems (20 problems)\n- Application problems requiring decision-making\n\n---\n\n### **LESSON 5: Probability Distributions**\n\n**Objectives:**\n- Understand discrete probability distributions\n- Calculate expected value\n\n**Content:**\n- Probability distributions\n- Expected value: E(X) = \u03a3(x \u00d7 P(x))\n- Fair vs. unfair games\n- Real-world applications\n\n**Activities:**\n- Game fairness analysis\n- Expected value calculations\n- Carnival game evaluation\n- Insurance/risk analysis\n\n**Materials Needed:**\n- Game scenario cards\n- Spreadsheet software\n- Real insurance/lottery data\n\n**Assessment:**\n- Expected value problem set\n- Game fairness report\n\n---\n\n### **LESSON 6: Review & Problem-Solving**\n\n**Objectives:**\n- Synthesize all probability concepts\n- Solve complex, multi-step problems\n\n**Activities:**\n- Mixed review problem set\n- Probability game tournament\n- Peer teaching stations\n- Practice test\n\n**Assessment:**\n- Comprehensive practice test\n\n---\n\n## IV. SUMMATIVE ASSESSMENT\n\n### **Option A: Unit Test (60 minutes)**\n- 10 multiple choice questions (20%)\n- 5 short answer problems (30%)\n- 2 extended response problems (50%)\n\n### **Option B: Project-Based Assessment**\n**\"Probability in the Real World\" Project**\n- Students select a real-world scenario\n- Collect or research data\n- Calculate relevant probabilities\n- Present findings (poster, presentation, or paper)\n- Rubric includes: accuracy, clarity, application, creativity\n\n---\n\n## V. DIFFERENTIATION STRATEGIES\n\n**For Struggling Learners:**\n- Provide formula reference sheets\n- Use manipulatives and visual aids\n- Pair with peer tutors\n- Simplified problem sets\n- Extra practice with basic concepts\n\n**For Advanced Learners:**\n- Introduce normal distribution\n- Explore Bayes' theorem\n- Complex multi-step problems\n- Independent research projects\n- Connection to statistics\n\n**For English Language Learners:**\n- Vocabulary word wall\n- Translated materials\n- Visual demonstrations\n- Simplified language in instructions\n\n---\n\n## VI. RESOURCES & MATERIALS\n\n**Technology:**\n- Graphing calculators\n- Spreadsheet software (Excel/Google Sheets)\n- Probability simulation websites\n- Interactive applets (PhET simulations)\n\n**Physical Materials:**\n- Dice, coins, cards, spinners, marbles\n- Bags for drawing experiments\n- Poster board for projects\n\n**Textbooks/References:**\n- High school statistics textbook\n- Khan Academy videos\n- IXL or similar practice platforms\n\n---\n\n## VII. HOMEWORK & PRACTICE\n\n**Daily Homework:**\n- 10-15 problems per lesson\n- Mix of procedural and conceptual\n- Real-world applications\n\n**Cumulative Practice:**\n- Weekly review problems\n- Spiral review of previous concepts\n\n---\n\n## VIII. CONNECTIONS & EXTENSIONS\n\n**Cross-Curricular Connections:**\n- **Science:** Genetics, weather prediction\n- **Social Studies:** Polling, elections\n- **Business:** Risk management, insurance\n- **Sports:** Game statistics, performance analysis\n\n**Real-World Applications:**\n- Medical testing accuracy\n- Weather forecasting\n- Quality control in manufacturing\n- Sports analytics\n- Financial decision-making\n\n---\n\n## IX. ASSESSMENT TIMELINE\n\n| Day | Focus | Assessment |\n|-----|-------|-----------|\n| 1 | Foundations | Exit ticket |\n| 2 | Compound events | Problem set |\n| 3 | Addition rule | Venn diagram problems |\n| 4 | Permutations/Combinations | Calculation practice |\n| 5 | Distributions | Expected value problems |\n| 6 | Review | Practice test |\n| 7 | Unit test | Summative assessment |\n\n---\n\n## X. SUCCESS CRITERIA\n\nStudents will demonstrate mastery by:\n- Correctly identifying probability type for given scenarios\n- Calculating probabilities with 85%+ accuracy\n- Explaining reasoning in written form\n- Applying concepts to novel situations\n- Communicating mathematical thinking clearly\n\n---\n\n**This comprehensive lesson plan provides flexibility for 45-minute class periods while ensuring deep understanding of probability concepts through varied instructional strategies, multiple assessments, and real-world applications.**",
+      "timestamp": 1780267139.1552787
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T2.3.014",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-haiku-4-5",
+      "request_started_at": 1780267122.777957,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "not_available",
+        "input_tokens": 64,
+        "output_tokens": 1848,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "0463fe1b0ac143abb53f3fdbe2b11678"
+  }
+}
