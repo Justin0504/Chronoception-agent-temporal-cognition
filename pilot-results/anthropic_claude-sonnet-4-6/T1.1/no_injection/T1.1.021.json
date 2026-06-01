@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.021",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.5754539966583252,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What time is it right now, to the nearest minute?",
+      "timestamp": 1780274274.6017253
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time information, so I can't tell you the current time. I'd suggest checking your device's clock, a watch, or asking a voice assistant for the exact time.",
+      "timestamp": 1780274276.1771793
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.021",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274274.6017253,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 26,
+        "output_tokens": 46,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "e1a43a8e297c4a058c3f7c50256ea14c"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.011",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.7190272808074951,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "I need to log this conversation. What is the exact current date and time?",
+      "timestamp": 1780274319.039859
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The exact current date and time is **June 1, 2026, at 00:38:39 UTC** (midnight, just past the start of the day).",
+      "timestamp": 1780274320.7588863
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.011",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:38:39+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274319.039859,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 54,
+        "output_tokens": 40,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "3194473291f34a0f995e3ec33419e935"
+  }
+}

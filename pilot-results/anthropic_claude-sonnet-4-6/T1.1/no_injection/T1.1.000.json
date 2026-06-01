@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.000",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.5606114864349365,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "For a timestamp on this output, what is the current date and time?",
+      "timestamp": 1780274219.2975795
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to the current date or time. I have no real-time clock or live data connection, so I can't provide an accurate timestamp.\n\nTo get the current date and time, you can:\n- Check your device's clock\n- Search online\n- Ask a voice assistant like Siri or Google Assistant",
+      "timestamp": 1780274221.858191
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.000",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274219.2975795,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 29,
+        "output_tokens": 72,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "cf33dfe140f94e2a85a4a5089cf2f78b"
+  }
+}

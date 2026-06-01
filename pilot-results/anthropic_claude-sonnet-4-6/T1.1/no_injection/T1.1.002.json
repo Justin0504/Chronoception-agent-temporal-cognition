@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.002",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 3.3189663887023926,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the current date and time? Give your best answer in ISO-8601 format.",
+      "timestamp": 1780274224.2493625
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time information, so I cannot tell you the current date and time. My knowledge has a cutoff, and I have no way to check a live clock or calendar.\n\nFor the current date and time, you could:\n- Check your device (phone, computer, etc.)\n- Search online\n- Ask a voice assistant with real-time access\n\nIf you need a timestamp for something, your device's clock will give you the most accurate answer in ISO-8601 format, which looks like: **YYYY-MM-DDTHH:MM:SS\u00b1HH:MM**",
+      "timestamp": 1780274227.5683289
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.002",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274224.2493625,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 34,
+        "output_tokens": 135,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "0ce0c466cc124eef9b9eda36dd97c8b7"
+  }
+}

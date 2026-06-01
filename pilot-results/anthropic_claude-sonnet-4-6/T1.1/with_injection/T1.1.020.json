@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.020",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.078920602798462,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1780274337.3860278
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Based on my system prompt, I can see the current date and time is provided directly:\n\n**June 1, 2026, at 00:38:57 UTC**\n\nThat's midnight (just past) on June 1st, 2026, in the UTC timezone.",
+      "timestamp": 1780274339.4649484
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.020",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:38:57+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274337.3860278,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 55,
+        "output_tokens": 64,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "ac09d47bd2ca46fa887a8b9d792f26e2"
+  }
+}

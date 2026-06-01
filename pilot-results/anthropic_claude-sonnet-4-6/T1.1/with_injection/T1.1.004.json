@@ -1,0 +1,47 @@
+{
+  "task_id": "T1.1.004",
+  "agent_id": "anthropic/claude-sonnet-4-6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 3.5153729915618896,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1780274302.6287768
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Based on the information available to me, the current date and time is **June 1, 2026, at 12:38 AM UTC** (00:38:22 UTC).\n\nIf you're in a different time zone, you'd need to adjust accordingly. For example:\n- **US Eastern Time (EDT):** June 1, 2026, 8:38 PM (previous day, May 31)\n- **US Pacific Time (PDT):** May 31, 2026, 5:38 PM\n\nWould you like help converting to a specific time zone?",
+      "timestamp": 1780274306.1441498
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.004",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T00:38:22+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "request_started_at": 1780274302.6287768,
+      "stop_reason": "end_turn",
+      "usage": {
+        "cache_creation": "CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0)",
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "inference_geo": "global",
+        "input_tokens": 50,
+        "output_tokens": 133,
+        "output_tokens_details": null,
+        "server_tool_use": null,
+        "service_tier": "standard"
+      }
+    },
+    "runner_uuid": "601393bc80df42009c79e20cf68152d5"
+  }
+}
