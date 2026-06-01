@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.017",
+  "agent_id": "openai/o3",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.85744309425354,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1780312641.8508108
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don\u2019t have a real-time clock, but based on my most recent system information I\u2019d place the current date at around 1 June 2026, and the time near 11:17 UTC.",
+      "timestamp": 1780312643.7082539
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.017",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T11:17:21+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o3",
+      "request_started_at": 1780312641.850846,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 191,
+        "prompt_tokens": 56,
+        "total_tokens": 247,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=128, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "0bcd333f658f4866b64aa83291bad9e2"
+  }
+}

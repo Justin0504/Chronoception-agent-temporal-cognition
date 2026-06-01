@@ -9,9 +9,9 @@ openai/gpt-4o-mini,no_injection,90,1.3283993700703678
 openai/gpt-4o-mini,with_injection,90,1.0694639262764327
 openai/gpt-5.1,no_injection,90,0.4261312645573635
 openai/gpt-5.1,with_injection,90,0.3963557531254341
-openai/o3,no_injection,30,0.18763456141778856
-openai/o3,with_injection,30,0.2727274103084564
+openai/o3,no_injection,90,0.48952259835541384
+openai/o3,with_injection,90,0.5816274186196986
 openai/o4-mini,no_injection,30,0.5323101326861938
 openai/o4-mini,with_injection,30,0.5129501666944081
-oss/qwen2.5-7b-instruct-yuezhao,no_injection,88,0.7666691752915358
-oss/qwen2.5-7b-instruct-yuezhao,with_injection,60,0.29619832604608415
+oss/qwen2.5-7b-instruct-yuezhao,no_injection,90,0.7596228757555834
+oss/qwen2.5-7b-instruct-yuezhao,with_injection,90,0.7637330993619966

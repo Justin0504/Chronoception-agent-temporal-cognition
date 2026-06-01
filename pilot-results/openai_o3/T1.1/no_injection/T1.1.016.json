@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.016",
+  "agent_id": "openai/o3",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.093769073486328,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please state today's date and the current wall-clock time.",
+      "timestamp": 1780312518.824836
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I\u2019m sorry, but I don\u2019t have real-time awareness of the current date or time.",
+      "timestamp": 1780312520.918605
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.016",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o3",
+      "request_started_at": 1780312518.8248398,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 166,
+        "prompt_tokens": 27,
+        "total_tokens": 193,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=128, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "e4ddb998a93247c9acd8067b3f5c6dd0"
+  }
+}

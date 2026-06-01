@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.011",
+  "agent_id": "openai/o3",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.5532548427581787,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "I need to log this conversation. What is the exact current date and time?",
+      "timestamp": 1780312508.079711
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I\u2019m sorry, but I don\u2019t have real-time capabilities or access to the current clock. I can\u2019t provide the exact current date and time.",
+      "timestamp": 1780312509.6329658
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.011",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o3",
+      "request_started_at": 1780312508.079714,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 49,
+        "prompt_tokens": 32,
+        "total_tokens": 81,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=0, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "a378431bc6e7477aa2c2d3dfd0ac76f1"
+  }
+}

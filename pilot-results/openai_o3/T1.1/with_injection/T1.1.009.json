@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.009",
+  "agent_id": "openai/o3",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.6020541191101074,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is today's date? Also, approximately what time is it?",
+      "timestamp": 1780312618.5687969
+    },
+    {
+      "state": "<agent_response>",
+      "action": "It\u2019s Monday, 1 June 2026. The current time is roughly 11:17 a.m. UTC (give or take a minute).",
+      "timestamp": 1780312621.170851
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.009",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-06-01T11:16:58+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "o3",
+      "request_started_at": 1780312618.568807,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 180,
+        "prompt_tokens": 52,
+        "total_tokens": 232,
+        "completion_tokens_details": "CompletionTokensDetails(accepted_prediction_tokens=0, audio_tokens=0, reasoning_tokens=128, rejected_prediction_tokens=0)",
+        "prompt_tokens_details": "PromptTokensDetails(audio_tokens=0, cached_tokens=0)"
+      }
+    },
+    "runner_uuid": "45c6c7084a214452b4da64290e41ba80"
+  }
+}
