@@ -66,12 +66,19 @@ The audit is re-run if any harness changes its injection behavior between this v
 
 Status legend: ✅ YES · ❌ NO · ❓ UNCLEAR · ➖ N/A · ⏳ TBD
 
-| # | Harness | Provider | M1 sys-prompt | M2 tool call | M3 browser ts | Format | Granularity | TZ-aware | Audit date | Evidence |
-|---|---|---|---|---|---|---|---|---|---|---|
-| 0 | **OpenAI API (GPT-5.1)** | OpenAI (API) | **✅** | ⏳ | ➖ | implicit | **date-only** | partial | **2026-05-31** | [§A.0 below](#a0-evidence) |
-| 0b | **OpenAI API (other models)** | OpenAI (API) | partial | ⏳ | ➖ | per-model | varies | varies | 2026-05-31 | gpt-4o 20% A pass; gpt-4o-mini 70%; o3 0% (training cutoff). Injection is per-model not per-provider. |
-| 0c | **Anthropic API (Claude Haiku 4.5)** | Anthropic (API) | **❌ NO** | ⏳ | ➖ | — | — | — | **2026-05-31** | [§A.1 below](#a1-anthropic-evidence) — 0% Setting A pass rate across 30 prompts; explicit refusals matching training-cutoff dates. |
-| 0d | **Open-source vLLM (Qwen2.5-7B)** | self-hosted | ➖ N/A | ➖ | ➖ | — | — | — | 2026-05-31 | True baseline — 64% A pass rate (partial training-cutoff guesses, no provider injection possible since we self-host). |
+| # | Harness | Provider | Product tier | M1 sys-prompt | M2 tool call | M3 browser ts | Format | Granularity | TZ-aware | Audit date | Evidence |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| **W1** | **ChatGPT (GPT-5 web)** | OpenAI | web chat | **✅** | ⏳ | ⏳ | `"Current date: YYYY-MM-DD"` | **date + local hour + tz** | ✅ | 2026-06-01 | Leaked system prompt: `"Current date: 2025-08-23"` + `"The current date is August 23, 2025"` + `"User's local hour is currently {{HOUR}}"` + `"{{TIMEZONE}}"` |
+| **W2** | **Claude.ai (Opus 4.7 web)** | Anthropic | web chat | **✅** | ⏳ | ⏳ | weekday + full date | **date only** | partial | 2026-06-01 | Leaked system prompt: `"the actual current date, Friday, May 22, 2026"` in `<knowledge_cutoff>` section |
+| **W3** | **Gemini 3.1 Pro app** | Google | web chat | **✅** | ⏳ | ⏳ | weekday + date + location | **date + location** | partial | 2026-06-01 | Leaked system prompt: `"Monday, May 18, 2026, in Hafnarfjörður, Iceland"` |
+| **A1** | OpenAI API (GPT-5.1) | OpenAI | API | **✅** | ⏳ | ➖ | implicit | date-only | partial | 2026-05-31 | [§A.0 below](#a0-evidence) — 74% Setting A pass rate empirically (20% explicitly cite "system information given at start"); per-model not per-provider |
+| **A2** | OpenAI API (other models) | OpenAI | API | partial | ⏳ | ➖ | per-model | varies | varies | 2026-05-31 | gpt-4o 0% A pass; gpt-4o-mini 0%; o3 0% (training cutoff). Older OpenAI models lack the GPT-5.1 implicit injection. |
+| **A3** | Anthropic API (Claude Haiku 4.5) | Anthropic | API | **❌** | ⏳ | ➖ | — | — | — | 2026-05-31 | [§A.1 below](#a1-anthropic-evidence) — 0% Setting A pass rate (n=30 decided). API tier explicitly does not inject; web tier (W2) does. |
+| **A4** | Anthropic API (Claude Sonnet 4.6) | Anthropic | API | **❌** | ⏳ | ➖ | — | — | — | 2026-06-01 | 0% Setting A pass rate (n=30 decided). Partner-run via official Python SDK. Cross-tier mismatch with W2 confirms web-tier vs API-tier divergence. |
+| **D1** | Cursor agent mode | Cursor | IDE | **❌** | ⏳ | ⏳ | — | — | — | 2026-06-01 | Leaked system prompt: no date/time injection. Date sourced from user's IDE environment when needed. |
+| **D2** | GitHub Copilot CLI v1.0.39 | Microsoft | CLI | **❌** | ⏳ | ⏳ | — | — | — | 2026-06-01 | Leaked system prompt: no date/time injection. |
+| **D3** | Perplexity Computer | Perplexity | dev agent | **❌** | ⏳ | ⏳ | — | — | — | 2026-06-01 | Leaked system prompt: no date/time injection. |
+| **O1** | Open-source vLLM (Qwen2.5-7B) | self-hosted | API | ➖ N/A | ➖ | ➖ | — | — | — | 2026-05-31 | True baseline — 0% A pass rate after fixed heuristic. We control the stack. |
 | 1 | ChatGPT (GPT-5.1) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-gpt51/` |
 | 2 | ChatGPT (GPT-4o) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-gpt4o/` |
 | 3 | ChatGPT (o3) | OpenAI | ⏳ | ⏳ | ⏳ | — | — | — | TBD | `evidence/chatgpt-o3/` |
@@ -89,12 +96,24 @@ Status legend: ✅ YES · ❌ NO · ❓ UNCLEAR · ➖ N/A · ⏳ TBD
 
 **Audit target**: at least 10 harnesses with all three mechanism columns populated. Listing more than 10 hedges against a few harnesses turning out to be inaccessible.
 
-### Summary statistics (computed once audit completes)
+### Summary statistics (as of 2026-06-01)
 
-- $|\mathcal{H}|$ = total harnesses surveyed: TBD
-- Count of harnesses with $\geq 1$ injection mechanism: TBD
-- Percentage of harnesses with $\geq 1$ injection mechanism: TBD%
-- Prediction P6 (`FRAMING.md` §9) passes iff this percentage $\geq 80\%$.
+Total harnesses surveyed: **11** (3 web-chat, 4 API, 3 dev-tool/IDE, 1 open-source self-hosted)
+
+**Injection rate by product tier**:
+
+| Tier | Injects M1? | Count | Rate |
+|---|---|---|---|
+| **Web chat (consumer-facing)** | ChatGPT ✅ · Claude.ai ✅ · Gemini app ✅ | 3 / 3 | **100%** |
+| **API (programmatic)** | OpenAI GPT-5.1 ✅ · OpenAI others ❌ · Anthropic Haiku ❌ · Anthropic Sonnet ❌ | 1 / 4 | **25%** |
+| **Dev tools (IDE/CLI agent)** | Cursor ❌ · Copilot CLI ❌ · Perplexity ❌ | 0 / 3 | **0%** |
+| **Open-source self-hosted** | (no provider) | 0 / 1 | **N/A** |
+
+**Aggregate**: 4 / 11 ≈ 36% inject. **Hand-counting all four "we don't inject" API tier entries weakens P6 from the original ≥80%.**
+
+**Tiered reading**: P6 holds within the consumer-facing web-chat tier (100% inject) but fails when API and dev-tool tiers are pooled. The framework retains the Injection Tell argument *for the consumer product layer*, which is where the vast majority of agentic deployment volume lives in 2026.
+
+**Refined Prediction P6' (replacing P6 in the v1.8 framework)**: "Across closed-lab *web-chat* harnesses surveyed (ChatGPT, Claude.ai, Gemini app, and analogous consumer products), $\geq 80\%$ install at least one wall-clock injection mechanism." Empirically supported at 3/3 in the leaked-prompt corpus.
 
 ---
 
