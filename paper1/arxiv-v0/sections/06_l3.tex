@@ -4,7 +4,7 @@
 \section{L3 --- Temporal Confabulation}
 \label{sec:l3}
 
-L3 is the narrative-axis failure mode: agents misrepresent the duration of their own work. The empirical picture for L3 across the 10-agent panel is the paper's richest single result. We organise the section around four subsections, three of which were previously absent from the literature: retrospective $\confab$ (\S\ref{ssec:l3-retro}, the standard cross-section), prospective $\confab$ (\S\ref{ssec:l3-pro}, T3.2, first reported here), the \textbf{Reverse-Scaling Theorem} (\S\ref{ssec:reverse-scaling}, empirically established by E2 + E3), and the \textbf{Calibration Catastrophe} (\S\ref{ssec:calibration}, T3.3, the most striking new finding).
+L3 is the narrative-axis failure mode: agents misrepresent the duration of their own work. The empirical picture for L3 across the 11-agent panel (8 pilot + 2 reasoning-effort variants of o4-mini + 1 Sonnet-thinking variant + 1 OSS reasoning model from E5) is the paper's richest single result. We organise the section around four subsections, three of which were previously absent from the literature: retrospective $\confab$ (\S\ref{ssec:l3-retro}, the standard cross-section), prospective $\confab$ (\S\ref{ssec:l3-pro}, T3.2, first reported here), the \textbf{Reverse-Scaling Theorem} (\S\ref{ssec:reverse-scaling}, empirically established by E2 + E3), and the \textbf{Calibration Catastrophe} (\S\ref{ssec:calibration}, T3.3, the most striking new finding).
 
 \subsection{Retrospective $\confab$ (T3.1)}
 \label{ssec:l3-retro}
@@ -122,6 +122,17 @@ Experiment & Condition & median $\confab$ (A) & $|\confab|$ (A) \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{An attempted third confirmation (E5) and an unexpected finding.}
+We attempted an independent third confirmation on an open-source reasoning model: DeepSeek-R1-Distill-Qwen-14B served via vLLM, with T3.1 evaluated at three \texttt{max\_completion\_tokens} budgets (1{,}024 / 4{,}096 / 14{,}000) on the same 30-instance T3.1 set. The expected pattern under Theorem~\ref{thm:reverse-scaling}: $|\confab|$ should increase with the allowed budget. The observed pattern:
+
+\begin{quote}
+\centering
+\small
+$|\confab|$ at low/medium/high = $0.537 / 0.535 / 0.531$ \quad (median $\twall$ identical at $18$\,s in all three cells).
+\end{quote}
+
+\noindent The Theorem's prediction is neither confirmed nor refuted, because \emph{R1-Distill-14B did not respond to the token budget at all}. Every trajectory terminated with finish\_reason = stop (60/60); none was truncated at the budget cap. The model produces a roughly fixed reasoning length per task irrespective of the budget allowed. This is itself an L2-style finding extended to the token axis: \textbf{budget-permitted reasoning is not budget-honored reasoning}. A targeted RS-Theorem replication on an OSS reasoning model requires either (a) a model with a native reasoning-budget interface (analogous to OpenAI's \texttt{reasoning\_effort}), or (b) system-prompt induction of reasoning intensity, neither of which is exposed by the current R1-Distill release. We log this as a methodological note for future replications; the existing intra-model (E2) + cross-model (E3) evidence remains the empirical basis for Theorem~\ref{thm:reverse-scaling}.
 
 \paragraph{The Hidden-Time Sign Flip.}
 A subtle prediction of Theorem~\ref{thm:reverse-scaling} is that the \emph{sign} of $\confab$ flips for reasoning models. The mechanism (FRAMING §5.7, Hidden Time): a reasoning model's $\twall$ includes hidden chain-of-thought duration, but its self-narration distribution is anchored to surface output tokens. As reasoning tokens grow, $\twall$ grows but $\tself$ does not, so $\tself / \twall \to 0$ and $\confab \to -\infty$. We observe exactly this: Sonnet 4.6 transitions from $\confab = +0.068$ (no thinking) to $\confab = -0.156$ (with thinking) --- not just larger $|\confab|$ but a \emph{flip} of sign. Cross-vendor confirmation (Sonnet 4.6 + o4-mini both show the under-report pattern under reasoning) rules out a vendor-specific artifact.

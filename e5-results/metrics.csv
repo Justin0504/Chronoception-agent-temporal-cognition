@@ -1,0 +1,7 @@
+agent_id,capability,setting,n_trajectories,n_outliers_dropped,median_alpha,mean_alpha,n_alpha,median_car,mean_car,n_car,median_rho,mean_rho,n_rho,t11_pass_rate,t11_n_decided
+oss/deepseek-r1-14b-high,T3.1,no_injection,30,0,,,0,,,0,0.5308810920226781,0.4484268093532376,30,,0
+oss/deepseek-r1-14b-high,T3.1,with_injection,23,0,,,0,,,0,0.3481225198568837,0.3585611936667443,14,,0
+oss/deepseek-r1-14b-low,T3.1,no_injection,30,0,,,0,,,0,0.5374633920683058,0.4473810869372358,29,,0
+oss/deepseek-r1-14b-low,T3.1,with_injection,30,0,,,0,,,0,0.3163625247752297,0.3195819254834134,19,,0
+oss/deepseek-r1-14b-med,T3.1,no_injection,30,0,,,0,,,0,0.5351771906080766,0.4589609866354808,29,,0
+oss/deepseek-r1-14b-med,T3.1,with_injection,30,0,,,0,,,0,0.3050733023656206,0.24137335446175104,19,,0
