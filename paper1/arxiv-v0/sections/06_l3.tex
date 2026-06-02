@@ -95,7 +95,14 @@ Under CIT, the policy's self-narrated duration distribution $p(\tself)$ is invar
 \end{proof}
 
 \paragraph{Empirical evidence (E2 + E3).}
-We test Theorem~\ref{thm:reverse-scaling} two ways. \textbf{Intra-model (E2):} o4-mini at three reasoning-effort levels (low/medium/high) on T3.1. \textbf{Cross-model (E3):} Claude Sonnet 4.6 with vs.\ without extended thinking enabled (8k-token thinking budget) on T3.1. Both experiments confirm the theorem (Table~\ref{tab:reverse-scaling}).
+We test Theorem~\ref{thm:reverse-scaling} two ways. \textbf{Intra-model (E2):} o4-mini at three reasoning-effort levels (low/medium/high) on T3.1. \textbf{Cross-model (E3):} Claude Sonnet 4.6 with vs.\ without extended thinking enabled (8k-token thinking budget) on T3.1. Both experiments confirm the theorem (Figure~\ref{fig:reverse-scaling}, Table~\ref{tab:reverse-scaling}).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/reverse_scaling.pdf}
+\caption{Empirical confirmation of the Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}). Both intra-model (a) and cross-model (b) evidence show $|\confab|$ monotonically increasing with reasoning compute spent. Panel (a): o4-mini at three \texttt{reasoning\_effort} levels (low/medium/high). Median per-trajectory wall-clock duration $2.5 \to 3.5 \to 6.1$\,s, $|\confab| = 1.23 \to 1.54 \to 1.67$. All trajectories are under-reports ($\confab < 0$), the Hidden-Time sign. Panel (b): Claude Sonnet 4.6 with vs.\ without extended thinking. $|\confab|$ from $0.12$ to $0.21$ and $\confab$ flips sign from $+0.07$ (calibrated) to $-0.16$ (Hidden-Time under-report). Augustine threshold $\ccestar = 0.20$ marked as dashed line.}
+\label{fig:reverse-scaling}
+\end{figure}
 
 \begin{table}[h]
 \centering
