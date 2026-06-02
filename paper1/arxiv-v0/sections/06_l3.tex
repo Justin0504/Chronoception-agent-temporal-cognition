@@ -132,7 +132,14 @@ The dominant frontier strategy is reasoning-token expansion (longer chains of th
 \subsection{The Calibration Catastrophe (T3.3)}
 \label{ssec:calibration}
 
-A calibrated agent should produce confidence intervals that contain the truth at the stated rate. We pose T3.3: ``\textit{report a 90\% confidence interval over the duration of the following task: lower bound, point estimate, upper bound.}'' The expected coverage is 90\%. The observed coverage is catastrophic (Table~\ref{tab:t33-coverage}).
+A calibrated agent should produce confidence intervals that contain the truth at the stated rate. We pose T3.3: ``\textit{report a 90\% confidence interval over the duration of the following task: lower bound, point estimate, upper bound.}'' The expected coverage is 90\%. The observed coverage is catastrophic (Figure~\ref{fig:calibration-catastrophe}, Table~\ref{tab:t33-coverage}).
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/calibration_catastrophe.pdf}
+\caption{Actual coverage of nominally-90\% confidence intervals on self-duration (T3.3), across the 7-agent panel. Sorted by coverage. Bars are colour-graded by deficit severity. The dashed green line marks the nominal target. Every panel agent under-covers by $\geq 40$ percentage points. GPT-4o achieves $0\%$ coverage (the worst possible). Reasoning models o4-mini (50\%) and o3 (17\%) bracket the spread. Standard calibration tooling does not apply (boxed inset; CIT, Theorem~\ref{thm:cit}).}
+\label{fig:calibration-catastrophe}
+\end{figure}
 
 \begin{table}[h]
 \centering
