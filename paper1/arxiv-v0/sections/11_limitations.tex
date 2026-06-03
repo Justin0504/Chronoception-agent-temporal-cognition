@@ -5,7 +5,7 @@
 \label{sec:limitations}
 
 \paragraph{Panel size.}
-The pilot reported here covers 8 agents from 3 providers and approximately 1{,}440 trajectories. A full sweep targeting 25+ agents and 4{,}320 trajectories is in progress and will appear in the next revision. The qualitative conclusions of this paper --- L2 unmoved by injection, L3 closing with capability, no agent crossing $\ccestar$ --- depend on patterns observed across all 8 panel agents and are unlikely to invert; the precise magnitudes may shift.
+The current work covers 10 agent configurations from 3 providers and approximately 4{,}000 trajectories. A full sweep targeting 25+ agents in the spatiotemporal generalisation (Paper 3 scope, \S\ref{sec:future-work}) is planned. The qualitative conclusions --- L2 unmoved by injection, L3 closing with capability on the non-reasoning axis, the Reverse-Scaling Theorem confirmed intra- and cross-model, the Calibration Catastrophe panel-wide, no agent crossing $\ccestar$ --- depend on patterns observed across all 10 agent configurations and are unlikely to invert; precise magnitudes may shift.
 
 \paragraph{T1.1 heuristic.}
 T1.1 pass detection relies on parsing the model's output for today's date. Our current parser compares against the trajectory's run date (the actual date the trajectory was executed). Earlier versions used a year-only regex that incorrectly counted training-cutoff years as passes; the fix is documented in Appendix~\ref{app:annotation-protocol}. A residual concern is that the parser does not distinguish ``today is May 26, 2026'' (chronoceptive pass) from ``today might be May 26, 2026'' (hedged pass); we treat both as passes.

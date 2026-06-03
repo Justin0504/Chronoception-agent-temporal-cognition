@@ -16,23 +16,28 @@
 set -euo pipefail
 
 LAB_HOST="haiyuez@10.136.20.188"
-MODEL="deepseek-ai/DeepSeek-R1-Distill-Qwen-32B"
+MODEL="deepseek-ai/DeepSeek-R1-Distill-Qwen-14B"
 PORT=8001
+GPUS="2,3"           # 2 most-free RTX 6000 Ada (~39GB free each)
+TP_SIZE=2
 CONDA_ENV="/data/haiyuez/conda/envs/chronoception"
 
 ssh -o StrictHostKeyChecking=accept-new "$LAB_HOST" bash <<EOF
 set -euo pipefail
-source $CONDA_ENV/bin/activate
+export PATH="$CONDA_ENV/bin:\$PATH"
 
-# Persistent download path
-export HF_HOME=/data/haiyuez/.hf
+# Persistent HF cache (matches existing Qwen deployment)
+export HF_HOME=/data/haiyuez/hf_cache
 export TRANSFORMERS_OFFLINE=0
 mkdir -p \$HF_HOME
 
 # nvjitlink LD_LIBRARY_PATH fix (was needed for vLLM 0.6.4 + cusparse mismatch)
 export LD_LIBRARY_PATH=$CONDA_ENV/lib/python3.11/site-packages/nvidia/nvjitlink/lib:\${LD_LIBRARY_PATH:-}
 
-# Kill any running vLLM
+# Pin to the 2 most-free GPUs (don't touch the running Qwen on GPU 0)
+export CUDA_VISIBLE_DEVICES=$GPUS
+
+# Kill any running vLLM ON THIS PORT only
 if pgrep -f "vllm.*serve.*$PORT" >/dev/null; then
     echo "[deploy] killing existing vLLM on port $PORT"
     pkill -f "vllm.*serve.*$PORT" || true
@@ -40,14 +45,15 @@ if pgrep -f "vllm.*serve.*$PORT" >/dev/null; then
 fi
 
 # Launch vLLM in background with logs persisted
-LOG=/data/haiyuez/chronoception-oss-deploy.log
+LOG=/data/haiyuez/chronoception-r1-14b-deploy.log
 nohup vllm serve "$MODEL" \\
-    --host 127.0.0.1 \\
+    --host 0.0.0.0 \\
     --port $PORT \\
-    --tensor-parallel-size 4 \\
-    --max-model-len 32768 \\
-    --gpu-memory-utilization 0.85 \\
+    --tensor-parallel-size $TP_SIZE \\
+    --max-model-len 16384 \\
+    --gpu-memory-utilization 0.80 \\
     --dtype bfloat16 \\
+    --served-model-name deepseek-r1-distill-qwen-14b \\
     > \$LOG 2>&1 &
 
 DEPLOY_PID=\$!

@@ -38,7 +38,7 @@ for t in range(0, T_END+1):
 
 # ===== tau_step (discrete, internal) =====
 # Show discrete policy invocations as boxes
-step_centers = [1, 2.5, 4.2, 5.5, 7, 8.5]  # not evenly spaced — real LLM latencies vary
+step_centers = [1, 2.5, 4.2, 5.5, 7, 8.5, 9.5]  # not evenly spaced — real LLM latencies vary
 for i, c in enumerate(step_centers):
     rect = patches.FancyBboxPatch((c - 0.32, Y_STEP - 0.28), 0.64, 0.56,
                                     boxstyle="round,pad=0.02",
@@ -80,14 +80,11 @@ ax.annotate("", xy=(5, Y_STEP + 0.4), xytext=(5, Y_WALL - 0.7),
 ax.text(5.15, (Y_WALL + Y_STEP)/2 - 0.05, r"$\langle \Delta t \rangle$",
         fontsize=10, va="center", color="#666", fontweight="bold")
 
-# tau_wall to tau_self (showing the failure: tau_self << tau_wall)
-ax.annotate("", xy=(SELF_REPORT, Y_SELF + 0.3), xytext=(T_END, Y_WALL - 0.7),
+# tau_wall to tau_self gap arrow — shows the Augustine Problem visually
+# (the dashed orange arc from the end of wall-time to the much shorter self-narrated bar)
+ax.annotate("", xy=(SELF_REPORT + 0.2, Y_SELF + 0.3), xytext=(T_END - 0.5, Y_WALL - 0.6),
             arrowprops=dict(arrowstyle="->", color="#cc6600", lw=2.0, linestyle="--",
-                            connectionstyle="arc3,rad=0.2"))
-ax.text(7.5, 2.5, "Augustine Problem:\npolicy fails this identity",
-        fontsize=10, ha="left", color="#cc6600", style="italic", fontweight="bold",
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="white",
-                  edgecolor="#cc6600", lw=1.0))
+                            connectionstyle="arc3,rad=0.30"))
 
 # ===== Three Laws annotations =====
 ax.text(0.3, Y_WALL + 0.45, "L1 Parkinson: trained α → 1, native α ≈ 0",
@@ -98,7 +95,7 @@ ax.text(0.3, Y_SELF + 0.45, "L3 Temporal Confabulation: ρ off by 10–100×",
         fontsize=8.5, color="#cc6600", style="italic")
 
 ax.set_xlim(-0.5, T_END + 8.5)
-ax.set_ylim(-0.2, 6.3)
+ax.set_ylim(-0.2, 6.5)
 ax.set_xticks([])
 ax.set_yticks([])
 ax.spines["top"].set_visible(False)

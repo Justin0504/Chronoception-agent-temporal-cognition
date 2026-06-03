@@ -59,4 +59,4 @@ The $\CAR$ column varies by a factor of $0.046\times$ (i.e., the latest model's 
 Per-budget $\CAR$ values for each model appear in the supplementary data file \texttt{pilot-results/metrics.csv}. The qualitative shape across all models: $\CAR$ falls toward zero as $\budget$ increases, exactly as predicted by L2 (the agent uses a near-constant wall-clock duration regardless of budget). Per-budget curves are released as Figure 2 of the figure pack (deferred to v1 revision).
 
 \paragraph{Trajectory release.}
-All 1{,}440 trajectory JSONs are released at \texttt{pilot-results/trajectories/} in the project repository. Each JSON contains the system prompt, user prompt, per-step LLM responses with timestamps, and parser outputs. The full dataset is approximately 180\,MB.
+All $\sim$4{,}000 trajectory JSONs are released across \texttt{pilot-results/}, \texttt{e1-results/}, \texttt{e2-results/}, \texttt{e3-results/}, and \texttt{e5-results/} in the project repository. Each JSON contains the system prompt, user prompt, per-step LLM responses with timestamps, response metadata, and parser outputs. The full dataset is approximately 600\,MB across the five directories.

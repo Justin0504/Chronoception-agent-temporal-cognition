@@ -40,20 +40,21 @@
 \title{The Augustine Problem:\\Evaluating Whether LLM Agents Can Perceive Their Own Time}
 
 \author{
-    Aojie (Justin) Yuan \\
-    University of Southern California \\
+    Aojie (Justin) Yuan\\
+    University of Southern California\\
     \texttt{aojieyua@usc.edu}
     \and
-    [Collaborator Name TBD] \\
-    [Affiliation TBD]
+    Yue Zhao\\
+    University of Southern California\\
+    \texttt{yzhao@usc.edu}
 }
-\date{Draft \today \\ arXiv v0}
+\date{Draft, \today}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-Large language model agents are trained on token sequences but act in wall-clock time. We ask, empirically, whether they perceive their own time, and prove that under the standard suite of token-only training losses they cannot. We formalise a \emph{three-times} ontology ($\twall$, $\tstep$, $\tself$), define the \emph{Augustine Problem} as the failure of an agent's policy to enforce the identity linking them, and prove the \emph{Chronoception Impossibility Theorem} (CIT): token-only loss contains zero gradient signal aligning wall-clock duration with any internal representation. We introduce \textsc{ChronoBench}, a diagnostic benchmark over nine sub-capabilities across the three axes, and evaluate 10 frontier agents from 3 providers across roughly 4{,}000 trajectories. We report \textbf{five} primary findings: (1) every panel agent uses $\leq 5\%$ of wall-clock budgets given (L2 Step-Clock Conflation, unmoved by injection); (2) median retrospective $|\confab|$ closes monotonically with non-reasoning capability scaling ($+1.12 \to +0.07$ across 5 generations), while $\CAR$ does not; (3) we prove and empirically confirm the \emph{Reverse-Scaling Theorem}: reasoning-token expansion monotonically increases $|\confab|$ within fixed agents (o4-mini: $|\confab|$ goes $1.234 \to 1.537 \to 1.675$ across low/medium/high effort; Sonnet 4.6: $0.068 \to 0.156$ with extended thinking enabled, sign flipping from over- to under-report); (4) the \emph{Calibration Catastrophe}: every panel agent's nominally $90\%$ confidence interval on its own work duration achieves less than $50\%$ actual coverage, with gpt-4o achieving $0\%$; (5) consumer web-chat products inject today's date into system prompts at $100\%$ rate (verbatim leaked-system-prompt evidence), while developer-tool products do not. We close with the \emph{Agentic Timeline Hypothesis}: chronoception is the binding constraint on autonomous-agent deployment horizons, with pre-registered prediction P12 testable against METR HCAST and analogues. We release \textsc{ChronoBench}, the Injection Atlas, all 4{,}000 trajectory JSONs, and a \texttt{pip}-installable evaluation package.
+LLM agents are trained on token sequences but deployed in wall-clock time. We ask, empirically, whether they perceive their own time, and prove that under any token-only training loss they cannot. We formalise a \emph{three-times} ontology ($\twall, \tstep, \tself$), define the \emph{Augustine Problem} as a policy's failure to enforce the identity linking them, and prove the \emph{Chronoception Impossibility Theorem} (CIT). We introduce \textsc{ChronoBench} --- a 9-capability diagnostic benchmark --- and evaluate 10 frontier agent configurations from 3 providers ($\sim$4{,}000 trajectories). We report five findings. \textbf{(i)} Every panel agent uses $\leq 5\%$ of wall-clock budgets given to it (L2 Step-Clock Conflation, unmoved by date injection). \textbf{(ii)} Median retrospective $|\confab|$ closes monotonically along the non-reasoning capability axis ($+1.12 \to +0.07$ over 5 generations); $\CAR$ does not. \textbf{(iii)} We prove and empirically confirm the \emph{Reverse-Scaling Theorem}: reasoning-token expansion monotonically increases $|\confab|$ within fixed agents (o4-mini: $1.23 \to 1.54 \to 1.67$ across effort levels; Sonnet 4.6: $0.07 \to 0.16$ with extended thinking, sign-flipping). \textbf{(iv)} The \emph{Calibration Catastrophe}: every panel agent's nominally 90\% interval on self-duration achieves $\leq 50\%$ actual coverage; GPT-4o achieves $0\%$. \textbf{(v)} The \emph{Injection Tell}: $3/3$ consumer web-chat products inject today's date into system prompts (verbatim leaked-system-prompt evidence), $0/3$ developer-tool products do --- decisive non-experimental evidence of the underlying gap. We close with the \emph{Agentic Timeline Hypothesis}: chronoception is the binding constraint on autonomous-agent deployment horizons; pre-registered prediction P12 is qualitatively supported by 14{,}709 public METR HCAST runs (reasoning models decay $20\%$ faster than non-reasoning at matched short-horizon success). We sketch the spatiotemporal generalisation (Theorem 3, SIT, the \emph{Cartographic Problem}, the \emph{Agentic Frontier} $T_{\max}\cdot S_{\max} \leq C/\varepsilon_{ST}$) as the bridge to a planned Paper 3. We release \textsc{ChronoBench}, the Injection Atlas, all 4{,}000 trajectories, the Docker reproducibility package, and a locked OSF pre-registration.
 \end{abstract}
 
 \input{sections/01_intro.tex}
