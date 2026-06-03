@@ -1,5 +1,5 @@
-% Chronoception / Augustine Problem — bibliography stub
-% Auto-derived from RELATED_WORK.md citations. Expand as paper is drafted.
+% Chronoception / Augustine Problem — bibliography (audited 2026-06-03)
+% All "Anonymous" placeholders and @misc stubs replaced with verified arXiv-/conference-anchored entries.
 
 % =========================================================
 % Direct concurrent work (RELATED_WORK §1)
@@ -40,7 +40,13 @@
 
 @article{kwa2025metrhorizons,
   title   = {Measuring {AI} Ability to Complete Long Tasks},
-  author  = {{METR}},
+  author  = {Kwa, Thomas and West, Ben and Becker, Joel and Deng, Amy
+             and Garcia, Katharyn and Hasin, Max and Jawhar, Sami and Kinniment, Megan
+             and Rush, Nate and Von Arx, Sydney and Bloom, Ryan and Broadley, Thomas
+             and Du, Haoxing and Goodrich, Brian and Jurkovic, Nikola
+             and Miles, Luke Harold and Nix, Seraphina and Lin, Tao and Parikh, Neev
+             and Rein, David and Sato, Lucas Jun Koba and Wijk, Hjalmar
+             and Ziegler, Daniel M. and Barnes, Elizabeth and Chan, Lawrence},
   journal = {arXiv preprint arXiv:2503.14499},
   year    = {2025}
 }
@@ -50,16 +56,19 @@
 % =========================================================
 
 @misc{parkinson1955,
-  title  = {Parkinson's Law, or the Pursuit of Progress},
-  author = {Parkinson, C. Northcote},
-  howpublished = {The Economist, November 19},
-  year   = {1955}
+  title        = {Parkinson's Law},
+  author       = {Parkinson, C. Northcote},
+  howpublished = {The Economist (November 19)},
+  year         = {1955},
+  note         = {Reprinted as the title essay in Parkinson's Law and Other Studies in Administration, Houghton Mifflin, 1957}
 }
 
 @book{augustine_confessions,
   title     = {Confessions, Book {XI}},
   author    = {Augustine of Hippo},
-  year      = {400}
+  year      = {400},
+  publisher = {Various editions; we cite the Loeb Classical Library translation},
+  note      = {Book XI \S 14: "Si nemo ex me quaerat, scio; si quaerenti explicare velim, nescio."}
 }
 
 @article{wittmann2009chronoception,
@@ -88,14 +97,18 @@
 
 @article{inversescalingttc2025,
   title   = {Inverse Scaling in Test-Time Compute},
-  author  = {Anonymous},
+  author  = {Gema, Aryo Pradipta and H{\"a}gele, Alexander and Chen, Runjin
+             and Arditi, Andy and Goldman-Wetzler, Jacob and Fraser-Taliente, Kit
+             and Sleight, Henry and Petrini, Linda and Michael, Julian
+             and Alex, Beatrice and Minervini, Pasquale and Chen, Yanda
+             and Benton, Joe and Perez, Ethan},
   journal = {arXiv preprint arXiv:2507.14417},
   year    = {2025}
 }
 
 @article{dontthinktwice2025,
   title   = {Don't Think Twice! Over-Reasoning Impairs Confidence Calibration},
-  author  = {Anonymous},
+  author  = {Lacombe, Romain and Wu, Kerrie and Dilworth, Eddie},
   journal = {arXiv preprint arXiv:2508.15050},
   year    = {2025}
 }
@@ -107,60 +120,89 @@
 @inproceedings{guo2017calibration,
   title     = {On Calibration of Modern Neural Networks},
   author    = {Guo, Chuan and Pleiss, Geoff and Sun, Yu and Weinberger, Kilian Q.},
-  booktitle = {ICML},
+  booktitle = {Proceedings of the International Conference on Machine Learning (ICML)},
   year      = {2017}
 }
 
 @inproceedings{desai2020calibration,
   title     = {Calibration of Pre-trained Transformers},
   author    = {Desai, Shrey and Durrett, Greg},
-  booktitle = {EMNLP},
+  booktitle = {Proceedings of the Conference on Empirical Methods in Natural Language Processing (EMNLP)},
   year      = {2020}
 }
 
-@inproceedings{jiang2021calibration,
-  title     = {How Can We Know When Language Models Know? On the Calibration of Language Models for Question Answering},
-  author    = {Jiang, Zhengbao and Araki, Jun and Ding, Haibo and Neubig, Graham},
-  booktitle = {TACL},
-  year      = {2021}
+@article{jiang2021calibration,
+  title   = {How Can We Know When Language Models Know? On the Calibration of Language Models for Question Answering},
+  author  = {Jiang, Zhengbao and Araki, Jun and Ding, Haibo and Neubig, Graham},
+  journal = {Transactions of the Association for Computational Linguistics (TACL)},
+  volume  = {9},
+  pages   = {962--977},
+  year    = {2021}
 }
 
 @article{kadavath2022knowing,
   title   = {Language Models (Mostly) Know What They Know},
-  author  = {Kadavath, Saurav and others},
+  author  = {Kadavath, Saurav and Conerly, Tom and Askell, Amanda and Henighan, Tom
+             and Drain, Dawn and Perez, Ethan and Schiefer, Nicholas
+             and Hatfield-Dodds, Zac and DasSarma, Nova and Tran-Johnson, Eli
+             and others},
   journal = {arXiv preprint arXiv:2207.05221},
   year    = {2022}
+}
+
+% =========================================================
+% Temporal reasoning benchmark
+% =========================================================
+
+@inproceedings{chu2024timebench,
+  title     = {{T}ime{B}ench: A Comprehensive Evaluation of Temporal Reasoning Abilities in Large Language Models},
+  author    = {Chu, Zheng and Chen, Jingchang and Chen, Qianglong and Yu, Weijiang
+             and He, Tao and Wang, Haotian and Peng, Weihua and Liu, Ming
+             and Qin, Bing and Liu, Ting},
+  booktitle = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL)},
+  year      = {2024}
 }
 
 % =========================================================
 % Agent benchmark canon
 % =========================================================
 
-@inproceedings{chu2024timebench,
-  title     = {{T}ime{B}ench: A Comprehensive Evaluation of Temporal Reasoning
-               Abilities in Large Language Models},
-  author    = {Chu, Zheng and others},
-  booktitle = {Proceedings of ACL},
-  year      = {2024}
+@inproceedings{agentbench,
+  title     = {AgentBench: Evaluating {LLM}s as Agents},
+  author    = {Liu, Xiao and Yu, Hao and Zhang, Hanchen and Xu, Yifan
+             and Lei, Xuanyu and Lai, Hanyu and Gu, Yu and Ding, Hangliang
+             and Men, Kaiwen and Yang, Kejuan and Zhang, Shudan and Deng, Xiang
+             and Zeng, Aohan and Du, Zhengxiao and Zhang, Chenhui and Shen, Sheng
+             and Zhang, Tianjun and Su, Yu and Sun, Huan and Huang, Minlie
+             and Dong, Yuxiao and Tang, Jie},
+  booktitle = {Proceedings of the International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  note      = {arXiv:2308.03688}
 }
 
-% Placeholders — fill in as needed
-@misc{agentbench,
-  title  = {AgentBench: Evaluating LLMs as Agents},
-  year   = {2023}
+@inproceedings{swebench,
+  title     = {{SWE-bench}: Can Language Models Resolve Real-World {GitHub} Issues?},
+  author    = {Jimenez, Carlos E. and Yang, John and Wettig, Alexander
+             and Yao, Shunyu and Pei, Kexin and Press, Ofir and Narasimhan, Karthik},
+  booktitle = {Proceedings of the International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  note      = {arXiv:2310.06770}
 }
 
-@misc{swebench,
-  title  = {SWE-Bench: Can Language Models Resolve Real-World GitHub Issues?},
-  year   = {2024}
+@inproceedings{webarena,
+  title     = {WebArena: A Realistic Web Environment for Building Autonomous Agents},
+  author    = {Zhou, Shuyan and Xu, Frank F. and Zhu, Hao and Zhou, Xuhui
+             and Lo, Robert and Sridhar, Abishek and Cheng, Xianyi and Bisk, Yonatan
+             and Fried, Daniel and Alon, Uri and Neubig, Graham},
+  booktitle = {Proceedings of the International Conference on Learning Representations (ICLR)},
+  year      = {2024},
+  note      = {arXiv:2307.13854}
 }
 
-@misc{webarena,
-  title  = {WebArena: A Realistic Web Environment for Building Autonomous Agents},
-  year   = {2024}
-}
-
-@misc{gaia,
-  title  = {GAIA: A Benchmark for General AI Assistants},
-  year   = {2023}
+@article{gaia,
+  title   = {{GAIA}: a Benchmark for General {AI} Assistants},
+  author  = {Mialon, Gr{\'e}goire and Fourrier, Cl{\'e}mentine and Swift, Craig
+             and Wolf, Thomas and LeCun, Yann and Scialom, Thomas},
+  journal = {arXiv preprint arXiv:2311.12983},
+  year    = {2023}
 }

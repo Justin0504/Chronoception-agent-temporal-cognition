@@ -43,7 +43,7 @@ Qwen2.5-7B-Instruct (oss) & $+1.564$ & $+1.073$ & 37$\times$ over \\
 \end{tabular}
 \end{table}
 
-\paragraph{Capability scaling closes retrospective L3 (P11 contrast).}
+\paragraph{Capability scaling closes retrospective L3 (the narrative-axis-vs-action-axis contrast).}
 Across the 5 non-reasoning frontier generations from 3 vendors, median $\confab$ falls $+1.117 \to +1.069 \to +0.463 \to +0.298 \to +0.068$ --- a 94\% reduction. $\CAR$ (\S\ref{sec:l2}) does not converge over the same panel. The narrative-axis is text-trainable; the action-axis is not.
 
 \paragraph{Verbatim trajectory evidence.}
@@ -80,7 +80,7 @@ gpt-4o-mini & $+1.100$ & $+1.050$ \\
 \paragraph{Implication.}
 Prospective $\confab$ is not an artifact of post-hoc memory inflation; it is a first-class narrative-axis failure. The agent constructs a duration estimate from a distribution that is decoupled from its policy's actual wall-clock cost. The decoupling is symmetric (over-prediction before the task; over-report after) because both share the same underlying generator: a token distribution over duration words that was never optimised against $\twall$.
 
-\subsection{The Reverse-Scaling Theorem (P9, established by E2 + E3)}
+\subsection{The Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}, established by E2 + E3)}
 \label{ssec:reverse-scaling}
 
 The capability-scaling pattern of \S\ref{ssec:l3-retro} suggested that narrative-axis failures might close monotonically with intelligence. We tested this on the reasoning axis directly --- varying \emph{reasoning-token expansion} within a fixed model --- and found the opposite. More reasoning compute makes the confabulation \emph{worse}, not better.
