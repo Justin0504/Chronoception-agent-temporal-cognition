@@ -1,26 +1,16 @@
-% Section 11 — Limitations
-% Source: FRAMING.md §13
+% Section 11 — Limitations (compressed v3)
 
 \section{Limitations}
 \label{sec:limitations}
 
-\paragraph{Panel size.}
-The current work covers 10 agent configurations from 3 providers and approximately 4{,}000 trajectories. A full sweep targeting 25+ agents in the spatiotemporal generalisation (Paper 3 scope, \S\ref{sec:future-work}) is planned. The qualitative conclusions --- L2 unmoved by injection, L3 closing with capability on the non-reasoning axis, the Reverse-Scaling Theorem confirmed intra- and cross-model, the Calibration Catastrophe panel-wide, no agent crossing $\ccestar$ --- depend on patterns observed across all 10 agent configurations and are unlikely to invert; precise magnitudes may shift.
+\textbf{Panel size.} 10 agent configurations from 3 providers, $\sim$4{,}000 trajectories. A 25-agent sweep is planned. The qualitative conclusions --- L2 unmoved by injection, L3 closing on the non-reasoning axis, Reverse-Scaling intra- and cross-model, the Calibration Catastrophe panel-wide, $\cce > \ccestar$ universally --- depend on patterns observed across all 10 configurations and are unlikely to invert; precise magnitudes may shift.
 
-\paragraph{T1.1 heuristic.}
-T1.1 pass detection relies on parsing the model's output for today's date. Our current parser compares against the trajectory's run date (the actual date the trajectory was executed). Earlier versions used a year-only regex that incorrectly counted training-cutoff years as passes; the fix is documented in Appendix~\ref{app:annotation-protocol}. A residual concern is that the parser does not distinguish ``today is May 26, 2026'' (chronoceptive pass) from ``today might be May 26, 2026'' (hedged pass); we treat both as passes.
+\textbf{Self-narration parser.} $\confab$ relies on $\selfparser$ (two-stage: regex + LLM-judge) extracting duration estimates from free text. Parser-vs-human disagreement on a 100-trajectory validation set is $3\%$; failures are excluded rather than imputed. Specification: Appendix~\ref{app:annotation-protocol}.
 
-\paragraph{Self-report parser dependency.}
-$\confab$ relies on $\selfparser$ extracting a duration estimate from free-text output. The parser is a two-stage ensemble (regex + LLM-judge); failures fall back to manual annotation. Disagreement rate between parser and human annotator on a 100-trajectory validation set is $3\%$. The parser's failure modes are documented in Appendix~\ref{app:annotation-protocol}; trajectories that fail parsing are excluded from $\confab$ statistics.
+\textbf{Reasoning-model T2.3.} We did not run T2.3 (wall-budget execution) on reasoning models: the test is prohibitively expensive at reasoning-model latencies. This is the only sub-capability gap in the panel matrix and is the reason the strict quantitative P12 test (\S\ref{sec:agentic-timeline}) is deferred to a follow-up; the qualitative test on public METR HCAST data is reported.
 
-\paragraph{Setting B realism.}
-Our Setting B prepends a date string, emulating the consumer web-chat pattern. The actual implementations across vendors are heterogeneous (different format strings, optional location, optional knowledge-cutoff section). We do not separately test the marginal contribution of each formatting choice; the universality of $\geq 96\%$ T1.1 pass rate across all panel models under our Setting B suggests the precise format does not matter at the headline level.
+\textbf{Provider-side injection.} GPT-5.1 exhibits $74\%$ Setting A T1.1 pass rate (provider-side M1 injection at the API tier). We report this as confound rather than eliminate; the framework's predictions are stated at the agent (model + harness) level rather than the foundation-model level.
 
-\paragraph{Provider-side injection.}
-We observe provider-side injection at one model (GPT-5.1) in our panel and treat its Setting A T1.1 pass rate (74\%) as a confound to be reported, not eliminated. The framework's predictions are stated at the agent (model+harness) level rather than the foundation-model level; this is appropriate because deployment is always agent-level.
+\textbf{Within-trajectory dynamics.} Predictions P8 and P9 (drift of $\confab_t$ and $\CAR_t$ on long trajectories) are pre-registered but not measured in the current pilot. They are part of the planned Paper 3 sweep (\S\ref{sec:future-work}, E8).
 
-\paragraph{Generalisation to other languages.}
-All trajectories are conducted in English. Whether $\cce$ varies across languages is an open question. The framework's theoretical predictions (CIT) are language-agnostic, but empirical magnitudes may differ.
-
-\paragraph{P12 not yet tested.}
-The Agentic Timeline P12 prediction is pre-registered but not tested in this paper; testing requires a horizon-stratified benchmark (METR HCAST or analogue) and a sufficiently large panel. The companion \textsc{ChronoStack} paper will report P12 against a custom horizon-stratified suite.
+\textbf{Language coverage.} All trajectories are in English. Whether $\cce$ varies across languages is open; CIT is language-agnostic.

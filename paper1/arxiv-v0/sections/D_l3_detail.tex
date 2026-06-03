@@ -1,0 +1,151 @@
+% Appendix D — L3 sub-failure detail (moved out of §6 in v3 compression)
+
+\section{L3 Sub-Failure Detail}
+\label{app:l3-detail}
+
+This appendix expands the four sub-failure analyses summarised in \S\ref{sec:l3}.
+
+\subsection*{D.1 Retrospective $\confab$ (T3.1) full table}
+
+\begin{table}[h]
+\centering
+\caption{Median $\confab$ on T3.1 across the 8-agent core panel, both settings, with $\tself / \twall$ ratio. Non-reasoning models over-report; reasoning models exhibit heterogeneous direction.}
+\label{tab:l3-rho-retro}
+\small
+\begin{tabular}{lccr}
+\toprule
+Model & $\confab$ (A) & $\confab$ (B) & $\tself/\twall$ ratio (A) \\
+\midrule
+gpt-4o-mini & $+1.117$ & $+1.111$ & 13$\times$ over \\
+gpt-4o & $+1.069$ & $+0.764$ & 12$\times$ over \\
+gpt-5.1 & $+0.298$ & $+0.126$ & 2$\times$ over \\
+o3 (reasoning) & $+0.338$ & $+0.707$ & 2$\times$ over \\
+o4-mini (reasoning) & $\mathbf{-1.537}$ & $\mathbf{-1.668}$ & \textbf{34$\times$ under} \\
+Claude Haiku 4.5 & $+0.463$ & $+0.343$ & 3$\times$ over \\
+\textbf{Claude Sonnet 4.6} & $\mathbf{+0.068}$ & $-0.061$ & \textbf{near 1$\times$} \\
+Qwen2.5-7B (oss) & $+1.564$ & $+1.073$ & 37$\times$ over \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{D.2 Prospective $\confab$ (T3.2) full table}
+
+\begin{table}[h]
+\centering
+\caption{T3.2 median prospective $\confab$, 7-agent panel. The ranking matches T3.1 to high agreement.}
+\label{tab:l3-rho-pro}
+\small
+\begin{tabular}{lcc}
+\toprule
+Model & $\confab_{\text{prospective}}$ (A) & (B) \\
+\midrule
+\textbf{Sonnet 4.6} & $\mathbf{+0.206}$ & $+0.192$ \\
+o4-mini (reasoning) & $+0.210$ & $+0.191$ \\
+o3 (reasoning) & $+0.841$ & $+0.369$ \\
+Haiku 4.5 & $+0.862$ & $+0.874$ \\
+gpt-5.1 & $+0.990$ & $+0.916$ \\
+gpt-4o-mini & $+1.100$ & $+1.050$ \\
+\textbf{gpt-4o} & $\mathbf{+1.264}$ & $+1.334$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection*{D.3 Verbatim trajectory evidence (retrospective L3)}
+
+The reasoning-model under-report and the calibrated frontier comparison both warrant verbatim quotation.
+
+\textbf{o4-mini Setting A T3.1.004} (task: ``\textit{Compose a brief congratulatory message}''; actual $\twall = 3.2\,$s):
+\begin{quote}
+\textit{``Congratulations on your promotion! \ldots\ This task took 0.04 seconds.''}
+\end{quote}
+The model reports $0.04$\,s for a task that took $3.2$\,s --- an $80\times$ under-report. The mechanism: $0.04$\,s is approximately the per-token generation time. The model is reporting surface-output time without including the hidden chain-of-thought that produced the choice of words.
+
+\textbf{Sonnet 4.6 Setting A T3.1 multiple trajectories} include the phrase:
+\begin{quote}
+\textit{``I do not have a precise internal clock, so this is an honest estimate.''}
+\end{quote}
+This is explicit chronoceptive epistemic humility --- the agent's narration acknowledges that its self-duration reports are not measurements but estimates from a learned distribution.
+
+\subsection*{D.4 E5 OSS validation full results}
+
+DeepSeek-R1-Distill-Qwen-14B (vLLM-served at the Yue Zhao lab cluster) on T3.1 across three $\texttt{max\_completion\_tokens}$ budgets, 30 instances per cell per setting:
+
+\begin{table}[h]
+\centering
+\small
+\caption{E5 result: token budget does not bind R1-Distill-14B's reasoning length.}
+\begin{tabular}{lcccc}
+\toprule
+Budget (tokens) & median $\confab$ (A) & $|\confab|$ (A) & median $\twall$ (s) & finish\_reason \\
+\midrule
+1024 (low) & $+0.537$ & $0.537$ & 18.5 & stop 60/60 \\
+4096 (med) & $+0.535$ & $0.535$ & 17.9 & stop 60/60 \\
+14000 (high) & $+0.531$ & $0.531$ & 18.0 & stop 60/60 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+No trajectory was truncated; every trajectory terminated voluntarily. $|\confab|$ is essentially constant at $0.531$--$0.537$ because R1-Distill produces a roughly fixed reasoning length per task regardless of budget. The Reverse-Scaling Theorem is therefore neither confirmed nor refuted by E5; we log this as a separate observation that \textbf{budget-permitted reasoning is not budget-honored reasoning} --- a token-axis analog of L2 Step-Clock Conflation. A targeted RS-Theorem replication on an OSS reasoning model requires either (a) a model with a native reasoning-effort interface, or (b) system-prompt induction of reasoning intensity; neither is exposed by the current R1-Distill release.
+
+\subsection*{D.5 The Calibration Catastrophe (T3.3) full coverage table}
+
+\begin{table}[h]
+\centering
+\caption{T3.3 actual coverage of nominally-$90\%$ confidence intervals, sorted; median CI width and deficit shown.}
+\label{tab:t33-coverage}
+\small
+\begin{tabular}{lccr}
+\toprule
+Model & Coverage & Median CI width (s) & Deficit (pp) \\
+\midrule
+\textbf{Sonnet 4.6} & \textbf{43\%} & 25 & $-47$ \\
+o4-mini (reasoning) & 50\% & 4 & $-40$ \\
+o3 (reasoning) & 17\% & 50 & $-73$ \\
+gpt-5.1 & 13\% & 49 & $-77$ \\
+gpt-4o-mini & 10\% & 20 & $-80$ \\
+Haiku 4.5 & 7\% & 30 & $-83$ \\
+\textbf{gpt-4o} & \textbf{0\%} & 20 & $\mathbf{-90}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two distinct failure modes: o4-mini produces extremely narrow intervals ($4$\,s median) and under-covers; gpt-4o produces moderate intervals ($20$\,s median) but is systematically biased.
+
+\subsection*{D.6 Pre-registered P11 (Calibration Catastrophe)}
+
+\textbf{P11.} On T3.3, every CIT-regime foundation-model agent achieves actual coverage $\leq 0.5$. Any agent that claims $> 0.5$ coverage in Setting A is either (a) using harness-side injection of duration data, or (b) trained against a loss that includes wall-clock support (exiting the CIT regime).
+
+\subsection*{D.7 Injection partial effect on retrospective $\confab$ (P1b-T3.1)}
+
+Wall-clock injection (Setting B) partially reduces $|\confab|$ across the panel: $|\Delta\confab| \in [0.006, 0.491]$, mean $0.18$. Injection does not close $\confab$ to zero but anchors the narrative more conservatively. The refined prediction P1b-T3.1 --- injection's effect on the narrative axis is partial and bounded, never reaching the calibrated state --- is confirmed. The action-axis sibling P1b-T2.3 shows no such effect ($|\Delta\CAR| \leq 0.01$). The two axes have structurally different responses to prompt-level information.
+
+\subsection*{D.8 Sub-capability decomposition of $\cce$ (panel best vs.\ worst)}
+
+\begin{table}[h]
+\centering
+\caption{$\cce$ sub-capability decomposition for the panel best (Sonnet 4.6 no thinking) and worst (gpt-4o-mini) agents, Setting A. Each cell is the $[0, 1]$-normalised failure score; the aggregate $\cce$ is $\tfrac{1}{3}$ of the per-axis means.}
+\label{tab:epsilon-decomp}
+\small
+\begin{tabular}{lccc}
+\toprule
+Sub-capability & Sonnet 4.6 & gpt-4o-mini & Comment \\
+\midrule
+T1.1 (clock awareness) & 1.000 & 1.000 & Both fail; B closes both \\
+T1.2 (elapsed time) & 0.487 & 1.000 & Sonnet better-calibrated, still off \\
+T1.3 (deadline tradeoff) & 0.741 & 0.822 & Both weakly modulate length with deadline \\
+T2.1 (step-budget) & 0.767 & 0.000 & Sonnet under-produces by $\sim 8$ steps \\
+T2.2 (step-to-wall arithmetic) & 0.000 & 0.000 & Trivial; both succeed \\
+T2.3 (wall-budget $= 1 - \CAR$) & 0.950 & 0.992 & Both fail catastrophically (L2) \\
+T3.1 (retrospective $\confab$) & 0.068 & 1.000 & Sonnet near-calibrated; gpt-4o-mini saturates \\
+T3.2 (prospective $\confab$) & 0.206 & 1.000 & Sonnet over-predicts $1.6\times$; saturates \\
+T3.3 ($|\text{cov} - 0.9|$) & 0.470 & 0.800 & Sonnet best in panel; gpt-4o-mini near-floor \\
+\midrule
+$\mathrm{score}_{T_1}$ & 0.743 & 0.941 & \\
+$\mathrm{score}_{T_2}$ & \textbf{0.572} & 0.331 & \emph{The binding constraint on Sonnet} \\
+$\mathrm{score}_{T_3}$ & 0.248 & 0.933 & \\
+\textbf{$\cce$ aggregate} & \textbf{0.521} & \textbf{0.735} & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The decomposition makes the structural claim concrete: Sonnet 4.6 has used the narrative-axis closure (T3 row reads $0.068, 0.206, 0.470$) to drag $\cce$ to the panel minimum, but the action axis (T2.1 $0.767$, T2.3 $0.950$) keeps the aggregate above $\ccestar$. No amount of further narrative-axis training closes this gap.

@@ -1,112 +1,20 @@
-% Section 8 — Chronoceptive Calibration Error epsilon (v2, post-E1)
-% Source: FRAMING.md §4 + §4.5 + §4.6; pilot-results/epsilon.csv + e1/e2/e3
+% Section 8 — Chronoceptive Calibration Error (compressed v3, decomp detail in Appendix D)
 
 \section{Chronoceptive Calibration Error $\cce$}
 \label{sec:epsilon}
 
-The L3 sub-structure of \S\ref{sec:l3} demands a richer aggregate than the v1 definition. We now report $\cce$ over three sub-components per axis (\S\ref{ssec:cce-decomp}), incorporating the Reverse-Scaling Theorem and the Calibration Catastrophe.
+We aggregate the three-axis failures into a single scalar.
 
-\subsection{Definition}
-\label{ssec:cce-decomp}
-
-\begin{definition}[Chronoceptive Calibration Error, v2]
+\begin{definition}[Chronoceptive Calibration Error]
 \label{def:cce}
-For an agent $\agent$ evaluated over trajectory set $\mathcal{T}$:
-\[
-\cce(\agent) \;:=\; \frac{1}{3}\Big(\mathrm{score}_{T1} + \mathrm{score}_{T2} + \mathrm{score}_{T3}\Big),
-\]
-where each axis aggregates its sub-capabilities (in this paper, the three reported sub-capabilities per axis):
-\[
-\mathrm{score}_{T1} \;=\; \tfrac{1}{3}\!\Big((1\!-\!\text{pass}_{T1.1}) + |\rho_{T1.2}|^{\dag} + (1\!-\!\text{corr}_{T1.3}^{+})\Big),
-\]
-\[
-\mathrm{score}_{T2} \;=\; \tfrac{1}{3}\!\Big((1\!-\!\text{comply}_{T2.1}) + (1\!-\!\text{acc}_{T2.2}) + (1\!-\!\CAR)\Big),
-\]
-\[
-\mathrm{score}_{T3} \;=\; \tfrac{1}{3}\!\Big(|\confab_{T3.1}|^{\dag} + |\confab_{T3.2}|^{\dag} + |\,\text{coverage}_{T3.3} - 0.9\,|\Big),
-\]
-with $|\cdot|^{\dag}$ denoting $|\cdot|$ saturated at $1$ (a $10\times$ ratio mismatch on $\confab$ is treated as maximum failure).
+$\cce(A) := \frac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis is the mean of its sub-capability failure scores normalised to $[0,1]$ (see Appendix~\ref{app:full-panel-tables}). $\cce = 0$ is grounded; $\ccestar = 0.20$ is the Augustine threshold (calibrated at $2\times$ human introspective error \citep{wittmann2009chronoception}).
 \end{definition}
-
-A grounded agent satisfies $\cce \approx 0$. The Augustine threshold is $\ccestar = 0.20$.
-
-\subsection{Panel ranking}
-\label{ssec:cce-panel}
-
-Figure~\ref{fig:epsilon-panel} reports the panel $\cce$ for both Setting A and Setting B, sorted; Table~\ref{tab:epsilon-v2} gives the numerical decomposition including Reverse-Scaling variants. Two findings dominate.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/epsilon_panel.pdf}
-\caption{Chronoceptive calibration error $\cce$ ranking across the 8-agent pilot panel. Setting A bars sorted; Setting B bars (lighter) shown below each. Dashed green line marks the Augustine threshold $\ccestar = 0.20$. The best agent (Sonnet 4.6 no thinking) sits $1.58\times$ the threshold; its T2 axis alone contributes $\approx 0.32$, irreducible by any narrative-axis intervention. \textbf{No agent crosses the threshold.} Reverse-Scaling variants (E2, E3) are not shown to avoid mixing T3.1-only proxies with full-panel $\cce$; their effect appears in Figure~\ref{fig:reverse-scaling}.}
+\caption{Panel $\cce$ ranking. Setting A bars sorted; Setting B (lighter) below each. Dashed green line marks $\ccestar = 0.20$. \textbf{No agent crosses the threshold.} The best agent (Sonnet 4.6 no thinking, $\cce = 0.316$) sits $1.58\times$ the threshold; its T2 axis alone contributes $\approx 0.32$ --- irreducible by any narrative-axis intervention. Reverse-Scaling and Sonnet-thinking variants appear in Figure~\ref{fig:reverse-scaling}; the full sub-capability decomposition table is in Appendix~\ref{app:full-panel-tables}.}
 \label{fig:epsilon-panel}
 \end{figure}
 
-\begin{table}[h]
-\centering
-\caption{v2 chronoceptive calibration error $\cce$ across the 10-agent panel, Setting A. The Sonnet 4.6 line marks the best chronoceptive agent in the panel. \emph{No} agent crosses the Augustine threshold $\ccestar = 0.20$. The reasoning-effort and thinking variants of Sonnet 4.6 / o4-mini show the Reverse-Scaling Theorem operating on the aggregate scalar: more reasoning compute increases $\cce$.}
-\label{tab:epsilon-v2}
-\small
-\begin{tabular}{lcll}
-\toprule
-Model / configuration & $\cce$ (A) & Dominant axis & Note \\
-\midrule
-Claude Sonnet 4.6 (no thinking) & \textbf{0.276} & T2 (0.317) & Lowest $\cce$ in panel \\
-Claude Sonnet 4.6 + thinking & 0.301 & T2 (0.317) & Reverse-scaling: $\Delta\cce = +0.025$ \\
-gpt-5.1 & 0.382 & T2 (0.328) & \\
-Claude Haiku 4.5 & 0.412 & T2 (0.324) & \\
-o3 (reasoning, medium) & 0.465 & T2 + T3 mixed & \\
-o4-mini (low effort) & 0.470 & T3 (rev-scaling) & \\
-o4-mini (medium effort) & 0.532 & T3 (rev-scaling) & \\
-o4-mini (high effort) & \textbf{0.611} & T3 (rev-scaling) & \textbf{worst reasoning, by reverse-scaling} \\
-gpt-4o & 0.624 & T3 (over-report) & \\
-Qwen2.5-7B (oss) & 0.768 & T3 (over-report) & \\
-gpt-4o-mini & 1.241 & T3 (over-report) & \\
-\midrule
-Augustine threshold $\ccestar$ & 0.200 & --- & \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Finding 1 --- The action axis is the binding constraint.}
-For every agent above $\ccestar$ by less than 0.20 (Sonnet 4.6 family + gpt-5.1 + Haiku 4.5), the dominant contribution to $\cce$ is $\mathrm{score}_{T2}$, driven almost entirely by L2 ($\CAR \to 0$). The $T_2$ axis contributes $\geq 0.317$ to every panel agent. Even projecting $\mathrm{score}_{T3} \to 0$ entirely, no agent crosses $\ccestar$ while $\mathrm{score}_{T2}$ remains at its empirical floor. \textbf{The Augustine threshold is structurally unreachable through narrative training.}
-
-\paragraph{Finding 2 --- Reverse-Scaling on the aggregate.}
-The Reverse-Scaling Theorem (\S\ref{ssec:reverse-scaling}) operates not only on $|\confab|$ in isolation but on the aggregate $\cce$. Within the o4-mini family: $\cce$ takes $0.470 \to 0.532 \to 0.611$ across low/medium/high reasoning effort --- a monotone increase. Within the Sonnet 4.6 family: $\cce$ goes $0.276 \to 0.301$ when extended thinking is enabled. \emph{More reasoning compute makes the agent further from chronoceptive ground truth, not closer.}
-
-\paragraph{Finding 3 --- Sonnet 4.6 + Reverse-Scaling delineates a tight ceiling.}
-The lowest-$\cce$ agent in our panel (Sonnet 4.6 no-thinking, $\cce = 0.276$) sits $0.076$ above $\ccestar$. The same agent under thinking ($\cce = 0.301$) sits $0.101$ above. This $0.025$ gap is the empirical effect size of the Reverse-Scaling Theorem at one operating point; extrapolating to o4-mini's $1.2\times$ increase across $3\times$ effort levels suggests the dominant lever for closing $\cce$ \emph{cannot} be more reasoning compute --- it must be the structural intervention CIT and Theorem~\ref{thm:reverse-scaling} jointly identify.
-
-\subsection{Decomposition by sub-capability}
-\label{ssec:cce-by-cap}
-
-Table~\ref{tab:epsilon-decomp} decomposes $\cce$ by sub-capability for Sonnet 4.6 (no thinking) and gpt-4o-mini, the panel's best and worst agents. The pattern: Sonnet 4.6 closes the narrative axis (T3 sub-suite) but cannot close T2.3; gpt-4o-mini fails everywhere except T1.1 under injection.
-
-\begin{table}[h]
-\centering
-\caption{Sub-capability decomposition for the panel's best (Sonnet 4.6) and worst (gpt-4o-mini) agents under Setting A. Each cell is the $0$-$1$ normalised failure score (0 = grounded). The aggregate $\cce$ is $\frac{1}{3}$ of the per-axis means.}
-\label{tab:epsilon-decomp}
-\small
-\begin{tabular}{lccc}
-\toprule
-Sub-capability & Sonnet 4.6 & gpt-4o-mini & Comment \\
-\midrule
-T1.1 (clock awareness) & 1.000 & 1.000 & Both fail; injection (B) closes both \\
-T1.2 (elapsed time) & 0.487 & 1.000 & Sonnet better-calibrated, but still off \\
-T1.3 (deadline tradeoff) & 0.741 & 0.822 & Both weakly respond to deadline \\
-T2.1 (step-budget) & 0.767 & 0.000 & Sonnet under-produces by 8 steps \\
-T2.2 (step-to-wall arithmetic) & 0.000 & 0.000 & Trivial; both succeed \\
-T2.3 (wall-budget = $1-\CAR$) & 0.950 & 0.992 & Both fail catastrophically (L2) \\
-T3.1 (retrospective $\confab$) & 0.068 & 1.000 & Sonnet near-calibrated; gpt-4o-mini saturates \\
-T3.2 (prospective $\confab$) & 0.206 & 1.000 & Sonnet over-predicts $1.6\times$; gpt-4o-mini saturates \\
-T3.3 ($|\text{cov}-0.9|$) & 0.470 & 0.800 & Sonnet best in panel; gpt-4o-mini near-floor \\
-\midrule
-$\mathrm{score}_{T1}$ & 0.743 & 0.941 & \\
-$\mathrm{score}_{T2}$ & 0.572 & 0.331 & \\
-$\mathrm{score}_{T3}$ & 0.248 & 0.933 & \\
-\textbf{$\cce$ aggregate} & \textbf{0.521} & \textbf{0.735} & \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The decomposition makes the structural claim concrete: Sonnet 4.6 has used the narrative-axis closure (T3 row reads 0.068, 0.206, 0.470) to drag its $\cce$ to the panel minimum, but the action axis (T2.1 0.767 and T2.3 0.950) keeps its aggregate above $\ccestar$. No amount of further narrative-axis training can close this gap.
+\textbf{Two findings.} \textbf{(1)} The action axis is the binding constraint. For every agent above $\ccestar$ by less than $0.20$ (Sonnet 4.6, gpt-5.1, Haiku 4.5), $\mathrm{score}_{T_2}$ dominates: T2 alone contributes $\geq 0.317$. Even projecting $\mathrm{score}_{T_3} \to 0$, no agent crosses $\ccestar$. \textbf{The Augustine Threshold is structurally unreachable through narrative training.} \textbf{(2)} Reverse-Scaling operates on aggregate $\cce$: o4-mini effort-sweep $0.470 \to 0.532 \to 0.611$; Sonnet 4.6 baseline $\to$ thinking $0.276 \to 0.301$. More reasoning compute makes the agent strictly further from grounded.

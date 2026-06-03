@@ -1,187 +1,57 @@
-% Section 6 — L3 Temporal Confabulation (primary result, v2)
-% Source: FRAMING.md §5 + §5.1.5 + §5.7; pilot-results + e1-results + e2-results + e3-results
+% Section 6 — L3 Temporal Confabulation (compressed v3, sub-failure detail in Appendix D)
 
 \section{L3 --- Temporal Confabulation}
 \label{sec:l3}
 
-L3 is the narrative-axis failure mode: agents misrepresent the duration of their own work. The empirical picture for L3 spans the full panel and its Reverse-Scaling variants (8 pilot agents + 2 reasoning-effort variants of o4-mini + 1 Sonnet-thinking variant + 1 OSS reasoning model at 3 budget levels). This is the paper's richest single result. We organise the section around four subsections, three of which were previously absent from the literature: retrospective $\confab$ (\S\ref{ssec:l3-retro}, the standard cross-section), prospective $\confab$ (\S\ref{ssec:l3-pro}, T3.2, first reported here), the \textbf{Reverse-Scaling Theorem} (\S\ref{ssec:reverse-scaling}, empirically established by E2 + E3), and the \textbf{Calibration Catastrophe} (\S\ref{ssec:calibration}, T3.3, the most striking new finding).
+L3 is the narrative-axis failure: agents misrepresent the duration of their own work. We organise around four sub-failures, three not previously reported: retrospective $\confab$ (\S\ref{ssec:l3-retro}, T3.1), prospective $\confab$ (T3.2, this paper), the \textbf{Reverse-Scaling Theorem} (\S\ref{ssec:reverse-scaling}, T3.1 + budget sweep), and the \textbf{Calibration Catastrophe} (\S\ref{ssec:calibration}, T3.3). For an agent $A$ on T3.1:
+\[
+\confab(\trajectory) := \log_{10}(\tself(\trajectory) / \twall(\trajectory)).
+\]
 
-\subsection{Retrospective $\confab$ (T3.1)}
+\subsection{Retrospective and prospective $\confab$}
 \label{ssec:l3-retro}
 
-\paragraph{Definition.}
-For an agent $\agent$ on T3.1 (retrospective duration estimation):
-\[
-\confab(\trajectory) \;:=\; \log_{10}\!\frac{\tself(\trajectory)}{\twall(\trajectory)},
-\]
-where $\tself$ is parsed from the agent's terminal output by $\selfparser$ (Appendix~\ref{app:annotation-protocol}). A chronoceptively grounded agent satisfies $\confab \approx 0$. Positive $\confab$ is over-report; negative is under-report.
+\textbf{Retrospective (T3.1).} Median $\confab$ on the 8-agent core panel: gpt-4o-mini $+1.12$, gpt-4o $+1.07$, Haiku 4.5 $+0.46$, gpt-5.1 $+0.30$, Sonnet 4.6 $\mathbf{+0.07}$ (panel min, near-grounded), Qwen2.5-7B $+1.56$ (oss), o3 $+0.34$ (reasoning), \textbf{o4-mini $\mathbf{-1.54}$} (reasoning, $34\times$ under-report). The 5-generation non-reasoning slice shows monotone closure: $+1.12 \to +0.07$, a $94\%$ reduction in $|\confab|$. Verbatim examples (Appendix~\ref{app:annotation-protocol}): o4-mini for a $3.2$-s task reports ``\textit{This task took 0.04 seconds.}''; Sonnet 4.6 reports ``\textit{I do not have a precise internal clock, so this is an honest estimate.}''
 
-\paragraph{Setup.}
-T3.1 asks the agent to complete a sub-task (haiku, brief summary, math problem) and then retrospectively report its work duration in seconds. 30 instances per model per setting.
-
-\paragraph{Headline result.}
-Table~\ref{tab:l3-rho-retro} reports median $\confab$ across the 8-agent core panel.
-
-\begin{table}[h]
-\centering
-\caption{T3.1 median $\confab$, 8-agent core panel. Non-reasoning models over-report duration ($\confab > 0$); reasoning models exhibit heterogeneous direction.}
-\label{tab:l3-rho-retro}
-\small
-\begin{tabular}{lccr}
-\toprule
-Model & $\confab$ (A) & $\confab$ (B) & $\tself/\twall$ ratio (A) \\
-\midrule
-gpt-4o-mini & $+1.117$ & $+1.111$ & 13$\times$ over \\
-gpt-4o & $+1.069$ & $+0.764$ & 12$\times$ over \\
-gpt-5.1 & $+0.298$ & $+0.126$ & 2$\times$ over \\
-o3 (reasoning) & $+0.338$ & $+0.707$ & 2$\times$ over \\
-o4-mini (reasoning) & $\mathbf{-1.537}$ & $\mathbf{-1.668}$ & \textbf{34$\times$ under} \\
-Claude Haiku 4.5 & $+0.463$ & $+0.343$ & 3$\times$ over \\
-\textbf{Claude Sonnet 4.6} & $\mathbf{+0.068}$ & $-0.061$ & \textbf{near 1$\times$} \\
-Qwen2.5-7B-Instruct (oss) & $+1.564$ & $+1.073$ & 37$\times$ over \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Capability scaling closes retrospective L3 (the narrative-axis-vs-action-axis contrast).}
-Across the 5 non-reasoning frontier generations from 3 vendors, median $\confab$ falls $+1.117 \to +1.069 \to +0.463 \to +0.298 \to +0.068$ --- a 94\% reduction. $\CAR$ (\S\ref{sec:l2}) does not converge over the same panel. The narrative-axis is text-trainable; the action-axis is not.
-
-\paragraph{Verbatim trajectory evidence.}
-From o4-mini Setting A T3.1.004 (task: ``Compose a brief congratulatory message''; actual $\twall = 3.2\,$s): \textit{``Congratulations on your promotion! \ldots\ This task took 0.04 seconds.''} An $80\times$ under-report. Anthropic's Sonnet 4.6 by contrast: \textit{``I do not have a precise internal clock, so this is an honest estimate.''}
-
-\subsection{Prospective $\confab$ (T3.2, P5 confirmed)}
-\label{ssec:l3-pro}
-
-If retrospective L3 reflects post-hoc inflation of a remembered duration, prospective L3 should reveal an independent failure mode: estimating duration \emph{before} the task begins. Pre-registered Prediction P5 (FRAMING §9) was that prospective $\confab$ would mirror retrospective ranking but with a smaller magnitude (less time has elapsed for confabulation to compound). We test this on T3.2 instances that prepend the instruction ``\textit{Before you begin, predict how many seconds the following task will take you. State the prediction as `I predict this will take X seconds'.}''.
-
-\paragraph{Headline result (Table~\ref{tab:l3-rho-pro}).}
-P5 is empirically confirmed in both ranking and magnitude.
-
-\begin{table}[h]
-\centering
-\caption{T3.2 median prospective $\confab$, 7-agent panel (Setting A). The ranking matches T3.1 to high agreement; magnitudes are similar with a slightly tighter distribution. Sonnet 4.6 and o4-mini cluster near grounded ($+0.21$), while gpt-4o sits at the extreme over-prediction end ($+1.26$).}
-\label{tab:l3-rho-pro}
-\small
-\begin{tabular}{lcc}
-\toprule
-Model & Median $\confab_{\text{prospective}}$ (A) & (B) \\
-\midrule
-\textbf{Sonnet 4.6} & \textbf{+0.206} & $+0.192$ \\
-o4-mini (reasoning) & $+0.210$ & $+0.191$ \\
-o3 (reasoning) & $+0.841$ & $+0.369$ \\
-Haiku 4.5 & $+0.862$ & $+0.874$ \\
-gpt-5.1 & $+0.990$ & $+0.916$ \\
-gpt-4o-mini & $+1.100$ & $+1.050$ \\
-\textbf{gpt-4o} & \textbf{+1.264} & $+1.334$ \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Implication.}
-Prospective $\confab$ is not an artifact of post-hoc memory inflation; it is a first-class narrative-axis failure. The agent constructs a duration estimate from a distribution that is decoupled from its policy's actual wall-clock cost. The decoupling is symmetric (over-prediction before the task; over-report after) because both share the same underlying generator: a token distribution over duration words that was never optimised against $\twall$.
+\textbf{Prospective (T3.2, P5 confirmed).} Predicting duration \emph{before} the task. The panel ranking matches T3.1; Sonnet 4.6 and o4-mini cluster near grounded ($+0.21$, $+0.21$); gpt-4o sits at the extreme ($+1.26$). Prospective $\confab$ is not an artifact of post-hoc memory inflation but an independent failure: both share a generator (token distribution over duration words) that was never optimised against $\twall$. Full T3.2 table in Appendix~\ref{app:full-panel-tables}.
 
 \subsection{The Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}, established by E2 + E3)}
 \label{ssec:reverse-scaling}
 
-The capability-scaling pattern of \S\ref{ssec:l3-retro} suggested that narrative-axis failures might close monotonically with intelligence. We tested this on the reasoning axis directly --- varying \emph{reasoning-token expansion} within a fixed model --- and found the opposite. More reasoning compute makes the confabulation \emph{worse}, not better.
+Capability scaling closes L3 on the non-reasoning axis. We tested the \emph{reasoning} axis directly --- varying reasoning-token expansion within a fixed model --- and found the opposite.
 
-\begin{theorem}[Reverse-Scaling Theorem]
+\begin{theorem}[Reverse-Scaling]
 \label{thm:reverse-scaling}
-Within a fixed agent architecture trained under token-only loss (CIT regime, Theorem~\ref{thm:cit}), $|\confab|$ is monotone non-decreasing in reasoning-token expansion. Equivalently: increasing the chain-of-thought budget without changing the loss function structurally degrades chronoception along the narrative axis.
+Within a fixed agent under CIT regime (Theorem~\ref{thm:cit}), $|\confab|$ is monotone non-decreasing in reasoning-token expansion. Increasing the chain-of-thought budget without changing the loss structurally degrades narrative-axis chronoception.
 \end{theorem}
 
 \begin{proof}[Sketch]
-Under CIT, the policy's self-narrated duration distribution $p(\tself)$ is invariant to $\twall$ across the training distribution. As reasoning-token budget $K$ increases, $\twall$ grows monotonically in $K$ (more tokens generated $\Rightarrow$ more wall-clock spent), while $p(\tself)$ remains anchored to its training distribution. Therefore $\mathbb{E}[|\log_{10}(\tself / \twall)|]$ grows monotonically in $K$.
+Under CIT, $p(\tself)$ is invariant to $\twall$ across the training distribution. As reasoning budget $K$ grows, $\twall \propto K$ but $p(\tself)$ remains anchored, so $\mathbb{E}[|\log_{10}(\tself/\twall)|]$ grows in $K$. The sign of $\confab$ flips for reasoning models: their $\twall$ includes hidden chain-of-thought duration but their narration is anchored to surface output, so $\tself/\twall \to 0$.
 \end{proof}
-
-\paragraph{Empirical evidence (E2 + E3).}
-We test Theorem~\ref{thm:reverse-scaling} two ways. \textbf{Intra-model (E2):} o4-mini at three reasoning-effort levels (low/medium/high) on T3.1. \textbf{Cross-model (E3):} Claude Sonnet 4.6 with vs.\ without extended thinking enabled (8k-token thinking budget) on T3.1. Both experiments confirm the theorem (Figure~\ref{fig:reverse-scaling}, Table~\ref{tab:reverse-scaling}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/reverse_scaling.pdf}
-\caption{Empirical confirmation of the Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}). Both intra-model (a) and cross-model (b) evidence show $|\confab|$ monotonically increasing with reasoning compute spent. Panel (a): o4-mini at three \texttt{reasoning\_effort} levels (low/medium/high). Median per-trajectory wall-clock duration $2.5 \to 3.5 \to 6.1$\,s, $|\confab| = 1.23 \to 1.54 \to 1.67$. All trajectories are under-reports ($\confab < 0$), the Hidden-Time sign. Panel (b): Claude Sonnet 4.6 with vs.\ without extended thinking. $|\confab|$ from $0.12$ to $0.21$ and $\confab$ flips sign from $+0.07$ (calibrated) to $-0.16$ (Hidden-Time under-report). Augustine threshold $\ccestar = 0.20$ marked as dashed line.}
+\caption{Empirical confirmation of Theorem~\ref{thm:reverse-scaling}. \textbf{(a) Intra-model:} o4-mini at three \texttt{reasoning\_effort} levels; $|\confab|$ goes $1.23 \to 1.54 \to 1.67$, all under-reports. \textbf{(b) Cross-model:} Sonnet 4.6 with vs.\ without extended thinking; $|\confab|$ goes $0.12 \to 0.21$, $\confab$ flips sign from $+0.07$ (calibrated) to $-0.16$ (Hidden-Time under-report). Augustine threshold $\ccestar = 0.20$ marked.}
 \label{fig:reverse-scaling}
 \end{figure}
 
-\begin{table}[h]
-\centering
-\caption{Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}) empirically confirmed both intra-model (top, E2) and cross-model (bottom, E3). $|\confab|$ monotonically increases with reasoning-token expansion. Sonnet 4.6 with thinking flips sign \emph{and} more than doubles in magnitude; it transitions from a calibrated agent ($|\confab| = 0.068$) to an under-reporter behaving like o4-mini ($|\confab| = 0.156$).}
-\label{tab:reverse-scaling}
-\small
-\begin{tabular}{llrr}
-\toprule
-Experiment & Condition & median $\confab$ (A) & $|\confab|$ (A) \\
-\midrule
-\multirow{3}{*}{E2: o4-mini} & reasoning\_effort=low & $-1.234$ & $1.234$ \\
-& reasoning\_effort=medium & $-1.537$ & $1.537$ \\
-& reasoning\_effort=high & $\mathbf{-1.675}$ & $\mathbf{1.675}$ \\
-\midrule
-\multirow{2}{*}{E3: Sonnet 4.6} & no thinking (baseline) & $+0.068$ & $0.068$ \\
-& thinking, 8k budget & $\mathbf{-0.156}$ & $\mathbf{0.156}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
+\textbf{Consequence.} The dominant frontier scaling strategy is reasoning-token expansion (longer chains of thought, larger thinking budgets, test-time compute). Theorem~\ref{thm:reverse-scaling} states it \emph{degrades} chronoception on the narrative axis. The L3 closure observed in \S\ref{ssec:l3-retro} is a peculiarity of \emph{non}-reasoning frontier scaling; the reasoning-token trajectory undoes it.
 
-\paragraph{An attempted third confirmation (E5) and an unexpected finding.}
-We attempted an independent third confirmation on an open-source reasoning model: DeepSeek-R1-Distill-Qwen-14B served via vLLM, with T3.1 evaluated at three \texttt{max\_completion\_tokens} budgets (1{,}024 / 4{,}096 / 14{,}000) on the same 30-instance T3.1 set. The expected pattern under Theorem~\ref{thm:reverse-scaling}: $|\confab|$ should increase with the allowed budget. The observed pattern:
-
-\begin{quote}
-\centering
-\small
-$|\confab|$ at low/medium/high = $0.537 / 0.535 / 0.531$ \quad (median $\twall$ identical at $18$\,s in all three cells).
-\end{quote}
-
-\noindent The Theorem's prediction is neither confirmed nor refuted, because \emph{R1-Distill-14B did not respond to the token budget at all}. Every trajectory terminated with finish\_reason = stop (60/60); none was truncated at the budget cap. The model produces a roughly fixed reasoning length per task irrespective of the budget allowed. This is itself an L2-style finding extended to the token axis: \textbf{budget-permitted reasoning is not budget-honored reasoning}. A targeted RS-Theorem replication on an OSS reasoning model requires either (a) a model with a native reasoning-budget interface (analogous to OpenAI's \texttt{reasoning\_effort}), or (b) system-prompt induction of reasoning intensity, neither of which is exposed by the current R1-Distill release. We log this as a methodological note for future replications; the existing intra-model (E2) + cross-model (E3) evidence remains the empirical basis for Theorem~\ref{thm:reverse-scaling}.
-
-\paragraph{The Hidden-Time Sign Flip.}
-A subtle prediction of Theorem~\ref{thm:reverse-scaling} is that the \emph{sign} of $\confab$ flips for reasoning models. The mechanism (FRAMING §5.7, Hidden Time): a reasoning model's $\twall$ includes hidden chain-of-thought duration, but its self-narration distribution is anchored to surface output tokens. As reasoning tokens grow, $\twall$ grows but $\tself$ does not, so $\tself / \twall \to 0$ and $\confab \to -\infty$. We observe exactly this: Sonnet 4.6 transitions from $\confab = +0.068$ (no thinking) to $\confab = -0.156$ (with thinking) --- not just larger $|\confab|$ but a \emph{flip} of sign. Cross-vendor confirmation (Sonnet 4.6 + o4-mini both show the under-report pattern under reasoning) rules out a vendor-specific artifact.
-
-\paragraph{Consequence for the industry.}
-The dominant frontier strategy is reasoning-token expansion (longer chains of thought, larger ``thinking budgets'', test-time compute). Theorem~\ref{thm:reverse-scaling} states that this strategy \emph{degrades} chronoception on the narrative axis. Combined with \S\ref{sec:l2}'s finding that the action axis is structurally unfixable from any text-only intervention, the narrative-axis closure observed in \S\ref{ssec:l3-retro} is a peculiarity of \emph{non}-reasoning frontier scaling --- and it is being undone by the reasoning-token strategy the field is currently pursuing.
+\textbf{An attempted third confirmation (E5).} We ran the same test on DeepSeek-R1-Distill-Qwen-14B (vLLM-served) at three \texttt{max\_completion\_tokens} budgets. Result: $|\confab|$ essentially constant at $0.531$--$0.537$ because R1-Distill does not respond to the budget at all (60/60 trajectories terminated with \texttt{finish\_reason = stop}, none truncated). Theorem~\ref{thm:reverse-scaling} is neither confirmed nor refuted by E5; we log this as the observation that \textbf{budget-permitted reasoning is not budget-honored reasoning} --- an L2-style finding on the token axis. Details in Appendix~\ref{app:l3-detail}.
 
 \subsection{The Calibration Catastrophe (T3.3)}
 \label{ssec:calibration}
 
-A calibrated agent should produce confidence intervals that contain the truth at the stated rate. We pose T3.3: ``\textit{report a 90\% confidence interval over the duration of the following task: lower bound, point estimate, upper bound.}'' The expected coverage is 90\%. The observed coverage is catastrophic (Figure~\ref{fig:calibration-catastrophe}, Table~\ref{tab:t33-coverage}).
+Asked for a 90\% confidence interval on the duration of its own work --- ``\textit{duration=Xs, ci=[Ys, Zs]}'' --- every panel agent achieves catastrophic coverage (Figure~\ref{fig:calibration-catastrophe}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/calibration_catastrophe.pdf}
-\caption{Actual coverage of nominally-90\% confidence intervals on self-duration (T3.3), across the 7-agent panel. Sorted by coverage. Bars are colour-graded by deficit severity. The dashed green line marks the nominal target. Every panel agent under-covers by $\geq 40$ percentage points. GPT-4o achieves $0\%$ coverage (the worst possible). Reasoning models o4-mini (50\%) and o3 (17\%) bracket the spread. Standard calibration tooling does not apply (boxed inset; CIT, Theorem~\ref{thm:cit}).}
+\caption{Actual coverage of nominally-90\% intervals on self-duration (T3.3). Sorted by coverage. Every panel agent under-covers by $\geq 40$ percentage points; GPT-4o achieves $0\%$ coverage. Two distinct failure modes: o4-mini under-covers with extremely narrow intervals (median width $4$\,s); gpt-4o under-covers with biased moderate intervals (median $20$\,s). Standard calibration tooling does not apply (inset; CIT).}
 \label{fig:calibration-catastrophe}
 \end{figure}
 
-\begin{table}[h]
-\centering
-\caption{T3.3 actual coverage of nominal 90\% confidence intervals. The deficit is the gap between the stated coverage (90\%) and the observed coverage. Every panel agent is dramatically over-confident; the best agent (Sonnet 4.6) misses by 47 percentage points; the worst (gpt-4o) by 90 percentage points. The median CI width and the actual wall-clock duration $\twall$ are both at the second-scale, so the failure is one of calibration, not of scale-mismatch.}
-\label{tab:t33-coverage}
-\small
-\begin{tabular}{lccr}
-\toprule
-Model & Coverage (target $90\%$) & Median CI width (s) & Deficit (pp) \\
-\midrule
-\textbf{Sonnet 4.6} & \textbf{$43\%$} & $25$ & $-47$ \\
-o4-mini (reasoning) & $50\%$ & $4$ & $-40$ \\
-o3 (reasoning) & $17\%$ & $50$ & $-73$ \\
-Haiku 4.5 & $7\%$ & $30$ & $-83$ \\
-gpt-5.1 & $13\%$ & $49$ & $-77$ \\
-gpt-4o-mini & $10\%$ & $20$ & $-80$ \\
-\textbf{gpt-4o} & \textbf{$0\%$} & $20$ & $\mathbf{-90}$ \\
-\bottomrule
-\end{tabular}
-\end{table}
+Modern calibration pipelines close token-level confidence to within a few percentage points \citep{guo2017calibration,dontthinktwice2025} via temperature scaling, isotonic regression, RLHF-with-confidence-targets. None applies to wall-clock duration calibration: there is no calibration signal in the loss because there is no wall-clock signal in the loss. The Calibration Catastrophe is the direct empirical projection of CIT (Theorem~\ref{thm:cit}) onto the duration-calibration sub-problem. Pre-registered P11 (Appendix~\ref{app:l3-detail}): no CIT-regime agent will achieve $> 0.5$ coverage on T3.3 without harness-side injection of duration data.
 
-\paragraph{Why this is a categorical failure.}
-Modern post-training pipelines explicitly target calibration. Temperature scaling, isotonic regression, and RLHF-with-confidence-targets all close calibration gaps to within a few percentage points on token-level confidence \citep{dontthinktwice2025}. None of these methods apply to wall-clock duration calibration: there is no calibration signal in the loss because there is no wall-clock signal in the loss. The catastrophic coverage we observe is the direct empirical projection of CIT (Theorem~\ref{thm:cit}) onto the calibration sub-problem.
-
-\paragraph{The minimum-CI-width agent is no better.}
-A skeptical reader might ask whether the failure is just over-narrow CIs. o4-mini produces extremely narrow intervals (median 4\,s) and achieves only 50\% coverage --- failure mode 1: under-cover. gpt-4o produces moderate intervals (median 20\,s) and achieves $0\%$ coverage --- failure mode 2: systematically biased. Neither dimension alone explains the catastrophe; both are present.
-
-\subsection{Injection partial effect on retrospective $\confab$ (P1b-T3.1 refinement)}
-\label{ssec:l3-injection}
-
-Wall-clock injection partially reduces $|\confab|$ across the panel: $|\Delta\confab| \in [0.006, 0.491]$, mean $0.18$. Injection does not close $\confab$ to zero but anchors the narrative more conservatively. The refined prediction P1b-T3.1 (FRAMING v1.8) --- injection effect on the narrative axis is partial and bounded --- is confirmed. The action-axis sibling (P1b-T2.3, \S\ref{sec:l2}) shows no such injection effect: $|\Delta\CAR| \leq 0.01$. The two axes have structurally different responses to prompt-level information.
-
-\paragraph{Synthesis of \S6.}
-The four sub-failures of L3 form a single coherent picture. Retrospective $\confab$ closes with capability scaling among non-reasoning frontier models, but prospective $\confab$ replicates the same pattern --- the closure is real on the narrative axis. The Reverse-Scaling Theorem then shows that the same models, when run with reasoning-token expansion, \emph{undo} the closure. And the Calibration Catastrophe shows that even the best-calibrated agent (Sonnet 4.6 without thinking) achieves only 43\% coverage on intervals it claims to be 90\% confident in. The narrative axis is partially trainable, partially un-trainable in a structurally predictable pattern: \textbf{narrative training closes the surface-distribution error, but cannot close the underlying chronoception gap.}
+\textbf{Synthesis.} The four sub-failures form a single picture: capability scaling closes the surface-distribution error (\S\ref{ssec:l3-retro}, retro \& prospective), but the Reverse-Scaling Theorem and the Calibration Catastrophe both demonstrate that this closure does \emph{not} extend to the underlying chronoception gap. Setting B injection partially reduces $|\confab|$ (mean $\Delta = 0.18$) but does not close it; the action-axis sibling shows no effect at all (\S\ref{sec:l2}, $|\Delta\CAR| \leq 0.01$). \textbf{Narrative training closes the surface; it cannot close the gap.}

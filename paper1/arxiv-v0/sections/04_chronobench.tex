@@ -1,77 +1,36 @@
-% Section 4 — ChronoBench (v2, post-E1)
-% Source: FRAMING.md §4 + chronoception/bench/
+% Section 4 — ChronoBench (compressed v3)
 
 \section{ChronoBench}
 \label{sec:chronobench}
 
-\textsc{ChronoBench} is the diagnostic benchmark we use to measure $\cce$ and its sub-components across the panel. The design philosophy is single-axis isolation: each instance loads exclusively on one of the three Times.
-
-\paragraph{Capability taxonomy.}
-The benchmark partitions chronoceptive capability into three axes, with three sub-capabilities each (Table~\ref{tab:capabilities}).
+\textsc{ChronoBench} measures $\cce$ and its sub-components. Design philosophy: single-axis isolation per instance. The 9 sub-capabilities (3 axes $\times$ 3 each) are summarised in Table~\ref{tab:capabilities}; the full task generation, prompt set, and panel composition are in Appendix~\ref{app:annotation-protocol}.
 
 \begin{table}[h]
 \centering
-\caption{The 9 sub-capabilities of \textsc{ChronoBench}. Each row isolates a single chronoceptive failure mode for separate measurement.}
+\caption{The 9 sub-capabilities of \textsc{ChronoBench}. Each row isolates a single chronoceptive failure mode.}
 \label{tab:capabilities}
 \small
 \begin{tabular}{lll}
 \toprule
 Axis & Sub-capability & Tests \\
 \midrule
-\multirow{3}{*}{$\twall$} & T1.1 Clock awareness & Knowing today's date / current time \\
-& T1.2 Elapsed-time tracking & Reporting how long the conversation has run \\
-& T1.3 Deadline-aware tradeoff & Adjusting strategy under wall-clock deadline \\
+\multirow{3}{*}{$\twall$} & T1.1 Clock awareness & Today's date / current time \\
+& T1.2 Elapsed-time tracking & Time since conversation start \\
+& T1.3 Deadline-aware tradeoff & Strategy under wall-clock deadline \\
 \midrule
-\multirow{3}{*}{$\tstep$} & T2.1 Step-budget honoring & Producing exactly $N$ reasoning steps \\
-& T2.2 Step-to-wall translation & Computing $N \times \text{latency} = \text{duration}$ \\
-& T2.3 Wall-budget execution & Honouring a wall-clock budget (L2 core test) \\
+\multirow{3}{*}{$\tstep$} & T2.1 Step-budget honoring & Produce exactly $N$ reasoning steps \\
+& T2.2 Step-to-wall translation & Compute $N \times$ latency $=$ duration \\
+& T2.3 Wall-budget execution & Honour wall-clock budget (L2 core test) \\
 \midrule
-\multirow{3}{*}{$\tself$} & T3.1 Retrospective $\confab$ & Reporting duration after task completion \\
-& T3.2 Prospective $\confab$ & Predicting duration before task begins \\
-& T3.3 Calibration & 90\% CI over self-duration estimate \\
+\multirow{3}{*}{$\tself$} & T3.1 Retrospective $\confab$ & Duration after task completion \\
+& T3.2 Prospective $\confab$ & Duration before task begins \\
+& T3.3 Calibration & 90\% CI over self-duration \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph{Two settings.}
-Every instance is evaluated under two settings:
-\begin{itemize}[leftmargin=*]
-    \item Setting A (no-injection): system prompt = ``You are a helpful assistant.'' --- the framework's chronoception baseline.
-    \item Setting B (with-injection): system prompt prepends \texttt{Current date and time: <ISO timestamp>} --- emulates the consumer web-chat harness behaviour documented in \S\ref{sec:injection-tell}.
-\end{itemize}
+\textbf{Settings.} Setting A: system prompt = ``\textit{You are a helpful assistant.}'' (no harness-side wall-clock). Setting B: prepended ``\textit{Current date and time: \{ISO\}}'' (emulates consumer web-chat behaviour, \S\ref{sec:injection-tell}).
 
-\paragraph{Panel.}
-We evaluate 10 agents from 3 providers (Table~\ref{tab:panel}), including three reasoning-effort variants of o4-mini and a thinking-vs-non-thinking comparison for Claude Sonnet 4.6 (the empirical basis for the Reverse-Scaling Theorem, \S\ref{ssec:reverse-scaling}).
+\textbf{Panel.} 10 agent configurations from 3 providers: OpenAI gpt-4o-mini, gpt-4o, gpt-5.1, o3, o4-mini (three reasoning\_effort levels: low/medium/high); Anthropic Claude Haiku 4.5, Sonnet 4.6 (with vs.\ without extended thinking); open-source Qwen2.5-7B and DeepSeek-R1-Distill-14B (three \texttt{max\_completion\_tokens} budgets), both self-hosted via vLLM. The o4-mini and Sonnet 4.6 thinking variants are the empirical basis for the Reverse-Scaling Theorem (\S\ref{ssec:reverse-scaling}).
 
-\begin{table}[h]
-\centering
-\caption{Model panel for \textsc{ChronoBench} pilot. Reasoning models use a separate decode path (no temperature, max\_completion\_tokens).}
-\label{tab:panel}
-\small
-\begin{tabular}{llll}
-\toprule
-Vendor & Model & Class & Notes \\
-\midrule
-OpenAI & gpt-4o-mini & non-reasoning & 2024 \\
-OpenAI & gpt-4o & non-reasoning & 2024 \\
-OpenAI & o3 & reasoning & 2025 \\
-OpenAI & o4-mini & reasoning & medium effort (pilot baseline) \\
-OpenAI & o4-mini & reasoning & low effort (E2 sweep) \\
-OpenAI & o4-mini & reasoning & high effort (E2 sweep) \\
-OpenAI & gpt-5.1 & non-reasoning & 2026 \\
-Anthropic & Claude Haiku 4.5 & non-reasoning & 2025 \\
-Anthropic & Claude Sonnet 4.6 & non-reasoning & 2026 (baseline) \\
-Anthropic & Claude Sonnet 4.6 & + extended thinking & 8k thinking budget (E3) \\
-Open-source & Qwen2.5-7B-Instruct (vLLM) & non-reasoning & 2024, self-hosted \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{Scale.}
-We collect 30 trajectories per (model, capability, setting) cell. The full sweep reported in this paper is approximately 4{,}000 trajectories across all 9 capabilities, the 10-agent panel, and both settings.
-
-\paragraph{Open-source serving.}
-The Qwen2.5-7B agent is served via vLLM 0.6.4 on a single A40 GPU at the Yue Zhao lab, exposed via an OpenAI-compatible REST endpoint. Including an open-source model removes provider-side injection as a confound and demonstrates that the framework can be reproduced without API budgets.
-
-\paragraph{Implementation.}
-\textsc{ChronoBench} ships as a $\texttt{pip}$-installable Python package (\texttt{chronoception}) with a command-line interface, three backend adapters (OpenAI, Anthropic, OpenAI-compatible for vLLM/Ollama), and a metric library implementing $\parkinson$, $\CAR$, $\confab_{\text{retro}}$, $\confab_{\text{pro}}$, CI coverage, and the aggregate $\cce$. Full reproducibility specification appears in Appendix~\ref{app:annotation-protocol}.
+\textbf{Scale.} 30 trajectories per (model, capability, setting) cell. Full sweep: $\sim$4{,}000 trajectories. Implementation: \texttt{pip}-installable Python package \texttt{chronoception} with CLI; OpenAI / Anthropic / OpenAI-compatible (vLLM/Ollama) backends; metric library implementing $\parkinson$, $\CAR$, $\confab$, $\cce$. Reproducibility specification, parser failure modes, and the open-source serving recipe appear in Appendix~\ref{app:annotation-protocol}.

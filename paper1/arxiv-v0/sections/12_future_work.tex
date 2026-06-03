@@ -1,115 +1,17 @@
-% Section 12 — Future Work: Spatiotemporal Generalisation
-% Source: FRAMING.md §14 (v2.5)
+% Section 12 — Future Work (compressed v3, full detail in Appendix E)
 
-\section{Future Work --- From Chronoception to Spatiotemporal Cognition}
+\section{Future Work --- The Spatiotemporal Generalisation}
 \label{sec:future-work}
 
-The framework so far is built on a single representational axis --- time. Three Times ($\twall, \tstep, \tself$), three Laws, the Chronoception Impossibility Theorem (Theorem~\ref{thm:cit}), the Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}), and the Augustine Threshold $\ccestar$ all live on this single axis. But the agents the framework was built to evaluate --- and whose deployment frontier the Agentic Timeline Hypothesis (\S\ref{sec:agentic-timeline}) bounds --- inhabit \emph{both} space and time. A SWE-Bench agent navigates a codebase; a WebArena agent navigates a website; a GAIA agent navigates the open web. The Augustine Problem is one face of a deeper representational gap whose other face is spatial.
-
-This section sketches the framework's planned generalisation. The detailed development is the scope of a planned third paper.
-
-\subsection{The Cartographic Problem}
-\label{ssec:cartographic}
-
-Mirror to the Three Times, we propose Three Spaces:
-
-\begin{itemize}[leftmargin=*]
-    \item $\sworld$ --- world-extent: external metric over the agent's environment (files visited, pages traversed, distance from origin in some embedding).
-    \item $\svisit$ --- visit-count: number of distinct external locations the policy has touched.
-    \item $\sself$ --- self-narrated extent: agent's report of where it has been or what it has explored.
-\end{itemize}
-
-\textbf{Grounded spatiotemporal cognition} requires both identities to hold:
-\[
-\twall \approx \tstep \cdot \langle\Delta t\rangle \approx \tself \quad \text{and} \quad \sworld \approx \svisit \cdot \langle\Delta s\rangle \approx \sself.
-\]
-
-The Augustine Problem is the failure of the first identity. The \emph{Cartographic Problem} is the failure of the second. We hypothesise that they fail jointly and for the same structural reason.
-
-\subsection{Theorem 3 --- The Spatiotemporal Impossibility Theorem (SIT)}
+The framework so far runs on one axis (time). But the agents whose deployment frontier the Agentic Timeline (\S\ref{sec:agentic-timeline}) bounds inhabit \emph{both} space and time: a SWE-Bench agent navigates a codebase; a WebArena agent navigates a website; a GAIA agent navigates the open web. The Augustine Problem is the temporal face of a deeper gap whose spatial face is the \emph{Cartographic Problem}: a parallel Three Spaces ontology ($\sworld, \svisit, \sself$) and a Spatiotemporal Impossibility Theorem (Theorem~\ref{thm:sit}) generalising CIT directly. Tokens carry neither $\twall$ nor $\sworld$; token-only gradient cannot align either.
 
 \begin{theorem}[Spatiotemporal Impossibility, SIT]
 \label{thm:sit}
 For any loss $\mathcal{L}(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<i}), x_i)]$ where neither $\ell$ nor $\mathcal{D}$ contains external-metric support, $\nabla_\theta\mathcal{L}$ contains zero gradient signal aligning either $\twall$ or $\sworld$ with any internal representation.
 \end{theorem}
 
-The proof generalises CIT (Theorem~\ref{thm:cit}) directly: tokens do not carry external metrics in either dimension. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level. Solving one does not solve the other; installing chronoception via wall-clock-supported loss does not install spatial perception unless the loss is extended along $\sworld$ separately.
-
-\subsection{The Three Spatial Laws (mirror of L1/L2/L3)}
-
-\textbf{SL1 Cartographic Parkinson's Law} ($\spathkparkinson$): trained agents fill spatial budgets. Native agents do not.
-
-\textbf{SL2 Visit-Step Conflation} ($\SAR = \sworld^*/S$): under spatial budgets, agents silently degrade the budget into step terminators --- the spatial mirror of L2 Step-Clock Conflation.
-
-\textbf{SL3 Cartographic Confabulation} ($\sconfab = \log_{10}(\sself / \sworld)$): agents misreport where they have been. Mirror of L3.
-
-\subsection{The Agentic Frontier}
-
-The Agentic Timeline Hypothesis bounds an agent's maximum viable horizon $T_{\max}(A)$. Extending: every agent has a maximum viable \emph{deployment region} in the joint $(T, S)$ plane:
+The full development --- Three Spatial Laws (SL1/SL2/SL3, mirror of L1/L2/L3), the \emph{Agentic Frontier} hypothesis
 \[
-T_{\max}(A) \cdot S_{\max}(A) \;\leq\; C / \ccestST(A),
+T_{\max}(A) \cdot S_{\max}(A) \;\leq\; C/\ccestST(A)
 \]
-where $\ccestST$ is the spatiotemporal calibration error. The frontier $T \cdot S = \text{const}$ is the agent's \emph{Agentic Frontier} --- the boundary of its deployable region.
-
-\paragraph{Pre-registered Prediction P13.}
-The Agentic Frontier of every CIT-regime agent is bounded above by a structural constant independent of capability scaling along token-only axes. Capability scaling enlarges the short-horizon, low-space corner. Reasoning-token scaling moves the corner inward (the joint Reverse-Scaling: Theorem~\ref{thm:reverse-scaling} extended). Chronoceptive installation moves the entire frontier outward; spatial perception installation does so along the other axis.
-
-\subsection{Connection to long-horizon agent benchmarks}
-
-Different benchmarks load on different corners of the $(T, S)$ plane:
-
-\begin{table}[h]
-\centering
-\caption{Major long-horizon agent benchmarks classified by spatiotemporal load.}
-\label{tab:benchmark-st-load}
-\small
-\begin{tabular}{lllc}
-\toprule
-Benchmark & Temporal load & Spatial load & Dominant axis \\
-\midrule
-METR HCAST & hours & small (single repo) & $T$ \\
-SWE-Bench Verified & tens of minutes & medium (codebase) & $T + S$ partial \\
-WebArena & minutes & large (multi-site nav) & $S$ \\
-GAIA & minutes--hours & open web & $S$ unbounded \\
-MLE-Bench & days & large (ML pipeline) & $T \times S$ joint \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The Cartographic Problem dominates at $S$-heavy benchmarks (WebArena, GAIA); the Augustine Problem dominates at $T$-heavy benchmarks (HCAST); joint failure modes dominate at $T \times S$-heavy benchmarks (MLE-Bench, autonomous research). The Agentic Timeline Hypothesis specifies the $T$-axis bound; the Cartographic generalisation specifies the $S$-axis bound; together they specify the frontier.
-
-\subsection{Five concrete future experiments (E6--E10)}
-
-\begin{itemize}[leftmargin=*]
-    \item \textbf{E6 Spatial-CAR on SWE-Bench Lite.} Spatial-budget analog of T2.3: ``\textit{solve this issue while touching at most $N$ files}'' across $N \in \{2, 5, 10, 30, \text{unlimited}\}$. Measure $\SAR$ per agent. Expected: $\SAR \ll 1$, mirror of L2.
-
-    \item \textbf{E7 Joint spatiotemporal budgets.} ``\textit{Complete this task in at most $T$ minutes, visiting at most $S$ pages.}'' Measure how often agents satisfy both, one, or neither constraint. Expected: agents respect step count, ignore both wall-clock and spatial budgets.
-
-    \item \textbf{E8 Within-trajectory drift on long horizons.} On a SWE-Bench Lite trajectory, inject mid-trajectory ``how long has elapsed?'' and ``how many files have you touched?'' probes. Measure drift of $\confab_t$ and $\sconfab_t$ as $t$ grows. Tests P8/P9 from the framework's within-trajectory predictions.
-
-    \item \textbf{E9 The Cartographic Tell.} Audit closed-lab harnesses for spatial-context injection: ``current working directory'' in IDE agents, ``recently visited URLs'' in browser agents, system file-tree dumps. Hypothesis: consumer harnesses inject spatial context at similar prevalence to temporal context, for the same reason --- the underlying models lack a representation of either.
-
-    \item \textbf{E10 Agentic Frontier mapping.} Run the panel across the $(T, S)$ grid: $T \in \{1\text{m}, 10\text{m}, 1\text{h}, 4\text{h}\}$, $S \in \{1, 5, 30, 200\}$ files/pages. For each $(T, S, A)$ cell, measure success rate. Fit the constant-success contour. Expected: contour matches $T \cdot S = C/\ccestST(A)$ for each agent.
-\end{itemize}
-
-\subsection{Paper 3 sketch --- \emph{The Agentic Frontier}}
-
-Paper 3 (provisional title: \emph{The Agentic Frontier: Spatiotemporal Cognition in LLM Agents}) extends the present diagnostic framework into the joint $(T, S)$ space:
-
-\begin{itemize}[leftmargin=*]
-    \item Generalises \textsc{ChronoBench} to \textsc{ChronoCartoBench}, adding 9 spatial sub-capabilities (3 axes $\times$ 3 difficulty tiers).
-    \item Establishes the Agentic Frontier hypothesis empirically on SWE-Bench Lite, WebArena, GAIA (E6, E7, E10).
-    \item Proves SIT (Theorem~\ref{thm:sit}) as a generalisation of CIT.
-    \item Connects to the world-models literature: agents lacking spatiotemporal cognition cannot acquire useful world models from token-only training (a direct corollary of SIT).
-    \item Maps to \textsc{ChronoStack}$^{+}$ (Paper 2 extension): installation routes for joint spatiotemporal grounding.
-\end{itemize}
-
-\paragraph{From two papers to three.}
-\begin{enumerate}[leftmargin=*]
-    \item Paper 1 --- \emph{The Augustine Problem} (this paper): chronoception, CIT, Reverse-Scaling, Agentic Timeline.
-    \item Paper 2 --- \textsc{ChronoStack}: constructive routes to install chronoception (loss-, tool-, architecture-level).
-    \item Paper 3 --- \emph{The Agentic Frontier}: spatiotemporal generalisation, Cartographic Problem, joint deployment bound.
-\end{enumerate}
-
-\paragraph{Why the generalisation matters.}
-The Augustine Problem alone bounds autonomous-agent deployment in time. The Cartographic Problem bounds it in space. Together they bound the joint $(T, S)$ region. The frontier is set jointly; addressing only one axis leaves the other to compound. This is the framework's structural claim about the autonomous-agent capability curve at the deployment frontier: \textbf{the curve saturates not because intelligence saturates, but because spatiotemporal cognition does not scale}.
+(P13, pre-registered), five concrete experiments E6-E10 spanning SWE-Bench Lite, WebArena, GAIA, and MLE-Bench, and the connection to world-models literature --- appears in Appendix~\ref{app:spatiotemporal}. The implication for the autonomous-agent capability curve: \textbf{the curve saturates not because intelligence saturates, but because spatiotemporal cognition does not scale}. This is the bridge from Paper 1 to the planned Paper 3 (\emph{The Agentic Frontier}).
