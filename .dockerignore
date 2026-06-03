@@ -1,0 +1,20 @@
+# Skip artifacts that should be regenerated inside the container
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+.git/
+.idea/
+.vscode/
+*.egg-info/
+build/
+dist/
+.env
+.env.*
+logs/
+repro_out/
+# Don't include the OSS lab server staging files
+deploy_logs/
+# Don't include raw 32B failed attempt
+**/deepseek-r1-32b-*/
