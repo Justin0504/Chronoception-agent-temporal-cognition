@@ -85,7 +85,7 @@ Paper 3 (provisional title: \emph{The Agentic Frontier: Spatiotemporal Cognition
     \item Generalises \textsc{ChronoBench} to \textsc{ChronoCartoBench}, adding 9 spatial sub-capabilities (3 axes $\times$ 3 difficulty tiers).
     \item Establishes the Agentic Frontier hypothesis empirically on SWE-Bench Lite, WebArena, and GAIA (E6, E7, E10).
     \item Proves SIT (Theorem~\ref{thm:sit}) as a generalisation of CIT.
-    \item Connects to the world-models literature: agents lacking spatiotemporal cognition cannot acquire useful world models from token-only training --- a direct corollary of SIT.
+    \item Connects to the world-models literature: agents lacking spatiotemporal cognition cannot acquire useful world models from token-only training --- a direct corollary of SIT. The standard world-model architectures of the deep-RL era \citep{ha2018worldmodels,hafner2019dreamer,schrittwieser2020muzero} install explicit latent state for both space and time, precisely because token-level training cannot. The recent foundation-world-model line \citep{bruce2024genie} extends the same architectural choice. Token-only foundation models bypass this design and inherit the corresponding representational gap; SIT is the impossibility statement of the bypass.
     \item Maps to \textsc{ChronoStack}$^{+}$ (Paper 2 extension): installation routes for joint spatiotemporal grounding.
 \end{itemize}
 

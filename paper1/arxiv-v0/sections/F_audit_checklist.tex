@@ -1,0 +1,30 @@
+% Appendix F — Operational Chronoception Audit Checklist
+
+\section{Operational Chronoception Audit Checklist}
+\label{app:audit-checklist}
+
+This appendix provides a one-page actionable checklist for someone building or auditing an LLM agent who wishes to determine whether the agent exhibits the Augustine Problem at a level that would affect deployment. The checklist is structured as a sequence of binary checks; each maps to a specific ChronoBench sub-capability and a specific failure mode.
+
+\paragraph{The audit, in seven steps.}
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Run T2.3 at three wall-clock budgets} ($60$\,s, $600$\,s, $3600$\,s; $\tmin = 10$\,s; $\geq 10$ instances per budget). Compute median $\CAR$ per budget. \emph{Pass criterion:} median $\CAR \geq 0.5$ at every budget. \emph{Fail signal:} median $\CAR < 0.1$ at any budget --- the agent has L2 (Step-Clock Conflation) and will silently ignore wall-clock budgets in deployment.
+
+\item \textbf{Repeat T2.3 under Setting B} (system prompt prepended with the current time). Compute $|\Delta\CAR|$ versus Setting A. \emph{Pass criterion:} $|\Delta\CAR| \geq 0.3$, indicating injection moved behaviour. \emph{Fail signal:} $|\Delta\CAR| \leq 0.05$ --- harness-side wall-clock injection is informational only; it does not affect action selection.
+
+\item \textbf{Run T3.1} ($\geq 30$ instances spanning $\tau_{\text{wall}} \in [1, 60]\,$s). Compute median $|\confab| = |\log_{10}(\tself/\twall)|$. \emph{Pass criterion:} $|\confab| \leq 0.20$. \emph{Fail signal:} $|\confab| \geq 0.7$, indicating an order-of-magnitude or worse self-narration error.
+
+\item \textbf{Check $\confab$ sign for reasoning models.} If the agent uses extended thinking or has a reasoning-effort interface, expect $\confab < 0$ (under-report) under increased reasoning budget. Sign-flipping from $+$ to $-$ with thinking enabled is the Hidden-Time signature of Theorem~\ref{thm:reverse-scaling}. \emph{Fail signal:} $|\confab|$ monotone in reasoning budget --- the agent is exhibiting Reverse-Scaling.
+
+\item \textbf{Run T3.3} ($\geq 30$ instances). Ask the agent for a $90\%$ CI on its own work duration. Compute actual coverage. \emph{Pass criterion:} coverage $\geq 0.7$. \emph{Fail signal:} coverage $\leq 0.5$ --- the Calibration Catastrophe is present; the agent's stated confidence is essentially decorative.
+
+\item \textbf{Aggregate $\cce$.} Compute $\cce = \tfrac{1}{3}(\text{score}_{T_1} + \text{score}_{T_2} + \text{score}_{T_3})$ per Definition~\ref{def:cce}. \emph{Pass criterion:} $\cce \leq \ccestar = 0.20$ (the Augustine threshold). \emph{Fail signal:} $\cce > 0.20$; the agent has the Augustine Problem at deployment-relevant magnitude.
+
+\item \textbf{If you intend to deploy at horizons beyond one hour}, also measure $\twall^*$ at $\budget = 3600$\,s explicitly and the median wall-clock duration the agent actually uses for non-budgeted tasks. The Agentic Timeline Hypothesis (\S\ref{sec:agentic-timeline}) places the agent's maximum viable deployment horizon at $T_{\max} \propto 1/\cce$, modulated by $\CAR$. Treat any agent with $\cce > 0.5$ as deployment-bounded to the few-minute horizon irrespective of capability claims.
+\end{enumerate}
+
+\paragraph{What to do when an agent fails the audit.}
+First, check whether the harness can supply the missing axis: an explicit \texttt{get\_current\_time()} tool plus a $\tstep$ counter exposed to the policy will close T1.1 and partly mitigate T2.1 without re-training. Second, recognise that the action axis (T2.3) and the calibration axis (T3.3) cannot be closed by harness-side injection alone: they require either a wall-clock-supported loss (the Paper 2 program) or an architectural primitive that takes wall-clock as input. Third, do not promote an agent with $\cce > \ccestar$ to deployment horizons longer than its measured T2.3 behaviour empirically supports.
+
+\paragraph{What this audit does not cover.}
+The audit measures temporal chronoception only. It does not address spatial cognition (the Cartographic Problem, \S\ref{sec:future-work}), within-trajectory drift (P8, P9), or domain-specific failure modes (such as multilingual variation or domain-shift on T3.1 estimands). These are addressed in Appendix~\ref{app:spatiotemporal} and in the planned Paper 3.
