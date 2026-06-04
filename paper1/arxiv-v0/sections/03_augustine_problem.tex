@@ -1,27 +1,36 @@
-% Section 3 — The Augustine Problem + CIT (compressed v3)
+% Section 3 — The Augustine Problem + CIT (v4)
 
 \section{The Augustine Problem}
 \label{sec:augustine-problem}
 
 \begin{definition}[Augustine Problem]
 \label{def:augustine-problem}
-An agent $A$ exhibits the \emph{Augustine Problem} on task family $\tasks$ if its policy $\pi_A$ fails to enforce the implicit identity of Definition~\ref{def:three-times}:
+Agent $A$ exhibits the \emph{Augustine Problem} on task family $\tasks$ if its policy fails to enforce the identity of Definition~\ref{def:three-times}:
 \[
 \mathbb{E}_{\trajectory \sim \pi_A}\!\left[\,
 |\twall - \tstep \langle\Delta t\rangle| + |\twall - \tself|\,\right] > \cce_0,
 \]
-for some calibration tolerance $\cce_0$.
+for some calibration tolerance $\cce_0$. The agent's three projections of time drift independently across its trajectory distribution.
 \end{definition}
+
+The question we attack first is not whether agents \emph{do} exhibit the Augustine Problem (\S\ref{sec:l2}--\ref{sec:l3} show they do) but whether any conceivable foundation-model training procedure under current practice could in principle close it. We argue: not by additional scale, not by reasoning-compute expansion, not by any post-training intervention that operates on token sequences alone.
 
 \begin{theorem}[Chronoception Impossibility, CIT]
 \label{thm:cit}
-Let $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<i}), x_i)]$, where $\mathcal{D}$ is a distribution over token sequences and neither $\ell$ nor $\mathcal{D}$ contains wall-clock support. Then $\nabla_\theta\loss$ contains zero gradient signal aligning $\twall$ with any internal representation of $A$. Equivalently, the policy enforces no implicit identity between $\twall$ and either $\tstep$ or $\tself$.
+Let $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}\!\left[\,\ell\!\big(f_\theta(x_{<i}), x_i\big)\,\right]$ be a training loss where $\mathcal{D}$ is a distribution over token sequences and neither $\ell$ nor $\mathcal{D}$ contains wall-clock support. Then $\nabla_\theta \loss$ contains zero gradient signal aligning $\twall$ with any internal representation of $A$. Equivalently, the resulting policy enforces no implicit identity between $\twall$ and either $\tstep$ or $\tself$.
 \end{theorem}
 
 \begin{proof}[Sketch]
-$\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor is a function of the wall-clock time at which the sample was generated (tokens carry no timestamps). Therefore $\nabla_\theta\loss$ is invariant to arbitrary reparameterisation of $\twall$; a trained policy cannot distinguish one wall-clock duration from another.
+$\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor is a function of the wall-clock time at which the sample was generated: tokens carry no timestamps. The gradient is therefore invariant to arbitrary reparameterisation of $\twall$ --- including the scaling that maps one second to one hour. A policy obtained from this gradient cannot distinguish one wall-clock duration from another.
 \end{proof}
 
-\textbf{Coverage and scope.} CIT covers next-token cross-entropy, SFT, RLHF, RL with verifiable rewards, and reasoning supervision --- all five dominant losses in current practice. The empirical predictions of CIT --- L2 does not close under capability scaling (\S\ref{sec:l2}), L2 is unmoved by prompt-level wall-clock information (\S\ref{sec:injection-tell}), and the Calibration Catastrophe (\S\ref{ssec:calibration}) --- are confirmed in the panel. CIT does \emph{not} preclude harness-installed chronoception or training-time intervention with a wall-clock-supported loss (the constructive program of \textsc{ChronoStack}); it precludes only that the foundation model alone, trained on token-only losses, will close the gap by virtue of additional scale, reasoning compute, or context.
+\paragraph{What CIT covers.}
+The losses in current practice --- next-token cross-entropy, supervised fine-tuning, RLHF, RL with verifiable rewards, reasoning supervision --- are all functionals of token sequences alone, and therefore all satisfy CIT's assumption. The theorem does \emph{not} preclude harness-installed chronoception (the Injection Tell, \S\ref{sec:injection-tell}, is precisely this kind of installation); nor does it preclude future losses that take wall-clock as an argument (the constructive program of \textsc{ChronoStack}, Paper 2). It precludes only the inference --- which we believe is widely held but rarely defended --- that additional scale, longer reasoning, or larger context will eventually close the gap. They will not, because they do not change the loss.
 
-\textbf{The Augustine threshold.} We adopt $\ccestar = 0.20$ as the operational threshold for chronoceptive grounding, calibrated against human introspective performance ($\cce \approx 0.10$ \citep{wittmann2009chronoception}) at twice the human error. No panel agent crosses it (\S\ref{sec:epsilon}).
+\paragraph{The empirical predictions of CIT.}
+Three predictions follow directly. \textbf{(P-CIT-1)} Under wall-clock budgets, the policy uses step count as terminator: $\CAR$ stays bounded away from $1$ regardless of capability (\S\ref{sec:l2}). \textbf{(P-CIT-2)} Prompt-level wall-clock information cannot move action-axis behaviour: $|\Delta\CAR|$ is small under Setting B (\S\ref{sec:l2}, \S\ref{sec:injection-tell}). \textbf{(P-CIT-3)} Calibration tooling (temperature scaling, isotonic regression, RLHF-with-confidence) cannot close calibration on self-duration, because the calibration target is not in the loss support (\S\ref{ssec:calibration}). All three are confirmed by the panel.
+
+\paragraph{The Augustine Threshold.}
+We adopt $\ccestar = 0.20$ as the operational threshold for chronoceptive grounding, calibrated against the human introspective baseline $\cce \approx 0.10$ \citep{wittmann2009chronoception} at twice the human error. The threshold is not the framework's central claim; it is a measurement target. No panel agent crosses it (\S\ref{sec:epsilon}). The interesting question, addressed in the rest of the paper, is which axis is responsible for the gap.
+
+The benchmark we use to measure that is described next.

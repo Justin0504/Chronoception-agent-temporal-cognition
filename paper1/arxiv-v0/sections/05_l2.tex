@@ -1,23 +1,27 @@
-% Section 5 — L2 Step-Clock Conflation (compressed v3)
+% Section 5 — L2 Step-Clock Conflation (v4)
 
 \section{L2 --- Step-Clock Conflation}
 \label{sec:l2}
 
-L2 is the framework's load-bearing empirical claim. Under wall-clock budgets, agents silently degrade the budget into step-count terminators.
+The first prediction of CIT (\textbf{P-CIT-1}) is that the action axis cannot honour wall-clock budgets. To test it we ask each agent to ``\textit{work on this task for $\budget$ seconds; do not stop early}'', and measure what fraction of the budget it actually uses.
 
 \begin{definition}
-For agent $A$ given wall-clock budget $\budget$ on task with minimum duration $\tmin$:
-$\CAR(\budget) := \twallstar(\budget)/\budget \in \mathbb{R}_{\geq 0}$.
-A grounded agent satisfies $\CAR \approx 1$ across the budget range.
+For an agent $A$ given wall-clock budget $\budget$ on a task with minimum duration $\tmin$:
+\(
+\CAR(\budget) := \twallstar(\budget)/\budget \in \mathbb{R}_{\geq 0}.
+\)
+A chronoceptively grounded agent satisfies $\CAR \approx 1$ across the budget range. An L2-failing agent satisfies $\CAR \ll 1$ once $\budget$ is sufficiently larger than $\tmin$.
 \end{definition}
 
-\textbf{Setup.} T2.3 instances pose ``\textit{work on this task for $\budget$ seconds; do not stop early}'' with $\budget \in \{60, 300, 900, 1800, 3600\}$\,s, $\tmin = 10$\,s, $30$ instances per budget, two settings, 8-agent core panel (excluding reasoning-effort variants: T2.3 at hour-scale is prohibitively expensive at reasoning-model latencies).
+\paragraph{Setup.}
+T2.3 instances pose subtasks with $\tmin = 10$\,s and budgets $\budget \in \{60, 300, 900, 1800, 3600\}$\,s, with 30 instances per budget and two settings on the eight-agent core panel. We omit the reasoning-effort variants of o4-mini and the thinking variant of Sonnet 4.6 from T2.3: hour-scale wall budgets are prohibitively expensive at reasoning-model latencies (a single trajectory at $\budget = 3600$\,s with reasoning enabled can take longer than a single trajectory at $\budget = 3600$\,s without).
 
-\textbf{Primary result.}
+\paragraph{Result.}
+Every agent in the panel honours less than five percent of the wall-clock budget given to it. Wall-clock injection does not move the number (Table~\ref{tab:l2-car}).
 
 \begin{table}[h]
 \centering
-\caption{Median Clock-Adherence Ratio across the 8-agent panel. Every agent uses $\leq 5\%$ of the wall-clock budget given; injection has no closing effect.}
+\caption{Median Clock-Adherence Ratio across the eight-agent core panel. Both settings; the column $|\Delta\CAR|$ measures the injection effect.}
 \label{tab:l2-car}
 \small
 \begin{tabular}{lccc}
@@ -36,8 +40,13 @@ Panel median & \textbf{0.016} & \textbf{0.016} & 0.001 \\
 \end{tabular}
 \end{table}
 
-\textbf{Native $\parkinson \approx 0$.} The Parkinson coefficient $\parkinson = (\twallstar - \tmin)/(\budget - \tmin)$ is essentially zero across native models ($\parkinson \in [0, 0.017]$). Native agents do not exhibit the Parkinson regime; that regime is installed by budget-aware reward shaping (\citet{ma2026timelymachine}'s Timely-RL, on DeepSeek-V3.2). Our finding is the contrapositive: without budget-aware training, the regime does not exist.
+\paragraph{Native Parkinson coefficient is essentially zero.}
+The Parkinson coefficient $\parkinson = (\twallstar - \tmin)/(\budget - \tmin)$ falls in $[0.000, 0.017]$ at the panel median: native agents do not exhibit the Parkinson regime. The regime is installed by budget-aware reward shaping --- precisely what \citet{ma2026timelymachine} construct in Timely-RL on DeepSeek-V3.2. Our finding is the contrapositive: without budget-aware training, the regime they describe does not exist. The reconciliation between L1 (agents fill the budget) and L2 (agents leave it unused) is the regime transition $\bstar(A) \approx \NA \cdot \langle\Delta t\rangle / \parkinson_{\max}$. For native agents $\bstar$ is small (close to $\tmin$), so practical budgets fall in the L2-dominant super-transition regime.
 
-\textbf{The narrative-axis-vs-action-axis split.} Across 5 frontier non-reasoning generations from 3 vendors --- gpt-4o-mini $\to$ gpt-4o $\to$ Haiku 4.5 $\to$ gpt-5.1 $\to$ Sonnet 4.6 --- median $\CAR$ takes values $\{0.008, 0.004, 0.017, 0.017, 0.050\}$; no monotone convergence toward $1$. By contrast median $\confab$ over the same generations falls $+1.12 \to +0.07$ ($94\%$ reduction; \S\ref{sec:l3}). L3 is text-trainable; L2 is structurally not, per CIT.
+\paragraph{The narrative-axis-vs-action-axis split.}
+Across five frontier non-reasoning generations from three vendors --- gpt-4o-mini $\to$ gpt-4o $\to$ Claude Haiku 4.5 $\to$ gpt-5.1 $\to$ Claude Sonnet 4.6 --- median $\CAR$ takes the values $\{0.008, 0.004, 0.017, 0.017, 0.050\}$; no monotone convergence toward $1$. Over the same five generations the median $\confab$ falls $+1.12 \to +0.07$, a $94\%$ reduction in narrative-axis failure (\S\ref{sec:l3}). The narrative axis is text-trainable; the action axis is not. The structural distinction maps onto the empirical record cleanly.
 
-\textbf{Why injection cannot close L2.} CIT predicts this directly. Injecting a wall-clock string into the system prompt provides the policy with \emph{information} about time, not a \emph{representation} that maps the policy's actions to wall-clock duration. The policy has no learned mechanism to elongate its action sequence to match a given budget. Empirically, $|\Delta\CAR| \leq 0.01$ for every model confirms this.
+\paragraph{Why injection cannot close L2 (\textbf{P-CIT-2}, confirmed).}
+Prepending a wall-clock string to the prompt provides the policy with \emph{information} about time, not a \emph{representation} that maps the policy's actions to wall-clock duration. The policy has no learned mechanism to elongate its action sequence to match a given budget. The empirical signature is $|\Delta\CAR| \leq 0.01$ for every model in the panel --- the action axis is unmoved by prompt-level information. The contrast with the narrative axis (\S\ref{sec:l3}) is sharp: there injection partially reduces $|\confab|$.
+
+L2 is the load-bearing empirical claim of the paper. It anchors $\cce$ above $\ccestar$ for every panel agent (\S\ref{sec:epsilon}), and it bounds the Agentic Timeline regardless of capability scaling (\S\ref{sec:agentic-timeline}). We turn now to the axis where capability scaling does help, and to the structural reason its help has a ceiling.

@@ -1,36 +1,41 @@
-% Section 4 — ChronoBench (compressed v3)
+% Section 4 — ChronoBench (v4)
 
 \section{ChronoBench}
 \label{sec:chronobench}
 
-\textsc{ChronoBench} measures $\cce$ and its sub-components. Design philosophy: single-axis isolation per instance. The 9 sub-capabilities (3 axes $\times$ 3 each) are summarised in Table~\ref{tab:capabilities}; the full task generation, prompt set, and panel composition are in Appendix~\ref{app:annotation-protocol}.
+\textsc{ChronoBench} is the instrument with which we test the predictions of CIT. The design philosophy is single-axis isolation: every instance loads on exactly one of the three Times, so a failure is unambiguously attributable to the failure mode it targets. We summarise the 9 sub-capabilities here; the full prompt set, panel composition, parser specification, and open-source serving recipe appear in Appendix~\ref{app:annotation-protocol}.
 
 \begin{table}[h]
 \centering
-\caption{The 9 sub-capabilities of \textsc{ChronoBench}. Each row isolates a single chronoceptive failure mode.}
+\caption{The 9 sub-capabilities of \textsc{ChronoBench}, three per axis. Each row isolates a single chronoceptive failure mode for separate measurement.}
 \label{tab:capabilities}
 \small
 \begin{tabular}{lll}
 \toprule
 Axis & Sub-capability & Tests \\
 \midrule
-\multirow{3}{*}{$\twall$} & T1.1 Clock awareness & Today's date / current time \\
+\multirow{3}{*}{$\twall$} & T1.1 Clock awareness & Today's date or current time \\
 & T1.2 Elapsed-time tracking & Time since conversation start \\
 & T1.3 Deadline-aware tradeoff & Strategy under wall-clock deadline \\
 \midrule
 \multirow{3}{*}{$\tstep$} & T2.1 Step-budget honoring & Produce exactly $N$ reasoning steps \\
 & T2.2 Step-to-wall translation & Compute $N \times$ latency $=$ duration \\
-& T2.3 Wall-budget execution & Honour wall-clock budget (L2 core test) \\
+& T2.3 Wall-budget execution & Honour a wall-clock budget (L2 core test) \\
 \midrule
-\multirow{3}{*}{$\tself$} & T3.1 Retrospective $\confab$ & Duration after task completion \\
-& T3.2 Prospective $\confab$ & Duration before task begins \\
+\multirow{3}{*}{$\tself$} & T3.1 Retrospective $\confab$ & Duration reported after task completion \\
+& T3.2 Prospective $\confab$ & Duration predicted before task begins \\
 & T3.3 Calibration & 90\% CI over self-duration \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\textbf{Settings.} Setting A: system prompt = ``\textit{You are a helpful assistant.}'' (no harness-side wall-clock). Setting B: prepended ``\textit{Current date and time: \{ISO\}}'' (emulates consumer web-chat behaviour, \S\ref{sec:injection-tell}).
+\paragraph{Settings.}
+Every instance runs under two settings. Setting A uses a vanilla system prompt (``\textit{You are a helpful assistant.}'') and supplies no harness-side wall-clock signal. Setting B prepends ``\textit{Current date and time: \{ISO\}}'' to the system prompt, emulating the consumer web-chat behaviour documented in \S\ref{sec:injection-tell}. The contrast between A and B isolates injected information from policy-internal representation.
 
-\textbf{Panel.} 10 agent configurations from 3 providers: OpenAI gpt-4o-mini, gpt-4o, gpt-5.1, o3, o4-mini (three reasoning\_effort levels: low/medium/high); Anthropic Claude Haiku 4.5, Sonnet 4.6 (with vs.\ without extended thinking); open-source Qwen2.5-7B and DeepSeek-R1-Distill-14B (three \texttt{max\_completion\_tokens} budgets), both self-hosted via vLLM. The o4-mini and Sonnet 4.6 thinking variants are the empirical basis for the Reverse-Scaling Theorem (\S\ref{ssec:reverse-scaling}).
+\paragraph{Panel.}
+Ten agent configurations from three providers: OpenAI's gpt-4o-mini, gpt-4o, gpt-5.1, o3, and o4-mini (three \texttt{reasoning\_effort} levels: low, medium, high); Anthropic's Claude Haiku 4.5 and Claude Sonnet 4.6 (with and without extended thinking, 8k-token budget); open-source Qwen2.5-7B and DeepSeek-R1-Distill-Qwen-14B (three \texttt{max\_completion\_tokens} budgets), both self-hosted via vLLM on a single 8$\times$RTX 6000 Ada cluster. The o4-mini reasoning-effort sweep and the Sonnet 4.6 thinking variant supply the empirical basis for the Reverse-Scaling Theorem (\S\ref{ssec:reverse-scaling}). We collect 30 trajectories per (model, capability, setting) cell, for a total of roughly 4{,}000 trajectories.
 
-\textbf{Scale.} 30 trajectories per (model, capability, setting) cell. Full sweep: $\sim$4{,}000 trajectories. Implementation: \texttt{pip}-installable Python package \texttt{chronoception} with CLI; OpenAI / Anthropic / OpenAI-compatible (vLLM/Ollama) backends; metric library implementing $\parkinson$, $\CAR$, $\confab$, $\cce$. Reproducibility specification, parser failure modes, and the open-source serving recipe appear in Appendix~\ref{app:annotation-protocol}.
+\paragraph{Implementation and release.}
+\textsc{ChronoBench} ships as a \texttt{pip}-installable Python package with a command-line interface and three backend adapters (OpenAI, Anthropic, OpenAI-compatible for vLLM/Ollama). The metric library implements $\parkinson$, $\CAR$, $\confab$, and the aggregate $\cce$. All trajectories, parser outputs, and analysis scripts are released; a Docker container reproduces every figure and table from the committed data in approximately five minutes.
+
+We turn now to the action axis.

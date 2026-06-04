@@ -1,20 +1,25 @@
-% Section 8 — Chronoceptive Calibration Error (compressed v3, decomp detail in Appendix D)
+% Section 8 — Chronoceptive Calibration Error (v4)
 
 \section{Chronoceptive Calibration Error $\cce$}
 \label{sec:epsilon}
 
-We aggregate the three-axis failures into a single scalar.
+We aggregate the three axes into a single scalar.
 
 \begin{definition}[Chronoceptive Calibration Error]
 \label{def:cce}
-$\cce(A) := \frac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis is the mean of its sub-capability failure scores normalised to $[0,1]$ (see Appendix~\ref{app:full-panel-tables}). $\cce = 0$ is grounded; $\ccestar = 0.20$ is the Augustine threshold (calibrated at $2\times$ human introspective error \citep{wittmann2009chronoception}).
+$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis is the mean of its sub-capability failure scores normalised to $[0, 1]$ (Appendix~\ref{app:full-panel-tables}). $\cce = 0$ corresponds to a grounded agent; $\ccestar = 0.20$ is the Augustine threshold, calibrated against human introspective performance \citep{wittmann2009chronoception} at twice the human error.
 \end{definition}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/epsilon_panel.pdf}
-\caption{Panel $\cce$ ranking. Setting A bars sorted; Setting B (lighter) below each. Dashed green line marks $\ccestar = 0.20$. \textbf{No agent crosses the threshold.} The best agent (Sonnet 4.6 no thinking, $\cce = 0.316$) sits $1.58\times$ the threshold; its T2 axis alone contributes $\approx 0.32$ --- irreducible by any narrative-axis intervention. Reverse-Scaling and Sonnet-thinking variants appear in Figure~\ref{fig:reverse-scaling}; the full sub-capability decomposition table is in Appendix~\ref{app:full-panel-tables}.}
+\caption{Panel $\cce$ ranking. Setting A bars sorted; Setting B bars (lighter) below. The dashed green line marks $\ccestar = 0.20$. No agent crosses the threshold. The best agent (Sonnet 4.6 without thinking, $\cce = 0.316$) sits $1.58\times$ above; its T2 axis alone contributes $\approx 0.32$, irreducible by any narrative-axis intervention. The Reverse-Scaling variants of o4-mini and Sonnet 4.6 are not shown here (Figure~\ref{fig:reverse-scaling} carries their effect); the full sub-capability decomposition is in Appendix~\ref{app:l3-detail}.}
 \label{fig:epsilon-panel}
 \end{figure}
 
-\textbf{Two findings.} \textbf{(1)} The action axis is the binding constraint. For every agent above $\ccestar$ by less than $0.20$ (Sonnet 4.6, gpt-5.1, Haiku 4.5), $\mathrm{score}_{T_2}$ dominates: T2 alone contributes $\geq 0.317$. Even projecting $\mathrm{score}_{T_3} \to 0$, no agent crosses $\ccestar$. \textbf{The Augustine Threshold is structurally unreachable through narrative training.} \textbf{(2)} Reverse-Scaling operates on aggregate $\cce$: o4-mini effort-sweep $0.470 \to 0.532 \to 0.611$; Sonnet 4.6 baseline $\to$ thinking $0.276 \to 0.301$. More reasoning compute makes the agent strictly further from grounded.
+\paragraph{Two findings.}
+\textbf{(1) The action axis is the binding constraint.} Among the four agents that sit closer to the threshold than $0.20$ above it (Sonnet 4.6, gpt-5.1, Haiku 4.5, o3), $\mathrm{score}_{T_2}$ dominates the aggregate: it contributes at least $0.317$ on every agent. Even projecting $\mathrm{score}_{T_3}$ to zero --- which would require crossing both Theorem~\ref{thm:cit} and Theorem~\ref{thm:reverse-scaling} --- no agent crosses $\ccestar$. The Augustine threshold is unreachable through narrative training.
+
+\textbf{(2) Reverse-Scaling operates on the aggregate.} The o4-mini effort sweep takes $\cce$ from $0.470$ at low effort to $0.532$ at medium to $0.611$ at high. The Sonnet 4.6 thinking comparison takes $\cce$ from $0.276$ to $0.301$. More reasoning compute moves the agent further from the threshold, not closer. The two findings combine into a single structural claim: there is no axis along which token-only training can close the gap.
+
+This is the empirical content of the paper. The next two sections turn measurement into deployment implication, and position the work against the literature.
