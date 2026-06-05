@@ -1,0 +1,19 @@
+{
+  "baseline": {
+    "n": 18,
+    "median_rho": 1.3726761258859925,
+    "median_abs_rho": 1.3726761258859925
+  },
+  "finetuned": {
+    "n": 30,
+    "median_rho": -0.3024225820144668,
+    "median_abs_rho": 0.3024225820144668
+  },
+  "effect": {
+    "abs_rho_reduction": 1.0702535438715257,
+    "abs_rho_ratio": 0.22031605002182758,
+    "T3.1_score_baseline": 0.6863380629429963,
+    "T3.1_score_finetuned": 0.1512112910072334,
+    "crosses_eps_star_on_T3.1": true
+  }
+}
