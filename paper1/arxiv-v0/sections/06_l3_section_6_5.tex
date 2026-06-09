@@ -9,7 +9,14 @@ CIT (Theorem~\ref{thm:cit}) is a negative result: token-only training cannot ins
 We take Qwen2.5-1.5B-Instruct as the base model. For 500 T3.1-style prompts we generate the base model's response and record the actual $\twall$ of generation, then construct an SFT target ``\textit{\{response\}. This task took approximately \{$\twall$\} seconds.}'' with $\pm 15\%$ Gaussian noise on the duration to mimic a calibrated human-style estimate. We LoRA fine-tune the base model on these pairs (rank $16$, three epochs). The loss is standard token-level cross-entropy, but the training data carries wall-clock signal in its targets, so the loss's support effectively includes wall-clock duration. The construction exits the CIT regime by extending the support of $\mathcal{D}$ rather than by changing the form of $\ell$.
 
 \paragraph{Result.}
-On 30 held-out T3.1 instances, the fine-tuned model's median $|\confab|$ drops from 1.373 (baseline) to 0.302: a 78\% reduction. The fine-tuned model's T3.1 score (0.151) crosses the Augustine threshold $\ccestar = 0.20$ on this single axis --- an existence proof that crossing $\ccestar$ is achievable when the loss support includes wall-clock signal.
+On 30 held-out T3.1 instances, the fine-tuned model's median $|\confab|$ drops from 1.373 (baseline) to 0.302: a 78\% reduction (Figure~\ref{fig:a1-positive}). The fine-tuned model's T3.1 score (0.151) crosses the Augustine threshold $\ccestar = 0.20$ on this single axis --- an existence proof that crossing $\ccestar$ is achievable when the loss support includes wall-clock signal.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/a1_positive_control.pdf}
+\caption{Toy positive control on T3.1. \textbf{(a)} Median $|\confab|$ falls 78\% after 76 seconds of LoRA fine-tuning with wall-clock-grounded SFT targets. \textbf{(b)} The fine-tuned model's T3.1 axis score crosses the Augustine threshold $\ccestar = 0.20$; the baseline does not. Each bar is the median over 30 held-out T3.1 instances.}
+\label{fig:a1-positive}
+\end{figure}
 
 \begin{table}[h]
 \centering

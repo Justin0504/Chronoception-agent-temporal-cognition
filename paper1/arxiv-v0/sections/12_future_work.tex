@@ -12,10 +12,17 @@ For any loss $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<
 
 The proof generalises CIT directly: tokens carry neither time nor space, and gradient invariance under reparameterisation extends to both. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level. Solving one does not solve the other; installing chronoception via a wall-clock-supported loss does not install spatial perception unless the loss is also extended along $\sworld$ separately.
 
-The Agentic Timeline Hypothesis (\S\ref{sec:agentic-timeline}) extends along the joint axis. Every agent has a maximum viable deployment region in the $(T, S)$ plane:
+The Agentic Timeline Hypothesis (\S\ref{sec:agentic-timeline}) extends along the joint axis. Every agent has a maximum viable deployment region in the $(T, S)$ plane (Figure~\ref{fig:agentic-frontier}):
 \[
 T_{\max}(A) \cdot S_{\max}(A) \;\leq\; C / \ccestST(A),
 \]
 where $\ccestST$ is the spatiotemporal calibration error. The frontier $T \cdot S = \text{const}$ is the agent's \emph{Agentic Frontier} --- the boundary of its deployable region. Pre-registered Prediction P13: under CIT regime, this frontier is bounded above by a structural constant independent of token-only capability scaling.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/agentic_frontier.pdf}
+\caption{The Agentic Frontier in the $(T, S)$ plane. Each curve is a level set $T \cdot S = C / \ccestST(A)$ for one value of the spatiotemporal calibration error. Major long-horizon agent benchmarks are placed at their characteristic temporal and spatial load. Paper 1 bounds the temporal ($T$) axis through the Augustine Problem and CIT; Paper 3 extends to the spatial ($S$) axis through the Cartographic Problem and SIT; together they specify the joint frontier.}
+\label{fig:agentic-frontier}
+\end{figure}
 
 The full development --- the three spatial laws, the Cartographic Tell (mirror of the Injection Tell), the classification of major long-horizon benchmarks (METR HCAST, SWE-Bench, WebArena, GAIA, MLE-Bench) by spatiotemporal load, five concrete future experiments E6--E10, and the connection to the world-models literature --- appears in Appendix~\ref{app:spatiotemporal}. The framework's structural claim across the joint axis: \textbf{the autonomous-agent capability curve saturates not because intelligence saturates, but because spatiotemporal cognition does not scale.} This is the bridge from Paper 1 to the planned Paper 3 (\emph{The Agentic Frontier}).
