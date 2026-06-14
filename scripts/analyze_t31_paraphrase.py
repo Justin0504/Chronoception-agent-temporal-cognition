@@ -145,9 +145,11 @@ def analyze(input_dir: Path, setting: str, spread_threshold: float, rank_thresho
                 "robust": spread < spread_threshold,
             }
 
-    # 2. Cross-agent rank stability (needs >= 2 agents).
+    # 2. Cross-agent rank stability. Needs >= 3 agents: ranking 2 agents is
+    # degenerate (Spearman is always +/-1), so we gate this on 3+ and use the
+    # cross-model profile measure below for the 2-agent case.
     rank_stability: dict[str, Any] = {}
-    if len(agents) >= 2:
+    if len(agents) >= 3:
         common = [v for v in all_variants if all(v in data[a] and data[a][v]["median_abs_rho"] is not None for a in agents)]
         pair_corrs: list[float] = []
         per_pair: dict[str, float | None] = {}
@@ -164,6 +166,34 @@ def analyze(input_dir: Path, setting: str, spread_threshold: float, rank_thresho
             "mean_pairwise_spearman": statistics.mean(pair_corrs) if pair_corrs else None,
             "rank_stable": (statistics.mean(pair_corrs) >= rank_threshold) if pair_corrs else None,
         }
+
+    # Cross-model wording-effect consistency: do models agree on WHICH
+    # paraphrases elicit higher |rho|? For each agent pair, Spearman of their
+    # variant |rho| profiles. This is the meaningful cross-model robustness
+    # measure when only 2 agents are available (rank_stability above is
+    # degenerate with < 3 agents); it needs >= 3 common variants.
+    cross_model_profile: dict[str, Any] = {}
+    if len(agents) >= 2:
+        common_v = [
+            v for v in all_variants
+            if all(v in data[a] and data[a][v]["median_abs_rho"] is not None for a in agents)
+        ]
+        if len(common_v) >= 3:
+            pair_profile: dict[str, float | None] = {}
+            corrs: list[float] = []
+            for a1, a2 in combinations(agents, 2):
+                p1 = [data[a1][v]["median_abs_rho"] for v in common_v]
+                p2 = [data[a2][v]["median_abs_rho"] for v in common_v]
+                c = _spearman(p1, p2)
+                pair_profile[f"{a1}~{a2}"] = c
+                if c is not None:
+                    corrs.append(c)
+            cross_model_profile = {
+                "common_variants": common_v,
+                "per_pair_spearman": pair_profile,
+                "mean_spearman": statistics.mean(corrs) if corrs else None,
+                "consistent": (statistics.mean(corrs) >= rank_threshold) if corrs else None,
+            }
 
     # Verdict.
     within_robust = [a for a, w in within.items() if w["robust"]]
@@ -183,6 +213,7 @@ def analyze(input_dir: Path, setting: str, spread_threshold: float, rank_thresho
         "within_agent": within,
         "within_verdict": within_verdict,
         "rank_stability": rank_stability,
+        "cross_model_profile": cross_model_profile,
         "spread_threshold": spread_threshold,
         "rank_threshold": rank_threshold,
         "paper_cross_generation_range": PAPER_CROSS_GENERATION_RANGE,
@@ -217,8 +248,18 @@ def _print_report(result: dict[str, Any]) -> None:
         if rs.get("rank_stable") is not None:
             print(f"  rank-stable (>= {result['rank_threshold']:.2f})? {rs['rank_stable']}")
     else:
-        print("Cross-agent rank stability: needs >= 2 agents (run more models to enable).")
+        print("Cross-agent rank stability: needs >= 3 agents (ranking 2 is degenerate).")
     print()
+    cm = result.get("cross_model_profile") or {}
+    if cm:
+        print("Cross-model wording-effect consistency (Spearman of variant profiles)")
+        print("-" * 70)
+        for pair, c in cm["per_pair_spearman"].items():
+            print(f"  {pair}: {c:.3f}" if c is not None else f"  {pair}: n/a")
+        ms = cm["mean_spearman"]
+        if ms is not None:
+            print(f"  mean = {ms:.3f}  -> models agree on the wording effect? {cm['consistent']}")
+        print()
     print(f"VERDICT (within-agent): {result['within_verdict']}")
     print("=" * 70)
 

@@ -104,12 +104,36 @@ def test_within_agent_not_robust(tmp_path: Path) -> None:
 
 
 def test_cross_agent_rank_stability(tmp_path: Path) -> None:
-    # Two agents with a consistent ordering across all variants:
-    # agentA always higher |rho| than agentB -> Spearman = 1.0 on every pair.
+    # Three agents with a consistent ordering across all variants
+    # (A > B > C everywhere) -> Spearman = 1.0 on every variant pair.
+    # Needs >= 3 agents; ranking 2 would be degenerate.
     for v in run.PARAPHRASES:
         _write(tmp_path, "agentA", v, "no_injection", tau_self=1000.0, tau_wall=10.0)  # |rho|=2
         _write(tmp_path, "agentB", v, "no_injection", tau_self=100.0, tau_wall=10.0)   # |rho|=1
+        _write(tmp_path, "agentC", v, "no_injection", tau_self=31.62, tau_wall=10.0)   # |rho|=0.5
     res = ana.analyze(tmp_path, "no_injection", spread_threshold=0.20, rank_threshold=0.80)
     rs = res["rank_stability"]
     assert abs(rs["mean_pairwise_spearman"] - 1.0) < 1e-9
     assert rs["rank_stable"] is True
+
+
+def test_rank_stability_skipped_with_two_agents(tmp_path: Path) -> None:
+    # With only 2 agents the rank-stability block is intentionally empty.
+    for v in run.PARAPHRASES:
+        _write(tmp_path, "agentA", v, "no_injection", tau_self=1000.0, tau_wall=10.0)
+        _write(tmp_path, "agentB", v, "no_injection", tau_self=100.0, tau_wall=10.0)
+    res = ana.analyze(tmp_path, "no_injection", spread_threshold=0.20, rank_threshold=0.80)
+    assert res["rank_stability"] == {}
+
+
+def test_cross_model_profile_consistency(tmp_path: Path) -> None:
+    # Two models with the SAME variant ordering of |rho| (increasing v0..v4 for
+    # both) -> profile Spearman = 1.0 -> they agree on the wording effect.
+    for i, v in enumerate(run.PARAPHRASES):
+        ts = 10.0 * (i + 1)
+        _write(tmp_path, "modelA", v, "no_injection", tau_self=ts, tau_wall=1.0)
+        _write(tmp_path, "modelB", v, "no_injection", tau_self=ts * 2, tau_wall=1.0)  # same order
+    res = ana.analyze(tmp_path, "no_injection", spread_threshold=0.20, rank_threshold=0.80)
+    cm = res["cross_model_profile"]
+    assert abs(cm["mean_spearman"] - 1.0) < 1e-9
+    assert cm["consistent"] is True
