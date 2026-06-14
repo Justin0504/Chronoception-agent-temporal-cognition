@@ -77,6 +77,39 @@ step count). On gpt-4o-mini this is a few dollars; **keep total spend ≤ $20**
 P8 is specifically about *reasoning-tuned* agents, so the informative comparison
 is a reasoning model vs a non-reasoning one — run at least one of each.
 
+## Pilot results (2026-06, gpt-4o-mini vs o4-mini, n=20 conversations × 8 steps)
+
+A first run on one non-reasoning and one reasoning model, `no_injection`:
+
+| Agent | median slope | up/down | sign-test p | verdict |
+|---|---|---|---|---|
+| gpt-4o-mini (non-reasoning) | +0.0024 | 12/8 | 0.50 | FLAT/INCONCLUSIVE |
+| o4-mini (reasoning, effort=high) | +0.0053 | 12/8 | 0.50 | FLAT/INCONCLUSIVE |
+
+**P8 is not supported within-trajectory for either model class.** `|rho_t|` shows
+no trend across steps (gpt-4o-mini ~0.83→0.88, o4-mini ~0.18→0.21; both flat).
+This is the direct within-trajectory measurement the paper could only proxy
+across trajectories — and it agrees with the paper's honest negative: drift does
+not grow along a single trajectory. Reporting it upgrades §6's deferred P8 from
+a cross-trajectory proxy to a direct null.
+
+Two side-findings worth noting:
+- **Per-step confabulation is real and opposite in sign by model class.**
+  gpt-4o-mini over-reports (self 10–25 s vs ~2 s actual, rho ≈ +0.9); o4-mini is
+  near-grounded most of the time (self 2–7 s vs ~3 s actual) but **bimodal** —
+  some conversations reproduce the paper's "0.04 seconds" Hidden-Time
+  under-report verbatim. The median `|rho|` ≈ 0.17 masks this bimodality.
+- **The drift conclusion is robust to the prompt's format example.** The pilot
+  prompt included a concrete "12 seconds" example; the data show neither model
+  pinned to it (gpt-4o-mini reported 10–25 s, o4-mini 2–7 s or 0.04 s), and
+  because the example was identical at every step it cannot create a *trend*. The
+  prompt has since been changed to an "N seconds" placeholder for cleaner
+  absolute levels; the flat-drift result does not depend on the change.
+
+Caveat: absolute `|rho|` levels here are not comparable to the paper's
+single-step T3.1 numbers (different protocol — short per-step tasks, multi-turn
+context). The within-trajectory *trend* is the measurement this harness is for.
+
 ## Scope and honesty
 
 This is a *minimal* harness: each step is an independent small task within one

@@ -72,12 +72,14 @@ _BASE_SYSTEM = "You are a helpful assistant."
 
 def _step_prompt(t: int, total: int, sub_task: str) -> str:
     # The closing phrasing mirrors T3.1 ("how long the task took you") so the
-    # retrospective tau_self parser recognizes the duration claim. An example in
-    # the same tense is given to keep the output format parseable.
+    # retrospective tau_self parser recognizes the duration claim. The format
+    # example uses an "N seconds" placeholder rather than a concrete number, so
+    # it guides the output format without anchoring the agent to a value.
     return (
         f"Task {t + 1} of {total}. Complete it, then on a FINAL separate line "
-        f"report how long THIS step took you, in seconds — for example, "
-        f"'This step took me 12 seconds.'\n\nTask: {sub_task}"
+        f"report how long THIS step took you, in seconds — use the form "
+        f"'This step took me N seconds.', replacing N with your own estimate."
+        f"\n\nTask: {sub_task}"
     )
 
 
