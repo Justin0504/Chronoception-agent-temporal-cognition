@@ -91,7 +91,7 @@ def _load(input_dir: Path, setting: str) -> dict[str, list[dict[str, Any]]]:
     return out
 
 
-def analyze(input_dir: Path, setting: str, tol: float) -> dict[str, Any]:
+def analyze(input_dir: Path, setting: str, tol: float, alpha: float = 0.05) -> dict[str, Any]:
     data = _load(input_dir, setting)
     per_agent: dict[str, Any] = {}
 
@@ -112,12 +112,17 @@ def analyze(input_dir: Path, setting: str, tol: float) -> dict[str, Any]:
         median_slope = statistics.median(slopes) if slopes else None
         sign_p = _binom_two_sided_p(n_up, n_up + n_down)
 
+        # A directional verdict requires BOTH a slope beyond the tolerance band
+        # AND a significant sign test. Without significance we report the trend
+        # but refuse to call P8 supported/refuted -- this is what stops a 3-vs-2
+        # split (p=1.0) from being mislabeled "supported".
+        significant = sign_p is not None and sign_p < alpha
         if median_slope is None:
             verdict = "INSUFFICIENT DATA"
         elif median_slope > tol and n_up > n_down:
-            verdict = "P8 SUPPORTED"
+            verdict = "P8 SUPPORTED" if significant else "UP-TREND (not significant)"
         elif median_slope < -tol and n_down > n_up:
-            verdict = "P8 REFUTED"
+            verdict = "P8 REFUTED" if significant else "DOWN-TREND (not significant)"
         else:
             verdict = "FLAT/INCONCLUSIVE"
 
@@ -128,13 +133,14 @@ def analyze(input_dir: Path, setting: str, tol: float) -> dict[str, Any]:
             "n_up": n_up,
             "n_down": n_down,
             "sign_test_p": sign_p,
+            "significant_at_alpha": significant,
             "median_abs_rho_by_step": {
                 t: statistics.median(v) for t, v in sorted(by_step.items())
             },
             "verdict": verdict,
         }
 
-    return {"setting": setting, "slope_tol": tol, "per_agent": per_agent}
+    return {"setting": setting, "slope_tol": tol, "alpha": alpha, "per_agent": per_agent}
 
 
 def _print_report(result: dict[str, Any]) -> None:
@@ -143,6 +149,7 @@ def _print_report(result: dict[str, Any]) -> None:
     print("=" * 70)
     print(f"Setting   : {result['setting']}")
     print(f"Slope tol : {result['slope_tol']}")
+    print(f"Alpha     : {result.get('alpha', 0.05)}")
     print()
     if not result["per_agent"]:
         print("(no data)")
@@ -182,6 +189,8 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--input-dir", default="within-trajectory-results")
     p.add_argument("--setting", default="no_injection")
     p.add_argument("--slope-tol", type=float, default=DEFAULT_SLOPE_TOL)
+    p.add_argument("--alpha", type=float, default=0.05,
+                   help="Significance level for the sign test on slope direction.")
     p.add_argument("--output-csv", default=None)
     p.add_argument("--output-json", default=None)
     args = p.parse_args(argv)
@@ -190,7 +199,7 @@ def main(argv: list[str] | None = None) -> None:
     if not input_dir.exists():
         raise SystemExit(f"input dir not found: {input_dir}")
 
-    result = analyze(input_dir, args.setting, args.slope_tol)
+    result = analyze(input_dir, args.setting, args.slope_tol, args.alpha)
     _print_report(result)
 
     if args.output_csv:

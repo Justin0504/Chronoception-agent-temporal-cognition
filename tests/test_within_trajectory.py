@@ -94,27 +94,41 @@ def _write_convs(base: Path, agent: str, setting: str, per_conv_rhos: list[list[
 
 
 def test_verdict_p8_supported(tmp_path: Path) -> None:
-    # Every conversation drifts up steeply.
-    convs = [[0.1, 0.3, 0.5, 0.7, 0.9] for _ in range(5)]
+    # Six conversations all drift up -> sign test p = 0.03125 < 0.05 -> significant.
+    convs = [[0.1, 0.3, 0.5, 0.7, 0.9] for _ in range(6)]
     _write_convs(tmp_path, "reasoner", "no_injection", convs)
-    res = ana.analyze(tmp_path, "no_injection", tol=0.02)
+    res = ana.analyze(tmp_path, "no_injection", tol=0.02, alpha=0.05)
     a = res["per_agent"]["reasoner"]
     assert a["median_slope"] > 0.02
+    assert a["significant_at_alpha"] is True
     assert a["verdict"] == "P8 SUPPORTED"
 
 
 def test_verdict_p8_refuted(tmp_path: Path) -> None:
-    # Every conversation drifts down (the paper's cross-trajectory direction).
-    convs = [[0.9, 0.7, 0.5, 0.3, 0.1] for _ in range(5)]
+    # Six conversations all drift down (the paper's cross-trajectory direction).
+    convs = [[0.9, 0.7, 0.5, 0.3, 0.1] for _ in range(6)]
     _write_convs(tmp_path, "model", "no_injection", convs)
-    res = ana.analyze(tmp_path, "no_injection", tol=0.02)
+    res = ana.analyze(tmp_path, "no_injection", tol=0.02, alpha=0.05)
     a = res["per_agent"]["model"]
     assert a["median_slope"] < -0.02
     assert a["verdict"] == "P8 REFUTED"
 
 
-def test_verdict_flat(tmp_path: Path) -> None:
-    convs = [[0.5, 0.5, 0.5, 0.5, 0.5] for _ in range(5)]
+def test_verdict_up_trend_not_significant(tmp_path: Path) -> None:
+    # A 3-up / 2-down split: direction is up but the sign test is not significant
+    # (this is the count=5 case that must NOT be called "supported").
+    up = [0.1, 0.3, 0.5, 0.7, 0.9]
+    down = [0.9, 0.7, 0.5, 0.3, 0.1]
+    convs = [up, up, up, down, down]
     _write_convs(tmp_path, "model", "no_injection", convs)
-    res = ana.analyze(tmp_path, "no_injection", tol=0.02)
+    res = ana.analyze(tmp_path, "no_injection", tol=0.02, alpha=0.05)
+    a = res["per_agent"]["model"]
+    assert a["significant_at_alpha"] is False
+    assert a["verdict"] == "UP-TREND (not significant)"
+
+
+def test_verdict_flat(tmp_path: Path) -> None:
+    convs = [[0.5, 0.5, 0.5, 0.5, 0.5] for _ in range(6)]
+    _write_convs(tmp_path, "model", "no_injection", convs)
+    res = ana.analyze(tmp_path, "no_injection", tol=0.02, alpha=0.05)
     assert res["per_agent"]["model"]["verdict"] == "FLAT/INCONCLUSIVE"
