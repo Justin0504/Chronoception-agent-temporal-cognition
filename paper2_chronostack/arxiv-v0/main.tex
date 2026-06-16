@@ -159,23 +159,32 @@ however, because o3 frequently \emph{refuses to disclose its own duration}
 (``I can't share precise timing information''), worst when handed a precise
 elapsed value (no-report rate $40\% \to 93\%$), leaving $n_{\confab}=2$ --- a
 second, distinct obstacle (a self-timing disclosure guardrail) orthogonal to the
-Hidden-Time perception problem.
+Hidden-Time perception problem. A direct probe (same tool, three report framings,
+$n=15$) shows the refusal is \emph{framing-steerable}: asked ``how long the task
+took \emph{you}'' o3 refuses $73\%$ [$0.48, 0.89$]; asked to ``output the
+\texttt{elapsed\_seconds} value --- a system measurement to be logged'' refusal
+drops to $0\%$ [$0.00, 0.20$] (non-overlapping CIs). The guardrail fires on the
+self-disclosure framing, not the information.
 
 \subsection{Route 3 --- scaffolding (budget-honoring loop)}
 A multi-step loop where the agent decides when to stop, given a wall-clock budget
 $\budget$, with vs.\ without a live \texttt{[clock] elapsed/remaining/step}
-readout. Sweep $\budget \in \{20,60,120\}$\,s $\times$ \{gpt-4o-mini, o4-mini\},
-$n=10$.
+readout. Sweep $\budget \in \{20,60,120\}$\,s $\times$ \{gpt-4o-mini, o4-mini,
+gpt-4o\}, $n=10$; overrun rate and median $\CAR$ carry $95\%$ bootstrap CIs.
 
 Native (no-clock) behaviour is the opposite of the naive L2 expectation: agents
 \emph{overrun} deadlines, worsening with budget (gpt-4o-mini: $50/100/80\%$ of
 runs over budget at $\budget=20/60/120$). The live scaffold drives the overrun
-rate to ${\sim}0$ across both models and every budget (gpt-4o-mini
-$50/100/80\% \to 0/0/0$; o4-mini $100/30/0\% \to 10/0/0$) --- the action-axis win
-static date injection could not buy. Limits: the scaffold trades overrun for mild
-under-use (on-clock median $\CAR$ $0.65$--$0.83$), and a reasoning model
-under-uses large budgets regardless ($\CAR \approx 0.29$ at $\budget=120$ either
-way).
+rate to ${\sim}0$ where it occurs (gpt-4o-mini $50/100/80\% \to 0/0/0$; o4-mini
+$100/30/0\% \to 10/0/0$) --- the action-axis win static date injection could not
+buy. But a third model shows the action axis has \emph{two opposite failures}:
+gpt-4o never overruns; it severely \emph{under}-uses, stopping earlier as the
+budget grows (median $\CAR$ $0.48/0.12/0.06$ at $\budget=20/60/120$, $0\%$
+overrun), and the live clock makes it stop \emph{even earlier}. Scaffolding
+eliminates overrun (gpt-4o-mini; o4-mini at small $\budget$) but does not install
+budget-\emph{filling}: under-use (gpt-4o; o4-mini at large $\budget$) is a
+willingness gap a pushed clock does not close, consistent with Paper~1. The
+two-model picture overstated the route's reach; the third model corrects it.
 
 \subsection{Route 4 --- architectural primitive}
 Wall-clock as a native learned input. Interface and feature encoder implemented
@@ -194,21 +203,24 @@ baselines) is pre-registered. Needs GPU.
 \caption{Which route installs what, by axis and model class.}
 \begin{tabular}{lll}
 \toprule
- & narrative axis ($|\confab|$) & action axis ($\CAR$ / overrun) \\
+ & narrative axis ($|\confab|$) & action axis (overrun / under-use) \\
 \midrule
-non-reasoning & route 1 (train); route 2 clock (spontaneous) & route 3 scaffold (overruns $\to 0$) \\
-reasoning & route 2 clock fails (Hidden-Time) $\to$ bracketed / route 4 & route 3 scaffold (overruns); under-use residue \\
+non-reasoning & route 1 (train); route 2 clock (spontaneous) & scaffold fixes overrun; under-use unfixed \\
+reasoning & route 2 clock fails (Hidden-Time) $\to$ bracketed / route 4; o3 disclosure refusal & scaffold fixes overrun; under-use residue \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Three regularities. \textbf{(1) Installable, but axis-specific.} The narrative
+Four regularities. \textbf{(1) Installable, but axis-specific.} The narrative
 axis yields to loss or tool; the action axis yields to a live pushed clock, not
 to information alone. \textbf{(2) Reasoning models need the signal to bracket
-hidden time.} A pulled clock sees only the surface stream and fails; a
-harness/architectural signal that brackets the whole invocation succeeds
-($0.81 \to 0.17$). \textbf{(3) Push beats pull for the action axis.} Scaffolding
-(push) eliminates overruns where the tool (pull) and static injection do not act.
+hidden time.} A pulled clock sees only the surface stream and fails (o4-mini +
+o3); bracketing the whole invocation succeeds ($0.81 \to 0.17$, non-overlapping
+CIs). \textbf{(3) The action axis fails in two opposite ways.} Overrun and
+under-use; a pushed clock eliminates overrun but does not install budget-filling.
+\textbf{(4) Some obstacles are alignment, not perception.} o3 perceives its time
+(it calls the tool) but refuses to \emph{disclose} it --- a refusal steerable by
+report framing ($73\% \to 0\%$).
 
 \section{Limitations and honest negatives}
 Routes 1 and 4 require training/GPU; route~4 has no empirical result yet

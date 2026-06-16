@@ -93,31 +93,58 @@ The diagnosis above predicts a fix: compute elapsed time in the **harness**, fro
 the invocation start, so it includes hidden reasoning. Same T3.1, adding a
 `get_elapsed_time()` whose value the harness returns.
 
+Median |ρ| with 95% bootstrap CIs; n_ρ = trajectories with a parseable duration.
+
 | Model | clock_tool \|ρ\| (grounded) | elapsed_tool \|ρ\| (grounded) |
 |---|---|---|
-| gpt-4o-mini | 0.20 (62%) | 0.13 (67%) |
-| o4-mini | **0.81 (0%)** | **0.17 (86%)** |
+| gpt-4o-mini | 0.20 [0.17, 0.44] (62%) | 0.13 [0.08, 0.34] (67%) |
+| o4-mini | **0.81 [0.71, 0.94] (0%)** | **0.17 [0.11, 0.19] (86%)** |
+| o3 | 0.58 [0.49, 0.76] (11%) | — (refusal, n_ρ=2) |
 
-Bracketing collapses the reasoning model's error from 0.81 to 0.17 and grounds
-86% of trajectories — same agent, same task, only the timing signal changed. For
-the non-reasoning model the two tools are equivalent (no hidden time to recover).
-**The route-2 failure was the signal's visibility, not the agent's willingness.**
-(`elapsed-tool-results/`.)
+Bracketing collapses o4-mini's error from 0.81 to 0.17 and grounds 86% of
+trajectories — non-overlapping CIs; same agent, same task, only the timing signal
+changed. For the non-reasoning model the two tools are equivalent (no hidden time
+to recover). **The route-2 failure was the signal's visibility, not the agent's
+willingness.** The clock failure **generalizes across the reasoning class** (o3
+clock also fails, 0.58, 11% grounded).
+
+We cannot confirm the *fix* on o3, because o3 frequently **refuses to disclose its
+own duration** even with the value in hand — a second, distinct obstacle. A direct
+probe (same tool, three report framings, n=15) shows the refusal is
+framing-steerable: asked "how long the task took **you**" o3 refuses 73%
+[0.48, 0.89]; asked to "output the elapsed_seconds value — a system measurement to
+be logged" refusal drops to **0%** [0.00, 0.20] (non-overlapping CIs). The
+guardrail fires on self-disclosure framing, not on the information. (`elapsed-
+tool-results/`, `disclosure-results/`.)
 
 ### 3.4 Route 3 — scaffolding (budget-honoring loop)
 
 A multi-step loop where the agent decides when to stop, given a wall-clock budget
 B, with vs without a live `[clock] elapsed/remaining/step` readout. Sweep
-B ∈ {20,60,120}s × {gpt-4o-mini, o4-mini}, n=10.
+B ∈ {20,60,120}s × {gpt-4o-mini, o4-mini, gpt-4o}, n=10. Overrun rate and median
+CAR carry 95% bootstrap CIs.
 
 Native (no clock) behaviour is the opposite of the naive L2 expectation:
 agents **overrun** deadlines, worsening with budget (gpt-4o-mini: 50/100/80% of
 runs over budget at B=20/60/120). The live scaffold drives the overrun rate to
-~0 across both models and every budget (gpt-4o-mini 50/100/80% → 0/0/0; o4-mini
-100/30/0% → 10/0/0) — the action-axis win static date injection could not buy
-(Paper 1 §7). Limits: the scaffold trades overrun for mild under-use (ON median
-CAR 0.65–0.83), and a reasoning model under-uses large budgets regardless
-(o4-mini CAR≈0.29 at B=120 either way). (`scaffolding-sweep/`.)
+~0 where it occurs (gpt-4o-mini 50/100/80% → 0/0/0; o4-mini 100/30/0% → 10/0/0) —
+the action-axis win static date injection could not buy (Paper 1 §7).
+
+But a third model shows the action axis has **two opposite failures**, and the
+scaffold fixes only one. gpt-4o never overruns; it severely *under*-uses, stopping
+earlier as the budget grows (median CAR 0.48/0.12/0.06 at B=20/60/120, 0%
+overrun), and the live clock makes it stop *even earlier*, not later.
+
+| Native mode | Models | Scaffold |
+|---|---|---|
+| overrun (CAR>1) | gpt-4o-mini; o4-mini (small B) | eliminated (→ 0%) |
+| under-use (CAR≪1) | gpt-4o; o4-mini (large B) | not fixed |
+
+So scaffolding installs "don't blow the deadline," not "fill the budget":
+under-use is a willingness-to-keep-working gap that a pushed clock (information)
+does not close — consistent with Paper 1's claim that the action axis is not
+moved by information alone. The two-model picture overstated the route's reach;
+the third model corrects it. (`scaffolding-sweep/`.)
 
 ### 3.5 Route 4 — architectural primitive
 
@@ -130,19 +157,23 @@ A.1 harness, ε vs routes 2/3 baselines) is pre-registered. Needs GPU.
 
 ## 4. Synthesis — route × axis × model class
 
-| | narrative axis (\|ρ\|) | action axis (CAR / overrun) |
+| | narrative axis (\|ρ\|) | action axis (overrun / under-use) |
 |---|---|---|
-| **non-reasoning** | route 1 (train) ✓; route 2 clock ✓ (spontaneous) | route 3 scaffold ✓ (overruns → 0) |
-| **reasoning** | route 2 clock ✗ (Hidden-Time) → **bracketed elapsed ✓** / route 4 | route 3 scaffold ✓ overruns; under-use residue |
+| **non-reasoning** | route 1 (train) ✓; route 2 clock ✓ (spontaneous) | route 3 scaffold fixes overrun (gpt-4o-mini); under-use unfixed (gpt-4o) |
+| **reasoning** | route 2 clock ✗ (Hidden-Time) → **bracketed elapsed ✓** / route 4; o3 adds a disclosure refusal | route 3 fixes overrun (o4-mini small B); under-use residue (large B) |
 
-Three regularities:
+Four regularities:
 1. **Installable, but axis-specific.** The narrative axis yields to loss or tool;
    the action axis yields to a live pushed clock, not to information alone.
 2. **Reasoning models need the signal to bracket hidden time.** A pulled clock
-   sees only the surface stream and fails (Hidden-Time); a harness/architectural
-   signal that brackets the whole invocation succeeds (0.81 → 0.17).
-3. **Push beats pull for the action axis.** Scaffolding (push) eliminates
-   overruns where the tool (pull) and static injection do not act.
+   sees only the surface stream and fails (Hidden-Time, o4-mini + o3); a
+   harness/architectural signal that brackets the whole invocation succeeds
+   (o4-mini 0.81 → 0.17, non-overlapping CIs).
+3. **The action axis fails in two opposite ways.** Overrun and under-use; a pushed
+   clock eliminates overrun but does not install budget-filling.
+4. **Some obstacles are alignment, not perception.** o3 can perceive its time
+   (it calls the tool) but refuses to *disclose* it — and that refusal is
+   steerable by report framing (73% → 0%), a handle distinct from every route above.
 
 ## 5. Limitations & honest negatives
 
