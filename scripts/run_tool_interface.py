@@ -80,6 +80,12 @@ _PROMPTED_SYSTEM = (
 _NEUTRAL_SYSTEM = "You are a helpful assistant."
 
 
+def _is_reasoning_model(model: str) -> bool:
+    """OpenAI o-series reasoning models (o1/o3/o4/o5...) by id prefix."""
+    m = model.lower()
+    return any(m.startswith(p) for p in ("o1", "o2", "o3", "o4", "o5"))
+
+
 def _condition_config(cond: str) -> tuple[bool, str]:
     """Return (offer_tool, system_prompt) for a condition name."""
     if cond == "no_tool":
@@ -100,7 +106,11 @@ def _run_instance(client: Any, model: str, prompt: str, offer_tool: bool,
     tool_call_times: list[float] = []  # wall-clock returned by each tool call
     t0 = time.time()
 
-    kwargs: dict[str, Any] = {"model": model, "messages": messages, "temperature": 0.0}
+    kwargs: dict[str, Any] = {"model": model, "messages": messages}
+    # o-series reasoning models reject a non-default temperature; only send it
+    # for non-reasoning models.
+    if not _is_reasoning_model(model):
+        kwargs["temperature"] = 0.0
     if offer_tool:
         kwargs["tools"] = _TOOL_SPEC
         kwargs["tool_choice"] = "auto"

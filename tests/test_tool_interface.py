@@ -31,6 +31,13 @@ def test_condition_config() -> None:
     assert offer2 is True and "get_current_time" in sysp2
 
 
+def test_is_reasoning_model() -> None:
+    assert run._is_reasoning_model("o4-mini") is True
+    assert run._is_reasoning_model("o3") is True
+    assert run._is_reasoning_model("gpt-4o-mini") is False
+    assert run._is_reasoning_model("gpt-4o") is False
+
+
 def test_iso_from_epoch_is_deterministic() -> None:
     # _iso must format from an explicit epoch (no argless datetime.now()).
     assert run._iso(0.0).startswith("1970-01-01T00:00:00")
