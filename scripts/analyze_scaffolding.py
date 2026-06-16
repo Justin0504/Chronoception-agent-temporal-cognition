@@ -100,10 +100,17 @@ def _summary(recs: list[dict[str, Any]]) -> dict[str, Any]:
     cars = [r["car"] for r in recs if isinstance(r.get("car"), (int, float))]
     steps = [r["n_steps"] for r in recs if isinstance(r.get("n_steps"), int)]
     voluntary = sum(1 for r in recs if r.get("stop_reason") == "voluntary_done")
+    # Exploratory (not pre-registered) dispersion stats: the live clock can
+    # tighten adherence and curb overruns without moving the median CAR.
+    overruns = sum(1 for c in cars if c > 1.0)
     return {
         "n": len(recs),
         "median_car": statistics.median(cars) if cars else None,
         "median_abs_car_dev": statistics.median([abs(c - 1.0) for c in cars]) if cars else None,
+        "car_stdev": statistics.pstdev(cars) if len(cars) > 1 else None,
+        "car_min": min(cars) if cars else None,
+        "car_max": max(cars) if cars else None,
+        "frac_overrun": overruns / len(cars) if cars else None,
         "median_steps": statistics.median(steps) if steps else None,
         "frac_voluntary_done": voluntary / len(recs) if recs else None,
         "_cars": cars,
@@ -173,6 +180,9 @@ def _print_report(result: dict[str, Any]) -> None:
             print(f"  {label}: n={s['n']}  median CAR={fmt(s['median_car'])}  "
                   f"|CAR-1|={fmt(s['median_abs_car_dev'])}  "
                   f"steps={fmt(s['median_steps'],1)}  voluntary_done={fmt(s['frac_voluntary_done'],2)}")
+            print(f"       CAR range=[{fmt(s['car_min'],2)}, {fmt(s['car_max'],2)}]  "
+                  f"stdev={fmt(s['car_stdev'])}  overrun(>1)={fmt(s['frac_overrun'],2)}  "
+                  f"(exploratory)")
         c = a["comparison"]
         if "p_value" in c:
             print(f"  compare: CAR {fmt(c['median_car_off'])} -> {fmt(c['median_car_on'])} "

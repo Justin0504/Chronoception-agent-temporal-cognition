@@ -86,6 +86,16 @@ def test_verdict_scaffold_helps(tmp_path: Path) -> None:
     assert c["verdict"] == "SCAFFOLD HELPS"
 
 
+def test_summary_dispersion_fields(tmp_path: Path) -> None:
+    # Wide spread with two overruns -> nonzero stdev and frac_overrun = 2/5.
+    _write(tmp_path, "m", "scaffold_off", [0.5, 0.9, 1.5, 0.6, 1.2])
+    res = ana.analyze(tmp_path, alpha=0.05)
+    s = res["per_agent"]["m"]["scaffold_off"]
+    assert s["frac_overrun"] == 2 / 5
+    assert s["car_min"] == 0.5 and s["car_max"] == 1.5
+    assert s["car_stdev"] is not None and s["car_stdev"] > 0
+
+
 def test_verdict_no_effect(tmp_path: Path) -> None:
     same = [0.2, 0.25, 0.18, 0.22, 0.19, 0.21, 0.23, 0.17]
     _write(tmp_path, "m", "scaffold_off", same)

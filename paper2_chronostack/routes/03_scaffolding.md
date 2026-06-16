@@ -76,6 +76,35 @@ informative contrast, mirroring the rest of the programme.
 - `scripts/analyze_scaffolding.py` — CAR comparison + Mann-Whitney U
 - `tests/test_scaffolding.py` — unit tests (control parsing, Mann-Whitney, verdicts)
 
+## Pilot result (2026-06, gpt-4o-mini, B=20 s, n=10 per condition)
+
+Pre-registered metric (median CAR, Mann-Whitney): **NO EFFECT** — median CAR
+0.90 (off) vs 0.86 (on), p=0.26. At B=20 s the off baseline already lands near
+budget on the median (two natural turns of gpt-4o-mini take ~17 s), so the
+median test had little room.
+
+**Exploratory finding (not pre-registered): the scaffold sharply tightens
+adherence and eliminates overruns.**
+
+| Condition | median CAR | CAR range | CAR stdev | overrun (CAR>1) |
+|---|---|---|---|---|
+| scaffold OFF | 0.90 | [0.55, 1.90] | 0.378 | 30% (3/10) |
+| scaffold ON | 0.86 | [0.82, 0.90] | **0.031** | **0%** |
+
+Without the clock the agent scatters — sometimes stops at 55% of the budget,
+sometimes overruns to 1.9× (one hit the safety cutoff). With the live clock it
+stops consistently just under the deadline: CAR variance falls ~12× and overruns
+go to zero. So the agent **can** act on a live wall-clock readout — the effect is
+on reliability/overrun, not central tendency. This is the first signal that
+scaffolding does something static date injection could not (Paper 1 §7).
+
+Caveats: single model, single budget, small n; the dispersion result is
+exploratory. The budget (20 s) sat too close to the natural landing point to
+test the "stops early" direction. **Pre-registered follow-up**: sweep B over
+{20, 60, 120} s — where the off baseline must fall short — with variance and
+overrun rate as *primary* endpoints (a Levene / Brown-Forsythe test on CAR
+spread), plus a reasoning model for the model-class contrast.
+
 ## Next steps if the MVP shows an effect
 
 - Sweep the budget B (does CAR-honoring hold across 10 s … 300 s?).
