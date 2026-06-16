@@ -38,6 +38,20 @@ def test_user_turn_scaffold_vs_plain() -> None:
     assert "remaining 20.0s" in scaf and "step 3" in scaf
 
 
+# ---------- bootstrap CI ----------
+
+
+def test_bootstrap_ci() -> None:
+    import statistics
+    assert ana._bootstrap_ci([0.9, 0.95], statistics.median) is None  # too few
+    lo, hi = ana._bootstrap_ci([0.9, 0.95, 0.92, 0.88, 0.91], statistics.median)
+    assert lo <= 0.91 <= hi and hi - lo < 0.2
+    # Seeded -> reproducible.
+    xs = [1.0, 1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0]
+    assert ana._bootstrap_ci(xs, lambda s: sum(s) / len(s)) == \
+        ana._bootstrap_ci(xs, lambda s: sum(s) / len(s))
+
+
 # ---------- Mann-Whitney ----------
 
 

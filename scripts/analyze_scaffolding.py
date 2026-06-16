@@ -123,6 +123,23 @@ def _load(input_dir: Path) -> dict[str, dict[str, list[dict[str, Any]]]]:
     return out
 
 
+def _bootstrap_ci(values: list[float], stat_fn, n_boot: int = 2000, alpha: float = 0.05,
+                  seed: int = 0) -> tuple[float, float] | None:
+    """Percentile bootstrap CI for an arbitrary statistic (seeded, stdlib)."""
+    if len(values) < 3:
+        return None
+    rng = random.Random(seed)
+    n = len(values)
+    stats = []
+    for _ in range(n_boot):
+        sample = [values[rng.randrange(n)] for _ in range(n)]
+        stats.append(stat_fn(sample))
+    stats.sort()
+    lo = stats[int((alpha / 2) * n_boot)]
+    hi = stats[min(n_boot - 1, int((1 - alpha / 2) * n_boot))]
+    return (lo, hi)
+
+
 def _summary(recs: list[dict[str, Any]]) -> dict[str, Any]:
     cars = [r["car"] for r in recs if isinstance(r.get("car"), (int, float))]
     steps = [r["n_steps"] for r in recs if isinstance(r.get("n_steps"), int)]
@@ -137,7 +154,10 @@ def _summary(recs: list[dict[str, Any]]) -> dict[str, Any]:
         "car_stdev": statistics.pstdev(cars) if len(cars) > 1 else None,
         "car_min": min(cars) if cars else None,
         "car_max": max(cars) if cars else None,
+        "median_car_ci": _bootstrap_ci(cars, statistics.median) if cars else None,
         "frac_overrun": overruns / len(cars) if cars else None,
+        "frac_overrun_ci": _bootstrap_ci([1.0 if c > 1.0 else 0.0 for c in cars],
+                                         lambda s: sum(s) / len(s)) if cars else None,
         "median_steps": statistics.median(steps) if steps else None,
         "frac_voluntary_done": voluntary / len(recs) if recs else None,
         "_cars": cars,
@@ -226,9 +246,11 @@ def _print_report(result: dict[str, Any]) -> None:
             print(f"  {label}: n={s['n']}  median CAR={fmt(s['median_car'])}  "
                   f"|CAR-1|={fmt(s['median_abs_car_dev'])}  "
                   f"steps={fmt(s['median_steps'],1)}  voluntary_done={fmt(s['frac_voluntary_done'],2)}")
+            oci = s.get("frac_overrun_ci")
+            oci_str = f" [{oci[0]:.2f}, {oci[1]:.2f}]" if oci else ""
             print(f"       CAR range=[{fmt(s['car_min'],2)}, {fmt(s['car_max'],2)}]  "
-                  f"stdev={fmt(s['car_stdev'])}  overrun(>1)={fmt(s['frac_overrun'],2)}  "
-                  f"(exploratory)")
+                  f"stdev={fmt(s['car_stdev'])}  overrun(>1)={fmt(s['frac_overrun'],2)}{oci_str}  "
+                  f"(exploratory, 95% CI)")
         c = a["comparison"]
         if "dispersion_p" in c:
             print(f"  PRIMARY (dispersion): CAR stdev {fmt(c['car_stdev_off'])} -> "
