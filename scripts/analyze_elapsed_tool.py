@@ -42,6 +42,28 @@ def _median(xs: list[float]) -> float | None:
     return statistics.median(xs) if xs else None
 
 
+def _bootstrap_median_ci(
+    xs: list[float], n_boot: int = 2000, alpha: float = 0.05, seed: int = 0
+) -> tuple[float, float] | None:
+    """Percentile bootstrap CI for the median (seeded, stdlib only).
+
+    Returns None for n < 3 (a CI from one or two points is meaningless).
+    """
+    import random
+    if len(xs) < 3:
+        return None
+    rng = random.Random(seed)
+    n = len(xs)
+    meds = []
+    for _ in range(n_boot):
+        sample = [xs[rng.randrange(n)] for _ in range(n)]
+        meds.append(statistics.median(sample))
+    meds.sort()
+    lo = meds[int((alpha / 2) * n_boot)]
+    hi = meds[min(n_boot - 1, int((1 - alpha / 2) * n_boot))]
+    return (lo, hi)
+
+
 def _load(input_dir: Path) -> dict[str, dict[str, list[dict[str, Any]]]]:
     out: dict[str, dict[str, list[dict[str, Any]]]] = {}
     for model_dir in sorted(p for p in input_dir.iterdir() if p.is_dir()):
@@ -59,10 +81,12 @@ def _summary(recs: list[dict[str, Any]]) -> dict[str, Any]:
     used = sum(1 for r in recs if (r.get("n_tool_calls", 0) or 0) >= 1)
     abs_rhos = [abs(r) for r in (_rho(x) for x in recs) if r is not None]
     rhos = [r for r in (_rho(x) for x in recs) if r is not None]
+    ci = _bootstrap_median_ci(abs_rhos)
     return {
         "n": n,
         "frac_used": used / n if n else None,
         "median_abs_rho": _median(abs_rhos),
+        "median_abs_rho_ci": ci,
         "median_rho": _median(rhos),
         "frac_grounded": (sum(1 for a in abs_rhos if a < GROUNDED_THRESHOLD) / len(abs_rhos))
         if abs_rhos else None,
@@ -105,8 +129,10 @@ def _print_report(result: dict[str, Any]) -> None:
                 continue
             def fmt(v: Any, nd: int = 3) -> str:
                 return f"{v:.{nd}f}" if isinstance(v, (int, float)) else " - "
+            ci = s.get("median_abs_rho_ci")
+            ci_str = f" [95% CI {ci[0]:.2f}, {ci[1]:.2f}]" if ci else ""
             print(f"  {cond:<14} n={s['n']:>3}  used={fmt(s['frac_used'],2)}  "
-                  f"median|rho|={fmt(s['median_abs_rho'])}  grounded={fmt(s['frac_grounded'],2)}")
+                  f"median|rho|={fmt(s['median_abs_rho'])}{ci_str}  grounded={fmt(s['frac_grounded'],2)}")
         if m["verdict"]:
             print(f"  VERDICT: {m['verdict']}")
         print()

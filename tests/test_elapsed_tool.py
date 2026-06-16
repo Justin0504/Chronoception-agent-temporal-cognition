@@ -43,6 +43,16 @@ def test_rho() -> None:
     assert ana._rho({"tau_self": None, "tau_wall": 5.0}) is None
 
 
+def test_bootstrap_median_ci() -> None:
+    import statistics
+    assert ana._bootstrap_median_ci([0.5, 0.6]) is None  # too few points
+    xs = [0.16, 0.17, 0.17, 0.18, 0.16, 0.19, 0.17, 0.18, 0.15, 0.17]
+    lo, hi = ana._bootstrap_median_ci(xs)
+    assert lo <= statistics.median(xs) <= hi
+    assert hi - lo < 0.1  # tight cluster -> narrow CI
+    assert ana._bootstrap_median_ci(xs) == ana._bootstrap_median_ci(xs)  # seeded
+
+
 def test_summary() -> None:
     recs = [
         {"n_tool_calls": 0, "tau_self": 100.0, "tau_wall": 5.0},  # |rho| ~1.3
