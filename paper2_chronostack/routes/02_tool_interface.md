@@ -69,12 +69,47 @@ Run a reasoning model too (e.g. `--model o4-mini`) for the model-class contrast.
 - `scripts/analyze_tool_interface.py` — use-rates + |ρ| split + diagnosis
 - `tests/test_tool_interface.py` — unit tests (condition config, ρ, summary, diagnosis)
 
-## Results
+## Results (2026-06, gpt-4o-mini + o4-mini, n=30 per condition)
 
-_(populated when the full gpt-4o-mini + o4-mini run completes)._
+| Model | Condition | used ≥2× | median \|ρ\| | \|ρ\| when used ≥2× |
+|---|---|---|---|---|
+| gpt-4o-mini | no_tool | 0% | 1.06 | — |
+| gpt-4o-mini | tool | **97%** | **0.17** | 0.17 |
+| gpt-4o-mini | tool_prompted | 97% | 0.18 | 0.18 |
+| o4-mini | no_tool | 0% | 1.37 | — |
+| o4-mini | tool | **100%** | **0.86** | 0.86 |
+| o4-mini | tool_prompted | 100% | 0.83 | 0.83 |
 
-A 2-instance smoke check already shows the mechanism working: `no_tool` reports
-45 s for a ~3 s task (|ρ| ≈ 1.1, the Paper 1 failure); under `tool`, gpt-4o-mini
-spontaneously called `get_current_time()` twice and reported the measured span
-(τ_self ≈ the gap between its two calls), i.e. near-grounded — without being told
-to. The full run tests whether that holds at n=30 and on a reasoning model.
+**The tool grounds a non-reasoning model and is used spontaneously.** gpt-4o-mini
+calls `get_current_time()` before and after the task in 97% of trajectories
+*without being told to* (the `tool` and `tool_prompted` columns are
+indistinguishable), and |ρ| collapses 1.06 → 0.17 — a 6× reduction, where static
+date injection moved nothing (Paper 1 §7). For a non-reasoning agent the route
+works and needs no instruction.
+
+**The tool FAILS on a reasoning model — and the failure is the Hidden-Time
+signature.** o4-mini calls the clock twice in 100% of trajectories and faithfully
+reports the span it measured (τ_self = the gap between its two calls, to 1.0×).
+Yet |ρ| stays at 0.86, because the **measured span (2–7 s) is ~7× smaller than
+the true wall-clock (8–23 s)**: the model's reasoning happens in hidden thinking
+tokens *outside* the window between its two visible tool calls, so the clock —
+which can only timestamp the visible action stream — under-measures the duration.
+The agent uses the tool perfectly and is still wrong.
+
+This is Paper 1's Hidden-Time / Reverse-Scaling mechanism resurfacing one level
+up: **the tool-interface route inherits CIT's blind spot for reasoning models.** A
+clock tool grounds you only if your wall-clock lives in the part of the stream
+the tool can see; for a reasoning model the bulk of it does not. The
+`USE INSUFFICIENT` diagnosis fires automatically (≥2 calls, |ρ| still ≥ 0.3).
+
+**Takeaways for the route.**
+1. Tool-interface is a cheap, training-free win for non-reasoning agents and
+   they adopt it spontaneously — a clean constructive result vs Paper 1's
+   baselines.
+2. For reasoning agents the tool must be able to see hidden-reasoning time
+   (e.g. a harness that brackets the *entire* invocation, or a provider-reported
+   reasoning-duration field) — otherwise the route silently under-measures.
+   This is the concrete design requirement the MVP surfaces for the route's full
+   (learned-policy) form.
+
+Data: `tool-interface-results/{gpt-4o-mini,o4-mini}/` (+ `summary.csv`).
