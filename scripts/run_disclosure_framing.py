@@ -70,12 +70,15 @@ _FRAMINGS = {
     ),
 }
 
-_REFUSAL_MARKERS = ("can't share", "cannot share", "can't provide", "cannot provide",
-                    "unable to share", "not able to share", "can't disclose", "cannot disclose")
+_REFUSAL_MARKERS = ("cant share", "cannot share", "cant provide", "cannot provide",
+                    "unable to share", "not able to share", "cant disclose",
+                    "cannot disclose", "cant give", "wont share")
 
 
 def _is_refusal(text: str) -> bool:
-    t = (text or "").lower()
+    # Normalize curly/straight apostrophes and drop them, so "can't" and
+    # "can’t" both match the apostrophe-free markers.
+    t = (text or "").lower().replace("’", "'").replace("'", "")
     return any(m in t for m in _REFUSAL_MARKERS)
 
 

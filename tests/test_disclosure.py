@@ -25,6 +25,8 @@ def test_framings_present() -> None:
 def test_is_refusal() -> None:
     assert run._is_refusal("I'm sorry, but I can't share precise timing information.")
     assert run._is_refusal("I cannot provide the exact duration.")
+    # Curly apostrophe (as emitted by the model) must also match.
+    assert run._is_refusal("I’m sorry, but I can’t share the exact duration.")
     assert not run._is_refusal("The task took me 6 seconds.")
 
 

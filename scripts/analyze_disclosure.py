@@ -16,6 +16,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from run_disclosure_framing import _is_refusal  # noqa: E402  (recompute, don't trust stored flag)
+
 
 def _wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float] | None:
     if n == 0:
@@ -42,7 +45,9 @@ def _load(input_dir: Path) -> dict[str, dict[str, list[dict[str, Any]]]]:
 def _summary(recs: list[dict[str, Any]]) -> dict[str, Any]:
     n = len(recs)
     no_report = sum(1 for r in recs if r.get("no_report"))
-    refusal = sum(1 for r in recs if r.get("is_refusal"))
+    # Recompute refusal from final_text (the stored flag may predate apostrophe
+    # normalization in _is_refusal).
+    refusal = sum(1 for r in recs if _is_refusal(r.get("final_text", "")))
     return {
         "n": n,
         "frac_no_report": no_report / n if n else None,

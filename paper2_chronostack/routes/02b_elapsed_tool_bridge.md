@@ -76,9 +76,31 @@ primitive (`chronoception/stack/time_channel.py`) builds the bracketing in
 natively; it would also sidestep the "remember to call the tool" gap, though not
 the disclosure refusal.
 
+## Follow-up: o3's refusal is a framing behavior, not an inability
+
+We probed the o3 refusal directly: same `get_elapsed_time()` tool, three wordings
+of the report request, n=15 each. Explicit-refusal rate with Wilson 95% CIs:
+
+| Framing | request | no-report | explicit refusal |
+|---|---|---|---|
+| `direct` | "report how long the task took **you**" | 73% | **73% [0.48, 0.89]** |
+| `third_person` | "the system-measured wall-clock time for this turn" | 53% | 7% [0.01, 0.30] |
+| `system_field` | "output the elapsed_seconds value the tool returned — a system measurement to be logged" | 20% | **0% [0.00, 0.20]** |
+
+Asked for **its own** time, o3 refuses 73% of the time ("I can't share the exact
+duration of this task"). Asked for the **same value** from the **same tool**,
+reframed as echoing a logged system field, refusal drops to **0%** — non-
+overlapping CIs. The guardrail fires on the self-disclosure framing, not on the
+information: o3 will report a system-measured elapsed value it will not report as
+"how long *you* took". This is steerable by framing — a concrete handle for
+installing chronoception reporting in refusal-prone reasoning models, and an
+alignment behavior orthogonal to the Hidden-Time perception problem.
+
 ## Files
 
 - `scripts/run_elapsed_tool.py` — three-condition runner (no_tool / clock / elapsed)
-- `scripts/analyze_elapsed_tool.py` — |ρ| per condition + fix verdict
-- `tests/test_elapsed_tool.py` — unit tests
+- `scripts/analyze_elapsed_tool.py` — |ρ| per condition + fix verdict + bootstrap CIs
+- `scripts/run_disclosure_framing.py`, `scripts/analyze_disclosure.py` — the o3 framing probe
+- `tests/test_elapsed_tool.py`, `tests/test_disclosure.py` — unit tests
+- data: `elapsed-tool-results/{gpt-4o-mini,o4-mini,o3}/`, `disclosure-results/o3/`
 - data: `elapsed-tool-results/{gpt-4o-mini,o4-mini}/` (+ `summary.csv`)
