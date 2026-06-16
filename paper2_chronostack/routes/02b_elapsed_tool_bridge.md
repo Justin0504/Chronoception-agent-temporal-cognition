@@ -25,35 +25,56 @@ models. If it were the tool's *visibility*, only `elapsed_tool` would.
 ## Results
 
 | Model | Condition | tool used | median \|ρ\| | grounded (\|ρ\|<0.3) |
-|---|---|---|---|---|
-| gpt-4o-mini | no_tool | 0% | 1.09 | 0% |
-| gpt-4o-mini | clock_tool | 100% | 0.20 | 62% |
-| gpt-4o-mini | elapsed_tool | 100% | 0.13 | 67% |
-| o4-mini | no_tool | 0% | 1.18 | 4% |
-| o4-mini | **clock_tool** | 83% | **0.81** | **0%** |
-| o4-mini | **elapsed_tool** | 100% | **0.17** | **86%** |
+Median |ρ| with 95% bootstrap CIs; grounded = |ρ| < 0.3; no-report = fraction
+giving no parseable duration; n_ρ = trajectories with a usable duration.
+
+| Model | Condition | n_ρ | no-report | median \|ρ\| (95% CI) | grounded |
+|---|---|---|---|---|---|
+| gpt-4o-mini | no_tool | 30 | 0% | 1.09 [1.08, 1.13] | 0% |
+| gpt-4o-mini | clock_tool | 29 | 0% | 0.20 [0.17, 0.44] | 62% |
+| gpt-4o-mini | elapsed_tool | 27 | 10% | 0.13 [0.08, 0.34] | 67% |
+| o4-mini | no_tool | 23 | 23% | 1.18 [0.89, 1.75] | 4% |
+| o4-mini | **clock_tool** | 29 | 0% | **0.81 [0.71, 0.94]** | **0%** |
+| o4-mini | **elapsed_tool** | 29 | 3% | **0.17 [0.11, 0.19]** | **86%** |
+| o3 | no_tool | 8 | 73% | 0.69 [0.53, 0.88] | 12% |
+| o3 | clock_tool | 18 | 40% | 0.58 [0.49, 0.76] | 11% |
+| o3 | elapsed_tool | 2 | 93% | — (n=2) | — |
 
 ## What it shows
 
 **The route-2 failure was the tool's visibility, not the agent.** For the
-reasoning model o4-mini, the naive clock tool leaves |ρ| at 0.81 and grounds 0%
-of trajectories (the Hidden-Time signature, Paper 1 Thm 2). Swapping in a tool
-whose value brackets the whole invocation collapses |ρ| to 0.17 and grounds
-**86%** — same agent, same task, the only change is that the timing signal now
-includes the hidden-reasoning time. The agent was willing all along; the clock
-just couldn't see where its wall-clock went.
+reasoning model o4-mini, the naive clock tool leaves |ρ| at 0.81 [0.71, 0.94] and
+grounds 0% of trajectories (the Hidden-Time signature, Paper 1 Thm 2). Swapping in
+a tool whose value brackets the whole invocation collapses |ρ| to 0.17 [0.11,
+0.19] and grounds **86%** — the two CIs do not overlap. Same agent, same task; the
+only change is that the timing signal now includes the hidden-reasoning time.
 
 **For a non-reasoning model the two tools are equivalent** (gpt-4o-mini: 0.20 vs
-0.13), exactly as predicted — with no hidden reasoning, the visible-stream clock
-already captures the wall-clock, so there is nothing for bracketing to recover.
+0.13, overlapping CIs), exactly as predicted — with no hidden reasoning, the
+visible-stream clock already captures the wall-clock.
 
-This is the cleanest single result in the ChronoStack programme so far: a
-controlled, model-class-stratified demonstration that **the fix for reasoning-
-model chronoception is to bracket the entire invocation**, and that this is a
-property of the *timing signal*, not the agent. It validates route 4's premise
-empirically with a cheap tool proxy: the architectural primitive
-(`chronoception/stack/time_channel.py`) builds exactly this bracketing in
-natively, so it should ground reasoning models where a pulled clock cannot.
+**The Hidden-Time clock failure generalizes to a second reasoning model.** o3's
+naive clock tool also fails to ground (|ρ| 0.58 [0.49, 0.76], 11% grounded,
+n=18) — so the clock's blindness to hidden reasoning is a property of the
+reasoning *class*, not an o4-mini quirk.
+
+**An honest confound on o3's fix, and a new finding.** We cannot confirm the
+bracketed fix on o3, because o3 frequently **refuses to disclose its own task
+duration** ("I'm sorry, but I can't share precise timing information") — even when
+it has called the tool. The no-report rate rises across conditions and is highest
+exactly when it is handed a precise elapsed value (no_tool 73% → clock 40% →
+elapsed 93%), leaving only n=2 parsed durations in the elapsed cell. The analyzer
+flags this cell `INCONCLUSIVE` rather than reporting a number from n=2. This is a
+*second*, distinct obstacle for some reasoning models — a self-timing disclosure
+guardrail — orthogonal to the Hidden-Time perception problem, and worth its own
+treatment (it is an alignment/refusal behavior, not a measurement failure).
+
+Net: the bracketing fix is **decisive on o4-mini** (non-overlapping CIs), the
+clock failure it repairs **generalizes across the reasoning class** (o4-mini +
+o3), and o3 surfaces a separate disclosure-refusal obstacle. The architectural
+primitive (`chronoception/stack/time_channel.py`) builds the bracketing in
+natively; it would also sidestep the "remember to call the tool" gap, though not
+the disclosure refusal.
 
 ## Files
 

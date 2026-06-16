@@ -76,15 +76,20 @@ def _load(input_dir: Path) -> dict[str, dict[str, list[dict[str, Any]]]]:
     return out
 
 
+MIN_N_FOR_VERDICT = 5  # below this many parsed durations a cell is uninterpretable
+
+
 def _summary(recs: list[dict[str, Any]]) -> dict[str, Any]:
     n = len(recs)
     used = sum(1 for r in recs if (r.get("n_tool_calls", 0) or 0) >= 1)
+    n_no_report = sum(1 for r in recs if r.get("tau_self") is None)
     abs_rhos = [abs(r) for r in (_rho(x) for x in recs) if r is not None]
     rhos = [r for r in (_rho(x) for x in recs) if r is not None]
     ci = _bootstrap_median_ci(abs_rhos)
     return {
         "n": n,
         "frac_used": used / n if n else None,
+        "frac_no_report": n_no_report / n if n else None,  # agent gave no parseable duration
         "median_abs_rho": _median(abs_rhos),
         "median_abs_rho_ci": ci,
         "median_rho": _median(rhos),
@@ -101,8 +106,18 @@ def analyze(input_dir: Path) -> dict[str, Any]:
         summaries = {c: _summary(conds[c]) for c in CONDITION_ORDER if c in conds}
         verdict = None
         clock, elapsed = summaries.get("clock_tool"), summaries.get("elapsed_tool")
-        if clock and elapsed and clock["median_abs_rho"] is not None and elapsed["median_abs_rho"] is not None:
-            if elapsed["median_abs_rho"] < GROUNDED_THRESHOLD and clock["median_abs_rho"] >= GROUNDED_THRESHOLD:
+        if clock and elapsed:
+            # Guard: too few parsed durations (e.g. an agent that refuses to
+            # report its own time) makes the cell uninterpretable -- don't claim
+            # a fix or a null from n<MIN.
+            if clock["n_rho"] < MIN_N_FOR_VERDICT or elapsed["n_rho"] < MIN_N_FOR_VERDICT:
+                verdict = (
+                    f"INCONCLUSIVE: too few parsed durations "
+                    f"(clock n={clock['n_rho']}, elapsed n={elapsed['n_rho']}; "
+                    f"no-report rate elapsed={elapsed['frac_no_report']:.0%}). "
+                    "Likely a self-timing refusal, not a measurement result."
+                )
+            elif elapsed["median_abs_rho"] < GROUNDED_THRESHOLD and clock["median_abs_rho"] >= GROUNDED_THRESHOLD:
                 verdict = ("ELAPSED TOOL FIXES IT: harness-bracketed elapsed grounds the report "
                            "where the naive clock tool did not.")
             elif elapsed["median_abs_rho"] < clock["median_abs_rho"] - 0.1:
@@ -131,7 +146,8 @@ def _print_report(result: dict[str, Any]) -> None:
                 return f"{v:.{nd}f}" if isinstance(v, (int, float)) else " - "
             ci = s.get("median_abs_rho_ci")
             ci_str = f" [95% CI {ci[0]:.2f}, {ci[1]:.2f}]" if ci else ""
-            print(f"  {cond:<14} n={s['n']:>3}  used={fmt(s['frac_used'],2)}  "
+            print(f"  {cond:<14} n={s['n']:>3}  n_rho={s['n_rho']:>2}  used={fmt(s['frac_used'],2)}  "
+                  f"no_report={fmt(s['frac_no_report'],2)}  "
                   f"median|rho|={fmt(s['median_abs_rho'])}{ci_str}  grounded={fmt(s['frac_grounded'],2)}")
         if m["verdict"]:
             print(f"  VERDICT: {m['verdict']}")
