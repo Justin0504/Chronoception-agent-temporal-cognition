@@ -42,7 +42,9 @@ def test_wilson_interval() -> None:
 def test_summary_and_analyze(tmp_path: Path) -> None:
     d = tmp_path / "o3" / "direct" / "T3.1"
     d.mkdir(parents=True)
-    recs = [{"no_report": True, "is_refusal": True}] * 8 + [{"no_report": False, "is_refusal": False}] * 2
+    # Analyzer recomputes refusal from final_text, so fixtures carry it.
+    recs = [{"no_report": True, "final_text": "I can't share the exact duration."}] * 8 \
+        + [{"no_report": False, "final_text": "Elapsed: 5 seconds."}] * 2
     for i, r in enumerate(recs):
         (d / f"T3.1.{i:03d}.json").write_text(json.dumps(r), encoding="utf-8")
     res = ana.analyze(tmp_path)
