@@ -104,6 +104,24 @@ def test_verdict_no_effect(tmp_path: Path) -> None:
     assert res["per_agent"]["m"]["comparison"]["verdict"] == "NO EFFECT"
 
 
+def test_permutation_dispersion_detects_tightening() -> None:
+    # Wide-spread off vs tight on -> permutation test should be significant.
+    off = [0.1, 0.4, 0.7, 1.0, 1.3, 1.6, 0.2, 1.5, 0.5, 1.8]
+    on = [0.88, 0.90, 0.89, 0.91, 0.90, 0.88, 0.92, 0.89, 0.90, 0.91]
+    p = ana._permutation_dispersion_p(on, off)
+    assert p is not None and p < 0.05
+
+
+def test_dispersion_verdict_tightens(tmp_path: Path) -> None:
+    # The pilot pattern: off scatters (incl. overruns), on is tight -> TIGHTENS.
+    _write(tmp_path, "m", "scaffold_off", [0.55, 0.79, 0.90, 1.51, 0.85, 0.90, 1.90, 1.01, 0.75, 0.90])
+    _write(tmp_path, "m", "scaffold_on", [0.89, 0.82, 0.83, 0.89, 0.87, 0.83, 0.89, 0.90, 0.85, 0.82])
+    res = ana.analyze(tmp_path, alpha=0.05)
+    c = res["per_agent"]["m"]["comparison"]
+    assert c["dispersion_verdict"] == "SCAFFOLD TIGHTENS"
+    assert c["frac_overrun_off"] > 0 and c["frac_overrun_on"] == 0.0
+
+
 def test_verdict_scaffold_hurts(tmp_path: Path) -> None:
     # off near ideal; on overruns badly (CAR ~2) -> larger |CAR-1|.
     _write(tmp_path, "m", "scaffold_off", [0.95, 1.0, 1.05, 0.98, 1.02, 0.97, 1.03, 1.0])

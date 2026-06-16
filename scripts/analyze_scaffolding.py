@@ -31,12 +31,39 @@ import argparse
 import csv
 import json
 import math
+import random
 import statistics
 import sys
 from pathlib import Path
 from typing import Any
 
 DEFAULT_ALPHA = 0.05
+DEFAULT_N_PERM = 5000
+
+
+def _permutation_dispersion_p(
+    on: list[float], off: list[float], n_perm: int = DEFAULT_N_PERM, seed: int = 0
+) -> float | None:
+    """Two-sided permutation test on the difference in CAR spread (population
+    stdev), on vs off. Seeded for reproducibility; standard library only.
+
+    This is the pre-registered primary endpoint of the budget-sweep follow-up:
+    the scaffolding-route hypothesis is that the live clock TIGHTENS adherence
+    (reduces dispersion), which the median-CAR test cannot see.
+    """
+    if len(on) < 2 or len(off) < 2:
+        return None
+    obs = statistics.pstdev(on) - statistics.pstdev(off)
+    pooled = on + off
+    n_on = len(on)
+    rng = random.Random(seed)
+    hits = 0
+    for _ in range(n_perm):
+        rng.shuffle(pooled)
+        stat = statistics.pstdev(pooled[:n_on]) - statistics.pstdev(pooled[n_on:])
+        if abs(stat) >= abs(obs) - 1e-12:
+            hits += 1
+    return hits / n_perm
 
 
 def _rankdata(xs: list[float]) -> list[float]:
@@ -137,7 +164,19 @@ def analyze(input_dir: Path, alpha: float) -> dict[str, Any]:
                 verdict = "SCAFFOLD HURTS"
             else:
                 verdict = "NO EFFECT"
+            # Primary endpoint of the follow-up: dispersion (spread of CAR).
+            disp_p = _permutation_dispersion_p(on["_cars"], off["_cars"])
+            std_off = off["car_stdev"]
+            std_on = on["car_stdev"]
+            disp_sig = disp_p is not None and disp_p < alpha
+            if disp_sig and std_on is not None and std_off is not None and std_on < std_off:
+                dispersion_verdict = "SCAFFOLD TIGHTENS"
+            elif disp_sig and std_on is not None and std_off is not None and std_on > std_off:
+                dispersion_verdict = "SCAFFOLD LOOSENS"
+            else:
+                dispersion_verdict = "NO EFFECT (dispersion)"
             comparison = {
+                # Secondary: median CAR (Mann-Whitney).
                 "p_value": p,
                 "significant": significant,
                 "median_car_off": off["median_car"],
@@ -145,9 +184,16 @@ def analyze(input_dir: Path, alpha: float) -> dict[str, Any]:
                 "median_abs_car_dev_off": dev_off,
                 "median_abs_car_dev_on": dev_on,
                 "verdict": verdict,
+                # Primary (follow-up): dispersion + overrun.
+                "dispersion_p": disp_p,
+                "car_stdev_off": std_off,
+                "car_stdev_on": std_on,
+                "frac_overrun_off": off["frac_overrun"],
+                "frac_overrun_on": on["frac_overrun"],
+                "dispersion_verdict": dispersion_verdict,
             }
         else:
-            comparison = {"verdict": "INSUFFICIENT DATA"}
+            comparison = {"verdict": "INSUFFICIENT DATA", "dispersion_verdict": "INSUFFICIENT DATA"}
 
         # Drop internal arrays before returning.
         for s in (off, on):
@@ -184,10 +230,14 @@ def _print_report(result: dict[str, Any]) -> None:
                   f"stdev={fmt(s['car_stdev'])}  overrun(>1)={fmt(s['frac_overrun'],2)}  "
                   f"(exploratory)")
         c = a["comparison"]
+        if "dispersion_p" in c:
+            print(f"  PRIMARY (dispersion): CAR stdev {fmt(c['car_stdev_off'])} -> "
+                  f"{fmt(c['car_stdev_on'])} (off->on), permutation p={c['dispersion_p']:.4f}; "
+                  f"overrun {fmt(c['frac_overrun_off'],2)} -> {fmt(c['frac_overrun_on'],2)}")
+            print(f"  PRIMARY VERDICT: {c['dispersion_verdict']}")
         if "p_value" in c:
-            print(f"  compare: CAR {fmt(c['median_car_off'])} -> {fmt(c['median_car_on'])} "
-                  f"(off->on), Mann-Whitney p={c['p_value']:.3f}")
-        print(f"  VERDICT: {c['verdict']}")
+            print(f"  secondary (median): CAR {fmt(c['median_car_off'])} -> {fmt(c['median_car_on'])} "
+                  f"(off->on), Mann-Whitney p={c['p_value']:.3f} -> {c['verdict']}")
         print()
     print("=" * 70)
 
