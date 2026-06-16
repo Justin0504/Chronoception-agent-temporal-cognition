@@ -105,7 +105,7 @@ test the "stops early" direction. **Pre-registered follow-up**: sweep B over
 overrun rate as *primary* endpoints (a Levene / Brown-Forsythe test on CAR
 spread), plus a reasoning model for the model-class contrast.
 
-## Budget-sweep follow-up (2026-06, gpt-4o-mini + o4-mini, B ∈ {20,60,120}s, n=10)
+## Budget-sweep follow-up (2026-06, gpt-4o-mini + o4-mini + gpt-4o, B ∈ {20,60,120}s, n=10)
 
 The follow-up makes CAR **dispersion** (seeded permutation test) and **overrun
 rate** the primary endpoints, sweeps three budgets, and adds a reasoning model.
@@ -144,11 +144,32 @@ endpoints carry the signal instead. Overrun rate is the cleanest single metric.
    done and the scaffold cannot make it keep going. Scaffolding installs "don't
    blow the deadline," not "fill the budget."
 
-Net: the scaffolding route's first defensible claim is **deadline-overrun
-elimination**, robust across two model classes and a 6× budget range — a concrete
-constructive win over Paper 1's negative baselines, with clearly stated limits.
+**A third model splits the action axis into two opposite failures.** Adding
+gpt-4o (n=10, same sweep) reveals that the native failure is not always overrun.
+gpt-4o never overruns; it severely *under*-uses, stopping earlier as the budget
+grows (median CAR 0.48 / 0.12 / 0.06 at B=20/60/120, 0% overrun throughout) — and
+the live clock makes it stop *even earlier* (on-clock CAR 0.21 / 0.05 / 0.04), not
+later. Telling an under-user "you have plenty of time left" does not make it keep
+working.
 
-Data: `scaffolding-sweep/b{20,60,120}/` (+ per-budget `car.csv`).
+So the action axis has two opposite failure modes, and scaffolding addresses only
+one:
+
+| Native mode | Models | Scaffold effect |
+|---|---|---|
+| **overrun** (CAR > 1) | gpt-4o-mini (all B); o4-mini (small B) | **eliminated** (→ 0% overrun) |
+| **under-use** (CAR ≪ 1) | gpt-4o (all B); o4-mini (large B) | **not fixed** (clock does not raise CAR; for gpt-4o it lowers it) |
+
+Net: the scaffolding route's defensible claim is **deadline-overrun elimination**
+for models that overrun — robust across a 6× budget range with overrun-rate CIs
+that exclude the null after intervention. It does **not** install
+budget-*filling*: under-use is an action-axis "willingness to keep working" gap
+that a pushed clock (information) does not close, consistent with Paper 1's claim
+that the action axis cannot be moved by information alone. The two-model picture
+(overrun-only) overstated the route's reach; the third model corrects it.
+
+Data: `scaffolding-sweep/b{20,60,120}/` (gpt-4o-mini, o4-mini, gpt-4o;
+per-budget `car.csv`). Median CAR and overrun rate carry 95% bootstrap CIs.
 
 ## Next steps if the MVP shows an effect
 
