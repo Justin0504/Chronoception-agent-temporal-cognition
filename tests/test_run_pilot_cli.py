@@ -6,7 +6,9 @@ Use the echo backend so the tests do not depend on real model API keys.
 from __future__ import annotations
 
 import json
+import os
 import sys
+import time
 from pathlib import Path
 
 import pytest
@@ -102,10 +104,19 @@ def test_force_overwrites_existing(tmp_path: Path) -> None:
     ]
     run_pilot.main(base_args)
     files_first = sorted(tmp_path.rglob("*.json"))
+    # Backdate the freshly written files so the post-force mtime is reliably
+    # greater regardless of filesystem mtime resolution (the echo backend writes
+    # so fast that two consecutive runs can land in the same mtime tick on
+    # Windows, which made the naive mtime comparison flaky). If --force fails to
+    # rewrite, the mtime stays backdated and the assertion still catches it.
+    backdated_ns = time.time_ns() - 10_000_000_000  # 10s in the past
+    for p in files_first:
+        os.utime(p, ns=(backdated_ns, backdated_ns))
     mtimes_first = {p: p.stat().st_mtime_ns for p in files_first}
     run_pilot.main([*base_args, "--force"])
     mtimes_second = {p: p.stat().st_mtime_ns for p in sorted(tmp_path.rglob("*.json"))}
-    assert any(mtimes_second[p] > mtimes_first[p] for p in mtimes_first)
+    assert files_first  # sanity: something was written
+    assert all(mtimes_second[p] > mtimes_first[p] for p in mtimes_first)
 
 
 def test_unknown_capability_rejected(tmp_path: Path) -> None:
