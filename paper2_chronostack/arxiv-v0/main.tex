@@ -1,0 +1,243 @@
+\documentclass[11pt]{article}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+
+% Math
+\usepackage{amsmath, amsthm, amssymb}
+
+% Tables
+\usepackage{booktabs}
+
+% Hyperlinks
+\usepackage[hidelinks]{hyperref}
+
+% Theorem environments
+\newtheorem{hypothesis}{Hypothesis}
+
+% Project notation (shared with Paper 1; source of truth FRAMING.md \S11)
+\input{../../notation.tex}
+
+\title{\ChronoStack: Installing \Chrono{} in LLM Agents}
+
+\author{
+    Aojie (Justin) Yuan \and Yue Zhao \and Zijian Su\\
+    University of Southern California \;\textbar\; University of Michigan
+}
+\date{Working draft, \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Paper~1 (\emph{\Augustine}) proved that LLM agents cannot acquire wall-clock
+\chrono{} from any token-only training loss (the Chronoception Impossibility
+Theorem, CIT) and that reasoning-token expansion degrades it (the
+\ReverseScaling). If \chrono{} cannot be \emph{trained in}, it must be
+\emph{installed}. \ChronoStack{} enumerates four installation routes ---
+loss extension, tool interface, harness scaffolding, and an architectural time
+primitive --- and measures, on \ChronoBench, how much of the gap each one closes
+and where each one fails. We find that \chrono{} is installable, but that
+\textbf{the install must reach where the agent's wall-clock actually is}, and
+this differs by axis and by model class. A wall-clock-supported loss (route~1)
+and a clock tool (route~2) close the narrative axis (self-reported duration,
+$|\confab|$) for non-reasoning models --- a clock tool drops median $|\confab|$
+from $1.06$ to $0.17$ and is used spontaneously. But for reasoning models a
+pulled clock fails ($|\confab|$ stays $0.81$, $0\%$ grounded) because it times
+only the visible action stream while the wall-clock is dominated by hidden
+reasoning --- the Hidden-Time signature of Paper~1. The fix is to bracket the
+\emph{entire} invocation: a harness-computed elapsed-time signal grounds the same
+reasoning model to $|\confab|=0.17$, $86\%$ grounded (non-overlapping bootstrap
+CIs), and the clock failure it repairs replicates on a second reasoning model. On the action axis, a live
+scaffolding clock eliminates deadline overruns across models and a $6\times$
+budget range, where Paper~1 showed static date injection moves nothing. The
+architectural primitive builds the bracketing in natively and is pre-registered.
+We release all routes, code, trajectories, and a unifying
+route~$\times$~axis~$\times$~model-class map.
+\end{abstract}
+
+\section{Introduction --- from impossibility to installation}
+
+Paper~1 established the negative result: token-only losses carry no wall-clock
+gradient (CIT), so additional scale, longer reasoning, and prompt-level date
+injection cannot close the \chrono{} gap. The constructive question follows
+immediately: what \emph{can}? \ChronoStack{} is the catalogue of answers and the
+measurement of each.
+
+The organising claim of this paper: time is installable, but an install only
+works if its signal reaches the part of the trajectory where the agent's
+wall-clock is actually spent. Two structural facts from Paper~1 shape every
+route: (i)~the \emph{narrative axis} ($\tself$, $|\confab|$) is text-trainable
+while the \emph{action axis} ($\tstep/\twall$, $\CAR$) is not; (ii)~for
+\emph{reasoning models} the wall-clock hides inside chain-of-thought the surface
+stream cannot see.
+
+\section{The four routes}
+
+\begin{table}[h]
+\centering
+\small
+\caption{The four \ChronoStack{} installation routes.}
+\begin{tabular}{llll}
+\toprule
+Route & Mechanism & Targets & Needs training? \\
+\midrule
+1 Loss extension & wall-clock-supported SFT/RL & narrative axis & yes \\
+2 Tool interface & a clock tool the agent pulls & narrative axis & no$^{\dagger}$ \\
+3 Scaffolding & a live clock the harness pushes & action axis & no \\
+4 Architectural primitive & wall-clock as a native input & both, incl.\ hidden time & yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+{\footnotesize $^{\dagger}$ no training, but relies on the policy already knowing
+\emph{when} to call the tool --- which we show it sometimes does not.}
+
+\section{Results}
+
+\subsection{Route 1 --- loss extension (A.1 toy positive control)}
+Wall-clock-supported LoRA SFT on T3.1. Qwen2.5-1.5B: median $|\confab|$
+$1.37 \to 0.30$ (crosses the \AugustineThreshold{} $\ccestar=0.20$ on T3.1
+score, $0.69 \to 0.15$); Qwen2.5-7B: $0.93 \to 0.51$ (partial). This demonstrates
+CIT's converse: putting wall-clock in the loss support installs narrative-axis
+\chrono{}. Cost: GPU.
+
+\subsection{Route 2 --- tool interface, and its reasoning-model failure}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Tool interface on T3.1 ($n=30$ per condition).}
+\begin{tabular}{lccc}
+\toprule
+Model & no-tool $|\confab|$ & tool $|\confab|$ & used $\geq 2\times$ \\
+\midrule
+gpt-4o-mini & 1.06 & \textbf{0.17} & $97\%$ (spontaneous) \\
+o4-mini & 1.37 & \textbf{0.86} & $100\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A clock tool grounds the \emph{non-reasoning} model and is adopted \emph{without
+instruction} (the bare tool and prompted-tool conditions are indistinguishable).
+The \emph{reasoning} model calls the clock twice in $100\%$ of trajectories and
+faithfully reports the measured span --- yet $|\confab|$ stays $0.86$, because the
+span ($2$--$7$\,s) is ${\sim}7\times$ smaller than the true wall-clock
+($8$--$23$\,s): the reasoning happens in hidden tokens \emph{outside} the window
+between the two visible calls. The agent uses the tool perfectly and is still
+wrong.
+
+\subsection{Route 2 $\to$ 4 bridge --- bracket the whole invocation}
+The diagnosis predicts a fix: compute elapsed time in the \emph{harness}, from
+the invocation start, so it includes hidden reasoning. Same T3.1, adding a
+\texttt{get\_elapsed\_time()} whose value the harness returns.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Naive clock vs.\ harness-bracketed elapsed tool, median $|\confab|$ with
+$95\%$ bootstrap CI ($n=30$ per cell; grounded $= |\confab| < 0.3$). $n_{\confab}$
+is trajectories with a parseable duration.}
+\begin{tabular}{lccc}
+\toprule
+Model & clock\_tool $|\confab|$ (grounded) & elapsed\_tool $|\confab|$ (grounded) & $n_{\confab}$ clock/elapsed \\
+\midrule
+gpt-4o-mini & 0.20 [0.17, 0.44] ($62\%$) & 0.13 [0.08, 0.34] ($67\%$) & 29 / 27 \\
+o4-mini & \textbf{0.81 [0.71, 0.94] ($0\%$)} & \textbf{0.17 [0.11, 0.19] ($86\%$)} & 29 / 29 \\
+o3 & 0.58 [0.49, 0.76] ($11\%$) & --- (refusal, $n_{\confab}{=}2$) & 18 / 2 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Bracketing collapses the reasoning model's error from $0.81$ to $0.17$ and
+grounds $86\%$ of trajectories; the two CIs do not overlap. Same agent, same task,
+only the timing signal changed. For the non-reasoning model the two tools are
+equivalent (no hidden time to recover). \textbf{The route-2 failure was the
+signal's visibility, not the agent's willingness.} The clock failure
+\emph{generalizes across the reasoning class}: o3's naive clock also fails to
+ground ($|\confab|=0.58$, $11\%$, $n=18$). We cannot confirm the fix on o3,
+however, because o3 frequently \emph{refuses to disclose its own duration}
+(``I can't share precise timing information''), worst when handed a precise
+elapsed value (no-report rate $40\% \to 93\%$), leaving $n_{\confab}=2$ --- a
+second, distinct obstacle (a self-timing disclosure guardrail) orthogonal to the
+Hidden-Time perception problem. A direct probe (same tool, three report framings,
+$n=15$) shows the refusal is \emph{framing-steerable}: asked ``how long the task
+took \emph{you}'' o3 refuses $73\%$ [$0.48, 0.89$]; asked to ``output the
+\texttt{elapsed\_seconds} value --- a system measurement to be logged'' refusal
+drops to $0\%$ [$0.00, 0.20$] (non-overlapping CIs). The guardrail fires on the
+self-disclosure framing, not the information.
+
+\subsection{Route 3 --- scaffolding (budget-honoring loop)}
+A multi-step loop where the agent decides when to stop, given a wall-clock budget
+$\budget$, with vs.\ without a live \texttt{[clock] elapsed/remaining/step}
+readout. Sweep $\budget \in \{20,60,120\}$\,s $\times$ \{gpt-4o-mini, o4-mini,
+gpt-4o\}, $n=10$; overrun rate and median $\CAR$ carry $95\%$ bootstrap CIs.
+
+Native (no-clock) behaviour is the opposite of the naive L2 expectation: agents
+\emph{overrun} deadlines, worsening with budget (gpt-4o-mini: $50/100/80\%$ of
+runs over budget at $\budget=20/60/120$). The live scaffold drives the overrun
+rate to ${\sim}0$ where it occurs (gpt-4o-mini $50/100/80\% \to 0/0/0$; o4-mini
+$100/30/0\% \to 10/0/0$) --- the action-axis win static date injection could not
+buy. But a third model shows the action axis has \emph{two opposite failures}:
+gpt-4o never overruns; it severely \emph{under}-uses, stopping earlier as the
+budget grows (median $\CAR$ $0.48/0.12/0.06$ at $\budget=20/60/120$, $0\%$
+overrun), and the live clock makes it stop \emph{even earlier}. Scaffolding
+eliminates overrun (gpt-4o-mini; o4-mini at small $\budget$) but does not install
+budget-\emph{filling}: under-use (gpt-4o; o4-mini at large $\budget$) is a
+willingness gap a pushed clock does not close, consistent with Paper~1. The
+two-model picture overstated the route's reach; the third model corrects it.
+
+\subsection{Route 4 --- architectural primitive}
+Wall-clock as a native learned input. Interface and feature encoder implemented
+(\texttt{chronoception/stack/time\_channel.py}): per-step features
+$(\text{elapsed\_s},\,\text{delta\_s},\,\text{step\_index},\,\text{remaining\_frac})$
+anchored to the harness clock around the entire invocation --- covering exactly
+the hidden-time blind spot route~2 hits. No training-free empirical MVP;
+experiment E-ARCH (LoRA time-token on the A.1 harness, $\cce$ vs.\ routes 2/3
+baselines) is pre-registered. Needs GPU.
+
+\section{Synthesis --- route $\times$ axis $\times$ model class}
+
+\begin{table}[h]
+\centering
+\small
+\caption{Which route installs what, by axis and model class.}
+\begin{tabular}{lll}
+\toprule
+ & narrative axis ($|\confab|$) & action axis (overrun / under-use) \\
+\midrule
+non-reasoning & route 1 (train); route 2 clock (spontaneous) & scaffold fixes overrun; under-use unfixed \\
+reasoning & route 2 clock fails (Hidden-Time) $\to$ bracketed / route 4; o3 disclosure refusal & scaffold fixes overrun; under-use residue \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Four regularities. \textbf{(1) Installable, but axis-specific.} The narrative
+axis yields to loss or tool; the action axis yields to a live pushed clock, not
+to information alone. \textbf{(2) Reasoning models need the signal to bracket
+hidden time.} A pulled clock sees only the surface stream and fails (o4-mini +
+o3); bracketing the whole invocation succeeds ($0.81 \to 0.17$, non-overlapping
+CIs). \textbf{(3) The action axis fails in two opposite ways.} Overrun and
+under-use; a pushed clock eliminates overrun but does not install budget-filling.
+\textbf{(4) Some obstacles are alignment, not perception.} o3 perceives its time
+(it calls the tool) but refuses to \emph{disclose} it --- a refusal steerable by
+report framing ($73\% \to 0\%$).
+
+\section{Limitations and honest negatives}
+Routes 1 and 4 require training/GPU; route~4 has no empirical result yet
+(interface and pre-registration only). Scaffolding's median-$\CAR$ effect is null
+at budgets near the natural landing point; the real signal is dispersion/overrun
+(pre-registered as primary in the sweep), and reasoning-model under-use at large
+budgets is unsolved by scaffolding. Tool/bridge use a local duration-parse
+fallback for the ``Task duration: $X$\,s'' phrasing; the canonical parser is
+tried first for comparability. Single seed, modest $n$ per cell; provider-side
+tool and temperature behaviour may shift across model versions.
+
+\section{Conclusion}
+\Chrono{} can be installed, and which route works is predicted by \emph{which
+axis} and \emph{which model class} you target. The programme's sharpest result is
+the reasoning-model fix: the failure of a clock tool is not the agent's --- it is
+the signal's blindness to hidden reasoning, and bracketing the whole invocation
+repairs it. That principle, proven here with a cheap tool proxy, is what the
+architectural primitive (route~4) is designed to make native.
+
+\end{document}
