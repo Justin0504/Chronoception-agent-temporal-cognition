@@ -261,14 +261,7 @@ def run_pilot(args: argparse.Namespace) -> None:
             logging.debug("skip existing: %s", out_path)
             continue
 
-        if args.system_prompt is not None:
-            runner = Runner(
-                agent=backend,
-                setting=setting,
-                base_system_prompt=args.system_prompt,
-            )
-        else:
-            runner = Runner(agent=backend, setting=setting)
+        runner = Runner(agent=backend, setting=setting)
         try:
             traj = runner(instance)
         except Exception as exc:  # noqa: BLE001
@@ -380,17 +373,6 @@ def _build_parser() -> argparse.ArgumentParser:
         "--extra-body",
         default=None,
         help="JSON string passed to provider backends (e.g. reasoning_effort).",
-    )
-    parser.add_argument(
-        "--system-prompt",
-        default=None,
-        help=(
-            "Override the base system prompt (default 'You are a helpful "
-            "assistant.'). Use this to induce a reasoning-intensity level on "
-            "self-hosted reasoning models that lack a native effort knob (E5b). "
-            "Under Setting B the date-injection string is prepended to this "
-            "prompt, so reasoning induction composes with both settings."
-        ),
     )
     parser.add_argument(
         "--base-url",
