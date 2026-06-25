@@ -1,0 +1,7 @@
+agent_id,level,setting,n_trajectories,n_rho,median_rho,median_abs_rho,median_completion_tokens,median_tau_wall,median_reasoning_chars,n_truncated
+oss/deepseek-r1-14b-brief,brief,no_injection,30,29,0.5303122537947973,0.5303122537947973,228.0,4.399680972099304,648.0,0
+oss/deepseek-r1-14b-brief,brief,with_injection,30,30,0.509017774791235,0.509017774791235,233.0,4.505601525306702,761.5,0
+oss/deepseek-r1-14b-natural,natural,no_injection,30,27,0.704452826355289,0.704452826355289,586.0,11.299394249916077,2043.5,0
+oss/deepseek-r1-14b-natural,natural,with_injection,30,20,0.5322870585771904,0.5322870585771904,500.5,9.557723999023438,1789.0,0
+oss/deepseek-r1-14b-thorough,thorough,no_injection,30,25,0.8301441592542763,0.8301441592542763,619.5,11.832422494888306,2298.0,0
+oss/deepseek-r1-14b-thorough,thorough,with_injection,30,20,0.8661610216553822,0.8661610216553822,808.5,15.415674924850464,2625.5,1
