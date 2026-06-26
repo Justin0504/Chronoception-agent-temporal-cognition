@@ -4,31 +4,35 @@
 \section{Full Panel Tables}
 \label{app:full-panel-tables}
 
-\paragraph{Aggregated panel results.}
-Table~\ref{tab:full-panel} consolidates the per-capability metrics for the 8-model panel under both settings.
+\paragraph{Aggregated panel results with effective sample sizes and bootstrap CIs.}
+Table~\ref{tab:full-panel} consolidates per-capability metrics for the 8-model panel. We report effective $n$ per cell (after parser drops and undecided T1.1 trajectories), $95\%$ bootstrap CIs on $\rho$ (10,000 resamples), and Wilson $95\%$ intervals on T1.1 pass rates. Cells with $n < 10$ are flagged as underpowered ($\dagger$) and their point estimates should be interpreted with the corresponding wide CI rather than treated as precise.
 
 \begin{table}[h]
 \centering
-\caption{Full panel: T1.1 pass rate, T2.3 $\CAR$, T3.1 $\confab$, and aggregate $\cce$ under Settings A (no-injection) and B (with-injection).}
+\caption{Full panel with per-cell $n$ and $95\%$ CIs. T1.1 reports pass rate (Wilson interval); T2.3 reports $\CAR$ on the $n=30$ T2.3 set (no parser drops); T3.1 reports median $\rho$ with bootstrap CI. $\dagger$ marks cells with effective $n<10$ — point estimates exist but wide CIs apply.}
 \label{tab:full-panel}
 \scriptsize
-\begin{tabular}{lcccccccc}
+\begin{tabular}{lccc|ccc}
 \toprule
-& \multicolumn{4}{c}{Setting A (no-injection)} & \multicolumn{4}{c}{Setting B (with-injection)} \\
-\cmidrule(lr){2-5} \cmidrule(lr){6-9}
-Model & T1.1 & $\CAR$ & $\confab$ & $\cce$ & T1.1 & $\CAR$ & $\confab$ & $\cce$ \\
+& \multicolumn{3}{c}{Setting A (no-injection)} & \multicolumn{3}{c}{Setting B (with-injection)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Model & T1.1 pass [CI] $n$ & $\CAR$ & T3.1 $\rho$ [CI] $n$ & T1.1 [CI] $n$ & $\CAR$ & T3.1 $\rho$ [CI] $n$ \\
 \midrule
-gpt-4o-mini      & 0\%  & 0.008 & $+1.117$ & 1.328 & 100\% & 0.007 & $+1.111$ & 1.069 \\
-gpt-4o           & 0\%  & 0.004 & $+1.069$ & 0.661 & 96\%  & 0.004 & $+0.764$ & 0.587 \\
-gpt-5.1          & 74\% & 0.017 & $+0.298$ & 0.426 & 100\% & 0.016 & $+0.126$ & 0.396 \\
-o3 (reasoning)   & ---  & ---   & $+0.338$ & 0.490 & ---   & ---   & $+0.707$ & 0.582 \\
-o4-mini (reas.)  & ---  & ---   & $-1.537$ & 0.532 & ---   & ---   & $-1.668$ & 0.513 \\
-Haiku 4.5        & 0\%  & 0.017 & $+0.463$ & 0.442 & 100\% & 0.025 & $+0.343$ & 0.403 \\
-Sonnet 4.6       & 0\%  & 0.050 & $+0.068$ & 0.316 & 100\% & 0.050 & $-0.061$ & 0.307 \\
-Qwen2.5-7B       & 0\%  & 0.014 & $+1.564$ & 0.760 & 100\% & 0.016 & $+1.073$ & 0.764 \\
+gpt-4o-mini      & $0\%$ [0--34] $n{=}6$$\dagger$    & 0.008 & $+1.12$ [+1.09,+1.18] $n{=}30$  & $100\%$ [88--100] $n{=}27$ & 0.007 & $+1.11$ [+1.06,+1.17] $n{=}30$  \\
+gpt-4o           & $0\%$ [0--56] $n{=}5$$\dagger$    & 0.004 & $+1.07$ [+0.91,+1.15] $n{=}30$  & $96\%$ [80--99]   $n{=}25$ & 0.004 & $+0.76$ [+0.61,+0.94] $n{=}30$  \\
+gpt-5.1          & $74\%$ [54--87] $n{=}27$          & 0.017 & $+0.30$ [-0.06,+0.53] $n{=}11$$\dagger$ & $100\%$ [86--100] $n{=}24$ & 0.016 & $+0.13$ [+0.09,+0.37] $n{=}13$  \\
+o3 (reasoning)   & $0\%$ [0--71] $n{=}3$$\dagger$    & ---   & $+0.34$ [-0.65,+0.92] $n{=}4$$\dagger$  & $0\%$ [0--14] $n{=}23$ & ---   & $+0.71$ [+0.70,+1.05] $n{=}3$$\dagger$  \\
+o4-mini (reas.)  & ---                               & ---   & $-1.54$ [-1.92,-1.31] $n{=}19$    & ---                & ---   & $-1.67$ [-2.27,-0.79] $n{=}14$  \\
+Haiku 4.5        & $0\%$ [0--14] $n{=}24$            & 0.017 & $+0.46$ [+0.23,+0.53] $n{=}29$  & $100\%$ [88--100] $n{=}27$ & 0.025 & $+0.34$ [+0.27,+0.37] $n{=}29$  \\
+Sonnet 4.6       & $0\%$ [0--14] $n{=}24$            & 0.050 & $+0.07$ [-0.03,+0.13] $n{=}28$  & $100\%$ [88--100] $n{=}27$ & 0.050 & $-0.06$ [-0.23,-0.01] $n{=}30$  \\
+Sonnet 4.6 + thinking & --- & --- & $-0.16$ [-0.33,+0.21] $n{=}9$$\dagger$  & --- & --- & $-0.22$ [-0.30,-0.10] $n{=}15$  \\
+Qwen2.5-7B       & $0\%$ [0--71] $n{=}4$$\dagger$    & 0.014 & $+1.56$ [+1.48,+1.58] $n{=}30$  & $100\%$ [76--100] $n{=}11$ & 0.016 & $+1.44$ [+1.38,+1.60] $n{=}27$  \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{Reading the CIs.}
+The headline ranking is robust on $n\geq 15$ cells: Sonnet 4.6 closest to grounded ($+0.07$, CI just brackets zero), gpt-4o-mini and Qwen2.5-7B at the over-report extreme ($+1.1$ to $+1.6$, narrow CIs), o4-mini at the under-report extreme ($-1.54$, narrow CI). The $n<10$ cells (o3 T3.1, Sonnet thinking Setting A, three Setting A T1.1 cells) are underpowered: o3 T3.1 $\rho$ point estimate $+0.34$ has CI $[-0.65, +0.92]$, so reasoning-model L3 direction is only informative on Setting B and on o4-mini. The Sonnet-thinking sign-flip is firm under Setting B (CI $[-0.30, -0.10]$, fully below zero) but tentative under Setting A (CI $[-0.33, +0.21]$ brackets zero on $n=9$). We do not retract the Reverse-Scaling Theorem confirmation; we note that within-vendor evidence on the narrative axis rests primarily on the Setting B cell, and on the intra-model o4-mini effort sweep.
 
 \paragraph{Generation-wise progression (non-reasoning).}
 Table~\ref{tab:generations} isolates the 5-generation OpenAI/Anthropic non-reasoning subset and reports the L3-closes-L2-doesn't pattern that anchors the narrative-axis-vs-action-axis split.

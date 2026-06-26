@@ -33,7 +33,7 @@ Under CIT, the policy's self-narrated duration distribution $p(\tself)$ is invar
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/reverse_scaling.pdf}
-\caption{Empirical confirmation of Theorem~\ref{thm:reverse-scaling}, intra-model and cross-model. \textbf{(a)} o4-mini at three \texttt{reasoning\_effort} levels: $|\confab|$ goes $1.23 \to 1.54 \to 1.67$. Every trajectory under-reports, the Hidden-Time signature. \textbf{(b)} Claude Sonnet 4.6 with vs.\ without extended thinking: $|\confab|$ more than doubles ($0.12 \to 0.21$), and $\confab$ flips sign from $+0.07$ (calibrated) to $-0.16$ (Hidden-Time under-report). The Augustine threshold $\ccestar = 0.20$ is shown as a dashed line; the cross-model contrast crosses below it without thinking and above it with.}
+\caption{Empirical confirmation of Theorem~\ref{thm:reverse-scaling}, intra-model and cross-model. \textbf{(a)} o4-mini at three \texttt{reasoning\_effort} levels: $|\confab|$ goes $1.23 \to 1.54 \to 1.67$. Every trajectory under-reports, the Hidden-Time signature. \textbf{(b)} Claude Sonnet 4.6 with vs.\ without extended thinking. Setting B ($n=15$): median $\rho$ shifts from $+0.07$ to $-0.22$ with 95\% bootstrap CI $[-0.30,-0.10]$ entirely below zero --- a Hidden-Time under-report sign flip. Setting A ($n=9$, underpowered): same shift point-estimates at $-0.16$ but CI $[-0.33,+0.21]$ brackets zero. The Augustine threshold $\ccestar = 0.20$ is shown as a dashed line; under Setting B the contrast crosses below it without thinking and above it with. Within-vendor narrative-axis evidence rests primarily on Setting B and on the intra-model effort sweep (panel a).}
 \label{fig:reverse-scaling}
 \end{figure}
 
