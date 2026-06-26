@@ -231,6 +231,53 @@ Dotted grid lines, very faint. Drop shadow on each icon.
 
 ---
 
+## Foundation-model logo sourcing
+
+Anywhere a figure shows a model name (`gpt-4o`, `Claude Sonnet 4.6`, `Qwen2.5-7B`,
+`DeepSeek-R1`, etc.) the camera-ready version should display the **official
+provider logo** next to or in place of the name marker — exactly the style of the
+reference plots provided. **Use only the official mark from the provider's own
+brand page or official GitHub.** Do not redraw from memory; do not use third-party
+icon packs.
+
+| Provider | Official source | What to download |
+|---|---|---|
+| **OpenAI** | <https://openai.com/brand> | "Blossom" swirl mark, SVG. Used for `gpt-4o`, `gpt-4o-mini`, `gpt-5.1`, `o3`, `o4-mini`. |
+| **Anthropic** | <https://www.anthropic.com> press / brand page; mark also on <https://github.com/anthropics> avatar | Coral burst (radiating asterisk), SVG/PNG. Used for `Claude Haiku 4.5`, `Claude Sonnet 4.6` (+ thinking). |
+| **Alibaba / Qwen** | <https://github.com/QwenLM> README + repo avatar; also on Tongyi brand page | Qwen 通义千问 mark (blue/purple flower), SVG/PNG. Used for `Qwen2.5-7B-Instruct`. |
+| **DeepSeek** | <https://www.deepseek.com> + <https://github.com/deepseek-ai> avatar | Blue whale mark, SVG/PNG. Used for `DeepSeek-R1-Distill-Qwen-14B`. |
+| **Google / Gemini** *(if added later)* | <https://about.google/brand-resource-center> | Gemini gradient sparkle, SVG. |
+| **Meta / Llama** *(if added later)* | <https://about.meta.com/brand-resources> | Llama mark, SVG. |
+
+**Verify each download** by visiting the provider's *own* domain — not a logo-
+aggregator site (logoipsum, vectorlogo.zone, etc.). The official mark is the only
+one that survives a careful reviewer eye and does not risk a trademark complaint.
+
+**Sizing in Figma**: place each logo as a 24–32 px square chip with a 4 px white
+or pastel rounded background so the mark stays legible against the bar / scatter
+fill — exactly the chip style shown in the reference plots.
+
+**Where to apply logos in this paper's figures**:
+
+| Figure | Apply official logos to |
+|---|---|
+| Figure 1 theorem_arc | Not used (conceptual diagram) |
+| Figure 2 three_times | Not used (ontology) |
+| Figure 3 chronobench_pipeline (NEW) | Panel 2 "Agent Panel" sub-cards — each sub-card shows the provider's official mark + the model list |
+| Figure 4 agentic_frontier | Not used (benchmark icons, not provider) |
+| **Figure 5 reverse_scaling** (data plot) | Add a small OpenAI mark on the o4-mini panel, Anthropic mark on the Sonnet 4.6 panel |
+| **Figure 6 calibration_catastrophe** (data plot) | Stamp the official mark on each bar — OpenAI on gpt-5.1/gpt-4o-mini/gpt-4o/o3/o4-mini; Anthropic on Sonnet 4.6 / Haiku 4.5 |
+| **Figure 7 epsilon_panel** (data plot) | Same as Figure 6, plus Qwen and DeepSeek marks for the OSS rows |
+| **Figure 8 a1_positive_control** (data plot) | Qwen mark on both base and fine-tuned bars (model is Qwen2.5-1.5B / 7B) |
+| Figure 9 p12_hcast | Stamp official mark on each scatter point per provider |
+
+For the data plots, the cleanest workflow is: regenerate the matplotlib PDF as
+usual, then open the PDF in Figma / Illustrator and overlay the logo chips on
+top of each bar / point. This keeps the underlying data plot reproducible while
+giving the camera-ready PDF the visual identity of the reference plots.
+
+---
+
 ## Figma operational hints
 
 - Frame size: aspect 16:9 → 1920 × 1080; aspect 16:5 → 1920 × 600.
