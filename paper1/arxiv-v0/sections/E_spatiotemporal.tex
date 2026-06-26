@@ -21,9 +21,13 @@ Grounded spatiotemporal cognition requires both identities:
 \]
 The Augustine Problem is the failure of the first; the \emph{Cartographic Problem} is the failure of the second. We hypothesise they fail jointly and for the same structural reason.
 
-\subsection*{E.2 Theorem 3 (SIT) — proof sketch}
+\subsection*{E.2 Theorem 3 (SIT) — assumption and proof sketch}
 
-The proof of Theorem~\ref{thm:sit} generalises CIT (Theorem~\ref{thm:cit}) directly. Neither $t(\cdot)$ nor any external metric on the environment appears in the support of token-only data; gradients are invariant to reparameterisation of either coordinate. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level: solving one does not solve the other; installing chronoception via wall-clock-supported loss does not install spatial perception unless the loss is extended along $\sworld$ separately.
+\paragraph{Assumption (token-only spatial support).}
+\label{ass:token-only-spatial}
+Strengthen Assumption~\ref{ass:token-only} to require additionally that $\mathcal{D}$ contains no field carrying a metric on the agent's environment (no file path graph, no page DOM coordinates, no distance metric on the embedding space). Pretraining and standard post-training pipelines satisfy this.
+
+\paragraph{Theorem~\ref{thm:sit} proof sketch.} The proof generalises CIT (Theorem~\ref{thm:cit}) directly. Under the strengthened assumption, neither $t(\cdot)$ nor any external metric $s(\cdot)$ on the environment appears in the support of token-only data, so $\loss$ is invariant under any pair of strictly monotone reparametrisations $(\phi_t, \phi_s)$ applied independently to wall-clock time and to the spatial coordinate. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level: solving one does not solve the other; installing chronoception via a wall-clock-supported loss does not install spatial perception unless the loss is extended along $\sworld$ separately.
 
 \subsection*{E.3 Three Spatial Laws (mirror of L1/L2/L3)}
 

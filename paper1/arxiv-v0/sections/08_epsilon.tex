@@ -7,8 +7,11 @@ We aggregate the three axes into a single scalar.
 
 \begin{definition}[Chronoceptive Calibration Error]
 \label{def:cce}
-$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis is the mean of its sub-capability failure scores normalised to $[0, 1]$ (Appendix~\ref{app:full-panel-tables}). $\cce = 0$ corresponds to a grounded agent; $\ccestar = 0.20$ is the Augustine threshold, calibrated against human introspective performance \citep{wittmann2009chronoception} at twice the human error.
+$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis-score $\mathrm{score}_{T_k}$ is the mean of the available sub-capability failure scores on that axis, normalised to $[0, 1]$ (Appendix~\ref{app:full-panel-tables}). $\cce = 0$ corresponds to a grounded agent; $\ccestar = 0.20$ is the Augustine threshold, calibrated against human introspective performance \citep{wittmann2009chronoception} at twice the human error.
 \end{definition}
+
+\paragraph{Aggregation disclosure.}
+The full benchmark defines nine sub-capabilities (T1.1--T3.3, \S\ref{sec:chronobench}). On the panel-wide pilot, axis-scores reduce to the three primary sub-capabilities for which we have full $n{=}30$ panel coverage --- T1.1 (date recall), T2.3 (clock adherence), T3.1 (retrospective duration) --- because T1.2, T1.3, T2.1, T2.2, T3.2, T3.3 are only filled for the five-generation non-reasoning slice (see Table~\ref{tab:full-panel}, App.~B). Where a sub-capability is missing for a given agent (e.g., o3 / o4-mini T1.1 on Setting~A), that sub-capability is dropped from the axis mean rather than imputed; consequently the $\cce$ point estimates in Figure~\ref{fig:epsilon-panel} are pilot-axis estimates, not full nine-cap averages. The pilot-axis estimate is a lower bound on the full-nine-cap $\cce$ whenever the dropped cells exhibit comparable or worse failure (which all per-cell evidence so far supports). Per-cell $n$ and bootstrap CIs in App.~B make this aggregation auditable.
 
 \begin{figure}[h]
 \centering

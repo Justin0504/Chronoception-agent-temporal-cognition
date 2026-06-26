@@ -21,13 +21,17 @@ with $\tself$ parsed from the agent's terminal output by $\selfparser$ (Appendix
 
 Capability scaling closes L3 on the non-reasoning axis. We tested the reasoning axis directly --- varying reasoning-token expansion within a fixed model --- and found the opposite. The result is not a surprise once stated as a theorem.
 
+\paragraph{Assumption (budget-honoured reasoning).}
+\label{ass:budget-honoured}
+A reasoning-budget knob $K$ on a fixed agent is \emph{honoured} if expected wall-clock per trajectory $\mathbb{E}[\twall \mid K]$ is strictly increasing in $K$. The o4-mini \texttt{reasoning\_effort} ladder, Anthropic extended-thinking budget, and DeepSeek-R1 native CoT all satisfy this empirically (\S\ref{ssec:reverse-scaling}, App.~\ref{app:l3-detail}). A counter-example --- a budget that the model declines to spend --- does not falsify the theorem; it falls outside the assumption (\S~``E5 negative finding'' below).
+
 \begin{theorem}[Reverse-Scaling]
 \label{thm:reverse-scaling}
-Within a fixed agent under CIT regime (Theorem~\ref{thm:cit}), $|\confab|$ is monotone non-decreasing in reasoning-token expansion. Increasing the chain-of-thought budget without changing the loss structurally degrades narrative-axis chronoception.
+For a fixed agent in the token-only regime (Assumption~\ref{ass:token-only}, hence under Theorem~\ref{thm:cit}), with a budget-honoured reasoning knob $K$ (Assumption~\ref{ass:budget-honoured}), $\mathbb{E}[|\confab| \mid K]$ is monotone non-decreasing in $K$. Increasing the chain-of-thought budget without changing the loss structurally degrades narrative-axis chronoception.
 \end{theorem}
 
 \begin{proof}[Sketch]
-Under CIT, the policy's self-narrated duration distribution $p(\tself)$ is invariant to $\twall$ across the training distribution. As the reasoning budget $K$ grows, $\twall$ grows monotonically in $K$: more tokens generated, more wall-clock spent. The distribution $p(\tself)$ remains anchored to its training data. Therefore $\mathbb{E}[|\log_{10}(\tself/\twall)|]$ grows monotonically in $K$. The sign of $\confab$ flips for reasoning models because reasoning-model $\twall$ includes hidden chain-of-thought duration, while $p(\tself)$ is anchored to the surface output: $\tself/\twall \to 0$ as $K$ grows.
+Under CIT, the policy's self-narrated duration distribution $p(\tself)$ is invariant to $\twall$: no gradient signal in training ties one to the other. The inference-time distribution $p(\tself \mid K)$ inherits this invariance --- $p(\tself \mid K) = p(\tself)$ for all $K$ in the trained range. By Assumption~\ref{ass:budget-honoured}, $\twall(K)$ is strictly increasing in $K$. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in $K$ in expectation. The sign of $\confab$ flips for reasoning models because reasoning-model $\twall$ includes hidden chain-of-thought duration while $p(\tself)$ remains anchored to the surface output: $\tself/\twall \to 0$ as $K$ grows.
 \end{proof}
 
 \begin{figure}[h]

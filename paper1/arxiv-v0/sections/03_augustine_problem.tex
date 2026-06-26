@@ -15,17 +15,25 @@ for some calibration tolerance $\cce_0$. The agent's three projections of time d
 
 The question we attack first is not whether agents \emph{do} exhibit the Augustine Problem (\S\ref{sec:l2}--\ref{sec:l3} show they do) but whether any conceivable foundation-model training procedure under current practice could in principle close it. We argue: not by additional scale, not by reasoning-compute expansion, not by any post-training intervention that operates on token sequences alone.
 
+\paragraph{Assumption (token-only loss support).}
+\label{ass:token-only}
+A training procedure is in the \emph{token-only regime} if its loss
+\[
+\loss(\theta) \;=\; \mathbb{E}_{x \sim \mathcal{D}}\!\left[\,\ell\!\big(f_\theta(x_{<i}),\, x_i\big)\,\right]
+\]
+satisfies (i) $\mathcal{D}$ is a distribution over finite token sequences, with no field carrying wall-clock duration or absolute timestamp, and (ii) $\ell$ is a function of the model's output token distribution alone. Next-token cross-entropy, supervised fine-tuning, RLHF, RL with verifiable rewards on tokenized rewards, and reasoning supervision all satisfy this assumption.
+
 \begin{theorem}[Chronoception Impossibility, CIT]
 \label{thm:cit}
-Let $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}\!\left[\,\ell\!\big(f_\theta(x_{<i}), x_i\big)\,\right]$ be a training loss where $\mathcal{D}$ is a distribution over token sequences and neither $\ell$ nor $\mathcal{D}$ contains wall-clock support. Then $\nabla_\theta \loss$ contains zero gradient signal aligning $\twall$ with any internal representation of $A$. Equivalently, the resulting policy enforces no implicit identity between $\twall$ and either $\tstep$ or $\tself$.
+Let $\loss$ be a token-only loss as above. For any strictly increasing reparametrisation $\phi:\mathbb{R}_{>0}\!\to\!\mathbb{R}_{>0}$ of wall-clock time, $\loss(\theta)$ is invariant under $\twall \mapsto \phi(\twall)$ on the data manifold. Equivalently, $\nabla_\theta \loss$ carries zero gradient signal aligning $\twall$ with any internal representation of $A$, and the resulting policy enforces no implicit identity between $\twall$ and either $\tstep$ or $\tself$.
 \end{theorem}
 
 \begin{proof}[Sketch]
-$\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor is a function of the wall-clock time at which the sample was generated: tokens carry no timestamps. The gradient is therefore invariant to arbitrary reparameterisation of $\twall$ --- including the scaling that maps one second to one hour. A policy obtained from this gradient cannot distinguish one wall-clock duration from another.
+$\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor depends on the wall-clock time at which the sample was generated: tokens carry no timestamps, and $\ell$ is a function of the output distribution alone. The gradient is therefore invariant to any reparametrisation $\phi$ of $\twall$ --- including the scaling that maps one second to one hour. A policy obtained from this gradient cannot distinguish one wall-clock duration from another.
 \end{proof}
 
-\paragraph{What CIT covers.}
-The losses in current practice --- next-token cross-entropy, supervised fine-tuning, RLHF, RL with verifiable rewards, reasoning supervision --- are all functionals of token sequences alone, and therefore all satisfy CIT's assumption. The theorem does \emph{not} preclude harness-installed chronoception (the Injection Tell, \S\ref{sec:injection-tell}, is precisely this kind of installation); nor does it preclude future losses that take wall-clock as an argument (the constructive program of \textsc{ChronoStack}, Paper 2). It precludes only the inference --- which we believe is widely held but rarely defended --- that additional scale, longer reasoning, or larger context will eventually close the gap. They will not, because they do not change the loss.
+\paragraph{Scope remark.}
+CIT does not claim there exists \emph{no possible} representation of time inside the policy. It claims that any such representation is not produced \emph{by the loss}: identical-loss runs on time-shuffled vs.\ time-aligned data converge to indistinguishable optima. Three corollaries are explicitly out of scope: \textbf{(a)} chronoception installed by the harness at inference (the Injection Tell, \S\ref{sec:injection-tell}, is precisely this --- not a CIT refutation but a CIT workaround); \textbf{(b)} chronoception installed by tool outputs (calling \texttt{date} grounds the policy through the tool's return value, not through the loss); \textbf{(c)} future losses that take $\twall$ as an explicit argument (the constructive programme of \textsc{ChronoStack}, Paper 2). CIT precludes only the inference --- which we believe is widely held but rarely defended --- that additional scale, longer reasoning, or larger context will eventually close the gap. They will not, because none of them changes the loss class to break the assumption.
 
 \paragraph{The empirical predictions of CIT.}
 Three predictions follow directly. \textbf{(P-CIT-1)} Under wall-clock budgets, the policy uses step count as terminator: $\CAR$ stays bounded away from $1$ regardless of capability (\S\ref{sec:l2}). \textbf{(P-CIT-2)} Prompt-level wall-clock information cannot move action-axis behaviour: $|\Delta\CAR|$ is small under Setting B (\S\ref{sec:l2}, \S\ref{sec:injection-tell}). \textbf{(P-CIT-3)} Calibration tooling (temperature scaling, isotonic regression, RLHF-with-confidence) cannot close calibration on self-duration, because the calibration target is not in the loss support (\S\ref{ssec:calibration}). All three are confirmed by the panel.
