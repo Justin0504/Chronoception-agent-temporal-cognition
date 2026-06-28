@@ -75,7 +75,7 @@ PANEL = [
 THINKING = ("anthropic/claude-sonnet-4-6", "Claude Sonnet 4.6 + thinking",
             ["e3-results"])
 
-DIRS = ["pilot-results", "e2-results", "e3-results", "e5-results", "e5b-results"]
+DIRS = ["pilot-results", "e1-results", "e2-results", "e3-results", "e5-results", "e5b-results"]
 
 
 def fmt(v, n_dec=3):
@@ -99,9 +99,13 @@ latex_lines = []
 
 for agent, label in PANEL:
     if agent == "anthropic/claude-sonnet-4-6":
-        rhos = load_rhos(["pilot-results", "e1-results"], agent)
+        # Exclude e3-results (thinking variant) and e1-results to keep this row pure
+        # non-thinking baseline; thinking gets its own row below
+        rhos = load_rhos(["pilot-results"], agent)
     elif agent == "openai/o4-mini":
-        rhos = load_rhos(["pilot-results", "e2-results", "e3-results"], agent)
+        rhos = load_rhos(["pilot-results", "e1-results", "e2-results", "e3-results"], agent)
+    elif agent == "openai/o3":
+        rhos = load_rhos(["pilot-results", "e1-results"], agent)
     else:
         rhos = load_rhos(DIRS, agent)
 
