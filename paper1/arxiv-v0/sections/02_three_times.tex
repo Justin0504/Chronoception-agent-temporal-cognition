@@ -1,9 +1,9 @@
 % Section 2 — The Three Times (v4)
 
-\section{The Three Times}
+\section{The Three Times of an Agent}
 \label{sec:three-times}
 
-To name the gap, we need a vocabulary for what it is a gap in. We decompose any agent trajectory into three ontologically distinct projections of time (Figure~\ref{fig:three-times}).
+The introduction gave the failure a name; the name will not do work until the objects it points at have coordinates. This section supplies the coordinates. We decompose any agent trajectory into three ontologically distinct projections of time (Figure~\ref{fig:three-times}), each of which can be measured, and each of which the identity we are about to write down will constrain.
 
 \begin{figure}[h]
 \centering
@@ -30,4 +30,4 @@ where $\langle\Delta t\rangle$ is the agent's average per-step wall-clock cost. 
 
 A natural objection: surely $\tstep$ is just $\twall$ in different units? Empirically, no. Under wall-clock budgets, the policy uses step count as its binding terminator (\S\ref{sec:l2}); under step budgets, the same policy uses step count. The agent's internal control variable is $\tstep$, and the gap $|\twall - \tstep \cdot \langle\Delta t\rangle|$ is precisely what we measure. We use \emph{chronoception} in the cognitive-science sense (perception of one's own work duration), distinct from \citet{goel2025chronocept}'s use of the same term for fact validity, and from \citet{chu2024timebench}'s temporal reasoning over external timelines.
 
-With the vocabulary fixed, the Augustine Problem can be stated precisely; we do so next.
+With the vocabulary fixed, we can state the Augustine Problem precisely --- and prove that under current training practice, no policy can enforce the identity above.

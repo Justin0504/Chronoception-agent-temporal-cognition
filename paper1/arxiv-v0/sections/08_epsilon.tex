@@ -1,9 +1,9 @@
 % Section 8 — Chronoceptive Calibration Error (v4)
 
-\section{Chronoceptive Calibration Error $\cce$}
+\section{The Chronoceptive Calibration Error $\cce$}
 \label{sec:epsilon}
 
-We aggregate the three axes into a single scalar.
+We have measured each axis in isolation --- L2 on the action side (\S\ref{sec:l2}), L3 across four faces on the narrative side (\S\ref{sec:l3}), and the Injection Tell as the engineering pattern that partially masks the wall axis at the consumer tier (\S\ref{sec:injection-tell}). To compare agents on a common scale and to state the deployment bound of \S\ref{sec:agentic-timeline}, we aggregate the three axes into a single scalar.
 
 \begin{definition}[Chronoceptive Calibration Error]
 \label{def:cce}
@@ -25,4 +25,4 @@ The full benchmark defines nine sub-capabilities (T1.1--T3.3, \S\ref{sec:chronob
 
 \textbf{(2) Reverse-Scaling operates on the aggregate.} The o4-mini effort sweep takes $\cce$ from $0.470$ at low effort to $0.532$ at medium to $0.611$ at high. The Sonnet 4.6 thinking comparison takes $\cce$ from $0.276$ to $0.301$. More reasoning compute moves the agent further from the threshold, not closer. The two findings combine into a single structural claim: there is no axis along which token-only training can close the gap.
 
-This is the empirical content of the paper. The next two sections turn measurement into deployment implication, and position the work against the literature.
+These two findings are the paper's central empirical claim: every axis of grounded chronoception is either untouched by capability scaling or structurally reversed by it. What does that mean for the deployment horizons the field is currently building toward? The next section makes the answer precise.

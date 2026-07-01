@@ -1,9 +1,9 @@
 % Section 10 — Related Work (v4)
 
-\section{Related Work}
+\section{Related Work and Positioning}
 \label{sec:related-work}
 
-The framework occupies a crossroads of four bodies of work. We position the contributions against each and indicate where our claims extend or contradict them.
+The framework of \S\ref{sec:three-times}--\ref{sec:agentic-timeline} sits at the crossroads of four bodies of work: contemporary work on LLM-agent temporal cognition, the cognitive-science and Augustinian lineage that gives the paper its name, inverse scaling and the calibration literature, and the aggregate agent-benchmark saturation curves whose mechanism we supply. We position our contributions against each in turn and indicate where our claims extend, complement, or contradict them.
 
 \paragraph{Concurrent work on agent temporal awareness.}
 Three contemporary papers measure aspects of temporal cognition; each touches one axis of our framework. \citet{garikaparthi2026canllmstime} measures duration self-reports on four non-reasoning model families and reports consistent over-report. The result is the L3 axis of our framework on the non-reasoning slice of our panel; we extend it to reasoning models, uncover the Hidden-Time sign flip, prove the Reverse-Scaling Theorem, and confirm the theorem with a cross-vendor pair. \citet{ma2026timelymachine} (Timely Machine) constructs Timely-RL, a reward shaping that installs the Parkinson regime in DeepSeek-V3.2. Their construction is the L1 axis of our framework, fully trained: the agent fills the budget. Our finding is the contrapositive on native agents: the regime does not exist without budget-aware training. Where Ma et al.\ engineer L1 in, we measure where L1 currently is. \citet{cheng2025temporallyblind} documents agent failures honouring time-bounded sub-tasks during tool use, naming agents ``temporally blind.'' Their finding is consistent with L2; our framework adds the formal axis split, CIT, the Calibration Catastrophe, the Atlas, and the Agentic Timeline. The combined gap our paper fills is a single framework that names the failure modes (Three Times $+$ three laws), proves their structural origin (CIT $+$ Reverse-Scaling), measures them on a cross-vendor panel, audits the closed-lab workaround (Injection Tell), and connects the measurement to deployment (Agentic Timeline).
@@ -22,3 +22,5 @@ The intellectual ingredients of the Augustine Problem have been available for ov
 
 \paragraph{Agent benchmarks.}
 \citep{agentbench,swebench,webarena,gaia,kwa2025metrhorizons} measure task success aggregated across many capabilities. Our benchmark is diagnostic: it isolates chronoception. The two are complementary --- aggregate benchmarks reveal that chronoceptive failures correlate with long-horizon task failure (\citet{kwa2025metrhorizons}'s HCAST scaling curve, which we use as P12 evidence in \S\ref{sec:agentic-timeline}); diagnostic benchmarks supply the mechanism. Our spatiotemporal extension (\S\ref{sec:future-work}) places SWE-Bench, WebArena, GAIA, and MLE-Bench into a single classification by $(T, S)$ load and predicts how each should respond to chronoceptive and cartographic installation.
+
+Having positioned the framework against the literature, we now address the objections a careful reader is entitled to raise --- and specify the four experiments that would falsify us.

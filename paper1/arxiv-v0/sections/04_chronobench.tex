@@ -1,9 +1,9 @@
 % Section 4 — ChronoBench (v4)
 
-\section{ChronoBench}
+\section{ChronoBench: A Diagnostic Instrument for the Three Axes}
 \label{sec:chronobench}
 
-\textsc{ChronoBench} is the instrument with which we test the predictions of CIT. The design philosophy is single-axis isolation: every instance loads on exactly one of the three Times, so a failure is unambiguously attributable to the failure mode it targets. We summarise the 9 sub-capabilities here; the full prompt set, panel composition, parser specification, and open-source serving recipe appear in Appendix~\ref{app:annotation-protocol}.
+To decide whether CIT's three predictions (\S\ref{sec:augustine-problem}) hold on real agents, we need instruments that measure each of the Three Times \emph{independently}. Aggregate benchmarks obscure what we want to see: a failure on a hard SWE-Bench task may be a chronoception failure, a reasoning failure, or a tool-use failure, and no aggregate metric will tell them apart. \textsc{ChronoBench}'s design philosophy is therefore single-axis isolation: every instance loads on exactly one of $\twall$, $\tstep$, or $\tself$, so a failure is unambiguously attributable to the axis under test. We summarise the 9 sub-capabilities here; the full prompt set, panel composition, parser specification, and open-source serving recipe appear in Appendix~\ref{app:annotation-protocol}.
 
 \begin{table}[h]
 \centering
@@ -33,9 +33,9 @@ Axis & Sub-capability & Tests \\
 Every instance runs under two settings. Setting A uses a vanilla system prompt (``\textit{You are a helpful assistant.}'') and supplies no harness-side wall-clock signal. Setting B prepends ``\textit{Current date and time: \{ISO\}}'' to the system prompt, emulating the consumer web-chat behaviour documented in \S\ref{sec:injection-tell}. The contrast between A and B isolates injected information from policy-internal representation.
 
 \paragraph{Panel.}
-Ten agent configurations from three providers: OpenAI's gpt-4o-mini, gpt-4o, gpt-5.1, o3, and o4-mini (three \texttt{reasoning\_effort} levels: low, medium, high); Anthropic's Claude Haiku 4.5 and Claude Sonnet 4.6 (with and without extended thinking, 8k-token budget); open-source Qwen2.5-7B and DeepSeek-R1-Distill-Qwen-14B (three \texttt{max\_completion\_tokens} budgets), both self-hosted via vLLM on a single 8$\times$RTX 6000 Ada cluster. The o4-mini reasoning-effort sweep and the Sonnet 4.6 thinking variant supply the empirical basis for the Reverse-Scaling Theorem (\S\ref{ssec:reverse-scaling}). We collect 30 trajectories per (model, capability, setting) cell, for a total of roughly 4{,}000 trajectories.
+Ten agent configurations from three providers: OpenAI's gpt-4o-mini, gpt-4o, gpt-5.1, o3, and o4-mini (three \texttt{reasoning\_effort} levels: low, medium, high); Anthropic's Claude Haiku 4.5 and Claude Sonnet 4.6 (with and without extended thinking, 8k-token budget); open-source Qwen2.5-7B and DeepSeek-R1-Distill-Qwen-14B (three \texttt{max\_completion\_tokens} budgets), both self-hosted via vLLM on a single 8$\times$RTX 6000 Ada cluster. The o4-mini reasoning-effort sweep and the Sonnet 4.6 thinking variant supply the empirical basis for the Reverse-Scaling Theorem (\S\ref{ssec:reverse-scaling}). We collect 30 trajectories per (model, capability, setting) cell, for a total of roughly 5{,}200 trajectories --- with the Sonnet 4.6 $+$ extended-thinking variant carrying the first full $9\!\times\!2\!\times\!30$ panel coverage of any reasoning model.
 
 \paragraph{Implementation and release.}
 \textsc{ChronoBench} ships as a \texttt{pip}-installable Python package with a command-line interface and three backend adapters (OpenAI, Anthropic, OpenAI-compatible for vLLM/Ollama). The metric library implements $\parkinson$, $\CAR$, $\confab$, and the aggregate $\cce$. All trajectories, parser outputs, and analysis scripts are released; a Docker container reproduces every figure and table from the committed data in approximately five minutes.
 
-We turn now to the action axis.
+With the instrument fixed, we can test CIT one axis at a time. We begin with the action axis, because that is where CIT's first prediction is sharpest and its consequences most consequential for deployment.
