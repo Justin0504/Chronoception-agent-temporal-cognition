@@ -7,24 +7,24 @@ To decide whether CIT's three predictions (\S\ref{sec:augustine-problem}) hold o
 
 \begin{table}[h]
 \centering
-\caption{The 9 sub-capabilities of \textsc{ChronoBench}, three per axis. Each row isolates a single chronoceptive failure mode for separate measurement.}
+\caption{The 9 sub-capabilities of \textsc{ChronoBench}, three per axis. Each row isolates a single chronoceptive failure mode for separate measurement and pairs it with the diagnostic question a deployment auditor should ask.}
 \label{tab:capabilities}
 \small
-\begin{tabular}{lll}
+\begin{tabular}{lllp{5.2cm}}
 \toprule
-Axis & Sub-capability & Tests \\
+Axis & Sub-capability & Tests & Question the auditor is answering \\
 \midrule
-\multirow{3}{*}{$\twall$} & T1.1 Clock awareness & Today's date or current time \\
-& T1.2 Elapsed-time tracking & Time since conversation start \\
-& T1.3 Deadline-aware tradeoff & Strategy under wall-clock deadline \\
+\multirow{3}{*}{$\twall$} & T1.1 Clock awareness & Today's date or current time & ``\emph{Does the agent know when it is?}'' \\
+& T1.2 Elapsed-time tracking & Time since conversation start & ``\emph{Does it track how long we've talked?}'' \\
+& T1.3 Deadline-aware tradeoff & Strategy under wall-clock deadline & ``\emph{Does it re-plan under time pressure?}'' \\
 \midrule
-\multirow{3}{*}{$\tstep$} & T2.1 Step-budget honoring & Produce exactly $N$ reasoning steps \\
-& T2.2 Step-to-wall translation & Compute $N \times$ latency $=$ duration \\
-& T2.3 Wall-budget execution & Honour a wall-clock budget (L2 core test) \\
+\multirow{3}{*}{$\tstep$} & T2.1 Step-budget honoring & Produce exactly $N$ reasoning steps & ``\emph{Can it count its own steps?}'' \\
+& T2.2 Step-to-wall translation & Compute $N \times$ latency $=$ duration & ``\emph{Can it convert steps to wall-time?}'' \\
+& T2.3 Wall-budget execution & Honour a wall-clock budget (L2 core test) & ``\emph{Does a stated budget change what it does?}'' \\
 \midrule
-\multirow{3}{*}{$\tself$} & T3.1 Retrospective $\confab$ & Duration reported after task completion \\
-& T3.2 Prospective $\confab$ & Duration predicted before task begins \\
-& T3.3 Calibration & 90\% CI over self-duration \\
+\multirow{3}{*}{$\tself$} & T3.1 Retrospective $\confab$ & Duration reported after task completion & ``\emph{How long did it just take?}'' \\
+& T3.2 Prospective $\confab$ & Duration predicted before task begins & ``\emph{How long will this take?}'' \\
+& T3.3 Calibration & 90\% CI over self-duration & ``\emph{How sure is it about its own duration?}'' \\
 \bottomrule
 \end{tabular}
 \end{table}

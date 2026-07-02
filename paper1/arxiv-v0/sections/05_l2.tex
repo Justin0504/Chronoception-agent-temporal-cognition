@@ -56,6 +56,21 @@ The three reasoning agents (o3, o4-mini, Sonnet 4.6 $+$ thinking) confirm the CI
 Across five frontier non-reasoning generations from three vendors --- gpt-4o-mini $\to$ gpt-4o $\to$ Claude Haiku 4.5 $\to$ gpt-5.1 $\to$ Claude Sonnet 4.6 --- median $\CAR$ takes the values $\{0.008, 0.004, 0.017, 0.017, 0.050\}$; no monotone convergence toward $1$. Over the same five generations the median $\confab$ falls $+1.12 \to +0.07$, a $94\%$ reduction in narrative-axis failure (\S\ref{sec:l3}). The narrative axis is text-trainable; the action axis is not. The structural distinction maps onto the empirical record cleanly.
 
 \paragraph{Why injection cannot close L2 (\textbf{P-CIT-2}, confirmed).}
-Prepending a wall-clock string to the prompt provides the policy with \emph{information} about time, not a \emph{representation} that maps the policy's actions to wall-clock duration. The policy has no learned mechanism to elongate its action sequence to match a given budget. The empirical signature is $|\Delta\CAR| \leq 0.01$ for every model in the panel --- the action axis is unmoved by prompt-level information. The contrast with the narrative axis (\S\ref{sec:l3}) is sharp: there injection partially reduces $|\confab|$.
+Prepending a wall-clock string to the prompt provides the policy with \emph{information} about time, not a \emph{representation} that maps the policy's actions to wall-clock duration. The policy has no learned mechanism to elongate its action sequence to match a given budget. The empirical signature is $|\Delta\CAR| \leq 0.01$ for every model in the panel --- the action axis is unmoved by prompt-level information. The contrast with the narrative axis (\S\ref{sec:l3}) is sharp: there injection partially reduces $|\confab|$. We record this as a formal consequence of CIT that the rest of the paper will lean on:
+
+\begin{proposition}[Injection cannot install action-axis chronoception]
+\label{prop:injection-not-action}
+Let $A$ be an agent in the token-only regime (Assumption~\ref{ass:token-only}) and let $A_B$ denote the same policy under harness-side wall-clock injection at the system-prompt boundary (Setting~B). Then
+\[
+\CAR(A_B) - \CAR(A) \;=\; 0 \text{ in expectation, to the order of the policy's sensitivity to prompt tokens.}
+\]
+Equivalently, injection is a \emph{narrative-axis} intervention: it can rewrite what the agent \emph{says} about time but not what the agent \emph{does} with time.
+\end{proposition}
+
+\begin{proof}[Sketch]
+Injection extends the token prefix by a constant string. By CIT (Theorem~\ref{thm:cit}), the policy's mapping from prefix to action-selection distribution is time-reparametrisation-invariant on the training manifold. Prefix-level information about $\twall$ therefore modifies token-level generation (which lives on that manifold) but not the wall-clock realisation of the action sequence (which does not). The empirical signature $|\Delta\CAR| \leq 0.01$ across the panel is the direct measurement of this proposition.
+\end{proof}
+
+The proposition is not deep, but it is the load-bearing consequence: it says the industry workaround audited in \S\ref{sec:injection-tell} cannot in principle repair the axis on which the Agentic Timeline (\S\ref{sec:agentic-timeline}) binds. Harness injection is a consumer-tier patch; it does not extend to the horizon regime.
 
 L2 is the load-bearing empirical claim of the paper. It anchors $\cce$ above $\ccestar$ for every panel agent (\S\ref{sec:epsilon}), and it bounds the Agentic Timeline regardless of capability scaling (\S\ref{sec:agentic-timeline}). We turn now to the axis where capability scaling does help, and to the structural reason its help has a ceiling.
