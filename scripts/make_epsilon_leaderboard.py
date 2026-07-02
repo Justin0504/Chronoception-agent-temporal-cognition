@@ -20,6 +20,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.lines import Line2D
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+import matplotlib.image as mpimg
 import matplotlib as mpl
 
 mpl.rcParams["pdf.fonttype"] = 42          # embed as truetype for vector edit
@@ -46,14 +48,21 @@ ROWS = [
     ("gpt-4o-mini",           "OA",  1.328, 1.069, 0.00, 0.32, 1.12, False),
 ]
 
-# Vendor colour system (used for chip + solid bar; hatch reuses lighter tone)
+# Vendor system: real logo PNGs + bar accents (chips replaced by logos)
+LOGO_DIR = Path("paper1/arxiv-v0/figures/logos")
 VENDOR = {
-    "OA": {"chip": "#10a37f", "bar": "#3182bd", "letter": "OA"},   # OpenAI green chip, blue bar
-    "AN": {"chip": "#cc785c", "bar": "#cc785c", "letter": "A"},    # Anthropic coral
-    "QW": {"chip": "#6a4c93", "bar": "#6a4c93", "letter": "Q"},    # Qwen violet
-    "DS": {"chip": "#2b6cb0", "bar": "#2b6cb0", "letter": "DS"},   # DeepSeek blue
-    "REF":{"chip": "#8a8a8a", "bar": "#8a8a8a", "letter": "OR"},   # Oracle grey chip
+    "OA": {"logo": LOGO_DIR / "openai.png",    "bar": "#3182bd"},  # OpenAI blossom
+    "AN": {"logo": LOGO_DIR / "anthropic.png", "bar": "#cc785c"},  # Anthropic AI mark
+    "QW": {"logo": LOGO_DIR / "qwen.png",      "bar": "#6a4c93"},  # Qwen mark
+    "DS": {"logo": LOGO_DIR / "deepseek.png",  "bar": "#2b6cb0"},  # DeepSeek whale
+    "REF":{"logo": None,                        "bar": "#c8c8c8", "letter": "★"},
 }
+_LOGO_CACHE = {}
+def get_logo(vk):
+    if vk not in _LOGO_CACHE:
+        p = VENDOR[vk].get("logo")
+        _LOGO_CACHE[vk] = mpimg.imread(p) if (p and p.exists()) else None
+    return _LOGO_CACHE[vk]
 
 BAR_MAX = 1.40  # right edge of bar area (epsilon units); >1.4 clips
 THRESHOLD = 0.20  # Augustine threshold ε*
@@ -118,14 +127,20 @@ def eps_to_x(eps):
 for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
     y = n_rows - i - 0.5
 
-    # ---- vendor chip ----
-    chip_col = VENDOR[vk]["chip"]
-    chip_letter = VENDOR[vk]["letter"]
-    ax.add_patch(Rectangle((X_CHIP - 1.4, y - 0.28), 2.8, 0.56,
-                           facecolor=chip_col, edgecolor="none",
-                           zorder=3, alpha=0.95))
-    ax.text(X_CHIP, y, chip_letter, ha="center", va="center",
-            fontsize=10, color="white", fontweight="700", zorder=4)
+    # ---- vendor logo (real image) ----
+    img = get_logo(vk)
+    if img is not None:
+        oi = OffsetImage(img, zoom=0.10)
+        ab = AnnotationBbox(oi, (X_CHIP, y), frameon=False, box_alignment=(0.5, 0.5),
+                            xycoords=("data","data"), zorder=4, pad=0)
+        ax.add_artist(ab)
+    else:
+        # Oracle: neutral filled circle chip
+        from matplotlib.patches import Circle
+        ax.add_patch(Circle((X_CHIP, y), 0.60, facecolor="#8a8a8a",
+                            edgecolor="#5a5a5a", lw=0.5, zorder=3))
+        ax.text(X_CHIP, y, "OR", ha="center", va="center",
+                fontsize=8, color="white", fontweight="700", zorder=4)
 
     # ---- model label ----
     weight = "600" if is_ref else "500"

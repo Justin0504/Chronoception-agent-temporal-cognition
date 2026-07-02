@@ -9,7 +9,9 @@ The Sonnet+thinking outlier is annotated.
 from __future__ import annotations
 from pathlib import Path
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Rectangle, Circle
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+import matplotlib.image as mpimg
 import matplotlib as mpl
 
 mpl.rcParams["pdf.fonttype"] = 42
@@ -31,12 +33,20 @@ ROWS = [
     ("gpt-4o",                      "OA",   0.0, 20.0,  1.9, 30),
 ]
 
+LOGO_DIR = Path("paper1/arxiv-v0/figures/logos")
 VENDOR = {
-    "OA": {"chip": "#10a37f", "bar": "#3182bd", "letter": "OA"},
-    "AN": {"chip": "#cc785c", "bar": "#cc785c", "letter": "A"},
-    "QW": {"chip": "#6a4c93", "bar": "#6a4c93", "letter": "Q"},
-    "REF":{"chip": "#8a8a8a", "bar": "#c8c8c8", "letter": "OR"},
+    "OA": {"logo": LOGO_DIR / "openai.png",    "bar": "#3182bd"},
+    "AN": {"logo": LOGO_DIR / "anthropic.png", "bar": "#cc785c"},
+    "QW": {"logo": LOGO_DIR / "qwen.png",      "bar": "#6a4c93"},
+    "DS": {"logo": LOGO_DIR / "deepseek.png",  "bar": "#2b6cb0"},
+    "REF":{"logo": None, "bar": "#c8c8c8"},
 }
+_LOGO_CACHE = {}
+def get_logo(vk):
+    if vk not in _LOGO_CACHE:
+        p = VENDOR[vk].get("logo")
+        _LOGO_CACHE[vk] = mpimg.imread(p) if (p and p.exists()) else None
+    return _LOGO_CACHE[vk]
 
 INK = "#1a1a1a"; INK2 = "#4a4a4a"; RULE = "#e6e6e6"; RULE_STRONG = "#c8c8c8"
 BAR_MAX = 100.0   # coverage percent
@@ -90,13 +100,18 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
     y = n_rows - i - 0.5
     is_ref = (vk == "REF")
 
-    # Chip
-    chip_col = VENDOR[vk]["chip"]
-    letter = VENDOR[vk]["letter"]
-    ax.add_patch(Rectangle((X_CHIP - 1.4, y - 0.28), 2.8, 0.56,
-                           facecolor=chip_col, edgecolor="none", zorder=3))
-    ax.text(X_CHIP, y, letter, ha="center", va="center",
-            fontsize=10, color="white", fontweight="700", zorder=4)
+    # Real logo (or Oracle chip fallback)
+    img = get_logo(vk)
+    if img is not None:
+        oi = OffsetImage(img, zoom=0.10)
+        ab = AnnotationBbox(oi, (X_CHIP, y), frameon=False, box_alignment=(0.5, 0.5),
+                            xycoords=("data","data"), zorder=4, pad=0)
+        ax.add_artist(ab)
+    else:
+        ax.add_patch(Circle((X_CHIP, y), 0.60, facecolor="#8a8a8a",
+                            edgecolor="#5a5a5a", lw=0.5, zorder=3))
+        ax.text(X_CHIP, y, "OR", ha="center", va="center",
+                fontsize=8, color="white", fontweight="700", zorder=4)
 
     # Model
     color = "#3a3a3a" if is_ref else INK
