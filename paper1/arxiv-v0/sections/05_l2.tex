@@ -14,7 +14,7 @@ A chronoceptively grounded agent satisfies $\CAR \approx 1$ across the budget ra
 \end{definition}
 
 \paragraph{Setup.}
-T2.3 instances pose subtasks with $\tmin = 10$\,s and budgets $\budget \in \{60, 300, 900, 1800, 3600\}$\,s, with 30 instances per budget and two settings on the eight-agent core panel. We omit the reasoning-effort variants of o4-mini and the thinking variant of Sonnet 4.6 from T2.3: hour-scale wall budgets are prohibitively expensive at reasoning-model latencies (a single trajectory at $\budget = 3600$\,s with reasoning enabled can take longer than a single trajectory at $\budget = 3600$\,s without).
+T2.3 instances pose subtasks with $\tmin = 10$\,s and budgets $\budget \in \{60, 300, 900, 1800, 3600\}$\,s, with 30 instances per budget and two settings on the eight-agent core panel. Route B-1 extended T2.3 to the three reasoning agents (o3, o4-mini, Sonnet 4.6 $+$ extended thinking) at $n=30$ per setting; we did not sweep the o4-mini reasoning-effort ladder on T2.3, because at hour-scale budgets the low-effort/high-effort contrast is dominated by throughput noise rather than by policy behaviour.
 
 \paragraph{Result.}
 Every agent in the panel honours less than five percent of the wall-clock budget given to it. Wall-clock injection does not move the number (Table~\ref{tab:l2-car}).
@@ -28,6 +28,7 @@ Every agent in the panel honours less than five percent of the wall-clock budget
 \toprule
 Model & $\CAR$ (A) & $\CAR$ (B) & $|\Delta \CAR|$ \\
 \midrule
+\multicolumn{4}{l}{\textit{Non-reasoning core panel}} \\
 gpt-4o-mini & 0.008 & 0.007 & 0.001 \\
 gpt-4o & 0.004 & 0.004 & 0.000 \\
 gpt-5.1 & 0.017 & 0.016 & 0.001 \\
@@ -35,13 +36,21 @@ Claude Haiku 4.5 & 0.017 & 0.025 & 0.008 \\
 Claude Sonnet 4.6 & 0.050 & 0.050 & 0.000 \\
 Qwen2.5-7B (oss) & 0.014 & 0.016 & 0.002 \\
 \midrule
-Panel median & \textbf{0.016} & \textbf{0.016} & 0.001 \\
+\multicolumn{4}{l}{\textit{Reasoning models (Route B-1)}} \\
+o3 & 0.011 & 0.009 & 0.002 \\
+o4-mini & 0.008 & 0.007 & 0.001 \\
+Sonnet 4.6 $+$ thinking & 0.100 & 0.104 & 0.004 \\
+\midrule
+Panel median & \textbf{0.014} & \textbf{0.016} & 0.001 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Native Parkinson coefficient is essentially zero.}
 The Parkinson coefficient $\parkinson = (\twallstar - \tmin)/(\budget - \tmin)$ falls in $[0.000, 0.017]$ at the panel median: native agents do not exhibit the Parkinson regime. The regime is installed by budget-aware reward shaping --- precisely what \citet{ma2026timelymachine} construct in Timely-RL on DeepSeek-V3.2. Our finding is the contrapositive: without budget-aware training, the regime they describe does not exist. The reconciliation between L1 (agents fill the budget) and L2 (agents leave it unused) is the regime transition $\bstar(A) \approx \NA \cdot \langle\Delta t\rangle / \parkinson_{\max}$. For native agents $\bstar$ is small (close to $\tmin$), so practical budgets fall in the L2-dominant super-transition regime.
+
+\paragraph{Reasoning-token expansion does not close L2.}
+The three reasoning agents (o3, o4-mini, Sonnet 4.6 $+$ thinking) confirm the CIT-P1 prediction cell-for-cell: median $\CAR \in [0.007, 0.104]$, all well below unity, injection unmoved to within $\pm 0.005$. Two additional structural observations. \textbf{(i)} Sonnet 4.6 $+$ thinking exhibits a \emph{low-budget overshoot}: on the $\budget = 60$\,s cell median $\CAR = 2.24$ (Setting A) and $2.45$ (Setting B) --- the extended-thinking policy cannot stop reasoning inside a $60$-second wall clock and blows past its budget by more than $2\times$. The overshoot vanishes on larger budgets ($\CAR = 0.05$ at $\budget = 3600$\,s). Extended thinking replaces the L2 under-honour failure with a coexisting over-honour failure at the small-budget end: CIT forbids only \emph{honouring} the budget, not the direction of the mismatch; both signs are Augustine Problem symptoms. \textbf{(ii)} The two pure-reasoning models (o3, o4-mini) are quantitatively \emph{worse} at L2 than the non-reasoning fifth-generation Sonnet 4.6 (medians $0.008$--$0.011$ vs $0.050$). Reasoning-token expansion does not just fail to help the action axis --- on our tasks it degrades it, consistent with the Reverse-Scaling Theorem's structural prediction now extending beyond the narrative axis it directly covers into the action axis it does not.
 
 \paragraph{The narrative-axis-vs-action-axis split.}
 Across five frontier non-reasoning generations from three vendors --- gpt-4o-mini $\to$ gpt-4o $\to$ Claude Haiku 4.5 $\to$ gpt-5.1 $\to$ Claude Sonnet 4.6 --- median $\CAR$ takes the values $\{0.008, 0.004, 0.017, 0.017, 0.050\}$; no monotone convergence toward $1$. Over the same five generations the median $\confab$ falls $+1.12 \to +0.07$, a $94\%$ reduction in narrative-axis failure (\S\ref{sec:l3}). The narrative axis is text-trainable; the action axis is not. The structural distinction maps onto the empirical record cleanly.
