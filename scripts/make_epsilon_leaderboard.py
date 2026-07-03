@@ -30,32 +30,38 @@ mpl.rcParams["font.family"]  = "sans-serif"
 mpl.rcParams["font.sans-serif"] = ["Inter", "Helvetica", "Arial", "DejaVu Sans"]
 
 # =============================================================
-# 1. Data — pulled from pilot-results/epsilon.csv + subcap decomp
+# 1. Data — 14-agent panel (10 base + 4 Vultr expansion)
 # =============================================================
-# Row order top→bottom; Oracle first (reference), then panel by ε(A)
-# ascending (best chronoception at top of the panel proper).
+# Ordered by ε(A) ascending. Oracle is the human-baseline reference.
 ROWS = [
     # (label, vendor_key, eps_A, eps_B, sT1, sT2, sT3, is_reference)
     ("Oracle",                "REF", 0.10, None, None, None, None, True),
-    ("Claude Sonnet 4.6",     "AN",  0.316, 0.307, 0.00, 0.32, 0.07, False),
     ("Claude Sonnet 4.6 + thinking", "AN", 0.276, 0.301, 0.00, 0.32, 0.22, False),
+    ("Claude Sonnet 4.6",     "AN",  0.316, 0.307, 0.00, 0.32, 0.07, False),
     ("gpt-5.1",               "OA",  0.426, 0.396, 0.13, 0.31, 0.30, False),
+    ("GLM-5.2-FP8",           "ZAI", 0.433, 0.420, 0.00, 0.99, 0.25, False),
     ("Claude Haiku 4.5",      "AN",  0.442, 0.403, 0.00, 0.30, 0.46, False),
     ("o3 (reasoning)",        "OA",  0.490, 0.582, 0.00, 0.30, 0.57, False),
     ("o4-mini (reasoning)",   "OA",  0.532, 0.513, 0.00, 0.30, 1.54, False),
+    ("Kimi-K2.6",             "MS",  0.583, 0.608, 0.00, 0.98, 0.86, False),
+    ("MiniMax-M2.7",          "MM",  0.632, 0.410, 0.00, 0.99, 0.85, False),
+    ("Qwen3.6-27B",           "QW",  0.642, 0.663, 0.00, 0.98, 0.95, False),
     ("gpt-4o",                "OA",  0.661, 0.587, 0.00, 0.32, 1.07, False),
     ("Qwen2.5-7B",            "QW",  0.760, 0.764, 0.00, 0.31, 1.56, False),
     ("gpt-4o-mini",           "OA",  1.328, 1.069, 0.00, 0.32, 1.12, False),
 ]
 
-# Vendor system: real logo PNGs + bar accents (chips replaced by logos)
+# Vendor system: real logo PNGs + bar accents
 LOGO_DIR = Path("paper1/arxiv-v0/figures/logos")
 VENDOR = {
-    "OA": {"logo": LOGO_DIR / "openai.png",    "bar": "#3182bd"},  # OpenAI blossom
-    "AN": {"logo": LOGO_DIR / "anthropic.png", "bar": "#cc785c"},  # Anthropic AI mark
-    "QW": {"logo": LOGO_DIR / "qwen.png",      "bar": "#6a4c93"},  # Qwen mark
-    "DS": {"logo": LOGO_DIR / "deepseek.png",  "bar": "#2b6cb0"},  # DeepSeek whale
-    "REF":{"logo": None,                        "bar": "#c8c8c8", "letter": "★"},
+    "OA":  {"logo": LOGO_DIR / "openai.png",    "bar": "#3182bd"},  # OpenAI blossom
+    "AN":  {"logo": LOGO_DIR / "anthropic.png", "bar": "#cc785c"},  # Anthropic AI mark
+    "QW":  {"logo": LOGO_DIR / "qwen.png",      "bar": "#6a4c93"},  # Qwen mark
+    "DS":  {"logo": LOGO_DIR / "deepseek.png",  "bar": "#2b6cb0"},  # DeepSeek whale
+    "ZAI": {"logo": LOGO_DIR / "zai.png",       "bar": "#4a4a4a"},  # GLM (Z.AI)
+    "MS":  {"logo": LOGO_DIR / "moonshot.png",  "bar": "#2b2b2b"},  # Moonshot (Kimi)
+    "MM":  {"logo": LOGO_DIR / "minimax.png",   "bar": "#e94e77"},  # MiniMax
+    "REF": {"logo": None,                        "bar": "#c8c8c8", "letter": "★"},
 }
 _LOGO_CACHE = {}
 def get_logo(vk):
@@ -135,12 +141,19 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
                             xycoords=("data","data"), zorder=4, pad=0)
         ax.add_artist(ab)
     else:
-        # Oracle: neutral filled circle chip
-        from matplotlib.patches import Circle
-        ax.add_patch(Circle((X_CHIP, y), 0.60, facecolor="#8a8a8a",
-                            edgecolor="#5a5a5a", lw=0.5, zorder=3))
-        ax.text(X_CHIP, y, "OR", ha="center", va="center",
-                fontsize=8, color="white", fontweight="700", zorder=4)
+        # Oracle: rounded rectangle chip + star (matches user's reference)
+        from matplotlib.patches import FancyBboxPatch
+        ax.add_patch(FancyBboxPatch((X_CHIP - 1.6, y - 0.35), 3.2, 0.70,
+                                    boxstyle="round,pad=0.02,rounding_size=0.35",
+                                    facecolor="#e6e6e6", edgecolor="none",
+                                    zorder=3))
+        # Star drawn as a stylized polygon (no unicode dependency)
+        import numpy as np
+        theta = np.linspace(-np.pi/2, 3*np.pi/2, 11)
+        r = np.array([0.32,0.14,0.32,0.14,0.32,0.14,0.32,0.14,0.32,0.14,0.32])
+        star_x = X_CHIP + r * np.cos(theta)
+        star_y = y + r * np.sin(theta)
+        ax.fill(star_x, star_y, color="#7a7a7a", zorder=4)
 
     # ---- model label ----
     weight = "600" if is_ref else "500"
@@ -224,14 +237,15 @@ ax.text(xT, 0.15, r"$\varepsilon^{\star} = 0.20$",
 # 6. Title
 # =============================================================
 fig.suptitle(
-    r"Chronoceptive Calibration Error $\varepsilon$ — full 10-agent panel",
+    r"Chronoceptive Calibration Error $\varepsilon$ — 14-agent panel (7 vendors, 4 Chinese labs)",
     x=0.02, y=0.975, ha="left", fontsize=15,
     fontweight="700", color=INK,
 )
 fig.text(0.02, 0.93,
     r"Solid bar = Setting A ($\varepsilon$).  Hatched extension = Setting B.  "
     r"Dashed green rule = Augustine threshold $\varepsilon^{\star} = 0.20$.  "
-    r"Bold numeric = best in column.  No panel agent crosses $\varepsilon^{\star}$.",
+    r"Bold numeric = best in column.  No panel agent crosses $\varepsilon^{\star}$; "
+    r"the Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) confirms the framework cross-vendor.",
     ha="left", fontsize=10, color=INK2, fontstyle="italic")
 
 # Legend chip below title
