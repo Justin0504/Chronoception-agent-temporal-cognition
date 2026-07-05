@@ -24,8 +24,11 @@ ROWS = [
     # label, vendor, coverage%, width_s, actual_s, n_decided
     ("Grounded target (90%)",       "REF", 90.0, None, None, None),
     ("Claude Sonnet 4.6 + thinking","AN",  76.7, 13.0, 11.6, 30),
+    ("Kimi-K2.6",                   "MS",  55.2, 14.0, 15.0, 30),
     ("o4-mini (reasoning)",         "OA",  50.0,  4.0,  5.7, 30),
     ("Claude Sonnet 4.6",           "AN",  43.3, 25.0,  6.6, 30),
+    ("MiniMax-M2.7",                "MM",  33.3, 15.0, 17.2, 30),
+    ("Qwen3.6-27B",                 "QW",  25.0, 11.0, 26.9, 30),
     ("o3 (reasoning)",              "OA",  17.2, 50.0,  4.5, 29),
     ("gpt-5.1",                     "OA",  13.3, 49.0,  2.3, 30),
     ("gpt-4o-mini",                 "OA",  10.0, 20.0,  3.2, 30),
@@ -35,11 +38,14 @@ ROWS = [
 
 LOGO_DIR = Path("paper1/arxiv-v0/figures/logos")
 VENDOR = {
-    "OA": {"logo": LOGO_DIR / "openai.png",    "bar": "#3182bd"},
-    "AN": {"logo": LOGO_DIR / "anthropic.png", "bar": "#cc785c"},
-    "QW": {"logo": LOGO_DIR / "qwen.png",      "bar": "#6a4c93"},
-    "DS": {"logo": LOGO_DIR / "deepseek.png",  "bar": "#2b6cb0"},
-    "REF":{"logo": None, "bar": "#c8c8c8"},
+    "OA":  {"logo": LOGO_DIR / "openai.png",    "bar": "#3182bd"},
+    "AN":  {"logo": LOGO_DIR / "anthropic.png", "bar": "#cc785c"},
+    "QW":  {"logo": LOGO_DIR / "qwen.png",      "bar": "#6a4c93"},
+    "DS":  {"logo": LOGO_DIR / "deepseek.png",  "bar": "#2b6cb0"},
+    "ZAI": {"logo": LOGO_DIR / "zai.png",       "bar": "#4a4a4a"},
+    "MS":  {"logo": LOGO_DIR / "moonshot.png",  "bar": "#2b2b2b"},
+    "MM":  {"logo": LOGO_DIR / "minimax.png",   "bar": "#e94e77"},
+    "REF": {"logo": None, "bar": "#c8c8c8"},
 }
 _LOGO_CACHE = {}
 def get_logo(vk):
