@@ -1,43 +1,22 @@
-% Section 6.5 — A positive control (auto-generated from A.1 eval)
+% Section 6.3 — Positive control (compressed)
 
 \subsection{A positive control: wall-clock SFT installs partial chronoception}
 \label{ssec:a1-positive-control}
 
-CIT (Theorem~\ref{thm:cit}) is a negative result: token-only training cannot install chronoception. The natural question is whether a training procedure that does include wall-clock signal can install it. We provide a toy positive control. The construction is deliberately minimal: it tests the existence of the converse direction, not its full realisation (the program of \textsc{ChronoStack}, Paper 2).
+CIT is a negative result. Can a procedure that includes wall-clock signal install chronoception? We provide a toy positive control.
 
 \paragraph{Construction.}
-We take Qwen2.5-1.5B-Instruct and Qwen2.5-7B-Instruct as two base models at different scales. For each, we generate 500 SFT pairs by running the base model on T3.1-style prompts and recording the actual $\twall$ of generation, then construct training targets of the form ``\textit{\{response\}. This task took approximately \{$\twall$\} seconds.}'' with $\pm 15\%$ Gaussian noise on the duration to mimic a calibrated human-style estimate. We LoRA fine-tune (rank $16$, three epochs) on each base model independently. The loss is standard token-level cross-entropy, but the training data carries wall-clock signal in its targets, so the loss's support effectively includes wall-clock duration. The construction exits the CIT regime by extending the support of $\mathcal{D}$ rather than by changing the form of $\ell$.
+Qwen2.5-1.5B and 7B base models. For each, 500 SFT pairs of the form ``\textit{\{response\}. This task took approximately \{$\twall$\} seconds.}'' with $\pm 15\%$ noise; LoRA rank $16$, three epochs. Token-level CE loss, but training targets carry $\twall$: the effective loss support includes wall-clock duration, exiting the CIT regime by extending $\mathcal{D}$'s support rather than changing $\ell$.
 
 \paragraph{Result.}
-On 30 held-out T3.1 instances per scale, wall-clock-grounded SFT reduces median $|\confab|$ at both scales: Qwen2.5-1.5B from $1.37$ to $0.30$ (a $78\%$ reduction), and Qwen2.5-7B from $0.93$ to $0.50$ (a $46\%$ reduction). The 1.5B fine-tuned T3.1 score ($0.151$) crosses the Augustine threshold $\ccestar = 0.20$ on this single axis; the 7B fine-tuned score ($0.252$) does not (Figure~\ref{fig:a1-positive}). Both scales reduce $|\confab|$ in the same direction and the sign of $\confab$ flips from over-report to under-report after fine-tuning. The asymmetry between scales is itself informative: the larger model has more entrenched priors over duration vocabulary that rank-16 LoRA does not fully overwrite.
+On 30 held-out T3.1 instances: median $|\confab|$ falls from $1.37$ to $0.30$ on 1.5B ($78\%$ reduction) and $0.93$ to $0.50$ on 7B ($46\%$). The 1.5B fine-tuned T3.1 score ($0.151$) crosses $\ccestar$ on this single axis; the 7B ($0.252$) does not (Fig.~\ref{fig:a1-positive}). At both scales $\confab$ flips from over-report to under-report.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/a1_positive_control.pdf}
-\caption{Toy positive control on T3.1 at two model scales. \textbf{(a)} Median $|\confab|$ falls at both scales after $\sim$60 s of LoRA fine-tuning with wall-clock-grounded SFT targets (78\% reduction on Qwen2.5-1.5B; 46\% on Qwen2.5-7B). \textbf{(b)} On the 1.5B model the fine-tuned T3.1 score crosses the Augustine threshold $\ccestar = 0.20$; on the 7B model it falls short of the threshold ($0.252$). The direction is consistent at both scales; the magnitude of effect required to cross $\ccestar$ depends on base-model prior strength. Each bar is the median over 30 held-out T3.1 instances.}
+\caption{Toy positive control. \textbf{(a)} $|\confab|$ falls at both scales after $\sim$60\,s of LoRA SFT. \textbf{(b)} 1.5B fine-tuned crosses $\ccestar$ on T3.1; 7B partial ($0.25$). Detailed table in App.~\ref{app:l3-detail}.}
 \label{fig:a1-positive}
 \end{figure}
 
-\begin{table}[h]
-\centering
-\caption{A.1 positive control at two model scales: 30-instance held-out T3.1, baseline vs.\ LoRA-fine-tuned with wall-clock-grounded SFT.}
-\label{tab:a1-result}
-\small
-\begin{tabular}{lcccc}
-\toprule
-Configuration & median $\confab$ & median $|\confab|$ & T3.1 score & crosses $\ccestar = 0.20$? \\
-\midrule
-Qwen2.5-1.5B (baseline) & $+1.373$ & $1.373$ & $0.686$ & no \\
-Qwen2.5-1.5B + wall-clock SFT & $-0.302$ & $0.302$ & $0.151$ & \textbf{YES} \\
-\midrule
-Qwen2.5-7B (baseline) & $+0.932$ & $0.932$ & $0.466$ & no \\
-Qwen2.5-7B + wall-clock SFT & $-0.505$ & $0.505$ & $0.252$ & no (partial) \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{What this demonstrates.}
-The construction is a toy --- it addresses T3.1 alone, on a single small model, with synthetic durations rather than a wall-clock-supported reward signal. It is sufficient nonetheless to demonstrate the converse direction of CIT: \textbf{when wall-clock signal is present in the loss support, narrative-axis chronoception is installable.} The reduction in $|\confab|$ is not a calibration tuning effect (calibration tooling does not see $\twall$, \S\ref{ssec:calibration}); it is the model learning a representation that maps its generation to a wall-clock estimate, exactly the representation CIT proves unattainable from token-only training. A full installation that closes $\cce$ across all nine sub-capabilities --- including the action axis L2, which a target-side annotation alone cannot reach --- is the program of \textsc{ChronoStack} (Paper 2). The toy control is the first existence proof of CIT's converse within the framework's own measurement system.
-
-\paragraph{What this does not demonstrate.}
-The positive control does not address L2 (T2.3 requires the policy to elongate its action sequence, not just append a duration string); it does not address calibration (T3.3 would require the model to learn a conditional uncertainty estimate over the duration); and it does not demonstrate generalisation to durations outside the training distribution. The 7B result is itself a calibrated reminder that the minimum-viable construction does not always reach $\ccestar$ --- larger models with stronger priors require either richer SFT data, higher-rank adaptation, or a wall-clock-supported reward signal to close the remaining gap. Each of these is an intervention \textsc{ChronoStack} (Paper 2) addresses separately: action-axis grounding requires a reward signal over wall-clock budgets; calibration requires a conditional-variance objective; full-axis grounding requires architectural support for wall-clock input.
+\paragraph{What it shows and does not show.}
+Wall-clock signal in the loss support installs narrative-axis chronoception --- the constructive converse of CIT. The control does not address L2 (which needs the policy to elongate action sequences, not append duration strings) or T3.3 calibration. Full-axis installation is the programme of \textsc{ChronoStack}: action-axis grounding requires a wall-clock-supported reward, calibration requires a conditional-variance objective, full grounding requires architectural support.

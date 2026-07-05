@@ -1,36 +1,29 @@
-% Section 2 — The Three Times (v4)
+% Section 2 — The Three Times (compressed)
 
 \section{The Three Times of an Agent}
 \label{sec:three-times}
 
-The introduction gave the failure a name; the name will not do work until the objects it points at have coordinates. This section supplies the coordinates. We decompose any agent trajectory into three ontologically distinct projections of time (Figure~\ref{fig:three-times}), each of which can be measured, and each of which the identity we are about to write down will constrain.
+The introduction gave the failure a name. To make ``failure'' precise we decompose any agent trajectory into three ontologically distinct projections of time (Fig.~\ref{fig:three-times}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/three_times.pdf}
-\caption{The Three Times. $\twall$ (top, blue) is external and continuous. $\tstep$ (middle, red) is the discrete sequence of policy invocations $a_0, a_1, \ldots$. $\tself$ (bottom, orange) is the agent's narrative of its own duration. A chronoceptively grounded policy enforces $\twall \approx \tstep \cdot \langle\Delta t\rangle \approx \tself$; the Augustine Problem (dashed arrow) is the failure of this identity. Each axis carries a named empirical law (L1, L2, L3).}
+\caption{The Three Times. $\twall$ (external, continuous), $\tstep$ (discrete policy invocations $a_0, a_1, \ldots$), $\tself$ (agent's narrative of its own duration). A grounded policy enforces $\twall \approx \tstep\!\cdot\!\langle\Delta t\rangle \approx \tself$; the Augustine Problem is failure of this identity. Each axis carries an empirical law (L1--L3).}
 \label{fig:three-times}
 \end{figure}
 
 \begin{definition}[Three Times]
 \label{def:three-times}
-For an agent $A$ executing trajectory $\trajectory = (s_0, a_0, s_1, a_1, \ldots, s_n)$:
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Wall-clock time} $\twall(\trajectory) := t(s_n) - t(s_0)$ assigns each state an external timestamp.
-    \item \textbf{Step time} $\tstep(\trajectory) := n$ counts policy invocations (LLM calls or sub-trajectories).
-    \item \textbf{Self-narrated time} $\tself(\trajectory) := \selfparser(s_n^{\text{output}})$ extracts the agent's reported duration from its terminal output. The parser is specified in Appendix~\ref{app:annotation-protocol}.
-\end{itemize}
+For a trajectory $\trajectory = (s_0, a_0, \ldots, s_n)$:
+$\twall(\trajectory) := t(s_n) - t(s_0)$ (external timestamp difference);
+$\tstep(\trajectory) := n$ (policy invocations);
+$\tself(\trajectory) := \selfparser(s_n^{\text{output}})$ (agent-reported duration; parser in App.~\ref{app:annotation-protocol}).
 \end{definition}
 
-Grounded chronoception requires the implicit identity
-\[
-\twall \approx \tstep \cdot \langle\Delta t\rangle \approx \tself,
-\]
-where $\langle\Delta t\rangle$ is the agent's average per-step wall-clock cost. The first approximation is L2 alignment: step counts track wall-clock. The second is L3 alignment: the agent's narrative tracks reality. The Augustine Problem is what we observe when both fail.
+Grounded chronoception requires
+$\twall \approx \tstep \cdot \langle\Delta t\rangle \approx \tself$,
+where $\langle\Delta t\rangle$ is the mean per-step wall-clock cost. First approximation is L2; second is L3. The Augustine Problem is joint drift.
 
-A natural objection: surely $\tstep$ is just $\twall$ in different units? Empirically, no. Under wall-clock budgets, the policy uses step count as its binding terminator (\S\ref{sec:l2}); under step budgets, the same policy uses step count. The agent's internal control variable is $\tstep$, and the gap $|\twall - \tstep \cdot \langle\Delta t\rangle|$ is precisely what we measure. We use \emph{chronoception} in the cognitive-science sense (perception of one's own work duration), distinct from \citet{goel2025chronocept}'s use of the same term for fact validity, and from \citet{chu2024timebench}'s temporal reasoning over external timelines.
+\paragraph{Why three, not two or four?} The three are minimal and irreducible. \emph{$\twall \neq \tstep$}: a 10-step trajectory takes $5$\,s on Haiku and $200$\,s on a thinking model. \emph{$\twall \neq \tself$}: agents mis-report by up to $34\times$ (\S\ref{sec:l3}). \emph{$\tstep \neq \tself$}: an agent can produce 6 steps and report ``10 seconds'' with no grounded mapping. Fewer times collapse the training-loss / deployment / narrative arguments; more (e.g., tool-read wall-clock) subsume into $\twall$ once the tool resolves.
 
-\paragraph{Why three Times, not two or four?}
-The three projections are the minimum jointly necessary set for the identity above to be non-trivial, and each is irreducible to the others. \textbf{$\twall$ is not $\tstep$}: the same $\tstep = 10$ step trajectory takes $\twall = 5$\,s on Haiku and $\twall = 200$\,s on a thinking model. \textbf{$\twall$ is not $\tself$}: L3 shows agents report $\tself$ off by up to $34\times$ from $\twall$ even when both are objectively measurable. \textbf{$\tstep$ is not $\tself$}: an agent can produce a $6$-step trajectory and report ``I did this in $10$ seconds'' without any grounded mapping between the two. A single-time ontology loses either the training-loss argument (which acts on $\tstep$) or the deployment argument (which acts on $\twall$) or the narrative-axis argument (which acts on $\tself$). A four-time ontology (e.g., adding wall-clock read from a tool) is subsumed: tool time collapses to $\twall$ once the tool call resolves. The three-time decomposition is minimal, complete, and forced by the three loci at which chronoception can fail --- training loss, execution environment, and generated output.
-
-With the vocabulary fixed, we can state the Augustine Problem precisely --- and prove that under current training practice, no policy can enforce the identity above.
+With the vocabulary fixed, we can state the Augustine Problem precisely.

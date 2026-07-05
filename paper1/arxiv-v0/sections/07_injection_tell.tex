@@ -1,54 +1,31 @@
-% Section 7 — The Injection Tell (v4)
+% Section 7 — Injection Tell (compressed)
 
-\section{The Injection Tell}
+\section{The Injection Tell: A Cross-Vendor Natural Experiment}
 \label{sec:injection-tell}
 
-A reader who has used ChatGPT, Claude.ai, or the Gemini app might object that the Augustine Problem is overstated: those products evidently know what time it is. The mechanism that produces the correct answer is, however, itself the strongest non-experimental evidence the problem is real. Closed-lab deployments do not give the agent chronoception. They install external workarounds that route wall-clock information into the agent's token stream: \textbf{M1} system-prompt insertion of a date string; \textbf{M2} implicit \texttt{get\_current\_time()} tool calls; \textbf{M3} browser-tool side effects that expose timestamps in fetched pages. In every case the model performs no perception of time. The harness perceives time on its behalf and re-encodes the percept as tokens. The model's role is to read and copy.
-
-\paragraph{The empirical signature.}
-We can detect M1 directly by comparing T1.1 pass rate (the agent quotes today's actual date) under Setting A against Setting B. Five of six panel models show $0\%$ pass under A: they refuse, citing training cutoff. The exception is GPT-5.1, whose Setting A pass rate is $74\%$. Twenty percent of its A trajectories explicitly mention ``\textit{system information given at the start of this conversation};'' the remainder quote today's date directly. We interpret this as M1 injection at the OpenAI API tier for GPT-5.1, present on the same API tier where o3, gpt-4o, and gpt-4o-mini are not injected. Within-vendor variation across model versions at the same API surface area --- the same authentication, the same SDK, the same headers --- is hard to explain by anything but a model-specific harness change.
+The consumer products powered by the panel agents feel chronoceptively grounded --- they answer date queries correctly. The mechanism that produces the answer is the strongest non-experimental evidence the underlying gap is real: closed-lab deployments do not give the agent chronoception; they \emph{route wall-clock information into the token stream}. Detected mechanisms: \textbf{M1} system-prompt date insertion; \textbf{M2} implicit \texttt{get\_current\_time()} tool calls; \textbf{M3} browser-tool side effects. In every case the harness perceives time on the model's behalf.
 
 \begin{table}[h]
 \centering
 \small
-\caption{T1.1 pass rates. $0\%$ Setting A pass is the chronoception baseline. GPT-5.1's $74\%$ A pass rate is the provider-side M1 injection signal.}
-\label{tab:t11-pass-rate}
-\begin{tabular}{lcc}
-\toprule
-Model & Setting A & Setting B \\
-\midrule
-gpt-4o-mini, gpt-4o, Haiku 4.5, Sonnet 4.6, Qwen2.5-7B & 0\% & 96--100\% \\
-\textbf{gpt-5.1} & \textbf{74\%} (provider injects) & 100\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph{The Injection Atlas.}
-We extend the audit from the API surface to consumer products and developer tools by auditing leaked system prompts (the \texttt{asgeirtj/system\_prompts\_leaks} corpus) for eleven harnesses across four product tiers. Table~\ref{tab:injection-atlas} summarises; verbatim excerpts and per-product evidence are in Appendix~\ref{app:atlas-evidence}.
-
-\begin{table}[h]
-\centering
-\small
-\caption{Closed-Lab Injection Atlas. M1 system-prompt injection across four product tiers. Verbatim leaked-system-prompt excerpts in Appendix~\ref{app:atlas-evidence}.}
+\caption{The Injection Atlas: M1 system-prompt date injection across four product tiers (\texttt{asgeirtj/system\_prompts\_leaks} corpus). Verbatim excerpts in App.~\ref{app:atlas-evidence}.}
 \label{tab:injection-atlas}
-\begin{tabular}{lcp{7.5cm}}
+\begin{tabular}{lcp{7.2cm}}
 \toprule
-Product tier & M1 rate & Examples / verbatim evidence \\
+Product tier & M1 rate & Examples \\
 \midrule
-Consumer web-chat & \textbf{3/3 (100\%)} & ChatGPT (\texttt{Current date: 2025-08-23}); Claude.ai (\texttt{Friday, May 22, 2026}); Gemini (\texttt{Monday, May 18, 2026, in Hafnarfj\"or\dh ur, Iceland}) \\
-Raw API & 1/4 (25\%) & GPT-5.1 yes; OpenAI o3 / gpt-4o / gpt-4o-mini no; Anthropic Haiku 4.5 / Sonnet 4.6 no \\
-Developer tools (IDE/CLI) & 0/3 (0\%) & Cursor, GitHub Copilot CLI, Perplexity Computer --- no date injection \\
+Consumer web-chat & \textbf{3/3 (100\%)} & ChatGPT, Claude.ai, Gemini all inject the current date \\
+Raw API & 1/4 (25\%) & GPT-5.1 injects; o3, gpt-4o, gpt-4o-mini, Anthropic API do not \\
+Developer tools (IDE/CLI) & 0/3 (0\%) & Cursor, GitHub Copilot CLI, Perplexity Computer --- no injection \\
 Open-source self-hosted & N/A & We control the entire stack \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \paragraph{Why this is decisive.}
-Three competing closed labs --- OpenAI, Anthropic, Google --- have arrived at the same engineering choice for their consumer chat products, independently, without coordination, and with substantial commercial incentive to ship the cheaper alternative if one existed. The choice they have arrived at is wall-clock injection at the system-prompt layer. Competing organisations do not patch capabilities the underlying model already possesses. Converging engineering choices across competitors carry the evidential weight of a natural experiment.
-
-The within-vendor contrast inside Anthropic is the sharpest single piece of evidence. The same Claude 4.5/4.6/4.7 model exhibits two behaviours depending on access path. Through Claude.ai (the web product), the model injects via its \texttt{<knowledge\_cutoff>} block and answers ``what time is it now?'' correctly. Through the Anthropic API (with the same model id), no injection is present, and the model refuses with explicit training-cutoff disclosure. \textbf{The model is one; the chronoception is the harness's.}
+Three closed labs converge on the same engineering choice for their consumer products, independently, with commercial incentive to ship the cheaper alternative if one existed. The within-Anthropic contrast is sharpest: the same Claude 4.6 model injects via \texttt{<knowledge\_cutoff>} on Claude.ai and answers ``what time is it now?'' correctly, but through the raw Anthropic API refuses with an explicit training-cutoff disclosure. \textbf{The model is one; the chronoception is the harness's.}
 
 \paragraph{What injection does not close.}
-Setting B raises T1.1 pass rate to at least $96\%$ on every panel agent. It does not move T2.3 $\CAR$ (\S\ref{sec:l2}, $|\Delta\CAR| \leq 0.01$) and reduces T3.1 $|\confab|$ only partially (mean $0.18$, \S\ref{sec:l3}). Information at the prompt is not a representation. The action axis remains untouched, the narrative axis only partially anchored, the calibration sub-problem unaffected. The harness solves the consumer-tier question (``what time is it?'') by patching the model's output; the underlying gap stays where it was.
+Setting~B raises T1.1 to $\geq 96\%$ on every panel agent (App.~\ref{app:full-panel-tables}), but does not move T2.3 $\CAR$ (Prop.~\ref{prop:injection-not-action}), reduces T3.1 $|\confab|$ only partially (mean $\Delta = 0.18$), and leaves T3.3 coverage unimproved. Injection is a consumer-tier patch on T1; L2 and L3 remain.
 
-We have now measured three axes of failure and identified the engineering pattern that compensates for one of them at the consumer tier. The next section aggregates the failures into a single scalar.
+Three axes of failure, one engineering pattern that half-compensates for one. The next section aggregates them into a single scalar.

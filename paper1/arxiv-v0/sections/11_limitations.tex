@@ -1,29 +1,21 @@
-% Section 11 — What we are and are not claiming (v4)
+% Section 11 — Scope + Falsification (compressed)
 
 \section{Scope, Objections, and Falsification}
 \label{sec:limitations}
 
-Strong claims about foundation-model agents invite obvious objections. We anticipate them here, state exactly what our framework does and does not claim, and specify the four pre-registered experiments that would falsify each central claim.
+\paragraph{What we do not claim.}
+\begin{itemize}[leftmargin=1.4em, itemsep=1pt]
+\item \emph{Not that current agents are useless.} At the T1.1-dominated chat horizon, the Injection Tell closes the visible failure. Predictions bind only where T2.3 and T3 become load-bearing.
+\item \emph{Not that capability scaling is worthless.} It closes the narrative axis $94\%$; the structural ceiling is the action axis.
+\item \emph{Not that all test-time compute fails.} A reasoning system consulting a wall-clock-supported tool exits CIT by construction; Reverse-Scaling says nothing about it.
+\item \emph{Not that the observation is novel.} Practitioners noted temporal blindness anecdotally \citep{cheng2025temporallyblind}. Our contribution is the structural diagnosis, ontology, theorems, atlas, and deployment bound.
+\item \emph{Not that $\ccestar = 0.20$ is unique.} The structural claim does not depend on the precise threshold.
+\end{itemize}
 
-\paragraph{We are not claiming that current LLM agents are useless.}
-At horizons where T1.1 dominates --- single-turn chat, short Q\&A, search-augmented retrieval --- the Injection Tell solves the problem at the consumer tier and the underlying chronoception gap is invisible. Many production deployments inhabit this regime. The framework's predictions about deployment ceilings (\S\ref{sec:agentic-timeline}) bind only at horizons where T2.3 and T3 become load-bearing.
+\paragraph{Empirical limitations.}
+Panel: 14 agents, $\sim$5{,}900 traj. Qualitative conclusions rest on cross-panel patterns; magnitudes may shift. Self-narration parsing: $3\%$ human-disagreement rate. All trajectories English. Within-trajectory drift (pre-registered P8, P9) not measured. GPT-5.1 provider-side M1 injection reported as confound.
 
-\paragraph{We are not claiming that capability scaling is worthless.}
-Capability scaling closes the narrative axis decisively: $|\confab|$ falls $94\%$ across five frontier generations of non-reasoning models. The closure is real and is the reason agents at the chat tier feel chronoceptively grounded. The framework's claim is that this closure has a structural ceiling --- the action axis --- which capability scaling alone cannot reach.
+\paragraph{Falsification.}
+Four pre-registered forms \citep{osf-prereg-2026}: \textbf{(F1)} an agent trained under a loss with no wall-clock support crossing $\ccestar$ under Setting~A falsifies CIT. \textbf{(F2)} a reasoning-tuned agent exhibiting monotone \emph{decrease} in $|\confab|$ across a three-level, one-order-of-magnitude $K$ sweep falsifies Reverse-Scaling. \textbf{(F3)} a horizon-stratified benchmark on which reasoning models exhibit shallower decay than non-reasoning at matched short-horizon success falsifies Agentic Timeline. \textbf{(F4)} a CIT-regime foundation model achieving $> 50\%$ T3.3 coverage without harness injection falsifies P11. We commit to reporting any we observe.
 
-\paragraph{We are not claiming that all forms of test-time compute fail.}
-The Reverse-Scaling Theorem applies to token-only test-time compute under CIT. A reasoning system that consults a wall-clock-supported tool, or whose policy is shaped by a wall-clock-aware reward, exits the CIT regime by construction. The theorem says nothing about such systems.
-
-\paragraph{We are not claiming that the Augustine Problem is novel as observation.}
-Practitioners have noted agents' confused relationship with time anecdotally for years; \citet{cheng2025temporallyblind} reports it under the name ``temporally blind.'' Our contribution is to name the gap as a structural diagnosis (the Augustine Problem), formalise its objects (Three Times), prove its origin (CIT), prove that reasoning compute makes it worse (Reverse-Scaling), audit the workaround (Injection Tell), and connect the measurement to deployment (Agentic Timeline).
-
-\paragraph{We are not claiming the Augustine Threshold is the only useful target.}
-$\ccestar = 0.20$ is a measurement target calibrated against the human baseline. A particular deployment may require tighter or looser bounds. The framework's structural claim --- that no current frontier agent crosses $\ccestar$, and the action axis is the binding constraint --- does not depend on the precise threshold value.
-
-\paragraph{Empirical limitations of the present study.}
-The panel covers 14 agent configurations and roughly $5{,}900$ trajectories. A full sweep targeting 25 or more agents is planned. The qualitative conclusions --- L2 unmoved by injection, L3 closing on the non-reasoning axis, the Reverse-Scaling pattern intra- and cross-model, the Calibration Catastrophe panel-wide, the universal failure to cross $\ccestar$ --- depend on patterns observed across the panel and are unlikely to invert; precise magnitudes may shift. Self-narration parsing introduces a $3\%$ disagreement rate against human annotation. We did not run T2.3 on reasoning models (wall-budget tests are prohibitively expensive at reasoning latencies), which is the reason the strict quantitative P12 test is deferred. GPT-5.1 exhibits provider-side M1 injection that we report as confound rather than eliminate; the framework's predictions are stated at the (model $+$ harness) level. Trajectories are all English-language; CIT is language-agnostic but empirical magnitudes are not necessarily. The within-trajectory predictions P8 and P9 are pre-registered but not measured.
-
-\paragraph{What would falsify the framework.}
-The framework's central claims are vulnerable to four explicit forms of falsification, all pre-registered \citep{osf-prereg-2026}. \textbf{(F1)} A foundation-model agent trained under a loss with no wall-clock support that crosses $\ccestar$ in Setting A would falsify CIT (Theorem~\ref{thm:cit}). \textbf{(F2)} A reasoning-tuned agent under CIT that exhibits monotone decrease in $|\confab|$ across an explicit reasoning-budget sweep covering at least three levels and at least one order of magnitude would falsify the Reverse-Scaling Theorem (Theorem~\ref{thm:reverse-scaling}). \textbf{(F3)} A horizon-stratified benchmark on which reasoning models exhibit shallower decay than non-reasoning models at matched short-horizon success would falsify the qualitative version of the Agentic Timeline Hypothesis. \textbf{(F4)} A CIT-regime foundation model achieving more than $50\%$ T3.3 coverage without harness-side injection would falsify the calibration corollary (P11). We commit to reporting any of these we observe. Where a claim is not falsifiable inside a token-only regime --- because the falsification requires exiting that regime --- we say so explicitly (the Reverse-Scaling Theorem's scope remark in \S\ref{ssec:reverse-scaling}, the CIT scope remark in \S\ref{sec:augustine-problem}). Everything else, the framework offers to the reader for refutation.
-
-The framework, thus scoped, still knows only time. But every agent it constrains inhabits both time and space --- a codebase, a website, the open web. The Augustine Problem is the temporal face of a deeper representational gap; the next section names the spatial face and closes the joint frontier.
+The framework knows only time; the spatial half follows.

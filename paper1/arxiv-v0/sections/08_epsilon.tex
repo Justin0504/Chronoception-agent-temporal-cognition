@@ -1,28 +1,22 @@
-% Section 8 — Chronoceptive Calibration Error (v4)
+% Section 8 — Chronoceptive Calibration Error (compressed)
 
 \section{The Chronoceptive Calibration Error $\cce$}
 \label{sec:epsilon}
 
-We have measured each axis in isolation --- L2 on the action side (\S\ref{sec:l2}), L3 across four faces on the narrative side (\S\ref{sec:l3}), and the Injection Tell as the engineering pattern that partially masks the wall axis at the consumer tier (\S\ref{sec:injection-tell}). To compare agents on a common scale and to state the deployment bound of \S\ref{sec:agentic-timeline}, we aggregate the three axes into a single scalar.
+We aggregate the three axes into a single scalar for cross-agent comparison and the deployment bound of \S\ref{sec:agentic-timeline}.
 
 \begin{definition}[Chronoceptive Calibration Error]
 \label{def:cce}
-$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis-score $\mathrm{score}_{T_k}$ is the mean of the available sub-capability failure scores on that axis, normalised to $[0, 1]$ (Appendix~\ref{app:full-panel-tables}). $\cce = 0$ corresponds to a grounded agent; $\ccestar = 0.20$ is the Augustine threshold, calibrated against human introspective performance \citep{wittmann2009chronoception} at twice the human error.
+$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, where each axis-score is the mean of available sub-capability failure scores normalised to $[0, 1]$ (App.~\ref{app:full-panel-tables}). $\cce = 0$ is grounded; $\ccestar = 0.20$ is the Augustine threshold. Missing cells are dropped, not imputed; the pilot-axis estimate is a lower bound on the full nine-cap $\cce$ where dropped cells exhibit comparable-or-worse failure.
 \end{definition}
-
-\paragraph{Aggregation disclosure.}
-The full benchmark defines nine sub-capabilities (T1.1--T3.3, \S\ref{sec:chronobench}). On the panel-wide pilot, axis-scores reduce to the three primary sub-capabilities for which we have full $n{=}30$ panel coverage --- T1.1 (date recall), T2.3 (clock adherence), T3.1 (retrospective duration) --- because T1.2, T1.3, T2.1, T2.2, T3.2, T3.3 are only filled for the five-generation non-reasoning slice (see Table~\ref{tab:full-panel}, App.~B). Where a sub-capability is missing for a given agent (e.g., o3 / o4-mini T1.1 on Setting~A), that sub-capability is dropped from the axis mean rather than imputed; consequently the $\cce$ point estimates in Figure~\ref{fig:epsilon-panel} are pilot-axis estimates, not full nine-cap averages. The pilot-axis estimate is a lower bound on the full-nine-cap $\cce$ whenever the dropped cells exhibit comparable or worse failure (which all per-cell evidence so far supports). Per-cell $n$ and bootstrap CIs in App.~B make this aggregation auditable.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/epsilon_panel.pdf}
-\caption{Panel $\cce$ ranking. Setting A bars sorted; Setting B bars (lighter) below. The dashed green line marks $\ccestar = 0.20$. No agent crosses the threshold. The best agent (Sonnet 4.6 without thinking, $\cce = 0.316$) sits $1.58\times$ above; its T2 axis alone contributes $\approx 0.32$, irreducible by any narrative-axis intervention. The Reverse-Scaling variants of o4-mini and Sonnet 4.6 are not shown here (Figure~\ref{fig:reverse-scaling} carries their effect); the full sub-capability decomposition is in Appendix~\ref{app:l3-detail}.}
+\caption{Panel $\cce$ ranking. No agent crosses $\ccestar$. The best agent (Sonnet 4.6 $+$ thinking, $\cce = 0.276$) sits $1.4\times$ above; its T2 axis alone contributes $\geq 0.30$, irreducible by any narrative-axis intervention. Full sub-capability decomposition in App.~\ref{app:l3-detail}.}
 \label{fig:epsilon-panel}
 \end{figure}
 
-\paragraph{Two findings.}
-\textbf{(1) The action axis is the binding constraint.} Among the four agents that sit closer to the threshold than $0.20$ above it (Sonnet 4.6, gpt-5.1, Haiku 4.5, o3), $\mathrm{score}_{T_2}$ dominates the aggregate: it contributes at least $0.317$ on every agent. Even projecting $\mathrm{score}_{T_3}$ to zero --- which would require crossing both Theorem~\ref{thm:cit} and Theorem~\ref{thm:reverse-scaling} --- no agent crosses $\ccestar$. The Augustine threshold is unreachable through narrative training.
+\paragraph{Two findings.} \textbf{(1) The action axis is binding.} Among the four agents closer to $\ccestar$ than $0.20$ above it (Sonnet~4.6 $\pm$ thinking, gpt-5.1, Haiku 4.5), $\mathrm{score}_{T_2}$ contributes $\geq 0.30$ on every agent. Projecting $\mathrm{score}_{T_3} \to 0$ --- which would require crossing both Theorem~\ref{thm:cit} and Theorem~\ref{thm:reverse-scaling} --- still leaves no agent below $\ccestar$. \textbf{(2) Reverse-Scaling operates on the aggregate.} The o4-mini effort sweep takes $\cce$ from $0.470$ (low) to $0.611$ (high). More reasoning compute moves the agent further from the threshold. There is no axis along which token-only training can close the gap.
 
-\textbf{(2) Reverse-Scaling operates on the aggregate.} The o4-mini effort sweep takes $\cce$ from $0.470$ at low effort to $0.532$ at medium to $0.611$ at high. The Sonnet 4.6 thinking comparison takes $\cce$ from $0.276$ to $0.301$. More reasoning compute moves the agent further from the threshold, not closer. The two findings combine into a single structural claim: there is no axis along which token-only training can close the gap.
-
-These two findings are the paper's central empirical claim: every axis of grounded chronoception is either untouched by capability scaling or structurally reversed by it. What does that mean for the deployment horizons the field is currently building toward? The next section makes the answer precise.
+This is the paper's central empirical claim. The next section turns it into a deployment bound.

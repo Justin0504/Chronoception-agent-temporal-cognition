@@ -1,28 +1,26 @@
-% Section 12 — Future Work (v4, brief sketch — full detail in Appendix E)
+% Section 12 — Spatial Generalisation (compressed; full sketch in App. E)
 
 \section{From Time to Space: The Spatiotemporal Generalisation}
 \label{sec:future-work}
 
-Three Times, three laws, one impossibility theorem, one deployment bound --- all developed along a single axis. But the agents whose deployment frontier the Agentic Timeline (\S\ref{sec:agentic-timeline}) bounds inhabit both time and space: a SWE-Bench agent navigates a codebase, a WebArena agent navigates a website, a GAIA agent navigates the open web. If the argument that produced CIT (\S\ref{sec:augustine-problem}) goes through for any external metric the loss does not see, then time is not the only axis where the framework applies. It goes through, and this section sketches the spatial half. The Augustine Problem is the temporal face of a deeper representational gap whose spatial face is the \emph{Cartographic Problem}: a mirror ontology of Three Spaces ($\sworld, \svisit, \sself$), three spatial laws (SL1, SL2, SL3) that mirror L1, L2, L3, and a generalised impossibility theorem.
+Every long-horizon benchmark on which deployment claims are made --- SWE-Bench, WebArena, GAIA, MLE-Bench --- requires the agent to navigate space as well as time. The argument that produces CIT (\S\ref{sec:augustine-problem}) goes through unchanged on any external metric the loss does not see. We state the spatial half and defer the full derivation to App.~\ref{app:spatiotemporal}.
 
 \begin{theorem}[Spatiotemporal Impossibility, SIT]
 \label{thm:sit}
-For any loss $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<i}), x_i)]$ where neither $\ell$ nor $\mathcal{D}$ contains external-metric support, $\nabla_\theta \loss$ contains zero gradient signal aligning either $\twall$ or $\sworld$ with any internal representation.
+Strengthen Assumption~\ref{ass:token-only} to exclude spatial metrics from $\mathcal{D}$'s support (Assumption~\ref{ass:token-only-spatial}). Then $\nabla_\theta \loss$ carries zero gradient signal aligning either $\twall$ or $\sworld$ with any internal representation.
 \end{theorem}
 
-The proof generalises CIT directly: tokens carry neither time nor space, and gradient invariance under reparameterisation extends to both. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level. Solving one does not solve the other; installing chronoception via a wall-clock-supported loss does not install spatial perception unless the loss is also extended along $\sworld$ separately.
-
-The Agentic Timeline Hypothesis (\S\ref{sec:agentic-timeline}) extends along the joint axis. Every agent has a maximum viable deployment region in the $(T, S)$ plane (Figure~\ref{fig:agentic-frontier}):
+The Augustine and Cartographic Problems are the same problem at the loss-function level. The Agentic Timeline (\S\ref{sec:agentic-timeline}) generalises to a joint deployment region:
 \[
-T_{\max}(A) \cdot S_{\max}(A) \;\leq\; C / \ccestST(A),
+T_{\max}(A)\cdot S_{\max}(A) \;\leq\; C/\ccestST(A).
 \]
-where $\ccestST$ is the spatiotemporal calibration error. The frontier $T \cdot S = \text{const}$ is the agent's \emph{Agentic Frontier} --- the boundary of its deployable region. Pre-registered Prediction P13: under CIT regime, this frontier is bounded above by a structural constant independent of token-only capability scaling.
+The frontier $T\!\cdot\!S = \text{const}$ is the agent's \emph{Agentic Frontier} (Fig.~\ref{fig:agentic-frontier}). \textbf{Pre-registered P13.} Under CIT-regime this frontier is bounded above by a structural constant independent of token-only capability scaling.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/agentic_frontier.pdf}
-\caption{The Agentic Frontier in the $(T, S)$ plane. Each curve is a level set $T \cdot S = C / \ccestST(A)$ for one value of the spatiotemporal calibration error. Major long-horizon agent benchmarks are placed at their characteristic temporal and spatial load. Paper 1 bounds the temporal ($T$) axis through the Augustine Problem and CIT; Paper 3 extends to the spatial ($S$) axis through the Cartographic Problem and SIT; together they specify the joint frontier.}
+\caption{The Agentic Frontier in the $(T, S)$ plane. Level sets $T\!\cdot\!S = C/\ccestST(A)$. Major long-horizon agent benchmarks placed by their characteristic $(T, S)$ load. Paper 1 bounds the $T$-axis; Paper 3 extends to the $S$-axis; together they specify the joint frontier.}
 \label{fig:agentic-frontier}
 \end{figure}
 
-The full development --- the three spatial laws, the Cartographic Tell (mirror of the Injection Tell), the classification of major long-horizon benchmarks (METR HCAST, SWE-Bench, WebArena, GAIA, MLE-Bench) by spatiotemporal load, five concrete future experiments E6--E10, and the connection to the world-models literature --- appears in Appendix~\ref{app:spatiotemporal}. The framework's structural claim across the joint axis: \textbf{the autonomous-agent capability curve saturates not because intelligence saturates, but because spatiotemporal cognition does not scale.} This is the bridge from Paper 1 to the planned Paper 3 (\emph{The Agentic Frontier}).
+The three spatial laws (SL1--SL3), the Cartographic Tell, benchmark classification, five future experiments (E6--E10), and the Paper 3 sketch are in App.~\ref{app:spatiotemporal}. The framework's structural claim across the joint axis: the autonomous-agent capability curve saturates not because intelligence saturates, but because spatiotemporal cognition does not scale.

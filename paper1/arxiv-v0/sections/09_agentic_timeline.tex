@@ -1,39 +1,25 @@
-% Section 9 — The Agentic Timeline Hypothesis (v4)
+% Section 9 — Agentic Timeline (compressed)
 
-\section{The Agentic Timeline Hypothesis}
+\section{From Measurement to Deployment: The Agentic Timeline}
 \label{sec:agentic-timeline}
 
-We turn measurement into deployment implication. The previous sections established that the action axis cannot be closed by narrative training, and that reasoning-token expansion makes the narrative axis worse. The question now is what that means for the autonomous-agent product line the field is currently building.
-
-Industry is moving along an explicit horizon trajectory: from minute-scale chat completion to hour-scale coding agents to day-scale autonomous research agents. At each new horizon a different chronoceptive sub-capability becomes load-bearing. At the chat horizon, only T1.1 matters (and the harness can patch it, \S\ref{sec:injection-tell}). At the hour horizon, T2.3 and T3.1 become binding: the agent must honour a wall-clock budget and report its progress truthfully. At the day horizon, the full profile $\Phi = (\parkinson, \CAR, \confab)$ must lie close to grounded, and the agent must hold session coherence across many sub-tasks. The required calibration grows tighter with the deployment horizon.
+Industry is moving from minute-scale chat to hour-scale coding agents to day-scale autonomous research agents. At each new horizon a different sub-capability becomes load-bearing: T1.1 at chat (harness-patchable, \S\ref{sec:injection-tell}), T2.3 and T3.1 at hour-scale (agent must honour a budget and report progress truthfully), the full profile $(\parkinson, \CAR, \confab)$ at day-scale. Required calibration grows tighter with the horizon.
 
 \begin{hypothesis}[Agentic Timeline]
 \label{hyp:agentic-timeline}
-For an agent $A$ with chronoceptive calibration error $\cce(A)$ and median Clock-Adherence Ratio $\CAR(A)$, the maximum viable deployment horizon $T_{\max}(A)$ satisfies
-\[
-T_{\max}(A) \;\propto\; \frac{1}{\cce(A)} \cdot f(\CAR(A)),
-\]
-with $f$ monotone-increasing in $\CAR$.
+$T_{\max}(A) \;\propto\; \frac{1}{\cce(A)} \cdot f(\CAR(A))$, with $f$ monotone-increasing in $\CAR$.
 \end{hypothesis}
 
-Combine Hypothesis~\ref{hyp:agentic-timeline} with the empirical content of \S\ref{sec:l2}--\ref{sec:l3}: L2 does not scale with capability, and Theorem~\ref{thm:reverse-scaling} says reasoning-token expansion grows $|\confab|$. The conclusion is that $T_{\max}$ scales with neither. \textbf{The autonomous-agent timeline is bounded by chronoception, not by intelligence and not by reasoning compute.} This is the framework's deployment-relevance claim. We turn now to its falsifiable form.
+Combined with the empirics of \S\ref{sec:l2}--\ref{sec:l3}: L2 does not scale with capability, Reverse-Scaling grows $|\confab|$ with reasoning budget. \textbf{$T_{\max}$ scales with neither. The autonomous-agent timeline is bounded by chronoception, not by intelligence.}
 
-\paragraph{Pre-registered P12.}
-On any horizon-stratified benchmark with at least five horizon tiers, the slope of success-rate decay with $\log T$ scales as $-(1 - \CAR(A))$ at fixed parameter count. Agents with $\CAR$ closer to $1$ lose less success rate per unit of horizon. A strict quantitative test requires $\CAR$ measurements on a panel that includes reasoning models; we have deferred this because T2.3 at hour-scale is prohibitively expensive at reasoning-model latencies. The qualitative version is testable on public data and we test it now.
-
-\paragraph{Supportive evidence on METR HCAST.}
-The METR HCAST corpus contains 14{,}709 runs across 20 frontier models with per-task human-time difficulty labelled. We bucket tasks by human-minutes, compute success rate per bucket per model, and fit the slope of success rate against $\log_{10}(\text{human-minutes})$ for each model. The framework predicts that reasoning models should exhibit steeper decay than non-reasoning models at matched short-horizon success, because the same L2 mechanism and Theorem~\ref{thm:reverse-scaling} apply at the model-class level.
+\paragraph{Pre-registered P12 and HCAST support.}
+On any horizon-stratified benchmark with $\geq 5$ horizon tiers, slope of success decay with $\log T$ scales as $-(1 - \CAR)$. On the METR HCAST corpus (14{,}709 runs, 20 frontier models), five reasoning models cluster at steeper mean $|\text{slope}| = 0.306$ vs.\ $0.255$ for fifteen non-reasoning models --- a $20\%$ effect at matched short-horizon success (Fig.~\ref{fig:p12-hcast}). Cluster separation is visible by inspection. The result is supportive rather than definitive: a strict P12 test requires direct $\CAR$ measurements on the HCAST panel.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\linewidth]{figures/p12_hcast.pdf}
-\caption{P12 supportive evidence on the public METR HCAST corpus (14{,}709 runs, 20 frontier models). The five reasoning models (red, including o1-preview, o1, o3, GPT-5-Codex, GPT-5.1-Codex-Max) cluster at steeper slopes (mean $|\text{slope}| = 0.306$) than the fifteen non-reasoning models (blue, mean $0.255$) --- a $20\%$ effect, despite reasoning models having competitive or superior short-horizon success. The reasoning cluster's shallowest slope is steeper than half of the non-reasoning cluster.}
+\caption{P12 support on METR HCAST. Reasoning models cluster at steeper decay slopes despite competitive short-horizon success --- the L2 mechanism at the model-class level.}
 \label{fig:p12-hcast}
 \end{figure}
 
-The cluster separation is visible by inspection (Figure~\ref{fig:p12-hcast}). The result is supportive rather than dispositive: a definitive P12 test requires direct $\CAR$ measurements on the HCAST panel, which we have not run. The qualitative pattern is what the framework predicts.
-
-\paragraph{Three field implications.}
-\textbf{First,} the narrative-axis ceiling is not the deployment ceiling. Scaling along the narrative axis improves short-horizon experience --- more polished responses, fewer hallucinated dates --- but saturates against L2 at the few-hour horizon. The ceiling is structural, and the data align with it. \textbf{Second,} provider injection (\S\ref{sec:injection-tell}) is a consumer-tier band-aid: it closes T1.1 where consumers will see the failure and leaves L2 and L3 untouched where coding agents and research agents will hit them. \textbf{Third,} the first lab that installs chronoception via a loss extension --- a wall-clock-supported reward signal, a learned interface to a tool, an architectural primitive that takes a wall-clock argument --- shifts the deployment frontier. The space of installation routes is the subject of Paper 2 (\textsc{ChronoStack}).
-
-We are not the first to observe that frontier agents have horizon limits. \citet{kwa2025metrhorizons} document the empirical saturation with care. Our contribution is a mechanism for the saturation that is structural rather than empirical: the curve saturates because the binding axis is one that token-only training cannot reach.
+\citet{kwa2025metrhorizons} document horizon saturation empirically; we supply a structural mechanism. The Reverse-Scaling Theorem says the corner-case fix (more reasoning) makes it worse; the constructive fix (wall-clock-supported loss) is the subject of Paper 2 (\textsc{ChronoStack}).
