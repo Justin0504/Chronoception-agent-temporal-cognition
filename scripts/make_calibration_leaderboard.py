@@ -114,10 +114,14 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
                             xycoords=("data","data"), zorder=4, pad=0)
         ax.add_artist(ab)
     else:
-        ax.add_patch(Circle((X_CHIP, y), 0.60, facecolor="#8a8a8a",
-                            edgecolor="#5a5a5a", lw=0.5, zorder=3))
-        ax.text(X_CHIP, y, "OR", ha="center", va="center",
-                fontsize=8, color="white", fontweight="700", zorder=4)
+        # Oracle: rounded chip + star marker
+        from matplotlib.patches import FancyBboxPatch
+        ax.add_patch(FancyBboxPatch((X_CHIP - 1.4, y - 0.30), 2.8, 0.60,
+                                    boxstyle="round,pad=0.02,rounding_size=0.18",
+                                    facecolor="#e6e6e6", edgecolor="none",
+                                    zorder=3))
+        ax.scatter([X_CHIP], [y], marker="*", s=180, color="#666666",
+                   edgecolors="none", zorder=5)
 
     # Model
     color = "#3a3a3a" if is_ref else INK

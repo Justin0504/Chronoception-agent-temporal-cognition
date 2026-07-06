@@ -141,19 +141,14 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
                             xycoords=("data","data"), zorder=4, pad=0)
         ax.add_artist(ab)
     else:
-        # Oracle: rounded rectangle chip + star (matches user's reference)
+        # Oracle: rounded chip + star marker (aspect-ratio safe via scatter)
         from matplotlib.patches import FancyBboxPatch
-        ax.add_patch(FancyBboxPatch((X_CHIP - 1.6, y - 0.35), 3.2, 0.70,
-                                    boxstyle="round,pad=0.02,rounding_size=0.35",
+        ax.add_patch(FancyBboxPatch((X_CHIP - 1.4, y - 0.30), 2.8, 0.60,
+                                    boxstyle="round,pad=0.02,rounding_size=0.18",
                                     facecolor="#e6e6e6", edgecolor="none",
                                     zorder=3))
-        # Star drawn as a stylized polygon (no unicode dependency)
-        import numpy as np
-        theta = np.linspace(-np.pi/2, 3*np.pi/2, 11)
-        r = np.array([0.32,0.14,0.32,0.14,0.32,0.14,0.32,0.14,0.32,0.14,0.32])
-        star_x = X_CHIP + r * np.cos(theta)
-        star_y = y + r * np.sin(theta)
-        ax.fill(star_x, star_y, color="#7a7a7a", zorder=4)
+        ax.scatter([X_CHIP], [y], marker="*", s=180, color="#666666",
+                   edgecolors="none", zorder=5)
 
     # ---- model label ----
     weight = "600" if is_ref else "500"
