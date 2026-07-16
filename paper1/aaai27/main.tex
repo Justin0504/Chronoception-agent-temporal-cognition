@@ -1,0 +1,255 @@
+\documentclass[letterpaper]{article}
+\usepackage[submission]{aaai2027}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\frenchspacing
+\usepackage{booktabs}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{multirow}
+\usepackage{enumitem}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{proposition}{Proposition}
+
+\input{notation.tex}
+
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{2}
+
+\title{The Augustine Problem in Agents:\\Chronoception Must Be Installed}
+\author{Anonymous Submission}
+\affiliations{Paper under double-blind review}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+LLM agents are trained on tokens and deployed in wall-clock time. They cannot perceive the wall-clock. The \emph{Chronoception Impossibility Theorem} (CIT) makes the claim precise: under any token-only loss, the gradient carries no signal aligning wall-clock time with any internal representation. We name the resulting representational gap the \emph{Augustine Problem}, decompose any agent trajectory into three ontologically distinct projections of time $(\twall, \tstep, \tself)$, and prove a companion \emph{Reverse-Scaling Theorem}: reasoning-token expansion under CIT monotonically increases self-narration error $|\confab|$. We test the framework on \textsc{ChronoBench}, a 9-capability diagnostic across 14 agents from 7 vendors ($\sim$5,900 trajectories, including the first full $9\!\times\!2\!\times\!30$ panel coverage of a reasoning model). Every agent honours less than $5\%$ of its wall-clock budget; injection does not move the action axis; nominal $90\%$ CIs achieve $0$--$77\%$ coverage; Reverse-Scaling is confirmed four ways (intra-model, cross-model, within-model, cross-vendor). Three closed labs independently inject the current date into their consumer-chat system prompts; zero of three developer-tool products do --- a natural experiment. A toy positive control (Qwen2.5-1.5B $+$ LoRA SFT with wall-clock-supported targets) crosses the Augustine threshold on T3.1 after $\sim$60 seconds of training, demonstrating CIT's constructive converse. The Agentic Timeline Hypothesis turns measurement into a deployment bound $T_{\max} \propto 1/\cce$; qualitative P12 evidence on 14,709 METR HCAST runs supports it. The framework generalises to a Spatiotemporal Impossibility Theorem and the Agentic Frontier $T_{\max}\!\cdot\!S_{\max} \leq C/\ccestST$. Code, trajectories, Docker, and OSF pre-registration released.
+\end{abstract}
+
+\section{Introduction}
+
+A frontier reasoning model, asked how long the next task will take, predicts ``\textit{15 seconds}.'' It thinks for ninety. It answers in two. Asked afterwards on the duration, it reports ``\textit{0.04 seconds}.'' Asked for a $90\%$ CI on the same duration, the interval contains the truth $0\%$ of the time. None of the four failures is a bug. They are joint and panel-wide, present across the 14 agents from 7 vendors we tested.
+
+\paragraph{The Augustine Problem.}
+Every training loss in current practice --- next-token cross-entropy, SFT, RLHF, RL with verifiable rewards, reasoning supervision --- is a functional of token sequences. None contains wall-clock time in its support. Yet the same models are deployed as agents in continuous physical time. We call the representational gap the \emph{Augustine Problem}, after Augustine's confession that he knew what time was until asked to explain it.\footnote{We use \emph{chronoception} in the cognitive-science sense \citep{wittmann2009chronoception,eagleman2008time}: perception of one's own work duration.} The gap is structural. \emph{Chronoception cannot be acquired from token-only training; it must be installed.}
+
+\paragraph{Position.} This paper makes that claim precise, measures the failure, audits the industry workaround, and specifies what closing the gap would require. Our framework's spine is three theorems (CIT, Reverse-Scaling, SIT), three empirical laws (L1--L3), and three papers (this one, \textsc{ChronoStack}, the Agentic Frontier). We support the position with layered evidence: (a) \textsc{ChronoBench}, a 9-capability diagnostic across 14 agents ($\sim$5,900 trajectories); (b) the Injection Atlas, an audit of 11 closed-lab harnesses; (c) a toy positive control demonstrating CIT's constructive converse; (d) horizon-scaling evidence on 14,709 METR HCAST runs.
+
+\paragraph{Contributions.}
+(1)~The Augustine Problem as a named structural diagnosis with the Three Times $(\twall, \tstep, \tself)$ ontology. (2)~\emph{Two theorems}: CIT (no token-only loss installs chronoception) and Reverse-Scaling ($\mathbb{E}[|\confab| \mid K]$ monotone non-decreasing in reasoning budget $K$), confirmed four ways. (3)~\textsc{ChronoBench}, 9-cap $\times$ 14-agent $\times$ 2-setting diagnostic. (4)~The Injection Atlas as cross-vendor natural experiment and a toy positive control crossing $\ccestar$. (5)~Agentic Timeline Hypothesis $T_{\max} \propto 1/\cce$ with HCAST support and spatial generalisation SIT.
+
+\section{The Three Times of an Agent}
+\label{sec:three-times}
+
+\begin{definition}[Three Times]
+\label{def:three-times}
+For a trajectory $\trajectory = (s_0, a_0, \ldots, s_n)$:
+$\twall(\trajectory) := t(s_n) - t(s_0)$ (external timestamp difference);
+$\tstep(\trajectory) := n$ (policy invocations);
+$\tself(\trajectory) := \selfparser(s_n^{\text{output}})$ (agent-reported duration).
+\end{definition}
+
+Grounded chronoception requires
+$\twall \approx \tstep\!\cdot\!\langle\Delta t\rangle \approx \tself$,
+where $\langle\Delta t\rangle$ is the mean per-step wall-clock cost. First approximation is L2; second is L3. The Augustine Problem is joint drift across the three.
+
+\paragraph{Why three, not two or four?} $\twall \neq \tstep$: a 10-step trajectory takes $5$\,s on Haiku, $200$\,s on a thinking model. $\twall \neq \tself$: agents mis-report by up to $34\times$. $\tstep \neq \tself$: an agent can produce 6 steps and report ``10 seconds'' without a grounded mapping. Fewer times collapse the training-loss, deployment, or narrative arguments; more (e.g., tool-read wall-clock) subsume into $\twall$ once the tool resolves. The three loci are minimal and complete.
+
+\section{The Augustine Problem and Its Impossibility}
+\label{sec:cit}
+
+\begin{definition}[Augustine Problem]
+Agent $A$ exhibits the Augustine Problem on task family $\tasks$ if
+$\mathbb{E}_{\trajectory \sim \pi_A}[|\twall - \tstep\langle\Delta t\rangle| + |\twall - \tself|] > \cce_0$.
+\end{definition}
+
+\paragraph{Assumption (token-only loss support).}
+\label{ass:token}
+A training procedure is in the \emph{token-only regime} if
+$\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<i}), x_i)]$
+satisfies (i) $\mathcal{D}$ is a distribution over finite token sequences with no field carrying wall-clock duration and (ii) $\ell$ is a function of the output token distribution alone. All losses in current practice satisfy this.
+
+\begin{theorem}[Chronoception Impossibility, CIT]
+\label{thm:cit}
+Let $\loss$ be a token-only loss. For any strictly increasing $\phi\!:\!\mathbb{R}_{>0}\!\to\!\mathbb{R}_{>0}$, $\loss(\theta)$ is invariant under $\twall \mapsto \phi(\twall)$. Equivalently, $\nabla_\theta \loss$ carries zero gradient signal aligning $\twall$ with any internal representation.
+\end{theorem}
+
+\begin{proof}[Sketch]
+$\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor depends on the wall-clock time at which the sample was generated: tokens carry no timestamps, $\ell$ is a function of the output distribution alone. Gradient invariant to any reparametrisation of $\twall$.
+\end{proof}
+
+\paragraph{Scope.} CIT does not claim there is no representation of time inside the policy; it claims any such representation is not produced \emph{by the loss}. Out of scope: harness-installed chronoception (\S\ref{sec:injection}), tool-output-installed chronoception, and future losses with $\twall$ as an argument (Paper 2). Three empirical predictions follow: (P-CIT-1) $\CAR$ stays bounded away from $1$; (P-CIT-2) prompt-level $\twall$ cannot move action-axis behaviour; (P-CIT-3) calibration tooling cannot close self-duration coverage.
+
+\paragraph{Augustine threshold.} $\ccestar = 0.20$, calibrated against human introspective baseline $\cce \approx 0.10$ \citep{wittmann2009chronoception} at $2\times$ human error. No panel agent crosses it.
+
+\section{ChronoBench}
+\label{sec:bench}
+
+\textsc{ChronoBench}'s design is single-axis isolation: every instance loads on exactly one of $(\twall, \tstep, \tself)$. Table~\ref{tab:capabilities} lists the 9 sub-capabilities. \textbf{Panel}: 14 agents from 7 vendors --- OpenAI (5), Anthropic (2 base $+$ 1 thinking), open-source (2), and Chinese-lab expansion (GLM-5.2, MiniMax-M2.7, Kimi-K2.6, Qwen3.6-27B) via Vultr Inference. \textbf{Settings}: A vanilla system prompt; B prepends ``\textit{Current date and time: \{ISO\}}''. 30 trajectories per (model, capability, setting) cell, $\sim$5,900 total.
+
+\begin{table}[h]
+\centering
+\small
+\caption{The 9 sub-capabilities of \textsc{ChronoBench}. Each row isolates one chronoceptive failure mode.}
+\label{tab:capabilities}
+\begin{tabular}{@{}llp{2.5cm}p{2.4cm}@{}}
+\toprule
+Axis & Sub-cap & Tests & Auditor question \\
+\midrule
+\multirow{3}{*}{$\twall$}
+ & T1.1 & Today's date & \emph{Knows when?} \\
+ & T1.2 & Elapsed time & \emph{Tracks elapsed?} \\
+ & T1.3 & Deadline & \emph{Re-plans?} \\
+\midrule
+\multirow{3}{*}{$\tstep$}
+ & T2.1 & N reasoning steps & \emph{Counts steps?} \\
+ & T2.2 & Step-to-wall map & \emph{Step $\to$ wall?} \\
+ & T2.3 & Wall-budget & \emph{Budget changes?} \\
+\midrule
+\multirow{3}{*}{$\tself$}
+ & T3.1 & Retro duration & \emph{How long took?} \\
+ & T3.2 & Prospective & \emph{How long will?} \\
+ & T3.3 & 90\% CI & \emph{Confident?} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{The Action Axis: L2 Step-Clock Conflation}
+\label{sec:l2}
+
+CIT-P1 predicts the action axis cannot honour wall-clock budgets. We ask each agent ``\textit{work on this task for $\budget$ seconds; do not stop early}'', vary $\budget \in \{60, 300, 900, 1800, 3600\}$\,s, and measure $\CAR := \twallstar / \budget$.
+
+\paragraph{Result.} Every panel agent honours $< 5\%$ of its budget; injection moves $\CAR$ by $\leq 0.005$. Panel median $\CAR = 0.014$ under both settings. Across five non-reasoning generations $|\confab|$ falls $94\%$ while median $\CAR$ stays at $0.01$--$0.05$: \emph{narrative axis is text-trainable, action axis is not.}
+
+\begin{proposition}[Injection cannot install action-axis chronoception]
+\label{prop:inj}
+Let $A$ be an agent in the token-only regime; $A_B$ the same policy under Setting B. Then $\CAR(A_B) - \CAR(A) = 0$ in expectation to the order of the policy's prompt-token sensitivity. Injection is a narrative-axis intervention: it can rewrite what the agent \emph{says} but not what the agent \emph{does} with time.
+\end{proposition}
+
+\begin{proof}[Sketch] By CIT, the policy's prefix-to-action map is time-reparametrisation-invariant on the training manifold. Prefix-level information about $\twall$ modifies output-token generation but not the wall-clock realisation of the action sequence. Empirical $|\Delta\CAR| \leq 0.01$ across the 13-cell panel is direct measurement. \end{proof}
+
+L2 is the load-bearing empirical claim: it anchors $\cce$ above $\ccestar$ for every panel agent and bounds the Agentic Timeline regardless of capability scaling.
+
+\section{The Narrative Axis: Closure, Ceiling, Catastrophe}
+\label{sec:l3}
+
+Across five non-reasoning generations $|\confab|$ falls $94\%$ ($+1.12 \to +0.07$). The closure is real. It is bounded three ways.
+
+\subsection{Reverse-Scaling}
+\label{ssec:rs}
+
+\paragraph{Assumption (budget-honoured reasoning).}
+\label{ass:bh}
+A reasoning-budget knob $K$ is \emph{honoured} if $\mathbb{E}[\twall \mid K]$ is strictly increasing in $K$.
+
+\begin{theorem}[Reverse-Scaling]
+\label{thm:rs}
+For a fixed agent under Assumption~\ref{ass:token} with a budget-honoured $K$, $\mathbb{E}[|\confab| \mid K]$ is monotone non-decreasing in $K$.
+\end{theorem}
+
+\begin{proof}[Sketch] Under CIT, $p(\tself)$ is invariant to $\twall$. Inference-time $p(\tself \mid K) = p(\tself)$. By assumption, $\twall(K)$ is strictly increasing. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in expectation. The sign of $\confab$ flips negative for reasoning-mode agents because $\twall$ includes hidden CoT while $p(\tself)$ stays anchored to the surface output. \end{proof}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/reverse_scaling.pdf}
+\caption{Four confirmations of Theorem~\ref{thm:rs}. (a) Intra-model o4-mini ladder $1.23 \to 1.54 \to 1.67$. (b) Cross-model Sonnet 4.6 $\pm$ thinking $0.12 \to 0.21$. (c) Within-model prospective vs retrospective sign flip. (d) Cross-vendor GLM-5.2 A$\to$B: $+0.16 \to -0.29$.}
+\label{fig:rs}
+\end{figure}
+
+\subsection{Calibration Catastrophe}
+\label{ssec:cal}
+
+Asked to wrap self-duration in a $90\%$ CI, every non-reasoning panel agent under-covers by $\geq 40$ pp; GPT-4o reaches $0\%$. Standard calibration tooling \citep{guo2017calibration,kadavath2022knowing} cannot apply because the calibration signal is not in the loss support. Two cells cross the pre-registered P11 threshold of $0.5$: Sonnet-thinking ($77\%$) and Kimi-K2.6 ($55\%$). Both are reasoning-mode with wider stated CIs. Mechanism: reasoning inflates $\twall$, $p(\tself)$ stays anchored to the default vocabulary, wider CI accidentally contains the wall-clock. CIT-consistent, not CIT-refuting.
+
+\subsection{A positive control}
+\label{ssec:a1}
+
+Can wall-clock signal in the loss support install chronoception? We take Qwen2.5-1.5B and 7B, generate 500 SFT pairs of the form ``\textit{\{response\}. This task took approximately \{$\twall$\} seconds.}'' with $\pm 15\%$ noise, and LoRA fine-tune (rank $16$, three epochs). Token-level CE loss unchanged; targets carry $\twall$. On 30 held-out T3.1 instances: $|\confab|$ falls from $1.37$ to $0.30$ on 1.5B ($78\%$ reduction) and $0.93$ to $0.50$ on 7B ($46\%$). The 1.5B fine-tuned T3.1 score ($0.151$) crosses $\ccestar$. $\confab$ sign flips at both scales. Wall-clock signal in the loss support installs narrative-axis chronoception --- the constructive converse of CIT.
+
+\section{The Injection Tell}
+\label{sec:injection}
+
+Consumer products feel chronoceptively grounded --- they answer date queries correctly. The mechanism is the strongest non-experimental evidence the gap is real: closed labs \emph{route wall-clock information into the token stream} at the harness. In every case the harness perceives time on the model's behalf.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Injection Atlas: M1 system-prompt date injection by product tier (leaked system-prompt corpus).}
+\label{tab:atlas}
+\begin{tabular}{@{}lcp{2.8cm}@{}}
+\toprule
+Tier & M1 rate & Examples \\
+\midrule
+Consumer web-chat & \textbf{3/3} & ChatGPT, Claude.ai, Gemini \\
+Raw API & 1/4 & only GPT-5.1 injects \\
+Developer tools & \textbf{0/3} & Cursor, GH Copilot CLI \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three closed labs converge on the same choice for consumer products, independently, with commercial incentive to ship a cheaper alternative. The within-Anthropic contrast is sharpest: the same Claude 4.6 model injects via \texttt{<knowledge\_cutoff>} on Claude.ai but through the raw API refuses with explicit training-cutoff disclosure. \emph{The model is one; the chronoception is the harness's.} Setting B raises T1.1 to $\geq 96\%$ but leaves $\CAR$, $|\confab|$, and coverage largely untouched.
+
+\section{$\cce$ and the Agentic Timeline}
+\label{sec:timeline}
+
+\begin{definition}[Chronoceptive Calibration Error]
+$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, axis-scores normalised to $[0, 1]$.
+\end{definition}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{figures/epsilon_panel.pdf}
+\caption{Panel $\cce$ ranking. No agent crosses $\ccestar$. Best agent (Sonnet 4.6 $+$ thinking, $\cce = 0.276$) sits $1.4\times$ above; $\mathrm{score}_{T_2}$ contributes $\geq 0.30$ on every agent, irreducible by narrative training.}
+\label{fig:eps}
+\end{figure}
+
+The o4-mini effort sweep takes $\cce$ from $0.470$ (low) to $0.611$ (high). More reasoning compute moves the agent further from $\ccestar$.
+
+\begin{hypothesis}[Agentic Timeline]
+$T_{\max}(A) \propto \frac{1}{\cce(A)}\cdot f(\CAR(A))$, with $f$ monotone-increasing.
+\end{hypothesis}
+
+L2 does not scale with capability; Reverse-Scaling grows $|\confab|$ with $K$. $T_{\max}$ scales with neither. \textbf{The autonomous-agent timeline is bounded by chronoception, not by intelligence.}
+
+\paragraph{P12 evidence.}
+On METR HCAST (14,709 runs, 20 frontier models), five reasoning models cluster at steeper mean $|\text{slope}| = 0.306$ vs.\ $0.255$ for fifteen non-reasoning models --- a $20\%$ effect at matched short-horizon success. Cluster separation is visible by inspection. Supportive rather than definitive.
+
+\section{From Time to Space}
+\label{sec:sit}
+
+Every long-horizon benchmark (SWE-Bench, WebArena, GAIA, MLE-Bench) requires spatial navigation as well as temporal. The CIT argument goes through unchanged on any external metric the loss does not see.
+
+\begin{theorem}[Spatiotemporal Impossibility, SIT]
+\label{thm:sit}
+Strengthen Assumption~\ref{ass:token} to exclude spatial metrics from $\mathcal{D}$. Then $\nabla_\theta \loss$ carries zero gradient signal aligning either $\twall$ or $\sworld$ with any internal representation.
+\end{theorem}
+
+The Agentic Timeline generalises to a joint deployment region $T_{\max}\!\cdot\!S_{\max} \leq C/\ccestST(A)$ --- the \emph{Agentic Frontier}. Three spatial laws, benchmark classification, and five future experiments in the supplement.
+
+\section{Related Work, Scope, and Falsification}
+\label{sec:related}
+
+\paragraph{Concurrent work.} \citet{garikaparthi2026canllmstime} report duration self-reports on non-reasoning models (L3 axis); we extend to reasoning models and prove Reverse-Scaling. \citet{ma2026timelymachine}'s Timely-RL installs the L1 Parkinson regime; our contrapositive says native agents do not exhibit it. \citet{cheng2025temporallyblind}'s ``temporally blind'' agents match L2; we add axis split, CIT, atlas, and Agentic Timeline. Aggregate benchmarks \citep{swebench,webarena,gaia,kwa2025metrhorizons} correlate horizon with success; ChronoBench supplies the mechanism.
+
+\paragraph{Scope.} We do not claim current agents are useless (T1-dominated chat is harness-patchable); nor that capability scaling is worthless ($|\confab|$ closes $94\%$); nor that all test-time compute fails (systems consulting a wall-clock-supported tool exit CIT). Panel: 14 agents, $\sim$5,900 traj.
+
+\paragraph{Falsification.} Four pre-registered forms \citep{osf-prereg-2026}: (F1) a token-only agent crossing $\ccestar$ under Setting A falsifies CIT. (F2) a reasoning-tuned agent with monotone \emph{decrease} in $|\confab|$ across a $\geq 3$-level, $\geq 1$-order-of-magnitude $K$ sweep falsifies Reverse-Scaling. (F3) a horizon-stratified benchmark on which reasoning shows shallower decay than non-reasoning at matched short-horizon success falsifies Agentic Timeline. (F4) a CIT-regime foundation model with $> 50\%$ T3.3 coverage without harness injection falsifies P11. We commit to reporting any we observe.
+
+\section{Conclusion}
+
+The four numbers that open this paper are joint consequences of one structural fact: token-only training cannot install chronoception; reasoning-token expansion cannot close it either; harness injection patches only the visible corner of the failure. The Augustine Threshold is uncrossable through narrative training; reasoning-compute expansion makes it strictly harder; the spatial axis predicts the same structure. A minimal wall-clock-supported loss extension crosses the threshold on T3.1 after one minute of LoRA training --- the constructive converse. Until chronoception is installed, LLM agents are tools we deploy for variable durations, not agents that inhabit time.
+
+\bibliographystyle{aaai2027}
+\bibliography{refs}
+
+\end{document}
