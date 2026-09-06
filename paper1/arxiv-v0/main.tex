@@ -35,16 +35,74 @@
 \newtheorem{hypothesis}{Hypothesis}
 \newtheorem{proposition}{Proposition}
 
-% Project notation (mirrors notation.tex from repo root)
+% Preprint-specific packages
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{titlesec}
+
+% Colour system for the preprint frontmatter
+\definecolor{AugustineNavy}{HTML}{1F3A5F}
+\definecolor{AugustineCoral}{HTML}{A50F15}
+\definecolor{AugustineGrey}{HTML}{4A4A4A}
+\definecolor{LinkBlue}{HTML}{2A5CAA}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=AugustineNavy,
+  citecolor=AugustineNavy,
+  urlcolor=LinkBlue,
+  pdftitle={The Augustine Problem in Agents},
+  pdfauthor={Aojie Yuan},
+  pdfsubject={LLM chronoception; position paper}
+}
+
+% Project notation
 \input{../../notation.tex}
 
-\title{The Augustine Problem in Agents}
+% ------- Preprint frontmatter -------
+\title{\vspace{-1cm}
+  \begin{flushleft}
+  \color{AugustineNavy}\rmfamily\bfseries\Huge
+  The Augustine Problem in Agents\\[4pt]
+  \normalsize\color{AugustineGrey}\rmfamily\itshape
+  Chronoception must be installed: LLM agents cannot perceive their own time.
+  \end{flushleft}
+}
 
-\author{Anonymous Authors\\Anonymous Institutions}
-\date{}
+\author{
+  \textbf{Aojie (Justin) Yuan}\\
+  University of Southern California\\
+  \texttt{aojieyua@usc.edu}
+}
+
+\date{\normalsize
+  \textbf{Preprint v1.0} \textbullet\ \today\\[6pt]
+  \small\color{AugustineGrey}
+  \begin{tabular}{@{}rl@{}}
+  Code + data + Docker: & \href{https://github.com/Justin0504/Chronoception-agent-temporal-cognition}{\texttt{github.com/Justin0504/Chronoception-agent-temporal-cognition}} \\[1pt]
+  Pre-registration:     & \href{https://osf.io/}{\texttt{OSF (locked)}}\ \ \textbullet\ \ \textbf{Correspondence:}\ \texttt{aojieyua@usc.edu} \\
+  \end{tabular}
+}
 
 \begin{document}
 \maketitle
+\thispagestyle{empty}
+
+% Framework spine banner
+\vspace{-0.4cm}
+\begin{center}
+\fcolorbox{AugustineNavy!30}{AugustineNavy!5}{
+\begin{minipage}{0.95\textwidth}
+\small\centering\rmfamily
+\textbf{\color{AugustineNavy}The framework's spine.}\ \
+Three theorems \textbf{(CIT, Reverse-Scaling, SIT)}, three empirical laws \textbf{(L1 / L2 / L3)}, and three papers
+\textbf{(Paper 1: this paper; Paper 2: ChronoStack; Paper 3: Agentic Frontier)}.
+Layered evidence: (a) \textsc{ChronoBench} \textbf{[14 agents / 7 vendors / $\sim$5{,}900 traj]},
+(b) Injection Atlas \textbf{[11 harnesses]}, (c) toy positive control \textbf{[LoRA SFT crosses $\ccestar$]}, (d) HCAST horizon evidence \textbf{[14{,}709 runs]}.
+\end{minipage}
+}
+\end{center}
+\vspace{0.15cm}
 
 \begin{abstract}
 LLM agents are trained on tokens and deployed in wall-clock time. They cannot perceive the wall-clock. The \emph{Chronoception Impossibility Theorem} (CIT) makes the claim precise: under any token-only loss, the gradient carries no signal aligning $\twall$ with any internal representation. The \emph{Three Times} ontology --- $\twall$, $\tstep$, $\tself$ --- names the projections a policy must align; the \emph{Augustine Problem} is that alignment failure.
@@ -53,6 +111,23 @@ LLM agents are trained on tokens and deployed in wall-clock time. They cannot pe
 
 Aggregated as $\cce$, no agent crosses the Augustine threshold $\ccestar = 0.20$; the action axis alone exceeds it. Under the \emph{Agentic Timeline Hypothesis} the deployment horizon scales as $T_{\max} \propto 1/\cce$; pre-registered P12 is qualitatively supported on 14{,}709 METR HCAST runs (reasoning models decay $20\%$ faster). The framework generalises to a \emph{Spatiotemporal Impossibility Theorem} (SIT) and the \emph{Agentic Frontier} bound $T_{\max} \cdot S_{\max} \leq C / \ccestST$ --- the bridge to Paper 3. Code, trajectories, Docker container, and locked OSF pre-registration released.
 \end{abstract}
+
+\vspace{0.15cm}
+\begin{center}
+\begin{minipage}{0.94\textwidth}
+\small\rmfamily
+\textbf{\color{AugustineNavy}How to read this paper.}\ \
+The \textbf{position} (\S\ref{sec:intro}) states the claim. The \textbf{ontology} (\S\ref{sec:three-times}) and \textbf{impossibility theorem} (\S\ref{sec:augustine-problem}) formalise it. \textbf{\S\ref{sec:l2}--\ref{sec:injection-tell}} present the layered empirical evidence, one axis at a time. \textbf{\S\ref{sec:epsilon}} aggregates; \textbf{\S\ref{sec:agentic-timeline}} draws the deployment bound; \textbf{\S\ref{sec:future-work}} generalises time to space. \textbf{Readers short on time} may skip to Figure~\ref{fig:reverse-scaling} (the four confirmations of Reverse-Scaling) and Figure~\ref{fig:epsilon-panel} (the 14-agent $\cce$ leaderboard); each carries the paper's central empirical claim in one panel.
+\end{minipage}
+\end{center}
+
+\vspace{0.2cm}
+\hrule
+\vspace{0.15cm}
+{\small\tableofcontents}
+\vspace{0.15cm}
+\hrule
+\vspace{0.25cm}
 
 \input{sections/01_intro.tex}
 
@@ -79,6 +154,19 @@ Aggregated as $\cce$, no agent crosses the Augustine threshold $\ccestar = 0.20$
 \input{sections/12_future_work.tex}
 
 \input{sections/13_conclusion.tex}
+
+% ------- Preprint back matter -------
+\section*{Author Contributions}
+A.Y.\ conceived the Augustine Problem framing and the Three Times ontology; formulated the CIT, Reverse-Scaling, and SIT theorems and their scope conditions; designed \textsc{ChronoBench} and its 9 sub-capabilities; implemented the panel runners, parsers, and metrics; executed the 14-agent evaluation across 7 vendors ($\sim$5{,}900 trajectories); assembled the Closed-Lab Injection Atlas; ran the toy positive control (A.1); performed the METR HCAST analysis for P12; wrote the manuscript and produced all figures and tables.
+
+\section*{Data and Code Availability}
+All trajectories ($\sim$5{,}900 JSON files, $\sim$600\,MB), the analysis code, parser implementations, and Docker reproducibility container are released at \url{https://github.com/Justin0504/Chronoception-agent-temporal-cognition}. The pre-registration is locked on OSF (linked from the repository). The Closed-Lab Injection Atlas is compiled from the public \texttt{asgeirtj/system\_prompts\_leaks} corpus; verbatim excerpts are collected in Appendix~\ref{app:atlas-evidence}. The METR HCAST public dataset is used unchanged. Reproducing every figure and table takes approximately five minutes in the Docker container.
+
+\section*{Acknowledgments}
+The author thanks collaborators and reviewers whose feedback shaped this preprint. Any errors are the author's.
+
+\section*{License}
+This preprint is released under the \textbf{CC BY 4.0} licence; the accompanying code and data are released under \textbf{MIT} and \textbf{CC BY 4.0}, respectively.
 
 \bibliography{bib/refs}
 
