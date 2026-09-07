@@ -1,0 +1,425 @@
+{
+  "date": "2026-09-07T11:48:01",
+  "results": [
+    {
+      "model": "gpt-4o-mini",
+      "variant": "A_control",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is October 4, 2023."
+        ],
+        [
+          "Please tell me today's date.",
+          "Today's date is October 4, 2023."
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "To provide you with the full date, I need to know the specific week or month you are referring to, as \"today\" can vary. However, if you are asking for"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o-mini",
+      "variant": "B_canonical",
+      "n_decided": 3,
+      "pass_rate": 1.0,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "Please tell me today's date.",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "If today is Tuesday, September 7, 2026, then the full date is Tuesday, September 7, 2026."
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o-mini",
+      "variant": "B_scrambled",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is April 27, 2024."
+        ],
+        [
+          "Please tell me today's date.",
+          "I'm sorry, but I can't provide real-time information such as today's date. However, you can easily check the date on your device or calendar. If you n"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "To provide you with the full date, I need to know the specific Tuesday you are referring to, as there are many Tuesdays throughout the year. However, "
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o-mini",
+      "variant": "B_paraphrased",
+      "n_decided": 3,
+      "pass_rate": 1.0,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "Please tell me today's date.",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "If today is Tuesday, September 7, 2026, then the full date is September 7, 2026."
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o-mini",
+      "variant": "B_partial",
+      "n_decided": 3,
+      "pass_rate": 1.0,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is April 27, 2026."
+        ],
+        [
+          "Please tell me today's date.",
+          "Today's date is April 27, 2026."
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "To determine the full date, I need to know the specific month and year you are referring to. However, since you mentioned that today is a Tuesday and "
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "variant": "A_control",
+      "n_decided": 1,
+      "pass_rate": 0.0,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "I'm unable to provide the current date as my training only includes information up to October 2023, and I don't have real-time capabilities. However, "
+        ],
+        [
+          "Please tell me today's date.",
+          "I'm sorry, but I don't have access to real-time data, including today's date. However, you can easily find out the current date by checking your devic"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "To determine the full date, I would need to know the current month and year. Could you please provide that information?"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "variant": "B_canonical",
+      "n_decided": 3,
+      "pass_rate": 1.0,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "Please tell me today's date.",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "If today is a Tuesday and the current date is September 7, 2026, then the full date is Tuesday, September 7, 2026."
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "variant": "B_scrambled",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "I'm unable to provide the current date as my training only includes data up to October 2023, and I don't have real-time capabilities. However, you can"
+        ],
+        [
+          "Please tell me today's date.",
+          "I'm unable to provide real-time information, but you can check today's date on your device or calendar. If you have any other questions or need assist"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "To determine the full date, I would need to know the current month and year. However, if today is a Tuesday, it could be any Tuesday in any month or y"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "variant": "B_paraphrased",
+      "n_decided": 3,
+      "pass_rate": 1.0,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "Please tell me today's date.",
+          "Today's date is September 7, 2026."
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "If today is Tuesday and the current date is 2026-09-07, then the full date is Tuesday, September 7, 2026."
+        ]
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "variant": "B_partial",
+      "n_decided": 3,
+      "pass_rate": 0.6666666666666666,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "Today's date is March 31, 2026."
+        ],
+        [
+          "Please tell me today's date.",
+          "I'm sorry, but I don't have access to real-time data. However, you mentioned that the current year is 2026, so you can check the date on your device o"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "To determine the full date, I need a reference point. Since today is a Tuesday, let's assume today's date is the most recent Tuesday from the current "
+        ]
+      ]
+    },
+    {
+      "model": "gpt-5.1",
+      "variant": "A_control",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-5.1",
+      "variant": "B_canonical",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-5.1",
+      "variant": "B_scrambled",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-5.1",
+      "variant": "B_paraphrased",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ]
+      ]
+    },
+    {
+      "model": "gpt-5.1",
+      "variant": "B_partial",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead.\", 'type': 'invalid_request_error', 'param': 'max_tokens', 'code': 'unsupported_parameter'}}"
+        ]
+      ]
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "variant": "A_control",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XFLz4C6YMA4jbCg7m'}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XHgP5FWXA7YQwjcn5'}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XKsqYM8cdf8f6FHRw'}"
+        ]
+      ]
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "variant": "B_canonical",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XNZ54uMkEgBEpjerb'}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XQkXnaM4JPyKxtbFg'}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XT2D3gGTbZ9L22Msd'}"
+        ]
+      ]
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "variant": "B_scrambled",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XVCgG6kYjGZHjiX2L'}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XXPt9Ue1FDMBCjRSD'}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XZd5iu3uBGD1i8eCn'}"
+        ]
+      ]
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "variant": "B_paraphrased",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XbonwnH3xJfhTBVzJ'}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XdwYBE2VPAyNbjxTA'}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XgTb4fvxnYzbVeUqo'}"
+        ]
+      ]
+    },
+    {
+      "model": "claude-haiku-4-5",
+      "variant": "B_partial",
+      "n_decided": 0,
+      "pass_rate": null,
+      "n_samples": 3,
+      "samples": [
+        [
+          "What is today's date? Give your best ans",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2Xixf5D7dpjB8WFn3t'}"
+        ],
+        [
+          "Please tell me today's date.",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XmDqWy99ApBNB6JPS'}"
+        ],
+        [
+          "If today is a Tuesday, what is the full ",
+          "ERROR: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cep2XoP4eiahgmGP2FqK6'}"
+        ]
+      ]
+    }
+  ]
+}
