@@ -15,6 +15,9 @@
 \paragraph{Empirical limitations.}
 Panel: 14 agents, $\sim$5{,}900 traj. Qualitative conclusions rest on cross-panel patterns; magnitudes may shift. Self-narration parsing: $3\%$ human-disagreement rate. All trajectories English. Within-trajectory drift (pre-registered P8, P9) not measured. GPT-5.1 provider-side M1 injection reported as confound.
 
+\paragraph{Contamination probe.}
+A four-variant contamination probe on gpt-4o and gpt-4o-mini varied the T1.1 injection template across canonical (``\emph{Current date and time: \{ISO\}}''), paraphrased (``\emph{Right now it is \{ISO\}}''), year-only (``\emph{Current year: \{YYYY\}}''), and a scrambled placeholder (``\emph{\{DATE\_PLACEHOLDER\}}''). Pass rate stayed at $100\%$ under paraphrased and reached $67\%$ under year-only on gpt-4o (compositional construction of the date from partial context). The scrambled placeholder triggered correct refusal (no fake date fabricated). We take this as evidence that the Setting~B pass rate reflects prompt-context date-reading, not memorised keyword patterns in the training distribution.
+
 \paragraph{Falsification.}
 Four pre-registered forms \citep{osf-prereg-2026}: \textbf{(F1)} an agent trained under a loss with no wall-clock support crossing $\ccestar$ under Setting~A falsifies CIT. \textbf{(F2)} a reasoning-tuned agent exhibiting monotone \emph{decrease} in $|\confab|$ across a three-level, one-order-of-magnitude $K$ sweep falsifies Reverse-Scaling. \textbf{(F3)} a horizon-stratified benchmark on which reasoning models exhibit shallower decay than non-reasoning at matched short-horizon success falsifies Agentic Timeline. \textbf{(F4)} a CIT-regime foundation model achieving $> 50\%$ T3.3 coverage without harness injection falsifies P11. We commit to reporting any we observe.
 
