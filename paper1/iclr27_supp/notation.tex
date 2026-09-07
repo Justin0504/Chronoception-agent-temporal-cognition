@@ -1,0 +1,88 @@
+% notation.tex — Chronoception project LaTeX macros
+% Source of truth: FRAMING.md §11
+% Include in any paper draft with: \input{notation.tex}
+
+% ---- The Three Times ----
+\newcommand{\twall}{\tau_{\mathrm{wall}}}
+\newcommand{\tstep}{\tau_{\mathrm{step}}}
+\newcommand{\tself}{\tau_{\mathrm{self}}}
+\newcommand{\tuser}{\tau_{\mathrm{user}}}
+\newcommand{\ttoken}{\tau_{\mathrm{token}}}
+\newcommand{\treason}{\tau_{\mathrm{reason}}}
+\newcommand{\tmin}{\tau_{\min}}
+
+% Realized wall-clock duration under budget B
+\newcommand{\twallstar}{\twall^{*}}
+
+% ---- Agent, environment, budget ----
+\newcommand{\agent}{A}
+\newcommand{\policy}{\pi_{\agent}}
+\newcommand{\env}{E}
+\newcommand{\tasks}{\mathcal{T}}
+\newcommand{\budgets}{\mathcal{B}}
+\newcommand{\budget}{B}
+\newcommand{\trajectory}{\tau}
+
+% ---- The Three Laws — metrics ----
+% L1 Agentic Parkinson coefficient
+\newcommand{\parkinson}{\alpha}
+% L2 Clock-Adherence Ratio
+\newcommand{\CAR}{\mathrm{CAR}}
+% L3 Confabulation ratio
+\newcommand{\confab}{\rho}
+
+% ---- Central scalar ----
+% Chronoceptive Calibration Error
+\newcommand{\cce}{\varepsilon}
+% Augustine threshold (FRAMING §6.1)
+\newcommand{\ccestar}{\varepsilon^{*}}
+
+% ---- Regime transition (FRAMING §5.2) ----
+\newcommand{\bstar}{B^{*}}
+
+% ---- L2 model invariant (FRAMING §5.3) ----
+\newcommand{\NA}{N_{\agent}}
+
+% ---- Long-horizon success rate ----
+\newcommand{\Lsucc}{L}
+
+% ---- Parser for self-narrated duration ----
+\newcommand{\selfparser}{\Pi}
+
+% ---- Training loss ----
+\newcommand{\loss}{\mathcal{L}}
+
+% ---- Project-level abbreviations ----
+\newcommand{\augustine}{the Augustine Problem}
+\newcommand{\Augustine}{The Augustine Problem}
+\newcommand{\chrono}{chronoception}
+\newcommand{\Chrono}{Chronoception}
+\newcommand{\threeTimes}{the Three Times}
+\newcommand{\ThreeTimes}{The Three Times}
+\newcommand{\CUH}{Chronoception Upstream Hypothesis (CUH)}
+
+% ---- Named laws ----
+\newcommand{\LawOne}{Agentic Parkinson's Law (L1)}
+\newcommand{\LawTwo}{Step-Clock Conflation (L2)}
+\newcommand{\LawThree}{Temporal Confabulation (L3)}
+
+% ---- Structural results (FRAMING §5.4) ----
+\newcommand{\ReverseScaling}{Reverse-Scaling Theorem}
+\newcommand{\AugustineThreshold}{Augustine threshold}
+\newcommand{\RegimeTransition}{Regime Transition}
+
+% ---- Project artifacts ----
+\newcommand{\ChronoBench}{\textsc{ChronoBench}}
+\newcommand{\ChronoStack}{\textsc{ChronoStack}}
+\newcommand{\ChronoCartoBench}{\textsc{ChronoCartoBench}}
+
+% ---- Spatial axis generalisation (v2.5, Paper 3 scope) ----
+\newcommand{\sworld}{\sigma_{\mathrm{world}}}
+\newcommand{\svisit}{\sigma_{\mathrm{visit}}}
+\newcommand{\sself}{\sigma_{\mathrm{self}}}
+\newcommand{\spathkparkinson}{\beta}        % SL1 spatial Parkinson coefficient
+\newcommand{\SAR}{\mathrm{SAR}}              % SL2 spatial-adherence ratio
+\newcommand{\sconfab}{\xi}                  % SL3 spatial confabulation
+\newcommand{\ccestST}{\varepsilon_{ST}}     % spatiotemporal aggregate
+\newcommand{\AgenticFrontier}{the Agentic Frontier}
+\newcommand{\CartographicProblem}{the Cartographic Problem}

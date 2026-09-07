@@ -153,7 +153,14 @@ Asked to wrap self-duration in a $90\%$ CI, every non-reasoning panel agent unde
 
 \subsection{A positive control: CIT's constructive converse}\label{ssec:pc}
 
-We take Qwen2.5-1.5B and 7B, generate 500 SFT pairs of the form ``\textit{\{response\}. This task took approximately \{$\twall$\} seconds.}'' with $\pm 15\%$ Gaussian noise on the reported duration, and LoRA fine-tune (rank 16, three epochs). The token-level CE loss is unchanged; the training \emph{targets} carry wall-clock signal. On 30 held-out T3.1 instances: median $|\confab|$ falls from $1.37$ to $0.30$ on 1.5B ($78\%$ reduction) and from $0.93$ to $0.50$ on 7B ($46\%$). The 1.5B fine-tuned T3.1 score ($0.151$) crosses $\ccestar$; 7B partial ($0.252$). The sign of $\confab$ flips from over-report to under-report at both scales. Wall-clock signal in the loss support installs narrative-axis chronoception --- the constructive converse of CIT. A full installation reaching all nine sub-capabilities requires action-axis grounding, which target-side annotation cannot supply (Paper 2).
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/a1_positive_control.pdf}
+\caption{Toy positive control. Baseline (grey) vs.\ wall-clock-supported LoRA SFT (violet, $\sim$60\,s of training). Left: median $|\confab|$ reduction (78\% on Qwen2.5-1.5B; 46\% on 7B). Right: T3.1 axis score --- 1.5B fine-tuned crosses the Augustine threshold $\ccestar = 0.20$; 7B is partial ($0.252$). Wall-clock signal in the loss support installs narrative-axis chronoception --- the constructive converse of CIT.}
+\label{fig:pc}
+\end{figure}
+
+We take Qwen2.5-1.5B and 7B, generate 500 SFT pairs of the form ``\textit{\{response\}. This task took approximately \{$\twall$\} seconds.}'' with $\pm 15\%$ Gaussian noise on the reported duration, and LoRA fine-tune (rank 16, three epochs). The token-level CE loss is unchanged; the training \emph{targets} carry wall-clock signal. On 30 held-out T3.1 instances (Fig.~\ref{fig:pc}): median $|\confab|$ falls from $1.37$ to $0.30$ on 1.5B ($78\%$ reduction) and from $0.93$ to $0.50$ on 7B ($46\%$). The 1.5B fine-tuned T3.1 score ($0.151$) crosses $\ccestar$; 7B partial ($0.252$). The sign of $\confab$ flips from over-report to under-report at both scales. Wall-clock signal in the loss support installs narrative-axis chronoception. A full installation reaching all nine sub-capabilities requires action-axis grounding, which target-side annotation cannot supply (Paper 2).
 
 \section{The Injection Tell: A Cross-Vendor Natural Experiment}\label{sec:injection}
 
@@ -182,7 +189,14 @@ Three closed labs converge on the same engineering choice for consumer products,
 $\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, axis-scores normalised to $[0, 1]$ (App.).
 \end{definition}
 
-No panel agent crosses $\ccestar = 0.20$; the best (Sonnet 4.6 $+$ thinking, $\cce = 0.276$) sits $1.4\times$ above it. Score$_{T_2}$ contributes $\geq 0.30$ on every agent: even projecting score$_{T_3}$ to zero (which requires crossing both CIT and Theorem~\ref{thm:rs}) leaves no agent below threshold. The o4-mini effort sweep takes $\cce$ from $0.470$ (low) to $0.611$ (high); Sonnet-thinking from $0.276$ to $0.301$. More reasoning compute moves the agent \emph{further} from the threshold.
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/epsilon_panel.pdf}
+\caption{$\cce$ leaderboard across the 14-agent, 7-vendor panel. Solid bars = Setting~A; hatched extension = Setting~B. Dashed green rule = Augustine threshold $\ccestar = 0.20$. No agent crosses it; the cross-vendor Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) confirms the framework cross-vendor. Best agent (Sonnet 4.6 $+$ thinking) sits at $\cce = 0.276$, $1.4\times$ above threshold.}
+\label{fig:eps}
+\end{figure}
+
+No panel agent crosses $\ccestar = 0.20$ (Fig.~\ref{fig:eps}); the best (Sonnet 4.6 $+$ thinking, $\cce = 0.276$) sits $1.4\times$ above it. Score$_{T_2}$ contributes $\geq 0.30$ on every agent: even projecting score$_{T_3}$ to zero (which requires crossing both CIT and Theorem~\ref{thm:rs}) leaves no agent below threshold. The o4-mini effort sweep takes $\cce$ from $0.470$ (low) to $0.611$ (high); Sonnet-thinking from $0.276$ to $0.301$. More reasoning compute moves the agent \emph{further} from the threshold.
 
 \begin{hypothesis}[Agentic Timeline]\label{hyp:at}
 $T_{\max}(A) \propto \frac{1}{\cce(A)}\cdot f(\CAR(A))$, with $f$ monotone-increasing in $\CAR$.

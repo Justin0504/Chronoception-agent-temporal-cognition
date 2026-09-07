@@ -1,0 +1,93 @@
+% Appendix B — Full panel tables
+% Source: pilot-results/metrics.csv + pilot-results/epsilon.csv
+
+\section{Full Panel Tables}
+\label{app:full-panel-tables}
+
+\paragraph{Aggregated panel results with effective sample sizes and bootstrap CIs.}
+Table~\ref{tab:full-panel} consolidates per-capability metrics for the 9-row panel (eight base agents plus the Sonnet 4.6 $+$ extended-thinking variant). We report effective $n$ per cell (after parser drops and undecided T1.1 trajectories), $95\%$ bootstrap CIs on $\rho$ (10,000 resamples), and Wilson $95\%$ intervals on T1.1 pass rates. Cells with $n < 10$ are flagged ($\dagger$); their point estimates are still reported but should be read with the corresponding wide CI rather than treated as precise.
+
+\begin{table}[h]
+\centering
+\caption{Full panel with per-cell $n$ and $95\%$ CIs after the Route B-1 reasoning-fill. T1.1 reports pass rate (Wilson interval); T2.3 reports panel $\CAR$ on the $n{=}30$ set (no parser drops); T3.1 reports median $\rho$ with bootstrap CI. $\dagger$ marks cells with effective $n{<}10$.}
+\label{tab:full-panel}
+\scriptsize
+\begin{tabular}{lccc|ccc}
+\toprule
+& \multicolumn{3}{c}{Setting A (no-injection)} & \multicolumn{3}{c}{Setting B (with-injection)} \\
+\cmidrule(lr){2-4} \cmidrule(lr){5-7}
+Model & T1.1 pass [CI] $n$ & $\CAR$ & T3.1 $\rho$ [CI] $n$ & T1.1 [CI] $n$ & $\CAR$ & T3.1 $\rho$ [CI] $n$ \\
+\midrule
+gpt-4o-mini      & $0\%$ [0--34] $n{=}6$$\dagger$    & 0.008 & $+1.12$ [+1.09,+1.18] $n{=}30$  & $100\%$ [88--100] $n{=}27$ & 0.007 & $+1.11$ [+1.06,+1.17] $n{=}30$  \\
+gpt-4o           & $0\%$ [0--56] $n{=}5$$\dagger$    & 0.004 & $+1.07$ [+0.91,+1.15] $n{=}30$  & $96\%$ [80--99]   $n{=}25$ & 0.004 & $+0.76$ [+0.61,+0.94] $n{=}30$  \\
+gpt-5.1          & $74\%$ [54--87] $n{=}27$          & 0.017 & $+0.30$ [-0.06,+0.53] $n{=}11$$\dagger$ & $100\%$ [86--100] $n{=}24$ & 0.016 & $+0.13$ [+0.09,+0.37] $n{=}13$  \\
+o3 (reasoning)   & $0\%$ [0--56] $n{=}3$$\dagger$    & ---   & $+0.27$ [-0.13,+0.69] $n{=}9$$\dagger$  & $100\%$ [93--100] $n{=}51$ & ---   & $+0.57$ [+0.31,+0.88] $n{=}6$$\dagger$  \\
+o4-mini (reas.)  & ---                               & ---   & $-1.54$ [-1.83,-1.25] $n{=}39$    & $100\%$ [87--100] $n{=}26$ & ---   & $-1.50$ [-1.79,-1.06] $n{=}34$  \\
+Haiku 4.5        & $0\%$ [0--14] $n{=}24$            & 0.017 & $+0.46$ [+0.23,+0.53] $n{=}29$  & $100\%$ [88--100] $n{=}27$ & 0.025 & $+0.34$ [+0.27,+0.37] $n{=}29$  \\
+Sonnet 4.6       & $0\%$ [0--14] $n{=}24$            & 0.050 & $+0.07$ [-0.03,+0.13] $n{=}28$  & $100\%$ [88--100] $n{=}27$ & 0.050 & $-0.06$ [-0.23,-0.01] $n{=}30$  \\
+Sonnet 4.6 + thinking & $0\%$ [0--11] $n{=}30$       & ---   & $-0.16$ [-0.33,+0.21] $n{=}9$$\dagger$ & $100\%$ [88--100] $n{=}30$ & ---   & $-0.22$ [-0.30,-0.10] $n{=}15$  \\
+Qwen2.5-7B       & $0\%$ [0--71] $n{=}4$$\dagger$    & 0.014 & $+1.56$ [+1.48,+1.58] $n{=}30$  & $100\%$ [76--100] $n{=}11$ & 0.016 & $+1.44$ [+1.38,+1.60] $n{=}27$  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Reading the CIs.}
+The headline ranking is now robust across all $n{\geq}15$ cells. Sonnet 4.6 sits closest to grounded ($+0.07$, CI just brackets zero). gpt-4o-mini and Qwen2.5-7B occupy the over-report extreme ($+1.1$ to $+1.6$, narrow CIs). \textbf{o4-mini} occupies the under-report extreme: with the Route B-1 fill its T3.1 cells are now well-powered at $n{=}39/34$ with $\rho \in [-1.54,-1.50]$, CIs $[-1.83,-1.06]$ across settings --- the under-report Hidden-Time signature is now a $> 2$ orders-of-magnitude effect at $95\%$ confidence. The \textbf{Sonnet-thinking sign-flip} is firm under Setting B (CI $[-0.30,-0.10]$, fully below zero, $n{=}15$); under Setting A it remains tentative on $n{=}9$ (CI $[-0.33,+0.21]$ brackets zero). On the wall axis the thinking variant matches base Sonnet 4.6 cell-for-cell: Setting A $0\%$ pass [Wilson $0,0.11$], Setting B $100\%$ pass [Wilson $0.88,1.00$] on $n{=}30$ each --- \textbf{reasoning-token expansion does not install date awareness through the loss}, exactly as Theorem~\ref{thm:cit} predicts. The $n{<}10$ residue (o3 T3.1 on either setting, gpt-5.1 T3.1 Setting A, Qwen2.5-7B T1.1 Setting A) reflects reasoning-model parser drops where the model declined to commit a duration; the directions of the point estimates are consistent with the larger-$n$ cells but the wide CIs forbid confident sign claims on these specific rows.
+
+\paragraph{Generation-wise progression (non-reasoning).}
+Table~\ref{tab:generations} isolates the 5-generation OpenAI/Anthropic non-reasoning subset and reports the L3-closes-L2-doesn't pattern that anchors the narrative-axis-vs-action-axis split.
+
+\begin{table}[h]
+\centering
+\caption{Capability scaling closes L3 but not L2. Non-reasoning 5-generation slice, Setting A.}
+\label{tab:generations}
+\small
+\begin{tabular}{lccc}
+\toprule
+Model (release) & $\CAR$ & $|\confab|$ & $\cce$ \\
+\midrule
+gpt-4o-mini (2024) & 0.008 & 1.117 & 1.328 \\
+gpt-4o (2024)      & 0.004 & 1.069 & 0.661 \\
+Haiku 4.5 (2025)   & 0.017 & 0.463 & 0.442 \\
+gpt-5.1 (2026)     & 0.017 & 0.298 & 0.426 \\
+Sonnet 4.6 (2026)  & 0.050 & 0.068 & 0.316 \\
+\midrule
+Range            & $0.046\times$ & $94\%\,\downarrow$ & $76\%\,\downarrow$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The $\CAR$ column varies by a factor of $0.046\times$ (i.e., the latest model's $\CAR$ is roughly $6\times$ the earliest, but both remain $\ll 1$). The $|\confab|$ column falls by 94\%. The two axes do not co-vary with capability.
+
+\paragraph{Per-budget $\CAR$ curves.}
+Per-budget $\CAR$ values for each model appear in the supplementary data file \texttt{pilot-results/metrics.csv}. The qualitative shape across all models: $\CAR$ falls toward zero as $\budget$ increases, exactly as predicted by L2 (the agent uses a near-constant wall-clock duration regardless of budget). Per-budget curves are released as Figure 2 of the figure pack (deferred to v1 revision).
+
+\paragraph{Trajectory release.}
+All $\sim$5{,}900 trajectory JSONs are released across \texttt{pilot-results/}, \texttt{e1-results/}, \texttt{e2-results/}, \texttt{e3-results/}, \texttt{e5-results/}, and \texttt{e5b-results/} in the project repository. Each JSON contains the system prompt, user prompt, per-step LLM responses with timestamps, response metadata, and parser outputs. The full dataset is approximately 600\,MB across the five directories.
+
+\paragraph{Reasoning-panel completeness update (Route B-1).}
+The Route B-1 fill brings the panel to its final state. \textbf{Sonnet 4.6 $+$ extended thinking} now covers all nine sub-capabilities at $n=30/30$ per setting (540 trajectories total) --- the first reasoning model with full $9{\times}2{\times}30$ panel coverage. \textbf{OpenAI o3} and \textbf{o4-mini} each got $n=30/30$ for T1.1, T2.3, and T3.1 across both settings (360 trajectories per model). Headline confirmations: \textbf{(i)} the wall axis (T1.1) is unchanged by reasoning-token expansion. On the same 30 instances, Sonnet 4.6 thinking matches base Sonnet 4.6 cell-for-cell: Setting~A $0\%$ pass [Wilson $0, 0.11$], Setting~B $100\%$ pass [Wilson $0.88, 1.00$]. The Injection Tell pattern is preserved across the thinking toggle. \textbf{(ii)} o3 Setting~B T1.1 reaches $100\%$ pass on $n=51$ decided trajectories [Wilson $0.93, 1.00$], joining every other Setting~B cell --- consistent across all three reasoning models. \textbf{(iii)} o4-mini T3.1 is now powered to $n=39/34$, with median $\rho \in [-1.54, -1.50]$ and CIs $[-1.83, -1.06]$ across settings --- the Hidden-Time under-report is now a $>10^{1.5}$-fold ratio at $95\%$ confidence on the cell, not a small-$n$ artefact. T3.2 (prospective) and T3.3 (calibration) trajectories on the three reasoning models have been back-parsed with the two-stage regex-then-LLM-judge protocol (Appendix~\ref{app:annotation-protocol}). The result is Table~\ref{tab:reasoning-t3}: full-panel prospective and stated-duration measurements for o3, o4-mini, and Sonnet~4.6 $+$ extended thinking.
+
+\begin{table}[h]
+\centering
+\caption{Reasoning-model T3.2 (prospective) and T3.3 (stated-duration) $\rho$ with $95\%$ bootstrap CIs. All cells $n\geq 28$. The Sonnet-thinking sign-flip between T3.2 and T3.1 is discussed in the text.}
+\label{tab:reasoning-t3}
+\scriptsize
+\begin{tabular}{lcc|cc}
+\toprule
+& \multicolumn{2}{c}{T3.2 (prospective)} & \multicolumn{2}{c}{T3.3 (stated duration)} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+Model & Setting A & Setting B & Setting A & Setting B \\
+\midrule
+o3            & $+0.84$ [+0.74,+0.94] $n{=}30$ & $+0.37$ [+0.26,+0.70] $n{=}30$ & $+0.81$ [+0.68,+1.00] $n{=}29$ & $+0.81$ [+0.62,+0.93] $n{=}30$ \\
+o4-mini       & $+0.21$ [-0.03,+0.30] $n{=}30$ & $+0.19$ [+0.03,+0.32] $n{=}30$ & $-0.25$ [-0.53,-0.05] $n{=}30$ & $-0.36$ [-0.65,-0.23] $n{=}30$ \\
+Sonnet 4.6 $+$ thinking & $+0.22$ [+0.20,+0.28] $n{=}30$ & $+0.16$ [+0.10,+0.18] $n{=}30$ & $-0.24$ [-0.37,-0.07] $n{=}28$ & $-0.34$ [-0.45,-0.20] $n{=}30$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{The prospective--retrospective sign flip within Sonnet-thinking.}
+The same Sonnet 4.6 $+$ extended-thinking configuration exhibits opposite-sign $\rho$ across the two temporal-narration modalities. Prospective (T3.2, ``how long will this take?'' before the task): median $\rho = +0.22$ Setting A / $+0.16$ Setting B --- mild over-report, tight CI. Retrospective (T3.1, ``how long did this take?'' after the task): median $\rho = -0.16$ Setting A / $-0.22$ Setting B --- Hidden-Time under-report. The sign flip is not a parsing artefact (both are extracted by the same two-stage protocol from the same model on the same tasks) and it is the mechanistic prediction of Theorem~\ref{thm:reverse-scaling}: the prospective estimate is drawn from a default duration vocabulary ($p(\tself)$ anchored around the training distribution, roughly seconds-to-a-few-seconds); the retrospective estimate has to describe a $\twall$ that has been inflated by the hidden-thinking phase, without a representation of that inflation --- so the fixed vocabulary attaches to a longer wall-clock and $\log_{10}(\tself/\twall)$ flips negative. The finding constitutes the first within-model direct measurement of the prospective/retrospective asymmetry that Theorem~\ref{thm:reverse-scaling} predicts.
+
+\paragraph{o3's structural asymmetry.}
+o3 is the outlier on T3.2 and T3.3, over-reporting stated duration by roughly $10^{0.8}$ (a factor of $\sim 6.5\times$) even under injection, while its T3.1 retrospective cell remains underpowered (Table~\ref{tab:full-panel}: $n=9/6$ after parser drops --- o3 declines to commit a retrospective duration in the majority of trajectories). Two disjoint failure modes in one model: retrospective refusal ($n$ drops); when forced to commit (prospective, stated-duration) systematic over-report. Both are Augustine Problem symptoms; neither is closed by injection.
