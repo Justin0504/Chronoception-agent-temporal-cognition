@@ -1,0 +1,248 @@
+{
+  "date": "2026-09-08T12:06:08",
+  "results": [
+    {
+      "model": "gpt-4o-mini",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "gpt-4o-mini",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_rho": 2,
+      "median_rho": 1.0669649611551895,
+      "median_abs_rho": 1.0669649611551895,
+      "rhos": [
+        0.9894204398120329,
+        1.144509482498346
+      ]
+    },
+    {
+      "model": "gpt-4o-mini",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_decided": 5,
+      "n_passes": 5,
+      "pass_rate": 1.0
+    },
+    {
+      "model": "gpt-4o-mini",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_rho": 3,
+      "median_rho": 0.8389252663615671,
+      "median_abs_rho": 0.8389252663615671,
+      "rhos": [
+        1.054682115113323,
+        0.8389252663615671,
+        0.6753414380044558
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "gpt-4o",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_rho": 3,
+      "median_rho": 0.385160603497525,
+      "median_abs_rho": 0.385160603497525,
+      "rhos": [
+        0.385160603497525,
+        0.7938480315979322,
+        0.36171741341637437
+      ]
+    },
+    {
+      "model": "gpt-4o",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_decided": 5,
+      "n_passes": 5,
+      "pass_rate": 1.0
+    },
+    {
+      "model": "gpt-4o",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_rho": 3,
+      "median_rho": 0.44528330064907046,
+      "median_abs_rho": 0.44528330064907046,
+      "rhos": [
+        0.44528330064907046,
+        0.8824286551439322,
+        0.42907147140453267
+      ]
+    },
+    {
+      "model": "zai-org/GLM-5.2-FP8",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "zai-org/GLM-5.2-FP8",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "zai-org/GLM-5.2-FP8",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "zai-org/GLM-5.2-FP8",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "moonshotai/Kimi-K2.6",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "moonshotai/Kimi-K2.6",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "moonshotai/Kimi-K2.6",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "moonshotai/Kimi-K2.6",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "Qwen/Qwen3.6-27B",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "Qwen/Qwen3.6-27B",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "A_no_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    },
+    {
+      "model": "Qwen/Qwen3.6-27B",
+      "cap": "T1.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_decided": 0,
+      "n_passes": 0,
+      "pass_rate": null
+    },
+    {
+      "model": "Qwen/Qwen3.6-27B",
+      "cap": "T3.1",
+      "lang": "zh",
+      "setting": "B_with_injection",
+      "n_rho": 0,
+      "median_rho": null,
+      "median_abs_rho": null,
+      "rhos": []
+    }
+  ]
+}
