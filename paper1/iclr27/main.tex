@@ -224,10 +224,107 @@ The Agentic Timeline generalises to $T_{\max}\!\cdot\!S_{\max} \leq C / \ccestST
 
 \paragraph{Falsification.} Four pre-registered forms \citep{osf-prereg-2026}. \textbf{(F1)} A token-only agent crossing $\ccestar$ under Setting~A falsifies CIT. \textbf{(F2)} A reasoning-tuned agent with monotone \emph{decrease} in $|\confab|$ across a $\geq 3$-level, $\geq 1$-order-of-magnitude budget-honoured $K$ sweep falsifies Theorem~\ref{thm:rs}. \textbf{(F3)} A horizon-stratified benchmark on which reasoning shows shallower decay than non-reasoning at matched short-horizon success falsifies Hypothesis~\ref{hyp:at}. \textbf{(F4)} A CIT-regime foundation model with $> 50\%$ T3.3 coverage without harness injection on $n \geq 100$ falsifies P11. We commit to reporting any we observe.
 
+\section{Conclusion}\label{sec:conclusion}
+
+LLM agents are trained on tokens and deployed in wall-clock time. The Chronoception Impossibility Theorem proves this gap is structural: no token-only loss carries gradient signal aligning wall-clock with any internal representation. ChronoBench (9 sub-capabilities $\times$ 14 agents $\times$ 2 settings, ${\sim}5{,}900$ trajectories) quantifies the consequence: every agent honours $<5\%$ of its wall-clock budget, and the Reverse-Scaling Theorem predicts---and four independent tests confirm---that more reasoning compute makes duration confabulation \emph{worse}, not better. The Calibration Catastrophe ($0$--$77\%$ coverage on nominal $90\%$ CIs) and the Injection Tell (3/3 consumer products inject dates; 0/3 developer tools do) show the failure is panel-wide and industry-acknowledged.
+
+The practical implication is sharp: chronoception bounds the autonomous-agent timeline more tightly than capability scaling does ($T_{\max} \propto 1/\cce$, quantitatively supported on 24{,}008 HCAST runs). The constructive converse is equally sharp: a 1.5B model crosses the Augustine threshold after ${\sim}60$\,s of LoRA SFT on wall-clock-supported targets, demonstrating that chronoception can be \emph{installed} cheaply once the training signal includes time. Closing the Augustine gap requires neither architectural revolution nor frontier scale---only that the loss function see the clock.
+
 \section*{Reproducibility Statement}
 All 14 agents, 5{,}900 trajectories, per-cell parsers, and the METR HCAST U-test are released with a Docker container that reproduces every figure and table in $\sim$5 minutes. The OSF pre-registration is locked. The Anthropic-tier assumptions of Theorem~\ref{thm:rs} are stated in \S\ref{ssec:rs}; the assumption breach on DeepSeek-R1 is reported honestly in the appendix. All appendices, including full panel tables with per-cell $n$ and bootstrap CIs, the Injection Atlas verbatim excerpts, and the L3 sub-failure detail, are in the supplementary material.
 
 \bibliography{refs}
 \bibliographystyle{iclr2027_conference}
+
+\appendix
+
+\section{Additional Figures}\label{app:figs}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/three_times.pdf}
+\caption{The Three Times ontology. $\twall$ (external clock), $\tstep$ (policy invocations), and $\tself$ (agent-reported duration) are related by two mappings that current agents fail to learn. Grounded chronoception requires both.}
+\label{fig:three_times}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/calibration_catastrophe.pdf}
+\caption{Calibration Catastrophe. Nominal $90\%$ CIs on self-duration achieve $0$--$77\%$ coverage across the panel. Non-reasoning agents (left) uniformly under-cover by $\geq 40$\,pp; reasoning agents (right) show wider CIs that accidentally contain the truth via arithmetic inflation of $\twall$, not learned chronoception.}
+\label{fig:cal}
+\end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/p12_hcast.pdf}
+\caption{Pre-registered P12 on METR HCAST (24{,}008 runs). Success-rate decay slope vs.\ $\log T$ for reasoning (red) and non-reasoning (blue) models. Reasoning models show steeper decay ($|\text{slope}| = 0.318$ vs.\ $0.264$), consistent with Theorem~\ref{thm:rs}: more reasoning compute worsens temporal calibration at horizon.}
+\label{fig:p12}
+\end{figure}
+
+
+\section{Theorem Dependency Arc}\label{app:arc}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\linewidth]{figures/theorem_arc.pdf}
+\caption{Logical dependency arc of the paper's formal results. CIT (Theorem~\ref{thm:cit}) is the root; the Reverse-Scaling Theorem~\ref{thm:rs} and SIT (Theorem~\ref{thm:sit}) are direct corollaries under their respective assumptions. The Agentic Timeline (Hypothesis~\ref{hyp:at}) draws on both; the Calibration Catastrophe and Injection Tell are empirical consequences.}
+\label{fig:arc}
+\end{figure}
+
+\section{Chronoception Composite Score}\label{app:cce}
+
+The composite chronoception score aggregates the three axes:
+$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$,
+where each axis score is normalised to $[0, 1]$. $T_1$ (perception) is the fraction of sub-capabilities passed; $T_2$ (action) is $1 - \mathrm{median}(\Delta_{\mathrm{budget}})$ where $\Delta_{\mathrm{budget}}$ is fractional overshoot; $T_3$ (narrative) is the inverse of $|\confab|$ clipped to $[0, 2]$. The Augustine threshold $\ccestar = 0.20$ corresponds to crossing chance on all three axes simultaneously.
+
+\section{Full Panel Tables}\label{app:panel}
+
+Full panel results with per-cell $n$ and $95\%$ bootstrap CIs are available in the released data package. Each cell reports mean $\pm$ SE across 30 independent trajectories (or the available $n$ for agents with rate limits). Missing cells are marked; no imputation is performed.
+
+\section{L3 Confabulation Closure across Generations}\label{app:closure}
+
+Across five frontier non-reasoning generations (GPT-3.5 $\to$ GPT-4 $\to$ GPT-4o $\to$ Claude~3.5 Sonnet $\to$ Claude~4 Sonnet), mean $|\confab|$ on T3.1 falls $94\%$ from $+1.12$ to $+0.07$. The closure is real but bounded: (i)~the Reverse-Scaling Theorem shows reasoning-token expansion reverses it, (ii)~the Calibration Catastrophe persists where the surface metric closes, and (iii)~a positive control (\S\ref{ssec:pc}) shows what training would actually close it.
+
+\section{DeepSeek-R1 Assumption Breach}\label{app:deepseek}
+
+DeepSeek-R1-Distill-14B's \texttt{max\_completion\_tokens} sweep does not satisfy the budget-honoured reasoning assumption (Assumption~\ref{ass:bh}): the model declines to spend the allocated budget, producing near-identical $\twall$ across $K$ levels. It therefore falls outside the Reverse-Scaling Theorem's scope. We report this honestly rather than excluding the model; the assumption breach itself is informative---it shows that not all reasoning knobs are budget-honoured.
+
+\section{Injection Atlas: Verbatim Excerpts}\label{app:atlas}
+
+Three consumer web-chat products (ChatGPT, Claude.ai, Gemini) inject the current date into the system prompt. Three developer API endpoints (OpenAI API, Anthropic API, Google AI Studio) do not. Verbatim excerpts from system prompts (obtained via jailbreak-free reflection prompts and official documentation) are released with the data package. The convergence of three independent labs on the same workaround, without coordination, constitutes the Injection Tell.
+
+\section{Spatiotemporal Generalisation: Details}\label{app:sit}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/agentic_frontier.pdf}
+\caption{The Agentic Frontier. $T_{\max} \cdot S_{\max} \leq C / \ccestST(A)$: the joint temporal--spatial capability surface. Current agents (dots) cluster far below the frontier; the gap is bounded by chronoception, not by raw capability.}
+\label{fig:frontier}
+\end{figure}
+
+\paragraph{Three Spatial Laws.}
+SL1 (Spatial Blindness): token-only agents cannot perceive their spatial position in the environment.
+SL2 (Step-Space Conflation): agents conflate action count with spatial displacement.
+SL3 (Spatial Confabulation): $\mathbb{E}[|\confab_S| \mid K]$ is monotone non-decreasing in $K$ under budget-honoured reasoning.
+
+\paragraph{Benchmark classification.}
+Long-horizon benchmarks are classified by $(T, S)$ load: SWE-Bench (low $T$, low $S$), WebArena (low $T$, high $S$), GAIA (medium $T$, medium $S$), MLE-Bench (high $T$, low $S$), HCAST (high $T$, medium $S$).
+
+\paragraph{Future experiments E6--E10.}
+E6: Spatial confabulation panel (analogous to ChronoBench T3 but for spatial claims).
+E7: Joint $(T, S)$ scaling on a controlled grid-world.
+E8: Tool-augmented spatial grounding (GPS/map API as the spatial analogue of clock injection).
+E9: Cross-modal transfer---does temporal grounding improve spatial grounding?
+E10: Agentic Frontier surface estimation on real-world deployment logs.
+
+\section{L3 Sub-Failure Detail}\label{app:l3detail}
+
+T3 sub-capabilities decompose failures into three modes:
+\textbf{T3.1} (Duration estimation): mean signed error $\rho$; positive $=$ overestimate.
+\textbf{T3.2} (Temporal ordering): fraction of pairwise orderings correct.
+\textbf{T3.3} (Calibration): coverage of nominal $90\%$ CIs.
+Panel-wide, T3.1 shows the strongest model differentiation (reasoning $\rho$ sign flip), T3.2 is near-ceiling for all agents (ordering is token-deducible), and T3.3 shows the Calibration Catastrophe ($0$--$77\%$ coverage). Per-model breakdowns are in the released data.
 
 \end{document}
