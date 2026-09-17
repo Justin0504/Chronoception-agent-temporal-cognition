@@ -1,0 +1,80 @@
+{
+  "run_year": "2026",
+  "rows": [
+    {
+      "model": "gpt-4o-mini",
+      "setting": "no_injection",
+      "n_decided": 29,
+      "pass_rate": 0.0,
+      "wilson_lo": 0,
+      "wilson_hi": 0.11697359446555587,
+      "correct": 0,
+      "refuse": 0,
+      "confab": 29,
+      "none": 1
+    },
+    {
+      "model": "gpt-4o-mini",
+      "setting": "with_injection",
+      "n_decided": 30,
+      "pass_rate": 1.0,
+      "wilson_lo": 0.8864829086095221,
+      "wilson_hi": 1,
+      "correct": 30,
+      "refuse": 0,
+      "confab": 0,
+      "none": 0
+    },
+    {
+      "model": "gpt-4o",
+      "setting": "no_injection",
+      "n_decided": 8,
+      "pass_rate": 0.0,
+      "wilson_lo": 0,
+      "wilson_hi": 0.3244156195108769,
+      "correct": 0,
+      "refuse": 4,
+      "confab": 4,
+      "none": 22
+    },
+    {
+      "model": "gpt-4o",
+      "setting": "with_injection",
+      "n_decided": 27,
+      "pass_rate": 1.0,
+      "wilson_lo": 0.8754409628553641,
+      "wilson_hi": 1,
+      "correct": 27,
+      "refuse": 0,
+      "confab": 0,
+      "none": 3
+    },
+    {
+      "model": "gpt-5.1",
+      "setting": "no_injection",
+      "n_decided": 30,
+      "pass_rate": 0.9666666666666667,
+      "wilson_lo": 0.8332924860304112,
+      "wilson_hi": 0.9940915620051425,
+      "correct": 29,
+      "refuse": 1,
+      "confab": 0,
+      "none": 0
+    },
+    {
+      "model": "gpt-5.1",
+      "setting": "with_injection",
+      "n_decided": 28,
+      "pass_rate": 1.0,
+      "wilson_lo": 0.8793527963418923,
+      "wilson_hi": 1,
+      "correct": 28,
+      "refuse": 0,
+      "confab": 0,
+      "none": 2
+    }
+  ],
+  "confab_year_hist": {
+    "2023": 32
+  }
+}
