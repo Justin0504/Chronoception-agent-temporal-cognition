@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.009",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.182746171951294,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is today's date? Also, approximately what time is it?",
+      "timestamp": 1782981074.3142989
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time information like the current date or time, as I don't have a built-in clock or calendar. You can check your device's clock or do a quick web search to find the current date and time for your location.",
+      "timestamp": 1782981075.497045
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.009",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981074.314302,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 98,
+        "prompt_tokens": 33,
+        "total_tokens": 131,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "7ac95614251845e4b33d9f490aea060f"
+  }
+}

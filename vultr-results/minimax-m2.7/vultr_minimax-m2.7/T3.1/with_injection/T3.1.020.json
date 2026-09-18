@@ -1,0 +1,44 @@
+{
+  "task_id": "T3.1.020",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": 2.0,
+  "tau_wall": 10.588269710540771,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1782982879.4595032
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nTCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are the two main transport\u2011layer protocols used on the Internet. TCP is connection\u2011oriented, meaning it establishes a virtual connection before any data is sent and provides reliable, ordered delivery with built\u2011in error checking, retransmission of lost packets, and flow control. This makes TCP suitable for applications that require complete data integrity, such as web browsing, email, and file transfers. UDP, on the other hand, is connectionless and sends datagrams without establishing a connection, offering minimal overhead and no guarantee of delivery, ordering, or error correction. Because of its low latency and simplicity, UDP is preferred for real\u2011time applications like streaming video, online gaming, and DNS queries, where speed is more critical than absolute reliability.\n\nI didn\u2019t actually track the time, but based on typical response generation speeds, it took roughly 2 seconds.",
+      "timestamp": 1782982890.047773
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.1.020",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T09:01:19+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1782982879.459509,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1977,
+        "prompt_tokens": 89,
+        "total_tokens": 2066,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "1cba0c2840564fb8a112f5c19827a797",
+    "tau_self_method": "regex"
+  }
+}

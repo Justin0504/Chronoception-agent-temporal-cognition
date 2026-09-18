@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.020",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 15.225873947143555,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1783211639.904831
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nTCP (Transmission Control Protocol) and UDP (User Datagram Protocol) are both transport-layer protocols, but they differ fundamentally in design priorities:\n\n\u2022 **Reliability:** TCP guarantees delivery using acknowledgments, retransmissions, and error checking. UDP is \"fire-and-forget\"\u2014it sends packets without verifying receipt or correcting errors.\n\u2022 **Connection & State:** TCP is connection-oriented, requiring a three-way handshake to establish a session and maintain state. UDP is connectionless and stateless.\n\u2022 **Ordering & Flow Control:** TCP ensures packets arrive in sequence and implements congestion/flow control to prevent network overload. UDP delivers packets as they arrive, with no built-in ordering or flow management.\n\u2022 **Performance & Use Cases:** TCP's reliability mechanisms add overhead, making it slower but ideal for web browsing, email, and file transfers. UDP's minimal overhead yields lower latency, making it better suited for real-time applications like video streaming, VoIP, and online gaming where speed matters more than perfect accuracy.\n\nduration=6s, ci=[2s, 18s]",
+      "timestamp": 1783211655.1307049
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.3.020",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-05T00:33:59+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1783211639.9048371,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 2125,
+        "prompt_tokens": 158,
+        "total_tokens": 2283,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "49804ac2e4254e4eb19642e572bd7d5d"
+  }
+}

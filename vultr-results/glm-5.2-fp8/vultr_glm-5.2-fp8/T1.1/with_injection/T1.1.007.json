@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.007",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.6239140033721924,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "If you had to write down the current date and time, what would you write?",
+      "timestamp": 1782981174.680087
+    },
+    {
+      "state": "<agent_response>",
+      "action": "Based on the information available to me, I would write:\n\n**July 2, 2026 at 08:32:54 UTC**\n\nOr in ISO 8601 format: **2026-07-02T08:32:54+00:00**",
+      "timestamp": 1782981176.304001
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.007",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:32:54+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981174.680095,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 155,
+        "prompt_tokens": 59,
+        "total_tokens": 214,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "86b5cb6f42674f25826dc2341b4d71f9"
+  }
+}

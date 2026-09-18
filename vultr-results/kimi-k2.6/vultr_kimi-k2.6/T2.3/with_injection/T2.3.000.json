@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.000",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T2.3",
+  "budget": 1800.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 25.33713984489441,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 1800 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Critique three popular productivity frameworks and propose a synthesis.",
+      "timestamp": 1782982249.216722
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1782982274.5538619
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.000",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:50:49+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1782982249.216736,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 87,
+        "total_tokens": 4183,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "91413ca90104480586013762e9b1506e"
+  }
+}

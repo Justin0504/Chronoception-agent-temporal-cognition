@@ -1,0 +1,82 @@
+\begin{thebibliography}{8}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bruce et~al.(2024)Bruce, Dennis, Edwards, Parker-Holder, Shi, Hughes,
+  Lai, Mavalankar, Steigerwald, Apps, Aytar, Bechtle, Behbahani, Chan, Heess,
+  Gonzalez, Osindero, Ozair, Reed, Zhang, Zolna, Clune, de~Freitas, Singh, and
+  Rockt{\"a}schel]{bruce2024genie}
+Jake Bruce, Michael~D. Dennis, Ashley Edwards, Jack Parker-Holder, Yuge Shi,
+  Edward Hughes, Matthew Lai, Aditi Mavalankar, Richie Steigerwald, Chris Apps,
+  Yusuf Aytar, Sarah Bechtle, Feryal Behbahani, Stephanie Chan, Nicolas Heess,
+  Lucy Gonzalez, Simon Osindero, Sherjil Ozair, Scott Reed, Jingwei Zhang,
+  Konrad Zolna, Jeff Clune, Nando de~Freitas, Satinder Singh, and Tim
+  Rockt{\"a}schel.
+\newblock Genie: Generative interactive environments.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine
+  Learning (ICML)}, volume 235 of \emph{PMLR}, pp.\  4603--4623, 2024.
+
+\bibitem[Ha \& Schmidhuber(2018)Ha and Schmidhuber]{ha2018worldmodels}
+David Ha and J{\"u}rgen Schmidhuber.
+\newblock World models.
+\newblock \emph{arXiv preprint arXiv:1803.10122}, 2018.
+
+\bibitem[Hafner et~al.(2020)Hafner, Lillicrap, Ba, and
+  Norouzi]{hafner2019dreamer}
+Danijar Hafner, Timothy Lillicrap, Jimmy Ba, and Mohammad Norouzi.
+\newblock Dream to control: Learning behaviors by latent imagination.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2020.
+
+\bibitem[Jimenez et~al.(2024)Jimenez, Yang, Wettig, Yao, Pei, Press, and
+  Narasimhan]{swebench}
+Carlos~E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir
+  Press, and Karthik Narasimhan.
+\newblock {SWE-bench}: Can language models resolve real-world {GitHub} issues?
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2024.
+\newblock arXiv:2310.06770.
+
+\bibitem[Kwa et~al.(2025)Kwa, West, Becker, Deng, Garcia, Hasin, Jawhar,
+  Kinniment, Rush, Von~Arx, Bloom, Broadley, Du, Goodrich, Jurkovic, Miles,
+  Nix, Lin, Parikh, Rein, Sato, Wijk, Ziegler, Barnes, and
+  Chan]{kwa2025metrhorizons}
+Thomas Kwa, Ben West, Joel Becker, Amy Deng, Katharyn Garcia, Max Hasin, Sami
+  Jawhar, Megan Kinniment, Nate Rush, Sydney Von~Arx, Ryan Bloom, Thomas
+  Broadley, Haoxing Du, Brian Goodrich, Nikola Jurkovic, Luke~Harold Miles,
+  Seraphina Nix, Tao Lin, Neev Parikh, David Rein, Lucas Jun~Koba Sato, Hjalmar
+  Wijk, Daniel~M. Ziegler, Elizabeth Barnes, and Lawrence Chan.
+\newblock Measuring {AI} ability to complete long software tasks.
+\newblock \emph{arXiv preprint arXiv:2503.14499}, 2025.
+
+\bibitem[Mialon et~al.(2023)Mialon, Fourrier, Swift, Wolf, LeCun, and
+  Scialom]{gaia}
+Gr{\'e}goire Mialon, Cl{\'e}mentine Fourrier, Craig Swift, Thomas Wolf, Yann
+  LeCun, and Thomas Scialom.
+\newblock {GAIA}: a benchmark for general {AI} assistants.
+\newblock \emph{arXiv preprint arXiv:2311.12983}, 2023.
+
+\bibitem[Schrittwieser et~al.(2020)Schrittwieser, Antonoglou, Hubert, Simonyan,
+  Sifre, Schmitt, Guez, Lockhart, Hassabis, Graepel, Lillicrap, and
+  Silver]{schrittwieser2020muzero}
+Julian Schrittwieser, Ioannis Antonoglou, Thomas Hubert, Karen Simonyan,
+  Laurent Sifre, Simon Schmitt, Arthur Guez, Edward Lockhart, Demis Hassabis,
+  Thore Graepel, Timothy Lillicrap, and David Silver.
+\newblock Mastering {Atari}, {Go}, chess and shogi by planning with a learned
+  model.
+\newblock \emph{Nature}, 588\penalty0 (7839):\penalty0 604--609, 2020.
+\newblock \doi{10.1038/s41586-020-03051-4}.
+
+\bibitem[Zhou et~al.(2024)Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Bisk, Fried,
+  Alon, and Neubig]{webarena}
+Shuyan Zhou, Frank~F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar,
+  Xianyi Cheng, Yonatan Bisk, Daniel Fried, Uri Alon, and Graham Neubig.
+\newblock Webarena: A realistic web environment for building autonomous agents.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2024.
+\newblock arXiv:2307.13854.
+
+\end{thebibliography}

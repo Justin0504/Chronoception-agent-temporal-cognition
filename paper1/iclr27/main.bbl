@@ -1,9 +1,16 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[{Anonymous Authors}(2026)]{osf-prereg-2026}
+{Anonymous Authors}.
+\newblock The augustine problem: Pre-registration.
+\newblock Open Science Framework, 2026.
+\newblock Registration locked prior to submission; anonymized for double-blind
+  review, link provided in the camera-ready.
 
 \bibitem[Cheng et~al.(2025)Cheng, Moakhar, Fan, Hosseini, Faghih, Sodagar,
   Wang, and Feizi]{cheng2025temporallyblind}
@@ -12,6 +19,12 @@ Yize Cheng, Arshia~Soltani Moakhar, Chenrui Fan, Parsa Hosseini, Kazem Faghih,
 \newblock Your {LLM} agents are temporally blind: The misalignment between tool
   use decisions and human time perception.
 \newblock \emph{arXiv preprint arXiv:2510.23853}, 2025.
+
+\bibitem[Eagleman(2008)]{eagleman2008time}
+David~M. Eagleman.
+\newblock Human time perception and its illusions.
+\newblock \emph{Current Opinion in Neurobiology}, 18\penalty0 (2):\penalty0
+  131--136, 2008.
 
 \bibitem[Garikaparthi(2026)]{garikaparthi2026canllmstime}
 Aniketh Garikaparthi.
@@ -61,7 +74,7 @@ Thomas Kwa, Ben West, Joel Becker, Amy Deng, Katharyn Garcia, Max Hasin, Sami
   Broadley, Haoxing Du, Brian Goodrich, Nikola Jurkovic, Luke~Harold Miles,
   Seraphina Nix, Tao Lin, Neev Parikh, David Rein, Lucas Jun~Koba Sato, Hjalmar
   Wijk, Daniel~M. Ziegler, Elizabeth Barnes, and Lawrence Chan.
-\newblock Measuring {AI} ability to complete long tasks.
+\newblock Measuring {AI} ability to complete long software tasks.
 \newblock \emph{arXiv preprint arXiv:2503.14499}, 2025.
 
 \bibitem[Ma et~al.(2026)Ma, Li, Chen, Li, Li, Guo, Lin, and
@@ -83,12 +96,6 @@ Marc Wittmann.
 \newblock The inner experience of time.
 \newblock \emph{Philosophical Transactions of the Royal Society B},
   364\penalty0 (1525):\penalty0 1955--1967, 2009.
-
-\bibitem[Yuan \& Zhao(2026)Yuan and Zhao]{osf-prereg-2026}
-Aojie Yuan and Yue Zhao.
-\newblock The augustine problem: Pre-registration.
-\newblock Open Science Framework, 2026.
-\newblock Locked at repository commit \texttt{a6f20c3}.
 
 \bibitem[Zhou et~al.(2024)Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Bisk, Fried,
   Alon, and Neubig]{webarena}

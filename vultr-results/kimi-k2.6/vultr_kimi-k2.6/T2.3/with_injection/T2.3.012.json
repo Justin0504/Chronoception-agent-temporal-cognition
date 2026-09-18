@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.012",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 14.14213490486145,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1782982598.900464
+    },
+    {
+      "state": "<agent_response>",
+      "action": " **Lesson Plan: Foundations of Probability**  \n*Target Audience:* High School (Grades 9\u201311) \u2022 *Duration:* 90 Minutes (or two 45-minute blocks)  \n*Subject:* Mathematics / Statistics & Probability  \n\n---\n\n### 1. STANDARDS\n- **CCSS HSS-CP.A.1** \u2013 Describe events as subsets of a sample space.\n- **CCSS HSS-CP.A.2** \u2013 Understand independence and conditional probability.\n- **CCSS HSS-CP.B.7** \u2013 Apply the Addition Rule, P(A or B) = P(A) + P(B) \u2013 P(A and B).\n- **CCSS MP.1\u2013MP.4** \u2013 Problem solving, reasoning, modeling, and strategic tool use.\n\n---\n\n### 2. LEARNING OBJECTIVES\nBy the end of the lesson, students will be able to:\n1. Define and identify **sample spaces, events, outcomes, and the complement** of an event.\n2. Calculate **theoretical probability** using the ratio of favorable outcomes to total possible outcomes.\n3. Distinguish between **independent, dependent, and mutually exclusive events**.\n4. Apply the **Multiplication Rule** for independent events and the **General Addition Rule** for unions.\n5. Design and analyze a simple real-world probability model.\n\n---\n\n### 3. MATERIALS\n- Student handouts (guided notes + practice set)\n- Class set: dice, coins, colored marbles/blocks, standard 52-card decks\n- Projector / whiteboard\n- Random number generators (optional Desmos/GeoGebra applet)\n- Exit-ticket slips\n\n---\n\n### 4. PRIOR KNOWLEDGE\n- Fractions, ratios, and percents\n- Basic set theory (intersection, union)\n- Familiarity with two-way tables (helpful, not required)\n\n---\n\n### 5. LESSON PROCEDURE\n\n#### **Opening / Hook (10 min)**\n*Activity:* **\u201cThe Birthday Bet\u201d**  \nAsk the class: *\u201cWhat is the probability that at least two people in this room share the same birthday?\u201d* Take guesses, then reveal the surprisingly high probability for a class of 30 (~70%). Do a quick poll if any birthdays match.  \n*Purpose:* Activate curiosity and demonstrate that intuition often fails against mathematical structure.\n\n#### **Direct Instruction (15 min)**\nPresent concise definitions with visual Venn diagrams on the board:\n\n| Term | Definition | Example |\n|------|------------|---------|\n| **Experiment** | A repeatable procedure | Rolling two dice |\n| **Outcome** | A single result | (3, 5) |\n| **Sample Space (S)** | Set of all possible outcomes | 36 ordered pairs |\n| **Event (E)** | A subset of the sample space | Sum is 8 |\n| **Probability** | P(E) = \\|E\\| / \\|S\\| | 5/36 |\n\nKey formulas to post:\n- **0 \u2264 P(E) \u2264 1** (impossible \u2192 certain)\n- **Complement:** P(E\u2032) = 1 \u2013 P(E)\n- **Independent Events:** P(A and B) = P(A) \u00b7 P(B)\n- **General Addition Rule:** P(A or B) = P(A) + P(B) \u2013 P(A and B)\n- **Mutually Exclusive:** If A \u2229 B = \u2205, then P(A or B) = P(A) + P(B)\n\n#### **Guided Practice: \u201cProbability Stations\u201d (25 min)**\nDivide students into groups of 3\u20134. Each station lasts ~6 minutes. Students record sample spaces and calculate theoretical probabilities, then perform a quick experiment (10 trials) to compare with experimental results.\n\n1. **Station A \u2013 Dice:** Find P(sum = 7) vs. P(sum = 2).  \n2. **Station B \u2013 Cards:** Find P(drawing a face card or a heart).  \n3. **Station C \u2013 Marbles (bag with replacement):** Bag has 4 red, 3 blue, 3 green. Find P(red then blue).  \n4. **Station D \u2013 Coins:** Flip 3 coins. Find P(exactly 2 heads).\n\n*Teacher moves between stations to ask probing questions:*  \n- \u201cDid you use replacement? How does that change the second draw?\u201d  \n- \u201cWhy is the experimental probability after 10 trials different from the theoretical?\u201d\n\n#### **Independent Practice (20 min)**\nHand out a tiered problem set.\n\n*Level 1 (Core):*\n1. A spinner has 8 equal sectors numbered 1\u20138. What is the probability of landing on an even number or a multiple of 3?\n2. You roll a die and flip a coin. What is P(6 and Heads)?\n\n*Level 2 (Advanced):*\n3. In a school, 40% of students play soccer, 30% play basketball, and 15% play both. What percent play at least one sport?\n4. Are the events \u201cIt rains today\u201d and \u201cI forget my umbrella\u201d independent or dependent? Justify.\n\n*Level 3 (Extension):*\n5. Design a game using dice or cards where the probability of winning is exactly 3/8. Write the rules and show your math.\n\nStudents work individually; early finishers become \u201cPeer Coaches\u201d to assist neighbors.\n\n#### **Closure / Synthesis (10 min)**\n*Think-Pair-Share:*\n- \u201cWhat is one real-world situation where knowing probability helps you make a better decision?\u201d\n- Groups share out. Teacher highlights applications: insurance risk, medical testing, game design, weather forecasting.\n\n**Exit Ticket (5 min):**  \n*Prompt:* \u201cA bag contains 5 yellow, 4 red, and 6 blue tokens. You draw one token, do not replace it, then draw a second token. Calculate P(red then blue). Show your sample-space reasoning.\u201d\n\nCollect slips to assess mastery of dependent events.\n\n---\n\n### 6. DIFFERENTIATION & ACCOMMODATIONS\n- **Visual Learners:** Provide completed Venn diagrams and color-coded sample-space tables.\n- **ELL Students:** Offer a vocabulary anchor chart with native-language cognates; allow oral responses for the exit ticket if needed.\n- **IEP / 504:** Reduce the number of practice problems; provide pre-printed formula cards; allow calculator use for complex fractions.\n- **Advanced Learners:** Introduce conditional probability with the formula P(A|B) = P(A and B) / P(B) and challenge them to solve the original \u201cBirthday Problem\u201d mathematically.\n\n---\n\n### 7. HOMEWORK\n*Real-World Probability Audit:* Students find one news article, advertisement, or sports statistic that uses probability or \u201cchance\u201d language. They write a \u00bd-page analysis:\n- Identify the event and the claimed probability.\n- Explain whether the claim seems based on theoretical or experimental data.\n- Note any missing information that would change the calculation.\n\n---\n\n### 8. ASSESSMENT & REFLECTION (Teacher Notes)\n- **Formative:** Observation during stations, exit-ticket analysis.\n- **Summative:** A follow-up quiz (Day 2) with compound probability word problems.\n- **Reflection Questions for the Teacher:**  \n  *Did students confuse \u201cmutually exclusive\u201d with \u201cindependent\u201d?* (Common pitfall\u2014address explicitly next class.)  \n  *Was the station pacing too tight?* Adjust timing for future blocks.\n\n---\n\n**End of Lesson Plan**",
+      "timestamp": 1782982613.042599
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.012",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:56:38+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1782982598.9005032,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 2286,
+        "prompt_tokens": 88,
+        "total_tokens": 2374,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "21239340b81b461890181133d4d36ef5"
+  }
+}

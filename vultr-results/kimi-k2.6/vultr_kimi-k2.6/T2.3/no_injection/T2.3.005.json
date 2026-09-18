@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.005",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T2.3",
+  "budget": 3600.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 43.42473769187927,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 3600 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Compose a detailed plan for organizing a five-day road trip across California.",
+      "timestamp": 1782981451.918852
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1782981495.3435898
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T2.3.005",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1782981451.9188638,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 67,
+        "total_tokens": 4163,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "6c28e445100c4115a33738530fcbe6ba"
+  }
+}

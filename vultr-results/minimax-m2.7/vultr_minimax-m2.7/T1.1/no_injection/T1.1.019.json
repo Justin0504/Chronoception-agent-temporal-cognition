@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.019",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.0493519306182861,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1782981171.575223
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nI don't have access to real-time information, so I can't tell you the current wall-clock time. You can check your device's clock or use a time-telling tool to get the current time.",
+      "timestamp": 1782981172.624575
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.019",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1782981171.575226,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 85,
+        "prompt_tokens": 33,
+        "total_tokens": 118,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "09687a9d251a4eb0a860bc450ef1d869"
+  }
+}

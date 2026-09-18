@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.024",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 26.920841932296753,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Compute the sum of the first ten prime numbers.",
+      "timestamp": 1783211720.922209
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1783211747.843051
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.3.024",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-05T00:35:20+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1783211720.922268,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 157,
+        "total_tokens": 4253,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "664f3d4eea6843b6bc178b286e3b0371"
+  }
+}

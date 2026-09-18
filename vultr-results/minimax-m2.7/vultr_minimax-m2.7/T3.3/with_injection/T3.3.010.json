@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.010",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 18.08187985420227,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1783211204.132019
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nTCP and UDP are both transport layer protocols used for sending data over networks, but they differ significantly in their design and use cases. TCP (Transmission Control Protocol) provides reliable, ordered, and error-checked communication by establishing a connection through a three-way handshake, using flow control, and retransmitting lost packets. This makes TCP suitable for applications requiring data integrity, such as web browsing, email, and file transfers. In contrast, UDP (User Datagram Protocol) is connectionless, sending datagrams without handshaking or error recovery, and does not guarantee order or delivery. This results in lower overhead and faster transmission, making UDP ideal for real-time applications like video streaming, online gaming, and DNS queries, where speed is more critical than reliability.\n\nduration=60s, ci=[30s, 120s]",
+      "timestamp": 1783211222.213899
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.3.010",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-05T00:26:44+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1783211204.132024,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 3665,
+        "prompt_tokens": 146,
+        "total_tokens": 3811,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "8ebf954614b148d7ae5fe5728a356671"
+  }
+}

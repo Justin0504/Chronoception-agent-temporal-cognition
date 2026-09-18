@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.027",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 17.085111618041992,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Compose a brief congratulatory message for a friend's promotion.",
+      "timestamp": 1783211511.7142432
+    },
+    {
+      "state": "<agent_response>",
+      "action": " Congratulations on your well-deserved promotion! Wishing you continued success and fulfillment in your new role.\n\nduration=3s, ci=[1s, 15s]",
+      "timestamp": 1783211528.7993548
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.3.027",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-05T00:31:51+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1783211511.714251,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 2837,
+        "prompt_tokens": 143,
+        "total_tokens": 2980,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "942201dbc2594e73b4248a2494d61836"
+  }
+}

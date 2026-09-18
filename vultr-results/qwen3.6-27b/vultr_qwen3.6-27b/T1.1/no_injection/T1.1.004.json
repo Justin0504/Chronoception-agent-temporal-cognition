@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.004",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.6289210319519043,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1782981345.319423
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nI don't have access to real-time information, including the current wall-clock time. You can quickly check the exact time on your device's clock, or if you let me know your time zone, I'd be happy to help with time zone conversions or scheduling!",
+      "timestamp": 1782981347.948344
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.004",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1782981345.3194299,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 330,
+        "prompt_tokens": 32,
+        "total_tokens": 362,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "eca1e96ab78946a48af55f2557aa106c"
+  }
+}

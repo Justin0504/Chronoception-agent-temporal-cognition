@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.014",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 7.413543224334717,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1782981982.27156
+    },
+    {
+      "state": "<agent_response>",
+      "action": "# Lesson Plan: Introduction to Probability\n\n## Grade Level: 9-12\n## Duration: 60 minutes\n## Subject: Mathematics\n\n---\n\n## Learning Objectives\nBy the end of this lesson, students will be able to:\n1. Define probability and distinguish between theoretical and experimental probability\n2. Calculate the probability of simple events using the formula P(A) = favorable outcomes / total outcomes\n3. Understand and apply the concepts of sample space, events, and outcomes\n4. Differentiate between independent and dependent events\n5. Calculate probabilities for compound events using the multiplication and addition rules\n\n---\n\n## Materials Needed\n- Whiteboard and markers\n- Dice (one pair per group)\n- Coins (one per student)\n- Deck of playing cards (one per group)\n- Spinner with colored sections\n- Worksheets with practice problems\n- Calculators\n- Projector for presentation slides\n\n---\n\n## Lesson Structure\n\n### 1. Warm-Up / Hook (7 minutes)\n- **Activity:** \"The Lottery Dilemma\"\n- Present a scenario: \"You have a 1 in 14 million chance of winning the lottery. Is it worth buying a ticket?\"\n- Ask students to discuss in pairs and share their reasoning\n- Introduce the concept that probability helps us quantify uncertainty and make informed decisions\n\n### 2. Direct Instruction (15 minutes)\n\n**Key Concepts to Cover:**\n\n**a) Basic Definitions:**\n- **Experiment:** A process that leads to well-defined outcomes\n- **Sample Space (S):** The set of all possible outcomes\n- **Event (E):** A subset of the sample space\n- **Outcome:** A single result of an experiment\n\n**b) Probability Formula:**\n$$P(E) = \\frac{\\text{Number of favorable outcomes}}{\\text{Total number of possible outcomes}}$$\n\n**c) Probability Scale:**\n- 0 \u2264 P(E) \u2264 1\n- P(E) = 0: Impossible event\n- P(E) = 1: Certain event\n- P(E) = 0.5: Equally likely event\n\n**d) Theoretical vs. Experimental Probability:**\n- **Theoretical:** Based on reasoning and calculation\n- **Experimental:** Based on repeated trials and observation\n- Law of Large Numbers: As trials increase, experimental probability approaches theoretical probability\n\n**e) Compound Events:**\n- **Independent Events:** P(A and B) = P(A) \u00d7 P(B)\n- **Dependent Events:** P(A and B) = P(A) \u00d7 P(B|A)\n- **Mutually Exclusive Events:** P(A or B) = P(A) + P(B)\n- **Non-Mutually Exclusive Events:** P(A or B) = P(A) + P(B) - P(A and B)\n\n### 3. Guided Practice (12 minutes)\n\n**Example 1: Rolling a Die**\n- What is the probability of rolling an even number?\n- Sample space: {1, 2, 3, 4, 5, 6}\n- Favorable outcomes: {2, 4, 6}\n- P(even) = 3/6 = 1/2\n\n**Example 2: Drawing a Card**\n- What is the probability of drawing a king from a standard deck?\n- Total cards: 52, Kings: 4\n- P(king) = 4/52 = 1/13\n\n**Example 3: Compound Event**\n- What is the probability of flipping two heads in a row?\n- P(H and H) = 1/2 \u00d7 1/2 = 1/4\n\n**Example 4: Dependent Events**\n- Drawing two cards without replacement, both being kings\n- P(first king) = 4/52, P(second king | first king) = 3/51\n- P(both kings) = 4/52 \u00d7 3/51 = 12/2652 \u2248 0.0045\n\n### 4. Collaborative Activity (15 minutes)\n\n**Station Rotation Activity:**\n\n**Station 1: Dice Rolling**\n- Students roll two dice 30 times and record sums\n- Calculate experimental probability of each sum\n- Compare with theoretical probability\n\n**Station 2: Card Drawing**\n- Draw cards and record suit/color\n- Calculate experimental probabilities\n- Compare with theoretical values\n\n**Station 3: Spinner Experiment**\n- Spin a colored spinner 20 times\n- Record results and calculate probabilities\n- Discuss why results may differ from theoretical\n\n**Station 4: Problem Solving**\n- Work through compound probability word problems\n- Peer discussion and solution sharing\n\n### 5. Independent Practice (8 minutes)\n\n**Worksheet Problems:**\n1. What is the probability of rolling a sum of 7 with two dice?\n2. A bag contains 5 red marbles, 3 blue marbles, and 2 green marbles. What is the probability of drawing a blue marble?\n3. What is the probability of flipping 3 heads in a row?\n4. In a standard deck, what is the probability of drawing a face card or an ace?\n5. If P(A) = 0.3 and P(B) = 0.4, and A and B are independent, find P(A and B).\n\n### 6. Closure and Assessment (3 minutes)\n\n**Exit Ticket:**\n- \"Explain the difference between theoretical and experimental probability in your own words, and give one real-world example where understanding probability is important.\"\n\n**Key Takeaways Review:**\n- Probability ranges from 0 to 1\n- Theoretical vs. experimental probability\n- Independent vs. dependent events\n- Addition and multiplication rules\n\n---\n\n## Homework Assignment\n1. Complete 10 probability problems from textbook (Section 7.2)\n2. **Real-world project:** Choose a real-world scenario (weather forecast, sports statistics, game show, insurance) and write a 1-page analysis of how probability is used in that context\n\n---\n\n## Differentiation Strategies\n\n**For Struggling Students:**\n- Provide visual aids (probability trees, Venn diagrams)\n- Use simpler fractions and smaller sample spaces\n- Offer additional manipulatives for hands-on learning\n- Provide partially completed examples\n\n**For Advanced Students:**\n- Introduce conditional probability and Bayes' theorem\n- Explore permutations and combinations\n- Challenge problems involving multiple dependent events\n- Research project on probability in quantum physics\n\n**For English Language Learners:**\n- Provide vocabulary cards with definitions and examples\n- Use visual representations of problems\n- Pair with bilingual peers when possible\n\n---\n\n## Assessment Methods\n\n**Formative Assessment:**\n- Observation during station activities\n- Questioning during guided practice\n- Exit ticket responses\n\n**Summative Assessment:**\n- Homework completion and accuracy\n- Quiz on probability concepts (next class)\n- Real-world project evaluation\n\n---\n\n## Extensions and Connections\n\n**Cross-Curricular Connections:**\n- **Science:** Genetics and Punnett squares\n- **Social Studies:** Election polling and margins of error\n- **Physical Education:** Sports statistics and performance analysis\n- **Computer Science:** Random number generation and algorithms\n\n**Real-World Applications:**\n- Weather forecasting\n- Insurance and risk assessment\n- Medical testing and false positives\n- Game design and casino mathematics\n- Quality control in manufacturing\n\n---\n\n## Common Misconceptions to Address\n\n1. **Gambler's Fallacy:** \"If I flipped heads 5 times, tails is due\" - Each flip is independent\n2. **Confusion between P(A and B) vs. P(A or B)**\n3. **Forgetting to account for overlapping events**\n4. **Assuming all outcomes are equally likely**\n5. **Confusing independent and dependent events**\n\n---\n\n## Next Lesson Preview\nTomorrow we will explore conditional probability and tree diagrams, building on today's foundation to solve more complex probability problems.\n\n---\n\n*This lesson plan aligns with Common Core State Standards for High School Statistics and Probability (HSS-CP.A.1, HSS-CP.A.2, HSS-CP.B.6, HSS-CP.B.7).*",
+      "timestamp": 1782981989.6851032
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.014",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:46:22+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981982.271571,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1812,
+        "prompt_tokens": 89,
+        "total_tokens": 1901,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "da2aff23cca744a1a7ee6062d6c2755c"
+  }
+}

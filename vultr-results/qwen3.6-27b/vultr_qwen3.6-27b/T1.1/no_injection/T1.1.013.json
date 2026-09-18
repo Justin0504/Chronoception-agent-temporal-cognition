@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.013",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 3.081886053085327,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What time is it right now, to the nearest minute?",
+      "timestamp": 1782981373.909855
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nI don't have access to real-time information, so I can't check the current time. For the most accurate time, I'd recommend checking your phone, computer, or a nearby clock. Let me know if you need help with anything else!",
+      "timestamp": 1782981376.991741
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.013",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1782981373.9098618,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 327,
+        "prompt_tokens": 33,
+        "total_tokens": 360,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "0f4d30e2c09241e0be93d428fff3f635"
+  }
+}

@@ -1,0 +1,34 @@
+\contentsline {section}{\numberline {1}Annotation Protocol}{1}{section.1}%
+\contentsline {paragraph}{T1.1 parser.}{1}{section*.2}%
+\contentsline {paragraph}{T2.3 measurement.}{1}{section*.3}%
+\contentsline {paragraph}{T3.1 parser ($\Pi $).}{2}{section*.4}%
+\contentsline {paragraph}{Settings A and B.}{2}{section*.5}%
+\contentsline {paragraph}{Reasoning model handling.}{2}{section*.6}%
+\contentsline {paragraph}{Open-source serving.}{2}{section*.7}%
+\contentsline {section}{\numberline {2}Full Panel Tables}{2}{section.2}%
+\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{2}{section*.8}%
+\contentsline {paragraph}{Reading the CIs.}{2}{section*.10}%
+\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{3}{section*.11}%
+\contentsline {paragraph}{Per-budget $\mathrm {CAR}$ curves.}{3}{section*.13}%
+\contentsline {paragraph}{Trajectory release.}{3}{section*.14}%
+\contentsline {paragraph}{Reasoning-panel completeness update (Route B-1).}{3}{section*.15}%
+\contentsline {paragraph}{The prospective--retrospective sign flip within Sonnet-thinking.}{4}{section*.17}%
+\contentsline {paragraph}{o3's structural asymmetry.}{4}{section*.18}%
+\contentsline {section}{\numberline {3}Atlas Evidence (Verbatim)}{4}{section.3}%
+\contentsline {paragraph}{ChatGPT (web product, OpenAI).}{4}{section*.19}%
+\contentsline {paragraph}{Claude.ai (web product, Anthropic).}{5}{section*.20}%
+\contentsline {paragraph}{Gemini app (Google).}{5}{section*.21}%
+\contentsline {paragraph}{Raw OpenAI API --- empirical contrast.}{5}{section*.22}%
+\contentsline {paragraph}{Raw Anthropic API --- empirical contrast.}{5}{section*.23}%
+\contentsline {paragraph}{Cursor agent (dev tool).}{5}{section*.24}%
+\contentsline {paragraph}{GitHub Copilot CLI (dev tool).}{5}{section*.25}%
+\contentsline {paragraph}{Perplexity Computer (dev tool).}{5}{section*.26}%
+\contentsline {paragraph}{Summary.}{5}{section*.27}%
+\contentsline {section}{\numberline {4}L3 Sub-Failure Detail}{5}{section.4}%
+\contentsline {section}{\numberline {5}Spatiotemporal Generalisation Full Sketch}{8}{section.5}%
+\contentsline {paragraph}{Assumption (token-only spatial support).}{8}{section*.43}%
+\contentsline {paragraph}{Theorem\nobreakspace {}\ref {thm:sit} proof sketch.}{8}{section*.44}%
+\contentsline {section}{\numberline {6}Operational Chronoception Audit Checklist}{10}{section.6}%
+\contentsline {paragraph}{The audit, in seven steps.}{10}{section*.51}%
+\contentsline {paragraph}{What to do when an agent fails the audit.}{11}{section*.52}%
+\contentsline {paragraph}{What this audit does not cover.}{11}{section*.53}%

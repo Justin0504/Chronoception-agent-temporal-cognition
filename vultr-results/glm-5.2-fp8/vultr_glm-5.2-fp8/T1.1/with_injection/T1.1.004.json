@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.004",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.4903678894042969,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1782981168.172106
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current wall-clock time is **2026-07-02 08:32:48 UTC** (July 2, 2026, at 8:32 AM and 48 seconds, Coordinated Universal Time).",
+      "timestamp": 1782981169.662474
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.004",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:32:48+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981168.1721091,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 153,
+        "prompt_tokens": 53,
+        "total_tokens": 206,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "0fd5a9da47004401a663c9574d751026"
+  }
+}

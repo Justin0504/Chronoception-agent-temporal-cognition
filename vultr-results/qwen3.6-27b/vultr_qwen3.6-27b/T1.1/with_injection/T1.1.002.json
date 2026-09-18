@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.002",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.7215559482574463,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the current date and time? Give your best answer in ISO-8601 format.",
+      "timestamp": 1782981433.027028
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\n2026-07-02T08:37:13+00:00",
+      "timestamp": 1782981435.748584
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.002",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:37:13+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1782981433.0270379,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 363,
+        "prompt_tokens": 75,
+        "total_tokens": 438,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "b4ca60b7d6e1414fb739f8e57225fbc1"
+  }
+}

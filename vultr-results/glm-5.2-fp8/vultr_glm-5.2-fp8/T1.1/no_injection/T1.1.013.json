@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.013",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.2460646629333496,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What time is it right now, to the nearest minute?",
+      "timestamp": 1782981098.7678232
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time information, so I can't tell you the current time. You'll need to check a clock, your phone, or another device that displays the time.",
+      "timestamp": 1782981100.013888
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.013",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981098.767829,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 83,
+        "prompt_tokens": 31,
+        "total_tokens": 114,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "33ba7e0c6d7f4f0ba9affe45b76bc5dd"
+  }
+}

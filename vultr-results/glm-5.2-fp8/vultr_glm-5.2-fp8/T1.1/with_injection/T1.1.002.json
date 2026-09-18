@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.002",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.3503012657165527,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the current date and time? Give your best answer in ISO-8601 format.",
+      "timestamp": 1782981164.8453078
+    },
+    {
+      "state": "<agent_response>",
+      "action": "The current date and time is:\n\n**2026-07-02T08:32:44+00:00**\n\nThis is in ISO-8601 format, representing July 2, 2026, at 08:32:44 UTC (Coordinated Universal Time).",
+      "timestamp": 1782981166.195609
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.002",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:32:44+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981164.8453188,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 133,
+        "prompt_tokens": 62,
+        "total_tokens": 195,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "0beea592b38f4903bffb029b69eea622"
+  }
+}

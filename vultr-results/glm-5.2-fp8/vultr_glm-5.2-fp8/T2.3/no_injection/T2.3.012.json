@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.012",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 4.694082021713257,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1782981430.942302
+    },
+    {
+      "state": "<agent_response>",
+      "action": "# Lesson Plan: Introduction to Probability for High School Students\n\n**Grade Level:** 9-12\n**Duration:** 60 minutes\n**Subject:** Mathematics\n\n---\n\n## Learning Objectives\nBy the end of this lesson, students will be able to:\n1. Define key probability terms: sample space, event, outcome, and probability.\n2. Distinguish between theoretical and experimental probability.\n3. Calculate the probability of simple events using the formula P(A) = favorable outcomes / total outcomes.\n4. Apply the addition rule and multiplication rule to compound events.\n5. Differentiate between independent and dependent events.\n\n---\n\n## Materials Needed\n- Whiteboard and markers\n- Dice (one pair per group)\n- Coins (one per student)\n- A standard deck of cards (one per group)\n- Worksheets with practice problems\n- Calculators\n- Projector for presentation slides\n\n---\n\n## Lesson Structure\n\n### 1. Warm-Up / Hook (5 minutes)\nBegin with a real-world question: \"If you flip a coin, what's the chance it lands on heads?\" Allow students to share answers. Then ask: \"What about rolling a six on a die?\" Use these examples to introduce the concept of probability as a measure of likelihood, ranging from 0 (impossible) to 1 (certain).\n\n### 2. Direct Instruction (15 minutes)\n- **Define key terms:** sample space, event, outcome, favorable outcome.\n- **Introduce the probability formula:** P(A) = number of favorable outcomes / total number of possible outcomes.\n- **Explain theoretical vs. experimental probability** with examples.\n- **Introduce compound events:** Discuss independent events (one event doesn't affect another) and dependent events.\n- **Addition rule:** P(A or B) = P(A) + P(B) \u2212 P(A and B).\n- **Multiplication rule:** P(A and B) = P(A) \u00d7 P(B) for independent events.\n\n### 3. Guided Practice (15 minutes)\nWork through examples together:\n- Example 1: Probability of drawing a king from a deck of cards (4/52 = 1/13).\n- Example 2: Probability of rolling two dice and getting a sum of 7.\n- Example 3: Probability of flipping two heads in a row (independent events).\n- Example 4: Drawing two cards without replacement (dependent events).\n\n### 4. Group Activity (15 minutes)\nDivide students into groups of 3-4. Each group conducts experiments:\n- Flip a coin 50 times and record results; compare experimental to theoretical probability.\n- Roll two dice 30 times, record sums, and create a frequency table.\n- Discuss why experimental results may differ from theoretical expectations.\n\n### 5. Independent Practice (5 minutes)\nStudents complete a short worksheet with 5 problems covering:\n- Simple probability calculations\n- Identifying independent vs. dependent events\n- Compound probability problems\n\n### 6. Closure and Assessment (5 minutes)\n- Review key concepts through a quick Q&A.\n- Exit ticket: Students answer one question\u2014e.g., \"A bag contains 3 red and 5 blue marbles. What is the probability of drawing a red marble, then without replacement, drawing a blue marble?\"\n\n---\n\n## Homework / Extension\n- Assign 10 practice problems covering all concepts taught.\n- Extension activity: Research one real-world application of probability (weather forecasting, insurance, games, medicine) and write a short paragraph.\n\n---\n\n## Differentiation\n- **Struggling students:** Provide visual aids, simpler examples, and one-on-one support.\n- **Advanced students:** Introduce permutations, combinations, and conditional probability (Bayes' theorem basics).\n- **ELL students:** Provide vocabulary cards with definitions and examples in both languages.\n\n---\n\n## Assessment\n- Formative: Observation during group work, exit ticket, worksheet completion.\n- Summative: A quiz in the next class covering probability calculations and compound events.\n\n---\n\nThis lesson plan balances direct instruction, hands-on experimentation, and independent practice to engage high school students and build a strong foundation in probability.",
+      "timestamp": 1782981435.636384
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T2.3.012",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981430.942316,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 1025,
+        "prompt_tokens": 66,
+        "total_tokens": 1091,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "4dab8c9d3009452aa926d88280543944"
+  }
+}

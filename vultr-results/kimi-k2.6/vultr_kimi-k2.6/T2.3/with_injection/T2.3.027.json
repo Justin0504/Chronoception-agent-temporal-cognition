@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.027",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T2.3",
+  "budget": 300.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 47.4421329498291,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 300 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Outline a complete short story with characters, plot, and theme.",
+      "timestamp": 1782983012.880487
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1782983060.32262
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.027",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T09:03:32+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1782983012.880503,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 88,
+        "total_tokens": 4184,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "0008f68773d64f8fb8cd1f9aa1e69344"
+  }
+}

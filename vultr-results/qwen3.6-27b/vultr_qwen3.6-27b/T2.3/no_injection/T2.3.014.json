@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.014",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 24.726991176605225,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1782981899.484555
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\n# \ud83d\udcd8 Complete Lesson Plan: Foundations of Probability\n**Target Audience:** High School Students (Grades 9\u201310)  \n**Duration:** 60 minutes  \n**Subject:** Mathematics / Statistics & Probability  \n**Prerequisites:** Comfort with fractions, decimals, percentages; basic understanding of sets and independent/dependent concepts (informal)\n\n---\n\n## \ud83c\udfaf Learning Objectives & Standards\nBy the end of this lesson, students will be able to:\n1. Define probability, sample space, event, and outcome using precise mathematical language.\n2. Distinguish between theoretical and experimental probability and explain the Law of Large Numbers.\n3. Calculate probabilities of simple and compound events using appropriate rules.\n4. Apply probability concepts to interpret real-world scenarios.\n\n**Aligned Standards (CCSS):**\n- `HS.S-CP.A.1`: Understand that the probability of a chance event is a number between 0 and 1.\n- `HS.S-CP.A.2`: Assign probabilities to events and find the probabilities of events.\n- `HS.S-CP.A.3`: Understand that two events A and B are independent if P(A and B) = P(A)P(B).\n\n---\n\n## \ud83d\udce6 Materials & Resources\n- Standard six-sided dice, coins, colored marbles, standard 52-card decks\n- Calculators, whiteboards & markers, projector/screen\n- \"Probability Stations\" handouts & data recording sheets\n- Independent practice worksheet (tiered)\n- Exit tickets\n- Optional: Digital simulation tool (e.g., Desmos Probability Simulator, PhET)\n\n---\n\n## \u23f1\ufe0f Lesson Procedure (60 Minutes)\n\n### \ud83d\udd39 1. Hook & Activation (10 min)\n**Activity:** *\"The 70% Rain Forecast\"*\n- Display a weather forecast graphic: \"70% chance of rain tomorrow.\"\n- Ask: *What does this actually mean? Would you bring an umbrella? Why or why not?*\n- Facilitate a quick think-pair-share. Address common misconceptions (e.g., \"70% of the day will rain\" vs. \"70% of similar past conditions resulted in rain\").\n- Introduce the probability scale (0 to 1) and frame probability as a mathematical tool for quantifying uncertainty.\n\n### \ud83d\udd39 2. Direct Instruction (15 min)\n**Key Concepts & Modeling:**\n- **Definitions:** Sample space (S), event (E), outcome, probability notation P(E).\n- **Theoretical Probability:** `P(E) = (Number of favorable outcomes) / (Total possible outcomes)`\n  - Example: P(rolling a 4) = 1/6\n- **Experimental Probability:** `P(E) = (Frequency of E) / (Total trials)`\n  - Demonstrate 20 coin flips live. Show how experimental results vary but trend toward theoretical as trials increase (Law of Large Numbers).\n- **Compound Events:**\n  - Independent: `P(A and B) = P(A) \u00d7 P(B)`\n  - Dependent (without replacement): Adjust denominator after first event.\n  - Mutually Exclusive vs. Overlapping: `P(A or B) = P(A) + P(B) \u2013 P(A and B)`\n- Use visual aids: tree diagrams, Venn diagrams, and probability tables.\n\n### \ud83d\udd39 3. Guided Practice: Probability Labs (15 min)\n**Structure:** Students work in groups of 3\u20134, rotating through 3 stations (5 min each).\n1. **Coin & Dice Station:** Conduct 50 trials. Compare experimental vs. theoretical P(heads) and P(rolling \u22654).\n2. **Marble Draw Station:** Bag with 4 red, 3 blue, 3 green marbles. Calculate & record P(red then blue) with and without replacement.\n3. **Card Deck Station:** Calculate P(heart or face card), P(king then queen), and P(not a spade).\n- **Teacher Role:** Circulate, ask probing questions (*\"Why did your experimental results differ?\" \"What changes when you don't replace the marble?\"*), correct misconceptions, and ensure data accuracy.\n\n### \ud83d\udd39 4. Independent Practice (15 min)\n**Worksheet Structure (Tiered):**\n- **Level 1 (Foundational):** Single-event calculations, converting between fractions/decimals/percentages.\n- **Level 2 (Application):** Compound events, tree diagrams, interpreting Venn diagrams.\n- **Level 3 (Real-World/Extension):** Sports statistics (free-throw percentages), quality control (defective items), and a short word problem requiring `P(A or B)` with overlapping sets.\n- Students work individually or in pairs. Teacher provides targeted support and checks for understanding.\n\n### \ud83d\udd39 5. Closure & Exit Ticket (5 min)\n- **Recap:** Quick verbal review of key formulas and the difference between theoretical/experimental probability.\n- **Exit Ticket:**\n  1. In your own words, explain the difference between theoretical and experimental probability.\n  2. Calculate P(rolling a 4 or higher on a standard die). Show your work.\n  3. Bonus: If P(A) = 0.4 and P(B) = 0.5, and A and B are independent, what is P(A and B)?\n- Collect tickets to gauge readiness for the next lesson.\n\n---\n\n## \ud83d\udcca Assessment Strategy\n- **Formative:** Observation during labs, questioning, exit ticket analysis, worksheet review.\n- **Summative:** Unit quiz (administered in subsequent lessons) covering probability rules, compound events, and real-world applications.\n- **Success Criteria:** \u226580% accuracy on exit ticket; ability to correctly set up and solve compound event problems.\n\n---\n\n## \u267f Differentiation & Accommodations\n- **Support/SPED:** Graphic organizers with formula templates, sentence frames for explanations, pre-filled data tables, peer tutoring, extended time on practice.\n- **ELL:** Bilingual glossary, visual probability scales, color-coded examples, emphasis on hands-on manipulatives before abstract notation.\n- **Advanced/Enrichment:** Introduce conditional probability notation `P(A|B)`, explore expected value, or challenge with non-uniform probability distributions (e.g., weighted dice).\n\n---\n\n## \ud83d\udcda Extension & Homework\n- **Journal/Reflection:** \"Probability in Your Life\" \u2013 Identify one real-world scenario where probability is used (sports, insurance, games, news). Explain how it works and whether it's theoretical or experimental.\n- **Optional Digital Exploration:** Use a free online simulator to run 1,000+ trials and observe convergence to theoretical probability.\n- **Preview:** Brief introduction to conditional probability and Bayes' Theorem (next lesson).\n\n---\n\n## \ud83d\udcdd Teacher Reflection & Next Steps\n- **Track Common Errors:** Confusing `P(A or B)` with `P(A and B)`, misidentifying independent vs. dependent events, calculation errors with fractions.\n- **Adjustments:** If >30% struggle with compound events, dedicate the next class to tree diagram scaffolding. If mastery is high, accelerate to permutations/combinations or expected value.\n- **Materials Prep:** Pre-assemble station kits, print tiered worksheets, test digital tools, and prepare exit ticket collection system.\n\n---\n\u2705 *This lesson plan is ready for immediate classroom implementation. It balances conceptual understanding, hands-on exploration, procedural fluency, and real-world relevance while aligning with high school standards and diverse learner needs.*",
+      "timestamp": 1782981924.2115462
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T2.3.014",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1782981899.484568,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 3599,
+        "prompt_tokens": 70,
+        "total_tokens": 3669,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "5128c7f3fce54f94a5cccc6ca05c35df"
+  }
+}

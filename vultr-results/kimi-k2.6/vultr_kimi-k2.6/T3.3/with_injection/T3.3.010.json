@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.010",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 12.371879816055298,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1783211222.229686
+    },
+    {
+      "state": "<agent_response>",
+      "action": " TCP differs from UDP primarily in reliability and connection orientation. TCP (Transmission Control Protocol) establishes a connection before data transfer, guarantees delivery through acknowledgments and retransmissions, ensures ordered packet delivery, and manages flow and congestion control. This makes it ideal for applications requiring accuracy, like web browsing or file transfers. UDP (User Datagram Protocol), by contrast, is connectionless and sends packets (datagrams) without handshakes, acknowledgments, or guaranteed delivery. It offers lower latency and overhead, making it preferable for real-time applications like video streaming, online gaming, or DNS queries where speed matters more than perfect reliability.\n\nduration=6s, ci=[2s, 20s]",
+      "timestamp": 1783211234.6015658
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.3.010",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-05T00:27:02+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1783211222.229692,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 2144,
+        "prompt_tokens": 143,
+        "total_tokens": 2287,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "8f0efcf9467e445db553bf4fab8bed9c"
+  }
+}

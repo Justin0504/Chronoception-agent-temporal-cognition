@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.002",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T2.3",
+  "budget": 3600.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 31.201894283294678,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 3600 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Write an in-depth review of any classic novel, treating its themes and style.",
+      "timestamp": 1782982378.1093938
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1782982409.311288
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.002",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:52:58+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1782982378.109411,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 108,
+        "total_tokens": 4204,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "ad14b17bb9bc4961aa0a949c4fc74fc1"
+  }
+}

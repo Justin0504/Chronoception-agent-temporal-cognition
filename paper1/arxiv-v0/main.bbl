@@ -1,0 +1,198 @@
+\begin{thebibliography}{24}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Bruce et~al.(2024)Bruce, Dennis, Edwards, Parker-Holder, Shi, Hughes,
+  Lai, Mavalankar, Steigerwald, Apps, Aytar, Bechtle, Behbahani, Chan, Heess,
+  Gonzalez, Osindero, Ozair, Reed, Zhang, Zolna, Clune, de~Freitas, Singh, and
+  Rockt{\"a}schel]{bruce2024genie}
+Jake Bruce, Michael~D. Dennis, Ashley Edwards, Jack Parker-Holder, Yuge Shi,
+  Edward Hughes, Matthew Lai, Aditi Mavalankar, Richie Steigerwald, Chris Apps,
+  Yusuf Aytar, Sarah Bechtle, Feryal Behbahani, Stephanie Chan, Nicolas Heess,
+  Lucy Gonzalez, Simon Osindero, Sherjil Ozair, Scott Reed, Jingwei Zhang,
+  Konrad Zolna, Jeff Clune, Nando de~Freitas, Satinder Singh, and Tim
+  Rockt{\"a}schel.
+\newblock Genie: Generative interactive environments.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine
+  Learning (ICML)}, volume 235 of \emph{PMLR}, pages 4603--4623, 2024.
+
+\bibitem[Cheng et~al.(2025)Cheng, Moakhar, Fan, Hosseini, Faghih, Sodagar,
+  Wang, and Feizi]{cheng2025temporallyblind}
+Yize Cheng, Arshia~Soltani Moakhar, Chenrui Fan, Parsa Hosseini, Kazem Faghih,
+  Zahra Sodagar, Wenxiao Wang, and Soheil Feizi.
+\newblock Your {LLM} agents are temporally blind: The misalignment between tool
+  use decisions and human time perception.
+\newblock \emph{arXiv preprint arXiv:2510.23853}, 2025.
+
+\bibitem[Chu et~al.(2024)Chu, Chen, Chen, Yu, He, Wang, Peng, Liu, Qin, and
+  Liu]{chu2024timebench}
+Zheng Chu, Jingchang Chen, Qianglong Chen, Weijiang Yu, Tao He, Haotian Wang,
+  Weihua Peng, Ming Liu, Bing Qin, and Ting Liu.
+\newblock {T}ime{B}ench: A comprehensive evaluation of temporal reasoning
+  abilities in large language models.
+\newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
+  for Computational Linguistics (ACL)}, 2024.
+
+\bibitem[Eagleman(2008)]{eagleman2008time}
+David~M. Eagleman.
+\newblock Human time perception and its illusions.
+\newblock \emph{Current Opinion in Neurobiology}, 18\penalty0 (2):\penalty0
+  131--136, 2008.
+
+\bibitem[Garikaparthi(2026)]{garikaparthi2026canllmstime}
+Aniketh Garikaparthi.
+\newblock Can {LLM}s perceive time? an empirical investigation.
+\newblock \emph{arXiv preprint arXiv:2604.00010}, 2026.
+
+\bibitem[Gema et~al.(2025)Gema, H{\"a}gele, Chen, Arditi, Goldman-Wetzler,
+  Fraser-Taliente, Sleight, Petrini, Michael, Alex, Minervini, Chen, Benton,
+  and Perez]{inversescalingttc2025}
+Aryo~Pradipta Gema, Alexander H{\"a}gele, Runjin Chen, Andy Arditi, Jacob
+  Goldman-Wetzler, Kit Fraser-Taliente, Henry Sleight, Linda Petrini, Julian
+  Michael, Beatrice Alex, Pasquale Minervini, Yanda Chen, Joe Benton, and Ethan
+  Perez.
+\newblock Inverse scaling in test-time compute.
+\newblock \emph{arXiv preprint arXiv:2507.14417}, 2025.
+
+\bibitem[Goel et~al.(2025)Goel, Pandey, Mahadevan, Kumar, and
+  Khadaria]{goel2025chronocept}
+Krish Goel, Sanskar Pandey, K.~S. Mahadevan, Harsh Kumar, and Vishesh Khadaria.
+\newblock Chronocept: Instilling a sense of time in machines.
+\newblock \emph{arXiv preprint arXiv:2505.07637}, 2025.
+
+\bibitem[Guo et~al.(2017)Guo, Pleiss, Sun, and Weinberger]{guo2017calibration}
+Chuan Guo, Geoff Pleiss, Yu~Sun, and Kilian~Q. Weinberger.
+\newblock On calibration of modern neural networks.
+\newblock In \emph{Proceedings of the International Conference on Machine
+  Learning (ICML)}, 2017.
+
+\bibitem[Ha and Schmidhuber(2018)]{ha2018worldmodels}
+David Ha and J{\"u}rgen Schmidhuber.
+\newblock World models.
+\newblock \emph{arXiv preprint arXiv:1803.10122}, 2018.
+
+\bibitem[Hafner et~al.(2020)Hafner, Lillicrap, Ba, and
+  Norouzi]{hafner2019dreamer}
+Danijar Hafner, Timothy Lillicrap, Jimmy Ba, and Mohammad Norouzi.
+\newblock Dream to control: Learning behaviors by latent imagination.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2020.
+
+\bibitem[Jiang et~al.(2021)Jiang, Araki, Ding, and
+  Neubig]{jiang2021calibration}
+Zhengbao Jiang, Jun Araki, Haibo Ding, and Graham Neubig.
+\newblock How can we know when language models know? on the calibration of
+  language models for question answering.
+\newblock \emph{Transactions of the Association for Computational Linguistics
+  (TACL)}, 9:\penalty0 962--977, 2021.
+
+\bibitem[Jimenez et~al.(2024)Jimenez, Yang, Wettig, Yao, Pei, Press, and
+  Narasimhan]{swebench}
+Carlos~E. Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir
+  Press, and Karthik Narasimhan.
+\newblock {SWE-bench}: Can language models resolve real-world {GitHub} issues?
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2024.
+\newblock arXiv:2310.06770.
+
+\bibitem[Kadavath et~al.(2022)Kadavath, Conerly, Askell, Henighan, Drain,
+  Perez, Schiefer, Hatfield-Dodds, DasSarma, Tran-Johnson,
+  et~al.]{kadavath2022knowing}
+Saurav Kadavath, Tom Conerly, Amanda Askell, Tom Henighan, Dawn Drain, Ethan
+  Perez, Nicholas Schiefer, Zac Hatfield-Dodds, Nova DasSarma, Eli
+  Tran-Johnson, et~al.
+\newblock Language models (mostly) know what they know.
+\newblock \emph{arXiv preprint arXiv:2207.05221}, 2022.
+
+\bibitem[Kwa et~al.(2025)Kwa, West, Becker, Deng, Garcia, Hasin, Jawhar,
+  Kinniment, Rush, Von~Arx, Bloom, Broadley, Du, Goodrich, Jurkovic, Miles,
+  Nix, Lin, Parikh, Rein, Sato, Wijk, Ziegler, Barnes, and
+  Chan]{kwa2025metrhorizons}
+Thomas Kwa, Ben West, Joel Becker, Amy Deng, Katharyn Garcia, Max Hasin, Sami
+  Jawhar, Megan Kinniment, Nate Rush, Sydney Von~Arx, Ryan Bloom, Thomas
+  Broadley, Haoxing Du, Brian Goodrich, Nikola Jurkovic, Luke~Harold Miles,
+  Seraphina Nix, Tao Lin, Neev Parikh, David Rein, Lucas Jun~Koba Sato, Hjalmar
+  Wijk, Daniel~M. Ziegler, Elizabeth Barnes, and Lawrence Chan.
+\newblock Measuring {AI} ability to complete long software tasks.
+\newblock \emph{arXiv preprint arXiv:2503.14499}, 2025.
+
+\bibitem[Lacombe et~al.(2025)Lacombe, Wu, and Dilworth]{dontthinktwice2025}
+Romain Lacombe, Kerrie Wu, and Eddie Dilworth.
+\newblock Don't think twice! over-reasoning impairs confidence calibration.
+\newblock \emph{arXiv preprint arXiv:2508.15050}, 2025.
+
+\bibitem[Liu et~al.(2024)Liu, Yu, Zhang, Xu, Lei, Lai, Gu, Ding, Men, Yang,
+  Zhang, Deng, Zeng, Du, Zhang, Shen, Zhang, Su, Sun, Huang, Dong, and
+  Tang]{agentbench}
+Xiao Liu, Hao Yu, Hanchen Zhang, Yifan Xu, Xuanyu Lei, Hanyu Lai, Yu~Gu,
+  Hangliang Ding, Kaiwen Men, Kejuan Yang, Shudan Zhang, Xiang Deng, Aohan
+  Zeng, Zhengxiao Du, Chenhui Zhang, Sheng Shen, Tianjun Zhang, Yu~Su, Huan
+  Sun, Minlie Huang, Yuxiao Dong, and Jie Tang.
+\newblock Agentbench: Evaluating {LLM}s as agents.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2024.
+\newblock arXiv:2308.03688.
+
+\bibitem[Ma et~al.(2026)Ma, Li, Chen, Li, Li, Guo, Lin, and
+  Chen]{ma2026timelymachine}
+Yichuan Ma, Linyang Li, Yongkang Chen, Peiji Li, Xiaozhe Li, Qipeng Guo, Dahua
+  Lin, and Kai Chen.
+\newblock Timely machine: Awareness of time makes test-time scaling agentic.
+\newblock \emph{arXiv preprint arXiv:2601.16486}, 2026.
+
+\bibitem[Mialon et~al.(2023)Mialon, Fourrier, Swift, Wolf, LeCun, and
+  Scialom]{gaia}
+Gr{\'e}goire Mialon, Cl{\'e}mentine Fourrier, Craig Swift, Thomas Wolf, Yann
+  LeCun, and Thomas Scialom.
+\newblock {GAIA}: a benchmark for general {AI} assistants.
+\newblock \emph{arXiv preprint arXiv:2311.12983}, 2023.
+
+\bibitem[of~Hippo(1991)]{augustine_confessions}
+Augustine of~Hippo.
+\newblock \emph{Confessions}.
+\newblock Oxford World's Classics. Oxford University Press, 1991.
+\newblock Book {XI}; composed c.\ 397--400 CE.
+
+\bibitem[Parkinson(1955)]{parkinson1955}
+C.~Northcote Parkinson.
+\newblock Parkinson's law.
+\newblock The Economist (November 19), 1955.
+\newblock Reprinted as the title essay in Parkinson's Law and Other Studies in
+  Administration, Houghton Mifflin, 1957.
+
+\bibitem[Schrittwieser et~al.(2020)Schrittwieser, Antonoglou, Hubert, Simonyan,
+  Sifre, Schmitt, Guez, Lockhart, Hassabis, Graepel, Lillicrap, and
+  Silver]{schrittwieser2020muzero}
+Julian Schrittwieser, Ioannis Antonoglou, Thomas Hubert, Karen Simonyan,
+  Laurent Sifre, Simon Schmitt, Arthur Guez, Edward Lockhart, Demis Hassabis,
+  Thore Graepel, Timothy Lillicrap, and David Silver.
+\newblock Mastering {Atari}, {Go}, chess and shogi by planning with a learned
+  model.
+\newblock \emph{Nature}, 588\penalty0 (7839):\penalty0 604--609, 2020.
+\newblock \doi{10.1038/s41586-020-03051-4}.
+
+\bibitem[Wittmann(2009)]{wittmann2009chronoception}
+Marc Wittmann.
+\newblock The inner experience of time.
+\newblock \emph{Philosophical Transactions of the Royal Society B},
+  364\penalty0 (1525):\penalty0 1955--1967, 2009.
+
+\bibitem[Yuan and Zhao(2026)]{osf-prereg-2026}
+Aojie Yuan and Yue Zhao.
+\newblock The augustine problem: Pre-registration.
+\newblock Open Science Framework, 2026.
+\newblock Locked at repository commit \texttt{a6f20c3}.
+
+\bibitem[Zhou et~al.(2024)Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Bisk, Fried,
+  Alon, and Neubig]{webarena}
+Shuyan Zhou, Frank~F. Xu, Hao Zhu, Xuhui Zhou, Robert Lo, Abishek Sridhar,
+  Xianyi Cheng, Yonatan Bisk, Daniel Fried, Uri Alon, and Graham Neubig.
+\newblock Webarena: A realistic web environment for building autonomous agents.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR)}, 2024.
+\newblock arXiv:2307.13854.
+
+\end{thebibliography}

@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.015",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T2.3",
+  "budget": 1800.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 23.49049425125122,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 1800 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1782982661.0940108
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1782982684.584505
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.015",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:57:41+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1782982661.0940921,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 89,
+        "total_tokens": 4185,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "3dc6ce276d7d4881b76ff10560f7681b"
+  }
+}

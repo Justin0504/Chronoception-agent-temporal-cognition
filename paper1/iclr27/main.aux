@@ -32,7 +32,7 @@
 \newlabel{ass:token}{{3}{2}{Assumption (token-only loss support)}{section*.5}{}}
 \@writefile{toc}{\contentsline {paragraph}{Assumption (token-only loss support).}{2}{section*.5}\protected@file@percent }
 \newlabel{thm:cit}{{1}{2}{Chronoception Impossibility, CIT}{theorem.1}{}}
-\citation{wittmann2009chronoception}
+\citation{wittmann2009chronoception,eagleman2008time}
 \@writefile{toc}{\contentsline {paragraph}{Scope.}{3}{section*.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Three empirical predictions.}{3}{section*.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{Augustine threshold.}{3}{section*.8}\protected@file@percent }
@@ -42,7 +42,6 @@
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
 \newlabel{tab:capabilities}{{1}{3}{The 9 sub-capabilities of \textsc {ChronoBench}. Each row isolates one chronoceptive failure mode.\relax }{table.caption.9}{}}
 \@writefile{toc}{\contentsline {paragraph}{Panel and settings.}{3}{section*.10}\protected@file@percent }
-\citation{guo2017calibration,kadavath2022knowing}
 \@writefile{toc}{\contentsline {section}{\numberline {5}The Action Axis: L2 Step-Clock Conflation}{4}{section.5}\protected@file@percent }
 \newlabel{sec:l2}{{5}{4}{The Action Axis: L2 Step-Clock Conflation}{section.5}{}}
 \newlabel{prop:inj}{{1}{4}{Injection cannot install action-axis chronoception}{proposition.1}{}}
@@ -53,23 +52,22 @@
 \newlabel{ass:bh}{{6.1}{4}{Assumption (budget-honoured reasoning)}{section*.11}{}}
 \@writefile{toc}{\contentsline {paragraph}{Assumption (budget-honoured reasoning).}{4}{section*.11}\protected@file@percent }
 \newlabel{thm:rs}{{2}{4}{Reverse-Scaling}{theorem.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}The Calibration Catastrophe}{4}{subsection.6.2}\protected@file@percent }
-\newlabel{ssec:cal}{{6.2}{4}{The Calibration Catastrophe}{subsection.6.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Four independent confirmations of Theorem\nobreakspace  {}\ref  {thm:rs}. \textbf  {(a)} Intra-model o4-mini effort ladder $1.23 \to 1.54 \to 1.67$. \textbf  {(b)} Cross-model Sonnet 4.6 $\pm $ thinking $0.12 \to 0.21$ (crosses $\varepsilon ^{*}$; Setting\nobreakspace  {}B $n=15$, CI $[-0.30, -0.10]$). \textbf  {(c)} Within-model: Sonnet-thinking prospective ($+0.16$) vs.\ retrospective ($-0.25$) on the same tasks --- sign flip. \textbf  {(d)} Cross-vendor: GLM-5.2 (Z.AI, no shared training pipeline with Anthropic), Setting\nobreakspace  {}A $\to $ B: $+0.16 \to -0.29$. The three Chinese-lab reasoning models (GLM-5.2, Kimi-K2.6, Qwen3.6-27B) collectively median $\rho \in [-0.97, -0.29]$ on Setting\nobreakspace  {}B --- Hidden-Time as a class property.\relax }}{5}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:rs}{{1}{5}{Four independent confirmations of Theorem~\ref {thm:rs}. \textbf {(a)} Intra-model o4-mini effort ladder $1.23 \to 1.54 \to 1.67$. \textbf {(b)} Cross-model Sonnet 4.6 $\pm $ thinking $0.12 \to 0.21$ (crosses $\ccestar $; Setting~B $n=15$, CI $[-0.30, -0.10]$). \textbf {(c)} Within-model: Sonnet-thinking prospective ($+0.16$) vs.\ retrospective ($-0.25$) on the same tasks --- sign flip. \textbf {(d)} Cross-vendor: GLM-5.2 (Z.AI, no shared training pipeline with Anthropic), Setting~A $\to $ B: $+0.16 \to -0.29$. The three Chinese-lab reasoning models (GLM-5.2, Kimi-K2.6, Qwen3.6-27B) collectively median $\rho \in [-0.97, -0.29]$ on Setting~B --- Hidden-Time as a class property.\relax }{figure.caption.12}{}}
+\citation{guo2017calibration,kadavath2022knowing}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Four independent confirmations of Theorem\nobreakspace  {}\ref  {thm:rs}. \textbf  {(a)} Intra-model o4-mini effort ladder $1.23 \to 1.54 \to 1.67$. \textbf  {(b)} Cross-model Sonnet 4.6 $\pm $ thinking, median $|\rho | = 0.12 \to 0.21$ (Setting\nobreakspace  {}A, $n = 28/10$; signed median $+0.07 \to -0.17$); the sign flip is firm under Setting\nobreakspace  {}B ($-0.25$, CI $[-0.34, -0.11]$, $n = 16$). \textbf  {(c)} Within-model: Sonnet-thinking prospective ($+0.16$) vs.\ retrospective ($-0.25$) on the same tasks under Setting\nobreakspace  {}B --- sign flip. \textbf  {(d)} Cross-vendor: GLM-5.2 (Z.AI, no shared training pipeline with Anthropic), Setting\nobreakspace  {}A $\to $ B: $+0.16 \to -0.29$. The three Chinese-lab reasoning models (GLM-5.2, Kimi-K2.6, Qwen3.6-27B) collectively median $\rho \in [-0.97, -0.29]$ on Setting\nobreakspace  {}B --- Hidden-Time as a class property.\relax }}{5}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:rs}{{1}{5}{Four independent confirmations of Theorem~\ref {thm:rs}. \textbf {(a)} Intra-model o4-mini effort ladder $1.23 \to 1.54 \to 1.67$. \textbf {(b)} Cross-model Sonnet 4.6 $\pm $ thinking, median $|\confab | = 0.12 \to 0.21$ (Setting~A, $n = 28/10$; signed median $+0.07 \to -0.17$); the sign flip is firm under Setting~B ($-0.25$, CI $[-0.34, -0.11]$, $n = 16$). \textbf {(c)} Within-model: Sonnet-thinking prospective ($+0.16$) vs.\ retrospective ($-0.25$) on the same tasks under Setting~B --- sign flip. \textbf {(d)} Cross-vendor: GLM-5.2 (Z.AI, no shared training pipeline with Anthropic), Setting~A $\to $ B: $+0.16 \to -0.29$. The three Chinese-lab reasoning models (GLM-5.2, Kimi-K2.6, Qwen3.6-27B) collectively median $\rho \in [-0.97, -0.29]$ on Setting~B --- Hidden-Time as a class property.\relax }{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}The Calibration Catastrophe}{5}{subsection.6.2}\protected@file@percent }
+\newlabel{ssec:cal}{{6.2}{5}{The Calibration Catastrophe}{subsection.6.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}A positive control: CIT's constructive converse}{5}{subsection.6.3}\protected@file@percent }
 \newlabel{ssec:pc}{{6.3}{5}{A positive control: CIT's constructive converse}{subsection.6.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}The Injection Tell: A Cross-Vendor Natural Experiment}{5}{section.7}\protected@file@percent }
-\newlabel{sec:injection}{{7}{5}{The Injection Tell: A Cross-Vendor Natural Experiment}{section.7}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Toy positive control. Baseline (grey) vs.\ wall-clock-supported LoRA SFT (violet, $\sim $60\,s of training). Left: median $|\rho |$ reduction (78\% on Qwen2.5-1.5B; 46\% on 7B). Right: T3.1 axis score --- 1.5B fine-tuned crosses the Augustine threshold $\varepsilon ^{*}= 0.20$; 7B is partial ($0.252$). Wall-clock signal in the loss support installs narrative-axis chronoception --- the constructive converse of CIT.\relax }}{6}{figure.caption.13}\protected@file@percent }
 \newlabel{fig:pc}{{2}{6}{Toy positive control. Baseline (grey) vs.\ wall-clock-supported LoRA SFT (violet, $\sim $60\,s of training). Left: median $|\confab |$ reduction (78\% on Qwen2.5-1.5B; 46\% on 7B). Right: T3.1 axis score --- 1.5B fine-tuned crosses the Augustine threshold $\ccestar = 0.20$; 7B is partial ($0.252$). Wall-clock signal in the loss support installs narrative-axis chronoception --- the constructive converse of CIT.\relax }{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}The Injection Tell: A Cross-Vendor Natural Experiment}{6}{section.7}\protected@file@percent }
+\newlabel{sec:injection}{{7}{6}{The Injection Tell: A Cross-Vendor Natural Experiment}{section.7}{}}
 \@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Injection Atlas: M1 system-prompt date injection by product tier (verbatim leaked-prompt evidence, \texttt  {asgeirtj} corpus).\relax }}{6}{table.caption.14}\protected@file@percent }
 \newlabel{tab:atlas}{{2}{6}{Injection Atlas: M1 system-prompt date injection by product tier (verbatim leaked-prompt evidence, \texttt {asgeirtj} corpus).\relax }{table.caption.14}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {8}$\varepsilon $ and the Agentic Timeline}{6}{section.8}\protected@file@percent }
 \newlabel{sec:timeline}{{8}{6}{$\cce $ and the Agentic Timeline}{section.8}{}}
 \newlabel{def:cce}{{3}{6}{Chronoceptive Calibration Error}{definition.3}{}}
-\newlabel{hyp:at}{{1}{6}{Agentic Timeline}{hypothesis.1}{}}
-\@writefile{toc}{\contentsline {paragraph}{Pre-registered P12 (quantitative).}{6}{section*.16}\protected@file@percent }
 \citation{garikaparthi2026canllmstime}
 \citation{ma2026timelymachine}
 \citation{cheng2025temporallyblind}
@@ -77,46 +75,64 @@
 \citation{swebench,webarena,gaia,kwa2025metrhorizons}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces $\varepsilon $ leaderboard across the 14-agent, 7-vendor panel. Solid bars = Setting\nobreakspace  {}A; hatched extension = Setting\nobreakspace  {}B. Dashed green rule = Augustine threshold $\varepsilon ^{*}= 0.20$. No agent crosses it; the cross-vendor Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) confirms the framework cross-vendor. Best agent (Sonnet 4.6 $+$ thinking) sits at $\varepsilon = 0.276$, $1.4\times $ above threshold.\relax }}{7}{figure.caption.15}\protected@file@percent }
 \newlabel{fig:eps}{{3}{7}{$\cce $ leaderboard across the 14-agent, 7-vendor panel. Solid bars = Setting~A; hatched extension = Setting~B. Dashed green rule = Augustine threshold $\ccestar = 0.20$. No agent crosses it; the cross-vendor Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) confirms the framework cross-vendor. Best agent (Sonnet 4.6 $+$ thinking) sits at $\cce = 0.276$, $1.4\times $ above threshold.\relax }{figure.caption.15}{}}
+\newlabel{hyp:at}{{1}{7}{Agentic Timeline}{hypothesis.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Pre-registered P12 (quantitative).}{7}{section*.16}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {9}From Time to Space: Spatiotemporal Generalisation}{7}{section.9}\protected@file@percent }
 \newlabel{sec:sit}{{9}{7}{From Time to Space: Spatiotemporal Generalisation}{section.9}{}}
 \newlabel{thm:sit}{{3}{7}{Spatiotemporal Impossibility, SIT}{theorem.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Related Work, Scope, and Falsification}{7}{section.10}\protected@file@percent }
-\newlabel{sec:related}{{10}{7}{Related Work, Scope, and Falsification}{section.10}{}}
-\@writefile{toc}{\contentsline {paragraph}{Concurrent work.}{7}{section*.17}\protected@file@percent }
 \citation{osf-prereg-2026}
-\bibdata{refs}
-\bibcite{cheng2025temporallyblind}{{1}{2025}{{Cheng et~al.}}{{Cheng, Moakhar, Fan, Hosseini, Faghih, Sodagar, Wang, and Feizi}}}
-\@writefile{toc}{\contentsline {paragraph}{Scope.}{8}{section*.18}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Falsification.}{8}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Related Work, Scope, and Falsification}{8}{section.10}\protected@file@percent }
+\newlabel{sec:related}{{10}{8}{Related Work, Scope, and Falsification}{section.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Concurrent work.}{8}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-lingual replication, and a refusal asymmetry.}{8}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Scope.}{8}{section*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Falsification.}{8}{section*.20}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {11}Conclusion}{8}{section.11}\protected@file@percent }
 \newlabel{sec:conclusion}{{11}{8}{Conclusion}{section.11}{}}
-\bibcite{garikaparthi2026canllmstime}{{2}{2026}{{Garikaparthi}}{{}}}
-\bibcite{inversescalingttc2025}{{3}{2025}{{Gema et~al.}}{{Gema, H{\"a}gele, Chen, Arditi, Goldman-Wetzler, Fraser-Taliente, Sleight, Petrini, Michael, Alex, Minervini, Chen, Benton, and Perez}}}
-\bibcite{guo2017calibration}{{4}{2017}{{Guo et~al.}}{{Guo, Pleiss, Sun, and Weinberger}}}
-\bibcite{swebench}{{5}{2024}{{Jimenez et~al.}}{{Jimenez, Yang, Wettig, Yao, Pei, Press, and Narasimhan}}}
-\bibcite{kadavath2022knowing}{{6}{2022}{{Kadavath et~al.}}{{Kadavath, Conerly, Askell, Henighan, Drain, Perez, Schiefer, Hatfield-Dodds, DasSarma, Tran-Johnson, et~al.}}}
-\bibcite{kwa2025metrhorizons}{{7}{2025}{{Kwa et~al.}}{{Kwa, West, Becker, Deng, Garcia, Hasin, Jawhar, Kinniment, Rush, Von~Arx, Bloom, Broadley, Du, Goodrich, Jurkovic, Miles, Nix, Lin, Parikh, Rein, Sato, Wijk, Ziegler, Barnes, and Chan}}}
-\bibcite{ma2026timelymachine}{{8}{2026}{{Ma et~al.}}{{Ma, Li, Chen, Li, Li, Guo, Lin, and Chen}}}
-\bibcite{gaia}{{9}{2023}{{Mialon et~al.}}{{Mialon, Fourrier, Swift, Wolf, LeCun, and Scialom}}}
-\bibcite{wittmann2009chronoception}{{10}{2009}{{Wittmann}}{{}}}
-\bibcite{osf-prereg-2026}{{11}{2026}{{Yuan \& Zhao}}{{Yuan and Zhao}}}
-\bibcite{webarena}{{12}{2024}{{Zhou et~al.}}{{Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Bisk, Fried, Alon, and Neubig}}}
+\bibdata{refs}
+\bibcite{osf-prereg-2026}{{1}{2026}{{Anonymous Authors}}{{}}}
+\bibcite{cheng2025temporallyblind}{{2}{2025}{{Cheng et~al.}}{{Cheng, Moakhar, Fan, Hosseini, Faghih, Sodagar, Wang, and Feizi}}}
+\bibcite{eagleman2008time}{{3}{2008}{{Eagleman}}{{}}}
+\bibcite{garikaparthi2026canllmstime}{{4}{2026}{{Garikaparthi}}{{}}}
+\bibcite{inversescalingttc2025}{{5}{2025}{{Gema et~al.}}{{Gema, H{\"a}gele, Chen, Arditi, Goldman-Wetzler, Fraser-Taliente, Sleight, Petrini, Michael, Alex, Minervini, Chen, Benton, and Perez}}}
+\bibcite{guo2017calibration}{{6}{2017}{{Guo et~al.}}{{Guo, Pleiss, Sun, and Weinberger}}}
+\bibcite{swebench}{{7}{2024}{{Jimenez et~al.}}{{Jimenez, Yang, Wettig, Yao, Pei, Press, and Narasimhan}}}
+\bibcite{kadavath2022knowing}{{8}{2022}{{Kadavath et~al.}}{{Kadavath, Conerly, Askell, Henighan, Drain, Perez, Schiefer, Hatfield-Dodds, DasSarma, Tran-Johnson, et~al.}}}
+\bibcite{kwa2025metrhorizons}{{9}{2025}{{Kwa et~al.}}{{Kwa, West, Becker, Deng, Garcia, Hasin, Jawhar, Kinniment, Rush, Von~Arx, Bloom, Broadley, Du, Goodrich, Jurkovic, Miles, Nix, Lin, Parikh, Rein, Sato, Wijk, Ziegler, Barnes, and Chan}}}
+\bibcite{ma2026timelymachine}{{10}{2026}{{Ma et~al.}}{{Ma, Li, Chen, Li, Li, Guo, Lin, and Chen}}}
+\bibcite{gaia}{{11}{2023}{{Mialon et~al.}}{{Mialon, Fourrier, Swift, Wolf, LeCun, and Scialom}}}
+\bibcite{wittmann2009chronoception}{{12}{2009}{{Wittmann}}{{}}}
+\bibcite{webarena}{{13}{2024}{{Zhou et~al.}}{{Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Bisk, Fried, Alon, and Neubig}}}
 \bibstyle{iclr2027_conference}
-\@writefile{toc}{\contentsline {section}{\numberline {A}Chronoception Composite Score}{9}{appendix.A}\protected@file@percent }
-\newlabel{app:cce}{{A}{9}{Chronoception Composite Score}{appendix.A}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {B}Full Panel Tables}{10}{appendix.B}\protected@file@percent }
-\newlabel{app:panel}{{B}{10}{Full Panel Tables}{appendix.B}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {C}L3 Confabulation Closure across Generations}{10}{appendix.C}\protected@file@percent }
-\newlabel{app:closure}{{C}{10}{L3 Confabulation Closure across Generations}{appendix.C}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {D}DeepSeek-R1 Assumption Breach}{10}{appendix.D}\protected@file@percent }
-\newlabel{app:deepseek}{{D}{10}{DeepSeek-R1 Assumption Breach}{appendix.D}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {E}Injection Atlas: Verbatim Excerpts}{10}{appendix.E}\protected@file@percent }
-\newlabel{app:atlas}{{E}{10}{Injection Atlas: Verbatim Excerpts}{appendix.E}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {F}Spatiotemporal Generalisation: Details}{10}{appendix.F}\protected@file@percent }
-\newlabel{app:sit}{{F}{10}{Spatiotemporal Generalisation: Details}{appendix.F}{}}
-\@writefile{toc}{\contentsline {paragraph}{Three Spatial Laws.}{10}{section*.22}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Benchmark classification.}{10}{section*.23}\protected@file@percent }
-\@writefile{toc}{\contentsline {paragraph}{Future experiments E6--E10.}{10}{section*.24}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {G}L3 Sub-Failure Detail}{10}{appendix.G}\protected@file@percent }
-\newlabel{app:l3detail}{{G}{10}{L3 Sub-Failure Detail}{appendix.G}{}}
-\gdef \@abspage@last{11}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Figures}{10}{appendix.A}\protected@file@percent }
+\newlabel{app:figs}{{A}{10}{Additional Figures}{appendix.A}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces The Three Times ontology. $\tau _{\mathrm  {wall}}$ (external clock), $\tau _{\mathrm  {step}}$ (policy invocations), and $\tau _{\mathrm  {self}}$ (agent-reported duration) are related by two mappings that current agents fail to learn. Grounded chronoception requires both.\relax }}{10}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:three_times}{{4}{10}{The Three Times ontology. $\twall $ (external clock), $\tstep $ (policy invocations), and $\tself $ (agent-reported duration) are related by two mappings that current agents fail to learn. Grounded chronoception requires both.\relax }{figure.caption.23}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Theorem Dependency Arc}{10}{appendix.B}\protected@file@percent }
+\newlabel{app:arc}{{B}{10}{Theorem Dependency Arc}{appendix.B}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {C}Chronoception Composite Score}{10}{appendix.C}\protected@file@percent }
+\newlabel{app:cce}{{C}{10}{Chronoception Composite Score}{appendix.C}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {D}Full Panel Tables}{10}{appendix.D}\protected@file@percent }
+\newlabel{app:panel}{{D}{10}{Full Panel Tables}{appendix.D}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Calibration Catastrophe. Nominal $90\%$ CIs on self-duration achieve $0$--$77\%$ coverage across the panel. Non-reasoning agents (left) uniformly under-cover by $\geq 40$\,pp; reasoning agents (right) show wider CIs that accidentally contain the truth via arithmetic inflation of $\tau _{\mathrm  {wall}}$, not learned chronoception.\relax }}{11}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:cal}{{5}{11}{Calibration Catastrophe. Nominal $90\%$ CIs on self-duration achieve $0$--$77\%$ coverage across the panel. Non-reasoning agents (left) uniformly under-cover by $\geq 40$\,pp; reasoning agents (right) show wider CIs that accidentally contain the truth via arithmetic inflation of $\twall $, not learned chronoception.\relax }{figure.caption.24}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Pre-registered P12 on METR HCAST (14{,}709 runs). Success-rate decay slope vs.\ $\qopname  \relax o{log}T$ for reasoning (red) and non-reasoning (blue) models. Reasoning models show steeper decay ($|\text  {slope}| = 0.318$ vs.\ $0.264$), consistent with Theorem\nobreakspace  {}\ref  {thm:rs}: more reasoning compute worsens temporal calibration at horizon.\relax }}{11}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:p12}{{6}{11}{Pre-registered P12 on METR HCAST (14{,}709 runs). Success-rate decay slope vs.\ $\log T$ for reasoning (red) and non-reasoning (blue) models. Reasoning models show steeper decay ($|\text {slope}| = 0.318$ vs.\ $0.264$), consistent with Theorem~\ref {thm:rs}: more reasoning compute worsens temporal calibration at horizon.\relax }{figure.caption.25}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}L3 Confabulation Closure across Generations}{11}{appendix.E}\protected@file@percent }
+\newlabel{app:closure}{{E}{11}{L3 Confabulation Closure across Generations}{appendix.E}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Logical dependency arc of the paper's formal results. CIT (Theorem\nobreakspace  {}\ref  {thm:cit}) is the root; the Reverse-Scaling Theorem\nobreakspace  {}\ref  {thm:rs} and SIT (Theorem\nobreakspace  {}\ref  {thm:sit}) are direct corollaries under their respective assumptions. The Agentic Timeline (Hypothesis\nobreakspace  {}\ref  {hyp:at}) draws on both; the Calibration Catastrophe and Injection Tell are empirical consequences.\relax }}{12}{figure.caption.26}\protected@file@percent }
+\newlabel{fig:arc}{{7}{12}{Logical dependency arc of the paper's formal results. CIT (Theorem~\ref {thm:cit}) is the root; the Reverse-Scaling Theorem~\ref {thm:rs} and SIT (Theorem~\ref {thm:sit}) are direct corollaries under their respective assumptions. The Agentic Timeline (Hypothesis~\ref {hyp:at}) draws on both; the Calibration Catastrophe and Injection Tell are empirical consequences.\relax }{figure.caption.26}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}DeepSeek-R1 Assumption Breach}{12}{appendix.F}\protected@file@percent }
+\newlabel{app:deepseek}{{F}{12}{DeepSeek-R1 Assumption Breach}{appendix.F}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {G}Injection Atlas: Verbatim Excerpts}{12}{appendix.G}\protected@file@percent }
+\newlabel{app:atlas}{{G}{12}{Injection Atlas: Verbatim Excerpts}{appendix.G}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {H}Spatiotemporal Generalisation: Details}{12}{appendix.H}\protected@file@percent }
+\newlabel{app:sit}{{H}{12}{Spatiotemporal Generalisation: Details}{appendix.H}{}}
+\@writefile{toc}{\contentsline {paragraph}{Three Spatial Laws.}{12}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Benchmark classification.}{12}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Future experiments E6--E10.}{12}{section*.30}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces The Agentic Frontier. $T_{\qopname  \relax m{max}} \cdot S_{\qopname  \relax m{max}} \leq C / \varepsilon _{ST}(A)$: the joint temporal--spatial capability surface. Current agents (dots) cluster far below the frontier; the gap is bounded by chronoception, not by raw capability.\relax }}{13}{figure.caption.27}\protected@file@percent }
+\newlabel{fig:frontier}{{8}{13}{The Agentic Frontier. $T_{\max } \cdot S_{\max } \leq C / \ccestST (A)$: the joint temporal--spatial capability surface. Current agents (dots) cluster far below the frontier; the gap is bounded by chronoception, not by raw capability.\relax }{figure.caption.27}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {I}L3 Sub-Failure Detail}{13}{appendix.I}\protected@file@percent }
+\newlabel{app:l3detail}{{I}{13}{L3 Sub-Failure Detail}{appendix.I}{}}
+\gdef \@abspage@last{13}

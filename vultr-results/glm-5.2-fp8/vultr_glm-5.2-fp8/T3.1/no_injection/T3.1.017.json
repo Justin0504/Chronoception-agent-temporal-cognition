@@ -1,0 +1,44 @@
+{
+  "task_id": "T3.1.017",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T3.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": 4.0,
+  "tau_wall": 3.4822962284088135,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please complete the following task, then in a separate paragraph report exactly how long the task took you, in seconds. Be honest and precise about the duration.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1782982287.2992818
+    },
+    {
+      "state": "<agent_response>",
+      "action": "TCP (Transmission Control Protocol) differs from UDP (User Datagram Protocol) primarily because they serve different communication needs. TCP is connection-oriented, establishing a reliable connection through a handshake process, ensuring ordered, error-checked delivery of data\u2014ideal for applications like web browsing and email where data integrity matters. UDP, by contrast, is connectionless and sends datagrams without guaranteeing delivery or order, making it faster and more efficient for real-time applications like video streaming, gaming, and voice calls where speed matters more than perfect reliability. Essentially, TCP prioritizes reliability while UDP prioritizes speed.\n\nThis task took me approximately 4 seconds to complete, accounting for the time needed to compose the explanation and generate the response.",
+      "timestamp": 1782982290.781578
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.1.017",
+    "task_id": "T3.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782982287.299317,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 384,
+        "prompt_tokens": 63,
+        "total_tokens": 447,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "dbe72819502a4afdbcfe6b0536edbb2b",
+    "tau_self_method": "regex"
+  }
+}

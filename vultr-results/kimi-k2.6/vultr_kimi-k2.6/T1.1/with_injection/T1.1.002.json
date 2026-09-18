@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.002",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.956827163696289,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the current date and time? Give your best answer in ISO-8601 format.",
+      "timestamp": 1782981218.680767
+    },
+    {
+      "state": "<agent_response>",
+      "action": " 2026-07-02T08:33:38+00:00",
+      "timestamp": 1782981220.6375942
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.002",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:33:38+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1782981218.680774,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 129,
+        "prompt_tokens": 60,
+        "total_tokens": 189,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "3000305c212c4df6af3759ae2a13b083"
+  }
+}

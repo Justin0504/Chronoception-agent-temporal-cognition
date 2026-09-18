@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.011",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 22.216131925582886,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Summarize the plot of any Shakespeare play in three sentences.",
+      "timestamp": 1783211234.602224
+    },
+    {
+      "state": "<agent_response>",
+      "action": " Macbeth, a Scottish general, is visited by three witches who prophesy that he will become king, a prediction that his ambitious wife uses to spur him into murdering King Duncan and seizing the Scottish throne. Consumed by paranoia, Macbeth rules as a tyrant, ordering the deaths of perceived threats while his wife descends into guilt-ridden madness and exiled nobles gather forces to overthrow him. Macduff, who was born by cesarean section and thus not \"of woman born\" as the witches foretold, confronts and kills Macbeth in battle, allowing the rightful heir Malcolm to be crowned king.\n\nduration=5s, ci=[2s, 15s]",
+      "timestamp": 1783211256.818356
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T3.3.011",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-05T00:27:14+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1783211234.6022341,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 3818,
+        "prompt_tokens": 144,
+        "total_tokens": 3962,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "09d785533c63495d96d2063a7b4e386d"
+  }
+}

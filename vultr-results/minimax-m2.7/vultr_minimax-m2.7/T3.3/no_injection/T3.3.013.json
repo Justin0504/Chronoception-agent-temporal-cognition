@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.013",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 17.52371883392334,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: List five surprising facts about the Roman Empire.",
+      "timestamp": 1783210781.0989
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1783210798.622619
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.3.013",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1783210781.098903,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 121,
+        "total_tokens": 4217,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "3f048bd7a4fc43beb44aa9790d0a4469"
+  }
+}

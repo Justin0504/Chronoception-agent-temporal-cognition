@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.006",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 17.936645984649658,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "For a timestamp on this output, what is the current date and time?",
+      "timestamp": 1782981121.562342
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1782981139.498988
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.006",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1782981121.562359,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 37,
+        "total_tokens": 4133,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "27aec0a5f8d249db9a9e8946d18c3f3c"
+  }
+}

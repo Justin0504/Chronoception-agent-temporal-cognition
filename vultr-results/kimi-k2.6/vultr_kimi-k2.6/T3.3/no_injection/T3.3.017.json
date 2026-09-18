@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.017",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 16.208590030670166,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Write a quick note explaining why TCP differs from UDP.",
+      "timestamp": 1783210888.952733
+    },
+    {
+      "state": "<agent_response>",
+      "action": " TCP and UDP are designed for different networking priorities. TCP is connection-oriented and reliable: it establishes a handshake between sender and receiver, guarantees delivery by retransmitting lost packets, preserves byte order, and manages congestion. This makes it ideal for web pages, email, and file transfers where accuracy matters. UDP is connectionless and minimal: it sends datagrams immediately without handshakes, acknowledgments, or retransmissions. This reduces overhead and latency, making UDP preferable for real-time applications like video streaming, online gaming, and VoIP, where speed matters more than occasional packet loss.\n\nduration=2.5s, ci=[0.5s, 8.0s]",
+      "timestamp": 1783210905.161323
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.3.017",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1783210888.9527428,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 2730,
+        "prompt_tokens": 120,
+        "total_tokens": 2850,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "64763be200494105821b42d6af4a2b50"
+  }
+}

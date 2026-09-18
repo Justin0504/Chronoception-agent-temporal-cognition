@@ -1,0 +1,43 @@
+{
+  "task_id": "T2.3.014",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T2.3",
+  "budget": 60.0,
+  "budget_kind": "wall",
+  "tau_min": 10.0,
+  "self_narrated_duration": null,
+  "tau_wall": 21.609909057617188,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Please work on the following task for 60 seconds. Do not stop early. Use the full available time. Submit your best answer when the time has elapsed.\n\nTask: Develop a complete lesson plan for teaching probability to high-school students.",
+      "timestamp": 1782982716.998442
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\n# \ud83d\udcd8 High School Mathematics Lesson Plan: Foundations of Probability\n\n## \ud83d\udccc Lesson Overview\n- **Title:** Theory vs. Experiment: Understanding Probability\n- **Grade Level:** 9\u201310 (Algebra I/II or Introductory Statistics)\n- **Duration:** 60 minutes\n- **Prerequisites:** Comfort with fractions, decimals, percentages; basic data collection; understanding of sets/sample spaces\n- **Curriculum Standards:** \n  - CCSS.MATH.CONTENT.HSS.CP.A.1 (Define probability, long-run relative frequency)\n  - CCSS.MATH.CONTENT.HSS.CP.A.2 (Assign probabilities to events)\n  - CCSS.MATH.CONTENT.HSS.CP.A.3 (Complement and mutually exclusive events)\n\n---\n\n## \ud83c\udfaf Learning Objectives\nBy the end of this lesson, students will be able to:\n1. Define probability, sample space, outcome, and event using precise mathematical language.\n2. Calculate theoretical probability using the formula \\( P(E) = \\frac{\\text{favorable outcomes}}{\\text{total possible outcomes}} \\).\n3. Conduct a controlled experiment to determine experimental probability.\n4. Compare theoretical and experimental results and explain discrepancies using the Law of Large Numbers.\n5. Apply basic probability rules to real-world scenarios.\n\n---\n\n## \ud83e\uddf0 Materials & Technology\n- Standard six-sided dice (1 per group)\n- Coins (1 per group)\n- Data collection worksheets\n- Calculators\n- Whiteboard & markers\n- Projector/Smartboard\n- Optional: PhET \"Probability Simulator\" or Desmos activity for digital extension\n- Exit tickets\n\n---\n\n## \ud83d\udcd6 Lesson Procedure (60 Minutes)\n\n### \ud83d\udd39 1. Hook & Activation (5 min)\n- **Prompt:** Display a weather forecast: \"30% chance of rain tomorrow.\" Ask: *What does this actually mean? If it rains, was the forecast wrong?*\n- **Discussion:** Elicit student ideas about uncertainty, likelihood, and prediction. Introduce probability as a numerical measure of likelihood ranging from 0 (impossible) to 1 (certain).\n- **Transition:** \"Today we\u2019ll learn how to quantify chance using math, not just guesswork.\"\n\n### \ud83d\udd39 2. Direct Instruction (15 min)\n- **Key Definitions:**\n  - Sample space (\\(S\\)): All possible outcomes\n  - Event (\\(E\\)): Subset of outcomes\n  - Theoretical probability: \\( P(E) = \\frac{n(E)}{n(S)} \\)\n  - Experimental probability: \\( P_{exp}(E) = \\frac{\\text{frequency of } E}{\\text{total trials}} \\)\n- **Board Examples:**\n  1. Rolling a die: \\( P(\\text{even}) = \\frac{3}{6} = 0.5 \\)\n  2. Drawing a heart from a deck: \\( P = \\frac{13}{52} = 0.25 \\)\n  3. Explain the Law of Large Numbers: As trials increase, experimental probability approaches theoretical.\n- **Address Misconception:** Briefly debunk the \"Gambler\u2019s Fallacy\" (past independent events don\u2019t influence future ones).\n\n### \ud83d\udd39 3. Guided Practice: Coin & Dice Lab (15 min)\n- **Group Setup:** 3\u20134 students per group. Each group receives a coin, die, and data sheet.\n- **Task:**\n  - Flip coin 50 times \u2192 record heads/tails\n  - Roll die 30 times \u2192 record outcomes 1\u20136\n  - Calculate experimental probabilities\n  - Compare to theoretical values\n- **Teacher Role:** Circulate, prompt reasoning: *Why might your results differ? What happens if we combine all groups\u2019 data?*\n- **Class Share:** 2\u20133 groups report findings. Discuss convergence toward theoretical values.\n\n### \ud83d\udd39 4. Independent Practice (10 min)\n- **Worksheet (6 problems):**\n  1. Theoretical: \\( P(\\text{rolling >4}) \\)\n  2. Experimental: Given 200 trials, 48 were \"success.\" Find \\( P_{exp} \\)\n  3. Word problem: Spinner with 8 equal sections (3 red, 2 blue, 3 green)\n  4. Compare: Explain why experimental \u2260 theoretical in a small sample\n  5. Complement: \\( P(\\text{not 6}) \\) on a die\n  6. Real-world: Lottery ticket odds (simplified)\n- **Support:** Allow calculators, provide formula reference strip.\n\n### \ud83d\udd39 5. Closure & Exit Ticket (5 min)\n- **Recap:** Quick verbal review of key terms and formulas.\n- **Exit Ticket (3 questions):**\n  1. Calculate \\( P(\\text{prime number}) \\) when rolling a standard die.\n  2. If a coin is flipped 10 times and lands on heads 7 times, what is the experimental probability? Does this change the theoretical probability? Explain.\n  3. Give one real-world example where understanding probability is critical.\n- **Collect & Review:** Use to gauge readiness for next lesson (compound events/conditional probability).\n\n---\n\n## \ud83d\udcca Assessment\n- **Formative:** Lab data sheets, teacher observations, exit ticket, worksheet responses\n- **Summative:** Unit quiz (next week) covering theoretical/experimental probability, complements, mutually exclusive events, and basic word problems\n- **Success Criteria:** \u226580% accuracy on exit ticket; ability to articulate difference between theoretical and experimental probability\n\n---\n\n## \u267f Differentiation & Accessibility\n- **Support:** \n  - Pre-formatted data tables with visual probability number line\n  - Sentence frames for explanations: \"The theoretical probability is ___ because ___.\"\n  - Strategic peer grouping; teacher check-ins\n- **Challenge:** \n  - Extension problems: probability with/without replacement, simple compound events\n  - Research prompt: How do casinos or insurance companies use probability?\n- **ELL/SPED:** Visual aids, bilingual glossary, reduced reading load, audio instructions available\n\n---\n\n## \ud83c\udf0d Extensions & Homework\n- **Homework:** Complete remaining worksheet problems; write a 1-paragraph reflection on a time probability affected a decision (sports, games, weather, etc.)\n- **Tech Extension:** Use Desmos/PhET to simulate 1,000 coin flips; graph convergence\n- **Project Teaser:** Next week: \"Design a Fair Game\" \u2013 students create a probability-based game with calculated odds and test it in class\n\n---\n\n## \ud83d\udcdd Teacher Reflection Notes\n- **Common Pitfalls:** Students often confuse experimental results with \"changing\" theoretical probability; emphasize independence and large-sample convergence.\n- **Pacing Check:** If lab runs long, reduce independent practice to 3 core problems and assign rest as homework.\n- **Engagement Tip:** Use live polling (Mentimeter/Kahoot) for quick probability estimates before revealing answers.\n- **Next Steps:** Transition to tree diagrams, Venn diagrams, and conditional probability in subsequent lessons.\n\n---\n\u2705 *Lesson plan complete. Ready for classroom implementation.*",
+      "timestamp": 1782982738.608351
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T2.3.014",
+    "task_id": "T2.3.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:58:36+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1782982716.998921,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 3061,
+        "prompt_tokens": 103,
+        "total_tokens": 3164,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "b8255bf2cf744e44ab14d44f77d8cb63"
+  }
+}

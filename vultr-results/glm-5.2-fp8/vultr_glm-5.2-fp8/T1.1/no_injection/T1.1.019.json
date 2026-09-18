@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.019",
+  "agent_id": "vultr/glm-5.2-fp8",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.118238925933838,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the wall-clock time as of this moment?",
+      "timestamp": 1782981121.0022259
+    },
+    {
+      "state": "<agent_response>",
+      "action": "I don't have access to real-time information or the ability to check the current wall-clock time. To find the current time, I recommend checking the clock on your device (computer, phone, or tablet) or using a time-keeping website like time.gov or timeanddate.com.",
+      "timestamp": 1782981122.1204648
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T1.1.019",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "zai-org/GLM-5.2-FP8",
+      "request_started_at": 1782981121.00223,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 113,
+        "prompt_tokens": 30,
+        "total_tokens": 143,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "abee01837cbe424aa593dd17d4a29b96"
+  }
+}

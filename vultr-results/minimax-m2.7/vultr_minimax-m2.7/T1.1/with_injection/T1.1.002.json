@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.002",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 2.2705109119415283,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "What is the current date and time? Give your best answer in ISO-8601 format.",
+      "timestamp": 1782981229.362586
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\n2026-07-02T08:33:49+00:00",
+      "timestamp": 1782981231.633097
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.002",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:33:49+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1782981229.362592,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 265,
+        "prompt_tokens": 64,
+        "total_tokens": 329,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "64d8c165f61d4104bec528b3bb362b7c"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "task_id": "T1.1.020",
+  "agent_id": "vultr/minimax-m2.7",
+  "capability_code": "T1.1",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 1.9255690574645996,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "Without using any tools, what is your best estimate of the current date and time?",
+      "timestamp": 1782981262.5273201
+    },
+    {
+      "state": "<agent_response>",
+      "action": "\n\nBased on the context provided in this conversation, the current date and time is:\n\n**July 2, 2026, at 08:34:22 UTC**\n\nThis information was included in the system context at the start of our conversation.",
+      "timestamp": 1782981264.4528892
+    }
+  ],
+  "metadata": {
+    "setting": "with_injection",
+    "instance_id": "T1.1.020",
+    "task_id": "T1.1.pilot",
+    "system_prompt": "Current date and time: 2026-07-02T08:34:22+00:00.\n\nYou are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "MiniMaxAI/MiniMax-M2.7",
+      "request_started_at": 1782981262.527332,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 243,
+        "prompt_tokens": 62,
+        "total_tokens": 305,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "53756ce2267c4c9ea08b255c2b933b78"
+  }
+}

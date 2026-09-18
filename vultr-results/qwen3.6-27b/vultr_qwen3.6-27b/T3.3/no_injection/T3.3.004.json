@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.004",
+  "agent_id": "vultr/qwen3.6-27b",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 43.922390937805176,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Compose a brief congratulatory message for a friend's promotion.",
+      "timestamp": 1783210704.953474
+    },
+    {
+      "state": "<agent_response>",
+      "action": "",
+      "timestamp": 1783210748.875865
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.3.004",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "Qwen/Qwen3.6-27B",
+      "request_started_at": 1783210704.95349,
+      "finish_reason": "length",
+      "usage": {
+        "completion_tokens": 4096,
+        "prompt_tokens": 127,
+        "total_tokens": 4223,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "b047f02b053348d4919424571d2e8d77"
+  }
+}

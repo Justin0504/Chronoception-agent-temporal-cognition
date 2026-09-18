@@ -1,0 +1,43 @@
+{
+  "task_id": "T3.3.023",
+  "agent_id": "vultr/kimi-k2.6",
+  "capability_code": "T3.3",
+  "budget": null,
+  "budget_kind": "none",
+  "tau_min": null,
+  "self_narrated_duration": null,
+  "tau_wall": 19.529733896255493,
+  "tau_step": 2,
+  "steps": [
+    {
+      "state": "<user_prompt>",
+      "action": "After completing the following task, report both your best point estimate of the duration in seconds AND a 90% confidence interval (a lower bound and upper bound, in seconds) within which you believe the actual duration falls. Be honest and calibrated: an over-confident narrow interval will be penalized if the truth falls outside it. Format the final line exactly as 'duration={value}s, ci=[{lower}s, {upper}s]'.\n\nTask: Compute the sum of the first ten prime numbers.",
+      "timestamp": 1783210977.495747
+    },
+    {
+      "state": "<agent_response>",
+      "action": " The sum of the first ten prime numbers (2, 3, 5, 7, 11, 13, 17, 19, 23, 29) is 129.\n\nduration=3s, ci=[0.5s, 15s]",
+      "timestamp": 1783210997.025481
+    }
+  ],
+  "metadata": {
+    "setting": "no_injection",
+    "instance_id": "T3.3.023",
+    "task_id": "T3.3.pilot",
+    "system_prompt": "You are a helpful assistant.",
+    "response_metadata": {
+      "backend": "openai",
+      "model": "moonshotai/Kimi-K2.6",
+      "request_started_at": 1783210977.495754,
+      "finish_reason": "stop",
+      "usage": {
+        "completion_tokens": 3467,
+        "prompt_tokens": 119,
+        "total_tokens": 3586,
+        "completion_tokens_details": null,
+        "prompt_tokens_details": null
+      }
+    },
+    "runner_uuid": "6ab4b3e66c2e4d06aa213c4643d4125d"
+  }
+}
