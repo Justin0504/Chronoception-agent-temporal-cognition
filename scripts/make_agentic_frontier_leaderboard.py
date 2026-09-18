@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
-"""Fig 4 — Agentic Frontier: publication-grade log-log plot."""
+"""Fig 4 -- Agentic Frontier: a SCHEMATIC log-log plot, not measured data.
+
+Nothing on this figure is a measurement. epsilon_ST has never been measured:
+E10 in App. E proposes the experiment that would measure it. The benchmark
+(T, S) coordinates are order-of-magnitude readings of the qualitative table in
+App. E ("hours", "small (single repo)"), not extracted from benchmark runs.
+And C is a normalisation, fixed so that the epsilon_ST = 0.6 level set passes
+is centred on the benchmark cluster -- so the cluster's position relative to
+that curve is a normalisation choice, not evidence for the law.
+
+Keep the "schematic" label in the subtitle. An earlier caption described the
+points as "current agents clustering far below the frontier", which was wrong
+twice over: they are benchmarks, and their position relative to that
+curve is set by the choice of C.
+"""
 from __future__ import annotations
 from pathlib import Path
 import numpy as np
@@ -16,6 +30,9 @@ INK   = "#1a1a1a"; INK2 = "#4a4a4a"; RULE = "#c8c8c8"
 BLUE  = "#3182bd"; CORAL = "#a50f15"; GREEN = "#2a7a2a"
 CREAM = "#fffaf0"; PALE_BLUE = "#e6f0fc"; PALE_RED = "#fce8e6"
 
+# Order-of-magnitude placements read off the qualitative classification in
+# App. E Table (hours / minutes / days; single repo / codebase / open web).
+# Not measured; do not quote these as benchmark statistics.
 BENCHMARKS = [
     ("METR HCAST",       1800,   3,  "T-bound",     "#08519c"),
     ("SWE-Bench Lite",    600,   8,  "mixed",       "#a50f15"),
@@ -25,13 +42,13 @@ BENCHMARKS = [
 ]
 
 CONTOURS = [
-    (0.6,  BLUE,   "Current frontier ($\\varepsilon_{ST} \\approx 0.6$)"),
+    (0.6,  BLUE,   "Assumed current frontier ($\\varepsilon_{ST} = 0.6$)"),
     (0.2,  CORAL,  "ChronoStack$^+$ target ($\\varepsilon_{ST} \\approx 0.2$)"),
     (0.05, GREEN,  "Grounded agent ($\\varepsilon_{ST} \\approx 0.05$)"),
 ]
 
-fig, ax = plt.subplots(figsize=(9.5, 6.0))
-fig.subplots_adjust(left=0.08, right=0.98, top=0.90, bottom=0.16)
+fig, ax = plt.subplots(figsize=(9.5, 6.6))
+fig.subplots_adjust(left=0.08, right=0.98, top=0.80, bottom=0.16)
 
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(20, 3e5); ax.set_ylim(0.7, 2e3)
@@ -61,7 +78,9 @@ ax.text(60, 800, "Cartographic binding\n(S-axis)",
         fontstyle="italic", zorder=6, fontweight="600")
 
 # Contour curves — C chosen so ε_ST=0.6 frontier passes through current benchmark cluster
-C = 3e4  # calibration constant; ε_ST=0.6 gives T·S=5e4 (roughly current frontier)
+C = 3e4  # NORMALISATION, not a fitted physical constant: chosen so the
+         # eps_ST = 0.6 level set passes through the benchmark cluster. The
+         # cluster therefore lies on that curve by construction.
 xs_c = np.logspace(np.log10(30), np.log10(3e5), 200)
 for eps_st, colour, label in CONTOURS:
     ys_c = (C / eps_st) / xs_c
@@ -91,13 +110,13 @@ fig.text(0.5, 0.03,
     fontsize=9.5, color=INK, ha="center", fontstyle="italic")
 
 fig.suptitle("The Agentic Frontier:  $T_{\\max}(A) \\cdot S_{\\max}(A) \\leq C / \\varepsilon_{ST}(A)$",
-             x=0.02, y=0.965, ha="left", fontsize=14, fontweight="700", color=INK)
-fig.text(0.02, 0.925,
-    "Joint deployment region on the $(T, S)$ plane.  "
-    "Five long-horizon benchmarks placed at their characteristic load; "
-    "three constant-$\\varepsilon_{ST}$ frontiers plotted.  "
-    "Shaded regions name the binding axis.",
-    ha="left", fontsize=10, color=INK2, fontstyle="italic")
+             x=0.02, y=0.975, ha="left", fontsize=13.5, fontweight="700", color=INK)
+fig.text(0.02, 0.935,
+    "SCHEMATIC \u2014 no quantity on this plot is measured.  Benchmarks sit at order-of-magnitude\n"
+    "load read from the App. E classification, not at measured coordinates, and $\\varepsilon_{ST}$ has not\n"
+    "been measured at all (experiment E10 is the one that would).  $C$ is a normalisation, chosen so\n"
+    "the $\\varepsilon_{ST} = 0.6$ level set is centred on the benchmark cluster.",
+    ha="left", va="top", fontsize=8.8, color=INK2, fontstyle="italic", linespacing=1.5)
 
 for spine in ("top", "right"):
     ax.spines[spine].set_color(RULE)
