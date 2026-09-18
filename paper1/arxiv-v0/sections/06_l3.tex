@@ -18,7 +18,7 @@ For a fixed agent under Assumption~\ref{ass:token-only} (hence Theorem~\ref{thm:
 \end{theorem}
 
 \begin{proof}[Sketch]
-Under CIT, $p(\tself)$ is invariant to $\twall$: no gradient signal ties one to the other. The inference-time distribution $p(\tself \mid K) = p(\tself)$ for all $K$. By assumption, $\twall(K)$ is strictly increasing. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in $K$ in expectation. The sign of $\confab$ flips negative for reasoning-mode agents because $\twall$ includes hidden CoT while $p(\tself)$ stays anchored to the surface output.
+Under CIT, $p(\tself)$ is invariant to $\twall$: no gradient signal ties one to the other. The inference-time distribution $p(\tself \mid K) = p(\tself)$ for all $K$. By assumption, $\twall(K)$ is strictly increasing. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in $K$ in expectation. The sign of $\confab$ turns negative once hidden CoT comes to dominate $\twall$, because $p(\tself)$ stays anchored to the surface output; the theorem itself constrains only $|\confab|$.
 \end{proof}
 
 \begin{figure}[h]
@@ -28,7 +28,9 @@ Under CIT, $p(\tself)$ is invariant to $\twall$: no gradient signal ties one to 
 \label{fig:reverse-scaling}
 \end{figure}
 
-The four confirmations span (intra-model effort, cross-model architecture change, within-model modality change, cross-vendor training pipeline). All four are the same qualitative object: an increase in reasoning budget --- or an intervention that triggers reasoning-mode CoT --- monotonically grows $|\confab|$ and flips its sign toward Hidden-Time under-report. The class-property holds independently of Sonnet-thinking as source. On Setting~B the three Chinese-lab reasoning models (GLM-5.2, Kimi-K2.6, Qwen3.6-27B) collectively median $\rho \in [-0.97, -0.29]$: Hidden-Time is what one measures whenever the model is running a reasoning-mode inference that the loss did not observe.
+The four confirmations vary four independent things: reasoning effort within one model, the presence of a thinking mode across two builds of one model, the narration modality within one configuration, and the training pipeline across two vendors that share none of it. All four show the same object --- raising the reasoning budget, or triggering reasoning-mode CoT, grows $|\confab|$. Three of the four also flip its sign toward Hidden-Time under-report, and on Setting~B the three Chinese-lab reasoning models (GLM-5.2, Kimi-K2.6, Qwen3.6-27B) sit collectively at median $\rho \in [-0.97, -0.29]$, which makes the flip a property of the class rather than of Sonnet-thinking.
+
+It is not universal, and we say so: o3 grows $|\confab|$ to $0.45$ --- well above base Sonnet 4.6's $0.12$ on the same tasks --- while continuing to over-report (App.~\ref{app:full-panel-tables}). Theorem~\ref{thm:reverse-scaling} constrains the magnitude, and every cell confirms the magnitude. The sign flip is the mechanism's most visible symptom, not its definition: it appears when the hidden chain-of-thought comes to dominate $\twall$, and o3 is the configuration where it does not.
 
 \subsection{The Calibration Catastrophe}
 \label{ssec:calibration}
@@ -43,7 +45,7 @@ Asked to wrap self-duration in a $90\%$ confidence interval, every non-reasoning
 \end{figure}
 
 \paragraph{Two P11 crossings, one mechanism.}
-Two cells cross $0.5$: Sonnet-thinking ($77\%$, Wilson CI $[0.59, 0.88]$) and Kimi-K2.6 ($55\%$, Wilson CI $[0.38, 0.71]$). Both are reasoning-mode; both have $\sim 3$--$5\times$ wider stated CIs than baseline; both hold no shared training pipeline. The mechanism is not learned chronoception but arithmetic: reasoning-mode inflates $\twall$, $p(\tself)$ stays anchored to the default duration vocabulary, and a wider stated CI happens to contain the wall-clock. Consistent with CIT. Sharpens P11: the next revision should measure a proper scoring rule (Brier / CRPS) rather than raw coverage.
+Two cells cross $0.5$: Sonnet-thinking ($77\%$, Wilson CI $[0.59, 0.88]$) and Kimi-K2.6 ($55\%$, Wilson CI $[0.38, 0.71]$). Both are reasoning-mode; both have $\sim 3$--$5\times$ wider stated CIs than baseline; both hold no shared training pipeline. The mechanism is not learned chronoception but arithmetic: reasoning-mode inflates $\twall$, $p(\tself)$ stays anchored to the default duration vocabulary, and a wider stated CI happens to contain the wall-clock. Consistent with CIT. Both cells rest on $n = 30$, below the $n \geq 100$ bar our pre-registered F4 sets for a falsification of P11, so we report them as threshold crossings rather than refutations --- but we do report them. They sharpen P11: the next revision should measure a proper scoring rule (Brier / CRPS) rather than raw coverage.
 
 \input{sections/06_l3_section_6_5.tex}
 

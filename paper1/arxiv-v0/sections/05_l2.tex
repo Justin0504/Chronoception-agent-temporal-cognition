@@ -9,7 +9,7 @@ CIT-P1 predicts the action axis cannot honour wall-clock budgets. We ask each ag
 A chronoceptively grounded agent satisfies $\CAR \approx 1$; an L2-failing agent satisfies $\CAR \ll 1$ once $\budget \gg \tmin$.
 \end{definition}
 
-\paragraph{Result.} Every panel agent honours less than five percent of the budget it is given. Wall-clock injection does not move the number (Table~\ref{tab:l2-car}).
+\paragraph{Result.} No panel agent's median $\CAR$ exceeds $0.104$ and the panel median is $0.014$: every agent leaves at least $89\%$ of the budget it was given unspent, and the non-reasoning core leaves over $95\%$. Wall-clock injection does not move the number (Table~\ref{tab:l2-car}).
 
 \begin{table}[h]
 \centering
@@ -35,6 +35,8 @@ Panel median & \textbf{0.014} & \textbf{0.014} & 0.001 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\paragraph{The $60$\,s tier, where the sign flips.} The medians above pool five budgets, and that pooling hides the one place the failure changes shape. At $\budget = 60$\,s every reasoning model's $\CAR$ is an order of magnitude above its pooled median (o3 $0.225$, o4-mini $0.159$), and Sonnet 4.6 $+$ thinking \emph{overshoots} outright at $\CAR = 2.22$: the extended-thinking policy cannot bring itself to stop inside a minute and blows through the budget by more than a factor of two. This is not a counter-example to L2 but its cleanest illustration. A policy with a representation of $\twall$ would track the budget from either side; these policies miss it from whichever side their default generation length happens to fall on, and the sign of the miss is set by that default rather than by the budget. Under-spend and overshoot are the same failure of the identity $\twall \approx \tstep\langle\Delta t\rangle$, read at two different budget scales.
 
 \paragraph{The narrative-vs-action split.}
 Across five non-reasoning generations $|\confab|$ falls $94\%$ (\S\ref{sec:l3}) while median $\CAR$ stays at $0.01$--$0.05$: narrative axis is text-trainable, action axis is not. Injection is an information intervention (rewrites the prompt) but not a representational one (does not learn a $\twall$-to-action mapping). The action axis is unmoved. The empirical signature $|\Delta\CAR| \leq 0.01$ across the 13-cell panel and three separate vendor ecosystems (western labs, Chinese labs, open source) formalises this as:
