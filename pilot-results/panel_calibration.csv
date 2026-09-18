@@ -1,0 +1,24 @@
+agent,setting,coverage_pct,n_decided,median_ci_width_s,median_tau_wall_s
+Claude Sonnet 4.6 + thinking,A,76.7,30,13.0,11.6
+Claude Sonnet 4.6 + thinking,B,66.7,30,14.0,12.4
+Kimi-K2.6,A,55.2,29,14.0,14.5
+Kimi-K2.6,B,43.3,30,14.2,16.9
+o4-mini (reasoning),A,50.0,30,4.0,5.7
+o4-mini (reasoning),B,30.0,30,4.0,6.5
+Claude Sonnet 4.6,A,43.3,30,25.0,6.6
+Claude Sonnet 4.6,B,40.0,30,25.0,6.8
+MiniMax-M2.7,A,33.3,15,15.0,9.3
+MiniMax-M2.7,B,37.5,8,25.5,11.3
+Qwen3.6-27B,A,25.0,12,11.0,13.2
+Qwen3.6-27B,B,16.7,24,8.5,14.4
+gpt-5.1,A,13.3,30,49.0,2.3
+gpt-5.1,B,20.0,30,31.0,2.3
+o3 (reasoning),A,17.2,29,50.0,4.5
+o3 (reasoning),B,16.7,30,70.0,5.4
+Claude Haiku 4.5,A,6.7,30,30.0,3.6
+Claude Haiku 4.5,B,13.3,30,32.5,3.7
+gpt-4o-mini,A,10.0,30,20.0,3.2
+gpt-4o-mini,B,13.3,30,30.0,3.0
+gpt-4o,A,0.0,30,20.0,1.9
+gpt-4o,B,10.0,30,30.0,2.4
+GLM-5.2-FP8,A,0.0,1,8.0,305.2

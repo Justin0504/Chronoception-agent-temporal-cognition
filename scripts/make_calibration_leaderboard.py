@@ -19,22 +19,44 @@ mpl.rcParams["ps.fonttype"]  = 42
 mpl.rcParams["font.family"]  = "sans-serif"
 mpl.rcParams["font.sans-serif"] = ["Inter", "Helvetica", "Arial", "DejaVu Sans"]
 
-# ---- Data (from analyze_e1.py output + Sonnet-thinking back-parse) ----
-ROWS = [
-    # label, vendor, coverage%, width_s, actual_s, n_decided
-    ("Grounded target (90%)",       "REF", 90.0, None, None, None),
-    ("Claude Sonnet 4.6 + thinking","AN",  76.7, 13.0, 11.6, 30),
-    ("Kimi-K2.6",                   "MS",  55.2, 14.0, 15.0, 30),
-    ("o4-mini (reasoning)",         "OA",  50.0,  4.0,  5.7, 30),
-    ("Claude Sonnet 4.6",           "AN",  43.3, 25.0,  6.6, 30),
-    ("MiniMax-M2.7",                "MM",  33.3, 15.0, 17.2, 30),
-    ("Qwen3.6-27B",                 "QW",  25.0, 11.0, 26.9, 30),
-    ("o3 (reasoning)",              "OA",  17.2, 50.0,  4.5, 29),
-    ("gpt-5.1",                     "OA",  13.3, 49.0,  2.3, 30),
-    ("gpt-4o-mini",                 "OA",  10.0, 20.0,  3.2, 30),
-    ("Claude Haiku 4.5",            "AN",   6.7, 30.0,  3.6, 30),
-    ("gpt-4o",                      "OA",   0.0, 20.0,  1.9, 30),
-]
+# ---- Data: loaded from pilot-results/panel_calibration.csv ----
+# NEVER hardcode these rows. The CSV is regenerated from the trajectories by
+# scripts/compute_panel_calibration.py (which reuses analyze_e1.t3_3_score, so
+# the figure and the analysis cannot disagree about what "covered" means).
+# The previous hardcoded copy had correct coverage percentages but asserted
+# n = 30 on three rows whose true n was 29, 15 and 12.
+#   python3 scripts/compute_panel_calibration.py           # refresh
+#   python3 scripts/compute_panel_calibration.py --check    # fail if stale
+import csv as _csv
+import subprocess as _sp
+
+_CAL_CSV = Path("pilot-results/panel_calibration.csv")
+if not _CAL_CSV.exists():
+    _sp.check_call(["python3", "scripts/compute_panel_calibration.py"])
+
+VENDOR_OF = {
+    "Claude Sonnet 4.6": "AN", "Claude Sonnet 4.6 + thinking": "AN",
+    "Claude Haiku 4.5": "AN", "gpt-4o": "OA", "gpt-4o-mini": "OA",
+    "gpt-5.1": "OA", "o3 (reasoning)": "OA", "o4-mini (reasoning)": "OA",
+    "GLM-5.2-FP8": "ZAI", "Kimi-K2.6": "MS", "MiniMax-M2.7": "MM",
+    "Qwen3.6-27B": "QW", "Qwen2.5-7B": "QW",
+}
+MIN_N = 10  # rows below this carry no usable coverage estimate
+
+# label, vendor, coverage%, width_s, actual_s, n_decided
+ROWS = [("Grounded target (90%)", "REF", 90.0, None, None, None)]
+with open(_CAL_CSV) as _fh:
+    _rows = [r for r in _csv.DictReader(_fh)
+             if r["setting"] == "A" and int(r["n_decided"]) >= MIN_N]
+_rows.sort(key=lambda r: -float(r["coverage_pct"]))
+for _r in _rows:
+    ROWS.append((
+        _r["agent"], VENDOR_OF.get(_r["agent"], "REF"),
+        float(_r["coverage_pct"]),
+        float(_r["median_ci_width_s"]),
+        float(_r["median_tau_wall_s"]),
+        int(_r["n_decided"]),
+    ))
 
 LOGO_DIR = Path("paper1/arxiv-v0/figures/logos")
 VENDOR = {
@@ -144,8 +166,9 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
                 fontsize=9.5, color="#2a7a2a", fontweight="700", zorder=4,
                 bbox=dict(facecolor="white", edgecolor="none", pad=1))
     else:
-        # colour by coverage tier: >=P11 threshold green, else vendor color
-        bar_col = "#2a7a2a" if cov >= P11_THRESH else VENDOR[vk]["bar"]
+        # Strictly above the P11 threshold, matching the text: P11 asks whether
+        # any agent achieves > 0.5, so o4-mini at exactly 15/30 does not cross.
+        bar_col = "#2a7a2a" if cov > P11_THRESH else VENDOR[vk]["bar"]
         ax.add_patch(Rectangle((X_BAR0, y - 0.20), x_end - X_BAR0, 0.40,
                                facecolor=bar_col, edgecolor="none", zorder=2))
         # label inside if room, else right
@@ -197,7 +220,7 @@ fig.suptitle(
 fig.text(0.02, 0.925,
     "Bars = actual coverage of the agent's stated 90% CI containing $\\tau_{\\rm wall}$.  "
     "Dashed green = 90% target.  Dashed orange = pre-registered P11 threshold (0.5).  "
-    "Every non-thinking model under-covers by ≥40 percentage points; "
+    "Every non-reasoning model under-covers by ≥40 percentage points; "
     "GPT-4o achieves 0%.",
     ha="left", fontsize=10, color=INK2, fontstyle="italic")
 
@@ -211,9 +234,11 @@ fig.text(0.995, 0.02,
     bbox=dict(boxstyle="round,pad=0.35", facecolor="#fffaf0",
               edgecolor="#c05d1e", alpha=0.95, lw=0.7))
 
-out_pdf = Path("paper1/arxiv-v0/figures/calibration_catastrophe.pdf")
-out_png = Path("paper1/arxiv-v0/figures/calibration_catastrophe.png")
-fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.15)
-fig.savefig(out_png, bbox_inches="tight", pad_inches=0.15, dpi=300)
-print(f"Wrote: {out_pdf}")
-print(f"Wrote: {out_png}")
+for _tree in ("paper1/arxiv-v0", "paper1/iclr27", "paper1/iclr27_supp"):
+    _pdf = Path(_tree) / "figures/calibration_catastrophe.pdf"
+    _pdf.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(_pdf, bbox_inches="tight", pad_inches=0.15)
+    print(f"Wrote: {_pdf}")
+_png = Path("paper1/arxiv-v0/figures/calibration_catastrophe.png")
+fig.savefig(_png, bbox_inches="tight", pad_inches=0.15, dpi=300)
+print(f"Wrote: {_png}")
