@@ -143,9 +143,11 @@ T3.3 ($|\text{cov} - 0.9|$) & 0.470 & 0.800 & Sonnet best in panel; gpt-4o-mini 
 $\mathrm{score}_{T_1}$ & 0.743 & 0.941 & \\
 $\mathrm{score}_{T_2}$ & \textbf{0.572} & 0.331 & \emph{The binding constraint on Sonnet} \\
 $\mathrm{score}_{T_3}$ & 0.248 & 0.933 & \\
-\textbf{$\cce$ aggregate} & \textbf{0.521} & \textbf{0.735} & \\
+\textbf{$\cce_9$ aggregate} & \textbf{0.521} & \textbf{0.735} & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The decomposition makes the structural claim concrete: Sonnet 4.6 has used the narrative-axis closure (T3 row reads $0.068, 0.206, 0.470$) to drag $\cce$ to the panel minimum, but the action axis (T2.1 $0.767$, T2.3 $0.950$) keeps the aggregate above $\ccestar$. No amount of further narrative-axis training closes this gap.
+\paragraph{Relation to the panel $\cce$.} The aggregate in this table, written $\cce_9$, is computed over all nine sub-capabilities with each sub-score normalised to $[0,1]$. It is not the same normalisation as the panel $\cce$ of \S\ref{sec:epsilon}, which averages two unbounded axis medians and is reported for cross-agent ranking; $\cce_9$ is reported to show \emph{which} sub-capabilities drive an agent's aggregate, and the two should not be read off against each other cell by cell. They do agree where it matters: $\cce_9(\text{Sonnet 4.6}) = 0.521$ against a panel $\cce$ of $0.536$. That agreement is itself a check --- under the superseded impute-zero convention the panel figure read $0.316$, which the nine-capability decomposition never supported.
+
+The decomposition makes the structural claim concrete: Sonnet 4.6 has used the narrative-axis closure (T3 row reads $0.068, 0.206, 0.470$) to drag its aggregate to the panel minimum, but the action axis (T2.1 $0.767$, T2.3 $0.950$) holds it above $\ccestar$. No amount of further narrative-axis training closes that gap.

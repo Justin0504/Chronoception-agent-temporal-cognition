@@ -78,7 +78,7 @@ Let $\loss$ be a token-only loss. For any strictly increasing reparametrisation 
 
 \paragraph{Three empirical predictions.} \textbf{P-CIT-1}: under wall-clock budgets, $\CAR$ stays bounded away from $1$ regardless of capability (\S\ref{sec:l2}). \textbf{P-CIT-2}: prompt-level $\twall$ information cannot move action-axis behaviour: $|\Delta\CAR|$ is small under Setting~B (\S\ref{sec:l2}). \textbf{P-CIT-3}: calibration tooling cannot close self-duration coverage because the calibration target is not in the loss support (\S\ref{sec:l3}). All three confirmed below.
 
-\paragraph{Augustine threshold.} We adopt $\ccestar = 0.20$ as an operational reporting threshold. We state plainly what it is and is not. It is \emph{not} derived from a measured human baseline: human duration perception is itself imperfect and scale-dependent \citep{wittmann2009chronoception,eagleman2008time}, but that literature reports discrimination thresholds rather than the retrospective estimation error our $\confab$ measures, and we know of no published human value directly convertible to it. $\ccestar = 0.20$ is the round figure one order of magnitude below a $2\times$ misestimate ($|\confab| = 0.30$), chosen before the panel was run and fixed thereafter. Nothing in our argument depends on the constant: the closest agent sits at $\cce = 0.276$ and the $\tstep$-axis term alone exceeds $0.30$ on every agent, so the qualitative conclusion is invariant to any threshold in $[0.1, 0.3]$. A task-matched human panel would let the threshold be earned rather than stipulated; that is the highest-priority follow-up (\S\ref{sec:related}).
+\paragraph{Augustine threshold.} We adopt $\ccestar = 0.20$ as an operational reporting threshold. We state plainly what it is and is not. It is \emph{not} derived from a measured human baseline: human duration perception is itself imperfect and scale-dependent \citep{wittmann2009chronoception,eagleman2008time}, but that literature reports discrimination thresholds rather than the retrospective estimation error our $\confab$ measures, and we know of no published human value directly convertible to it. $\ccestar = 0.20$ is the round figure one order of magnitude below a $2\times$ misestimate ($|\confab| = 0.30$), chosen before the panel was run and fixed thereafter. Nothing in our argument depends on the constant: the closest agent sits at $\cce = 0.536$, and $\mathrm{score}_{T_2} \geq 0.92$ on every agent puts a floor of $\cce \geq 0.46$ under the whole panel irrespective of the narrative axis, so the qualitative conclusion is invariant to any threshold in $[0.1, 0.45]$. A task-matched human panel would let the threshold be earned rather than stipulated; that is the highest-priority follow-up (\S\ref{sec:related}).
 
 \section{\textsc{ChronoBench}}\label{sec:bench}
 
@@ -186,17 +186,19 @@ Three closed labs converge on the same engineering choice for consumer products,
 \section{$\cce$ and the Agentic Timeline}\label{sec:timeline}
 
 \begin{definition}[Chronoceptive Calibration Error]\label{def:cce}
-$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$, axis-scores normalised to $[0, 1]$ (App.). $\cce$ is computed on the fixed 90-trajectory pilot protocol (T1.1, T2.3, T3.1 at $n = 30$) so the ranking is corpus-matched; agents whose T3.1 cell survives few $\tself$ parses (o3, $n_\rho = 4/3$) inherit that uncertainty, and the App.\ reports the same cells on the larger Route B-1 corpus.
+$\cce(A)$ is the mean of the axis scores actually measured, each taken as a median over that axis's trajectories: $\mathrm{score}_{T_2} := \mathrm{med}\,|\CAR - 1|$ on T2.3, $\mathrm{score}_{T_3} := \mathrm{med}\,|\confab|$ on T3.1. An axis with no trajectories is \emph{dropped} and the remaining weights renormalised --- never imputed as zero. Medians rather than means because two harness artefacts (a stalled gpt-4o-mini request, $\twall = 14.9$\,h against a $900$\,s budget) would otherwise decide the bottom of the ranking.
 \end{definition}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/epsilon_panel.pdf}
-\caption{$\cce$ leaderboard across the 14-agent, 7-vendor panel. Solid bars = Setting~A; hatched extension = Setting~B. Dashed green rule = Augustine threshold $\ccestar = 0.20$. No agent crosses it; the cross-vendor Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) confirms the framework cross-vendor. Best agent (Sonnet 4.6 $+$ thinking) sits at $\cce = 0.276$, $1.4\times$ above threshold.}
+\caption{$\cce$ over the 13 scored agents from 7 vendors. (DeepSeek-R1-Distill-14B is the 14th panel configuration and is unscored: it declines to spend its reasoning budget, so it falls outside Assumption~\ref{ass:bh}.) Solid bars = Setting~A; hatched extension = Setting~B. Dashed green rule = $\ccestar = 0.20$. No agent crosses it --- the closest, Sonnet 4.6, sits $2.7\times$ above. $n_\rho$ in red marks cells below $n = 15$. The Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) places the framework cross-vendor.}
 \label{fig:eps}
 \end{figure}
 
-No panel agent crosses $\ccestar = 0.20$ (Fig.~\ref{fig:eps}); the best (Sonnet 4.6 $+$ thinking, $\cce = 0.276$) sits $1.4\times$ above it. Score$_{T_2}$ contributes $\geq 0.30$ on every agent: even projecting score$_{T_3}$ to zero (which requires crossing both CIT and Theorem~\ref{thm:rs}) leaves no agent below threshold. The o4-mini effort sweep takes $\cce$ from $0.470$ (low) to $0.611$ (high); Sonnet-thinking from $0.276$ to $0.301$. More reasoning compute moves the agent \emph{further} from the threshold.
+No panel agent crosses $\ccestar = 0.20$ (Fig.~\ref{fig:eps}); the closest, Sonnet 4.6, sits at $\cce = 0.536$, $2.7\times$ above. The action axis is why: $\mathrm{score}_{T_2} \in [0.92, 1.00]$ on \emph{every} agent, so even driving $\mathrm{score}_{T_3}$ to zero --- which would require crossing both CIT and Theorem~\ref{thm:rs} --- leaves $\cce \geq 0.46$, still $2.3\times$ above threshold. Adding extended thinking to Sonnet 4.6 moves $\cce$ the wrong way ($0.536 \to 0.566$ under Setting~A, $0.537 \to 0.585$ under~B), and the o4-mini effort ladder moves it further still ($\confab$ axis, $1.23 \to 1.54 \to 1.67$ from low to high effort). More reasoning compute moves the agent \emph{away} from the threshold.
+
+\paragraph{A correction to the $\cce$ convention.} Our earlier draft scored an unmeasured axis as $0$ while leaving its weight in the denominator. The $\alpha$ axis is never populated under this protocol --- T2.3 is the only capability carrying a wall-clock budget and it is a $\tstep$-axis capability --- so that convention credited every agent with a free perfect third, and credited an agent with a partial corpus (o4-mini, which had no T2.3 cell in the original run) with two. The $\cce$ reported here follows Definition~\ref{def:cce} instead. The correction raises every $\cce$, so it strengthens rather than rescues the threshold claim; it changes the ordering in one place, moving o4-mini from mid-panel to the bottom, which is where its $|\confab| = 1.54$ belongs.
 
 \begin{hypothesis}[Agentic Timeline]\label{hyp:at}
 $T_{\max}(A) \propto \frac{1}{\cce(A)}\cdot f(\CAR(A))$, with $f$ monotone-increasing in $\CAR$.
@@ -280,9 +282,19 @@ All 14 agents, 5{,}900 trajectories, per-cell parsers, and the METR HCAST U-test
 
 \section{Chronoception Composite Score}\label{app:cce}
 
-The composite chronoception score aggregates the three axes:
-$\cce(A) := \tfrac{1}{3}(\mathrm{score}_{T_1} + \mathrm{score}_{T_2} + \mathrm{score}_{T_3})$,
-where each axis score is normalised to $[0, 1]$. $T_1$ (perception) is the fraction of sub-capabilities passed; $T_2$ (action) is $1 - \mathrm{median}(\Delta_{\mathrm{budget}})$ where $\Delta_{\mathrm{budget}}$ is fractional overshoot; $T_3$ (narrative) is the inverse of $|\confab|$ clipped to $[0, 2]$. The Augustine threshold $\ccestar = 0.20$ corresponds to crossing chance on all three axes simultaneously.
+$\cce$ aggregates the axes on which the agent was actually measured. Each axis contributes the median of its per-trajectory error, and $\cce$ is the unweighted mean over the axes present:
+\[
+\cce(A) \;=\; \frac{1}{|\mathcal{A}|}\sum_{k \in \mathcal{A}} \mathrm{score}_k,
+\qquad
+\mathrm{score}_{T_2} = \mathrm{med}\,|\CAR - 1|,
+\quad
+\mathrm{score}_{T_3} = \mathrm{med}\,|\confab| ,
+\]
+where $\mathcal{A}$ is the set of axes with at least one defined trajectory. Under the ChronoBench protocol reported here $\mathcal{A} = \{T_2, T_3\}$: T2.3 supplies $\CAR$ and T3.1 supplies $\confab$, while the $\tau_{\mathrm{wall}}$-axis coefficient $\alpha$ requires a wall-clock budget on a $\twall$-axis capability, which no capability in this protocol carries. $\cce = 0$ is grounded; larger is worse, and the scale is unbounded above because $|\confab|$ is a $\log_{10}$ ratio.
+
+Two properties matter for reading the leaderboard. First, an absent axis is dropped from $\mathcal{A}$ rather than scored $0$, so an agent is never rewarded for a measurement that was not taken. Second, each axis uses a median rather than a mean, so a single stalled request cannot set an agent's rank; two such trajectories exist in the corpus (gpt-4o-mini T2.3, $\twall = 14.9$\,h against a $900$\,s budget) and under a mean they would move that agent's $\cce$ from $1.06$ to $1.99$ and make it the worst in the panel.
+
+$\ccestar = 0.20$ is a stipulated reporting threshold, not a derived one (\S\ref{sec:cit}); nothing in the argument depends on its exact value, and the panel minimum of $0.536$ clears it by a factor of $2.7$.
 
 \section{Full Panel Tables}\label{app:panel}
 

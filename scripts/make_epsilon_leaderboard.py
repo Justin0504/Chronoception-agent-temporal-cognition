@@ -30,26 +30,43 @@ mpl.rcParams["font.family"]  = "sans-serif"
 mpl.rcParams["font.sans-serif"] = ["Inter", "Helvetica", "Arial", "DejaVu Sans"]
 
 # =============================================================
-# 1. Data — 14-agent panel (10 base + 4 Vultr expansion)
+# 1. Data -- loaded from pilot-results/panel_epsilon.csv
 # =============================================================
-# Ordered by ε(A) ascending. Oracle is the human-baseline reference.
-ROWS = [
-    # (label, vendor_key, eps_A, eps_B, sT1, sT2, sT3, is_reference)
-    ("Oracle",                "REF", 0.10, None, None, None, None, True),
-    ("Claude Sonnet 4.6 + thinking", "AN", 0.276, 0.301, 0.00, 0.32, 0.22, False),
-    ("Claude Sonnet 4.6",     "AN",  0.316, 0.307, 0.00, 0.32, 0.07, False),
-    ("gpt-5.1",               "OA",  0.426, 0.396, 0.13, 0.31, 0.30, False),
-    ("GLM-5.2-FP8",           "ZAI", 0.433, 0.420, 0.00, 0.99, 0.25, False),
-    ("Claude Haiku 4.5",      "AN",  0.442, 0.403, 0.00, 0.30, 0.46, False),
-    ("o3 (reasoning)",        "OA",  0.490, 0.582, 0.00, 0.30, 0.57, False),
-    ("o4-mini (reasoning)",   "OA",  0.532, 0.513, 0.00, 0.30, 1.54, False),
-    ("Kimi-K2.6",             "MS",  0.583, 0.608, 0.00, 0.98, 0.86, False),
-    ("MiniMax-M2.7",          "MM",  0.632, 0.410, 0.00, 0.99, 0.85, False),
-    ("Qwen3.6-27B",           "QW",  0.642, 0.663, 0.00, 0.98, 0.95, False),
-    ("gpt-4o",                "OA",  0.661, 0.587, 0.00, 0.32, 1.07, False),
-    ("Qwen2.5-7B",            "QW",  0.760, 0.764, 0.00, 0.31, 1.56, False),
-    ("gpt-4o-mini",           "OA",  1.328, 1.069, 0.00, 0.32, 1.12, False),
-]
+# NEVER hardcode these rows. The CSV is regenerated from the trajectories by
+# scripts/compute_panel_epsilon.py; an earlier hardcoded copy of this table
+# silently went stale against the corpus and had to be caught by hand.
+#   python3 scripts/compute_panel_epsilon.py           # refresh
+#   python3 scripts/compute_panel_epsilon.py --check   # fail if stale
+import csv as _csv
+import subprocess as _sp
+
+_EPS_CSV = Path("pilot-results/panel_epsilon.csv")
+if not _EPS_CSV.exists():
+    _sp.check_call(["python3", "scripts/compute_panel_epsilon.py"])
+
+VENDOR_OF = {
+    "Claude Sonnet 4.6": "AN", "Claude Sonnet 4.6 + thinking": "AN",
+    "Claude Haiku 4.5": "AN", "gpt-4o": "OA", "gpt-4o-mini": "OA",
+    "gpt-5.1": "OA", "o3 (reasoning)": "OA", "o4-mini (reasoning)": "OA",
+    "GLM-5.2-FP8": "ZAI", "Kimi-K2.6": "MS", "MiniMax-M2.7": "MM",
+    "Qwen3.6-27B": "QW", "Qwen2.5-7B": "QW",
+}
+
+def _f(v):
+    return None if v in (None, "", "None") else float(v)
+
+# (label, vendor_key, eps_A, eps_B, |CAR-1|, |rho|, n_rho, is_reference)
+ROWS = [("Oracle", "REF", 0.10, None, None, None, None, True)]
+with open(_EPS_CSV) as _fh:
+    _rows = [r for r in _csv.DictReader(_fh) if _f(r["eps_A"]) is not None]
+_rows.sort(key=lambda r: _f(r["eps_A"]))
+for _r in _rows:
+    ROWS.append((
+        _r["agent"], VENDOR_OF.get(_r["agent"], "REF"),
+        _f(_r["eps_A"]), _f(_r["eps_B"]),
+        _f(_r["car_A"]), _f(_r["rho_A"]),
+        _f(_r["n_rho_A"]), False,
+    ))
 
 # Vendor system: real logo PNGs + bar accents
 LOGO_DIR = Path("paper1/arxiv-v0/figures/logos")
@@ -70,7 +87,7 @@ def get_logo(vk):
         _LOGO_CACHE[vk] = mpimg.imread(p) if (p and p.exists()) else None
     return _LOGO_CACHE[vk]
 
-BAR_MAX = 1.40  # right edge of bar area (epsilon units); >1.4 clips
+BAR_MAX = 2.10  # right edge of bar area (epsilon units); must exceed max eps
 THRESHOLD = 0.20  # Augustine threshold ε*
 INK = "#1a1a1a"; INK2 = "#4a4a4a"; RULE = "#e6e6e6"; RULE_STRONG = "#c8c8c8"
 
@@ -112,9 +129,9 @@ ax.text((X_BAR0+X_BAR1)/2, head_y,
         r"$\varepsilon$  (Setting A  $\rightarrow$  Setting B)",
         ha="center", va="center", fontsize=9.5, color=INK2, style="italic")
 head(X_EPS,      r"$\varepsilon$(A)")
-head(X_SCORE_T1, r"score$_{T_1}$")
-head(X_SCORE_T2, r"score$_{T_2}$")
-head(X_SCORE_T3, r"score$_{T_3}$")
+head(X_SCORE_T1, r"$|\mathrm{CAR}-1|$")
+head(X_SCORE_T2, r"$|\rho|$")
+head(X_SCORE_T3, r"$n_\rho$")
 
 # thin rule under header
 ax.plot([2, 98], [head_y - 0.35]*2, color=RULE_STRONG, lw=0.7, zorder=0)
@@ -125,7 +142,7 @@ ax.plot([2, 98], [head_y - 0.35]*2, color=RULE_STRONG, lw=0.7, zorder=0)
 best_eps = min(r[2] for r in ROWS if not r[7])   # excluding Oracle
 best_T1  = min([r[4] for r in ROWS if r[4] is not None and not r[7]] or [None])
 best_T2  = min([r[5] for r in ROWS if r[5] is not None and not r[7]] or [None])
-best_T3  = min([r[6] for r in ROWS if r[6] is not None and not r[7]] or [None])
+best_T3  = None  # n_rho column: a count, not a score
 
 def eps_to_x(eps):
     return X_BAR0 + (eps / BAR_MAX) * (X_BAR1 - X_BAR0)
@@ -212,7 +229,12 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
     cell(X_EPS,      epsA, best_eps, is_ref)
     cell(X_SCORE_T1, sT1,  best_T1,  is_ref)
     cell(X_SCORE_T2, sT2,  best_T2,  is_ref)
-    cell(X_SCORE_T3, sT3,  best_T3,  is_ref)
+    if sT3 is None or is_ref:
+        ax.text(X_SCORE_T3, y, "\u2014", ha="right", va="center", fontsize=10, color="#9a9a9a")
+    else:
+        ax.text(X_SCORE_T3, y, f"{int(sT3)}", ha="right", va="center",
+                fontsize=11, color=INK if sT3 >= 15 else "#b03030",
+                fontweight="500")
 
     # thin row rule beneath
     if i < n_rows - 1:
@@ -232,15 +254,16 @@ ax.text(xT, 0.15, r"$\varepsilon^{\star} = 0.20$",
 # 6. Title
 # =============================================================
 fig.suptitle(
-    r"Chronoceptive Calibration Error $\varepsilon$ — 14-agent panel (7 vendors, 4 Chinese labs)",
+    r"Chronoceptive Calibration Error $\varepsilon$ — 13 scored agents (7 vendors, 4 Chinese labs)",
     x=0.02, y=0.975, ha="left", fontsize=15,
     fontweight="700", color=INK,
 )
-fig.text(0.02, 0.93,
-    r"Solid bar = Setting A ($\varepsilon$).  Hatched extension = Setting B.  "
-    r"Dashed green rule = Augustine threshold $\varepsilon^{\star} = 0.20$.  "
-    r"Bold numeric = best in column.  No panel agent crosses $\varepsilon^{\star}$; "
-    r"the Chinese-lab expansion (GLM, MiniMax, Kimi, Qwen3.6) confirms the framework cross-vendor.",
+fig.text(0.02, 0.935,
+    "Solid bar = Setting A.  Hatched extension = Setting B.  Dashed rule = Augustine threshold "
+    r"$\varepsilon^{\star} = 0.20$.  $\varepsilon$ = mean of the two measured axes, each a median."
+    "\n"
+    r"No agent crosses $\varepsilon^{\star}$; the closest sits $2.7\times$ above it.  "
+    r"Red $n_\rho$ marks cells below $n{=}15$.  DeepSeek-R1-Distill-14B (14th configuration) is unscored.",
     ha="left", fontsize=10, color=INK2, fontstyle="italic")
 
 # Legend chip below title
@@ -250,9 +273,13 @@ ax.plot([], [], color="none")  # anchor
 # =============================================================
 # 7. Save
 # =============================================================
-out_pdf = Path("paper1/arxiv-v0/figures/epsilon_panel.pdf")
-out_png = Path("paper1/arxiv-v0/figures/epsilon_panel.png")
-fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.15)
-fig.savefig(out_png, bbox_inches="tight", pad_inches=0.15, dpi=300)
-print(f"Wrote: {out_pdf}")
-print(f"Wrote: {out_png}")
+# All three trees get the same figure; the ICLR and supplement copies used to be
+# updated by hand, which is how they drifted apart.
+for _tree in ("paper1/arxiv-v0", "paper1/iclr27", "paper1/iclr27_supp"):
+    _pdf = Path(_tree) / "figures/epsilon_panel.pdf"
+    _pdf.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(_pdf, bbox_inches="tight", pad_inches=0.15)
+    print(f"Wrote: {_pdf}")
+_png = Path("paper1/arxiv-v0/figures/epsilon_panel.png")
+fig.savefig(_png, bbox_inches="tight", pad_inches=0.15, dpi=300)
+print(f"Wrote: {_png}")

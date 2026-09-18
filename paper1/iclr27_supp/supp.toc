@@ -25,10 +25,11 @@
 \contentsline {paragraph}{Perplexity Computer (dev tool).}{5}{section*.26}%
 \contentsline {paragraph}{Summary.}{5}{section*.27}%
 \contentsline {section}{\numberline {4}L3 Sub-Failure Detail}{5}{section.4}%
+\contentsline {paragraph}{Relation to the panel $\varepsilon $.}{7}{section*.41}%
 \contentsline {section}{\numberline {5}Spatiotemporal Generalisation Full Sketch}{8}{section.5}%
-\contentsline {paragraph}{Assumption (token-only spatial support).}{8}{section*.43}%
-\contentsline {paragraph}{Theorem\nobreakspace {}\ref {thm:sit} proof sketch.}{8}{section*.44}%
+\contentsline {paragraph}{Assumption (token-only spatial support).}{8}{section*.44}%
+\contentsline {paragraph}{Theorem\nobreakspace {}\ref {thm:sit} proof sketch.}{8}{section*.45}%
 \contentsline {section}{\numberline {6}Operational Chronoception Audit Checklist}{10}{section.6}%
-\contentsline {paragraph}{The audit, in seven steps.}{10}{section*.51}%
-\contentsline {paragraph}{What to do when an agent fails the audit.}{11}{section*.52}%
-\contentsline {paragraph}{What this audit does not cover.}{11}{section*.53}%
+\contentsline {paragraph}{The audit, in seven steps.}{10}{section*.52}%
+\contentsline {paragraph}{What to do when an agent fails the audit.}{11}{section*.53}%
+\contentsline {paragraph}{What this audit does not cover.}{11}{section*.54}%

@@ -31,55 +31,58 @@
 \contentsline {paragraph}{Why this is decisive.}{12}{table.3}%
 \contentsline {paragraph}{What injection does not close.}{12}{table.3}%
 \contentsline {section}{\numberline {8}The Chronoceptive Calibration Error $\varepsilon $}{12}{section.8}%
+\contentsline {paragraph}{Which axes, and why medians.}{12}{definition.4}%
+\contentsline {paragraph}{A correction to the convention.}{13}{definition.4}%
 \contentsline {paragraph}{Two findings.}{13}{figure.5}%
 \contentsline {section}{\numberline {9}From Measurement to Deployment: The Agentic Timeline}{13}{section.9}%
 \contentsline {paragraph}{Pre-registered P12 and HCAST support.}{14}{hypothesis.1}%
 \contentsline {section}{\numberline {10}Related Work and Positioning}{14}{section.10}%
 \contentsline {paragraph}{Concurrent work on agent temporal cognition.}{14}{section.10}%
-\contentsline {paragraph}{Foundational lineage.}{15}{section.10}%
-\contentsline {paragraph}{Distinguished from external-timeline reasoning.}{15}{section.10}%
-\contentsline {paragraph}{Inverse scaling and calibration.}{15}{section.10}%
-\contentsline {paragraph}{Aggregate agent benchmarks.}{15}{section.10}%
+\contentsline {paragraph}{Foundational lineage.}{14}{section.10}%
+\contentsline {paragraph}{Distinguished from external-timeline reasoning.}{14}{section.10}%
+\contentsline {paragraph}{Inverse scaling and calibration.}{14}{section.10}%
+\contentsline {paragraph}{Aggregate agent benchmarks.}{14}{section.10}%
 \contentsline {section}{\numberline {11}Scope, Objections, and Falsification}{15}{section.11}%
 \contentsline {paragraph}{What we do not claim.}{15}{section.11}%
 \contentsline {paragraph}{Empirical limitations.}{15}{section.11}%
-\contentsline {paragraph}{Cross-lingual replication.}{16}{section.11}%
-\contentsline {paragraph}{A refusal asymmetry the English panel hides.}{16}{section.11}%
+\contentsline {paragraph}{Cross-lingual replication.}{15}{section.11}%
+\contentsline {paragraph}{A refusal asymmetry the English panel hides.}{15}{section.11}%
 \contentsline {paragraph}{Contamination probe.}{16}{section.11}%
 \contentsline {paragraph}{Falsification.}{16}{section.11}%
-\contentsline {section}{\numberline {12}From Time to Space: The Spatiotemporal Generalisation}{17}{section.12}%
-\contentsline {section}{\numberline {13}Toward Agents That Inhabit Time}{18}{section.13}%
-\contentsline {section}{\numberline {A}Annotation Protocol}{21}{appendix.A}%
-\contentsline {paragraph}{T1.1 parser.}{21}{appendix.A}%
-\contentsline {paragraph}{T2.3 measurement.}{21}{appendix.A}%
-\contentsline {paragraph}{T3.1 parser ($\Pi $).}{21}{appendix.A}%
-\contentsline {paragraph}{Settings A and B.}{21}{appendix.A}%
-\contentsline {paragraph}{Reasoning model handling.}{21}{appendix.A}%
-\contentsline {paragraph}{Open-source serving.}{21}{appendix.A}%
-\contentsline {section}{\numberline {B}Full Panel Tables}{22}{appendix.B}%
-\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{22}{appendix.B}%
-\contentsline {paragraph}{Reading the CIs.}{22}{table.4}%
-\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{22}{table.4}%
-\contentsline {paragraph}{Per-budget $\mathrm {CAR}$ curves.}{23}{table.5}%
-\contentsline {paragraph}{Trajectory release.}{23}{table.5}%
-\contentsline {paragraph}{Reasoning-panel completeness update (Route B-1).}{23}{table.5}%
+\contentsline {section}{\numberline {12}From Time to Space: The Spatiotemporal Generalisation}{16}{section.12}%
+\contentsline {section}{\numberline {13}Toward Agents That Inhabit Time}{16}{section.13}%
+\contentsline {section}{\numberline {A}Annotation Protocol}{20}{appendix.A}%
+\contentsline {paragraph}{T1.1 parser.}{20}{appendix.A}%
+\contentsline {paragraph}{T2.3 measurement.}{20}{appendix.A}%
+\contentsline {paragraph}{T3.1 parser ($\Pi $).}{20}{appendix.A}%
+\contentsline {paragraph}{Settings A and B.}{20}{appendix.A}%
+\contentsline {paragraph}{Reasoning model handling.}{20}{appendix.A}%
+\contentsline {paragraph}{Open-source serving.}{20}{appendix.A}%
+\contentsline {section}{\numberline {B}Full Panel Tables}{20}{appendix.B}%
+\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{20}{appendix.B}%
+\contentsline {paragraph}{Reading the CIs.}{21}{table.4}%
+\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{21}{table.4}%
+\contentsline {paragraph}{Per-budget $\mathrm {CAR}$ curves.}{22}{table.5}%
+\contentsline {paragraph}{Trajectory release.}{22}{table.5}%
+\contentsline {paragraph}{Reasoning-panel completeness update (Route B-1).}{22}{table.5}%
 \contentsline {paragraph}{The prospective--retrospective sign flip within Sonnet-thinking.}{23}{table.6}%
-\contentsline {paragraph}{o3's structural asymmetry.}{24}{table.6}%
-\contentsline {section}{\numberline {C}Atlas Evidence (Verbatim)}{24}{appendix.C}%
-\contentsline {paragraph}{ChatGPT (web product, OpenAI).}{24}{appendix.C}%
-\contentsline {paragraph}{Claude.ai (web product, Anthropic).}{24}{appendix.C}%
-\contentsline {paragraph}{Gemini app (Google).}{25}{appendix.C}%
-\contentsline {paragraph}{Raw OpenAI API --- empirical contrast.}{25}{appendix.C}%
-\contentsline {paragraph}{Raw Anthropic API --- empirical contrast.}{25}{appendix.C}%
-\contentsline {paragraph}{Cursor agent (dev tool).}{25}{appendix.C}%
-\contentsline {paragraph}{GitHub Copilot CLI (dev tool).}{25}{appendix.C}%
-\contentsline {paragraph}{Perplexity Computer (dev tool).}{25}{appendix.C}%
-\contentsline {paragraph}{Summary.}{25}{appendix.C}%
-\contentsline {section}{\numberline {D}L3 Sub-Failure Detail}{25}{appendix.D}%
-\contentsline {section}{\numberline {E}Spatiotemporal Generalisation Full Sketch}{28}{appendix.E}%
-\contentsline {paragraph}{Assumption (token-only spatial support).}{29}{appendix.E}%
-\contentsline {paragraph}{Theorem\nobreakspace {}\ref {thm:sit} proof sketch.}{29}{appendix.E}%
-\contentsline {section}{\numberline {F}Operational Chronoception Audit Checklist}{31}{appendix.F}%
-\contentsline {paragraph}{The audit, in seven steps.}{31}{appendix.F}%
-\contentsline {paragraph}{What to do when an agent fails the audit.}{32}{Item.7}%
-\contentsline {paragraph}{What this audit does not cover.}{32}{Item.7}%
+\contentsline {paragraph}{o3's structural asymmetry.}{23}{table.6}%
+\contentsline {section}{\numberline {C}Atlas Evidence (Verbatim)}{23}{appendix.C}%
+\contentsline {paragraph}{ChatGPT (web product, OpenAI).}{23}{appendix.C}%
+\contentsline {paragraph}{Claude.ai (web product, Anthropic).}{23}{appendix.C}%
+\contentsline {paragraph}{Gemini app (Google).}{23}{appendix.C}%
+\contentsline {paragraph}{Raw OpenAI API --- empirical contrast.}{24}{appendix.C}%
+\contentsline {paragraph}{Raw Anthropic API --- empirical contrast.}{24}{appendix.C}%
+\contentsline {paragraph}{Cursor agent (dev tool).}{24}{appendix.C}%
+\contentsline {paragraph}{GitHub Copilot CLI (dev tool).}{24}{appendix.C}%
+\contentsline {paragraph}{Perplexity Computer (dev tool).}{24}{appendix.C}%
+\contentsline {paragraph}{Summary.}{24}{appendix.C}%
+\contentsline {section}{\numberline {D}L3 Sub-Failure Detail}{24}{appendix.D}%
+\contentsline {paragraph}{Relation to the panel $\varepsilon $.}{27}{table.11}%
+\contentsline {section}{\numberline {E}Spatiotemporal Generalisation Full Sketch}{27}{appendix.E}%
+\contentsline {paragraph}{Assumption (token-only spatial support).}{28}{appendix.E}%
+\contentsline {paragraph}{Theorem\nobreakspace {}\ref {thm:sit} proof sketch.}{28}{appendix.E}%
+\contentsline {section}{\numberline {F}Operational Chronoception Audit Checklist}{30}{appendix.F}%
+\contentsline {paragraph}{The audit, in seven steps.}{30}{appendix.F}%
+\contentsline {paragraph}{What to do when an agent fails the audit.}{31}{Item.7}%
+\contentsline {paragraph}{What this audit does not cover.}{31}{Item.7}%

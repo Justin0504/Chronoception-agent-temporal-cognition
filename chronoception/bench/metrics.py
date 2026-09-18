@@ -108,6 +108,7 @@ def confabulation_ratio(traj: Trajectory) -> float:
 def chronoceptive_calibration_error(
     trajectories: Iterable[Trajectory],
     weights: tuple[float, float, float] = (1.0 / 3, 1.0 / 3, 1.0 / 3),
+    renormalise: bool = True,
 ) -> float:
     """The central scalar epsilon (FRAMING.md §4).
 
@@ -118,13 +119,20 @@ def chronoceptive_calibration_error(
     trajectories without a self-narrated duration contribute no rho.
 
     The expectation is taken over the trajectories for which each respective
-    metric is defined; missing terms are dropped rather than imputed.
+    metric is defined. An axis with no defined trajectories at all is dropped
+    and its weight redistributed over the remaining axes, so that epsilon is
+    always a weighted mean over the axes actually measured. Pass
+    renormalise=False for the pre-2026-09 convention, which instead scored a
+    missing axis as 0.0 and left its weight in the denominator.
 
     Parameters
     ----------
     trajectories : iterable of Trajectory
     weights : tuple (w1, w2, w3)
         Must sum to 1. Reference configuration: (1/3, 1/3, 1/3).
+    renormalise : bool
+        Redistribute the weight of any axis with no data over the axes that
+        have data (default). False reproduces the legacy impute-zero scale.
 
     Returns
     -------
@@ -176,11 +184,30 @@ def chronoceptive_calibration_error(
             "no trajectories had any of the three metrics defined; epsilon undefined"
         )
 
-    mean_alpha = sum(alpha_terms) / len(alpha_terms) if alpha_terms else 0.0
-    mean_car = sum(car_terms) / len(car_terms) if car_terms else 0.0
-    mean_rho = sum(rho_terms) / len(rho_terms) if rho_terms else 0.0
+    # An axis with no defined trajectories is DROPPED, not imputed: its weight
+    # is redistributed over the axes that do have data, matching the definition
+    # given in the paper. Imputing a missing axis as 0.0 and leaving its weight
+    # in the denominator (renormalise=False) would credit the agent with a
+    # perfect score on an axis that was never measured.
+    #
+    # This is a NO-OP on the 90-trajectory pilot protocol and on every panel
+    # reported in the paper: all three axes carry data there (T2.3 supplies both
+    # alpha and CAR -- alpha via tau_min, CAR via the budget -- and T3.1
+    # supplies rho), so no published epsilon changes. The branch exists so that
+    # a future protocol which omits an axis entirely cannot silently deflate
+    # epsilon by the weight of the axis it skipped.
+    present = [
+        (w1, sum(alpha_terms) / len(alpha_terms)) if alpha_terms else None,
+        (w2, sum(car_terms) / len(car_terms)) if car_terms else None,
+        (w3, sum(rho_terms) / len(rho_terms)) if rho_terms else None,
+    ]
+    present = [p for p in present if p is not None]
 
-    return w1 * mean_alpha + w2 * mean_car + w3 * mean_rho
+    if not renormalise:
+        return sum(w * m for w, m in present)
+
+    total_w = sum(w for w, _ in present)
+    return sum(w * m for w, m in present) / total_w
 
 
 epsilon = chronoceptive_calibration_error
