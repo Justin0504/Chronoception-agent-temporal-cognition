@@ -23,6 +23,25 @@ Setting~A in Chinese exposes a failure mode invisible in the English data. In En
 
 The reading we take is that the English refusal is a \emph{surface behaviour of the post-training distribution, not a representation of not-knowing}. It does not survive a change of language; the underlying absence of $\twall$ does. An agent that says ``I do not know today's date'' has not thereby acquired chronoception --- it has acquired an English sentence. This sharpens rather than softens the position of \S\ref{sec:augustine-problem}: the apparent epistemic humility of frontier models on the wall axis is itself installed, and installed in one language at a time. It also implies the T1.1 pass rates we report for the English panel are an optimistic reading of the underlying state, since a refusal and a confabulation score identically as failures but differ sharply in downstream risk. A full multilingual sweep across more languages and the remaining vendors is future work.
 
+\paragraph{The L1 experiment we owe.}
+The budget elasticity of \S\ref{sec:l1} is measured on T2.3, which holds one
+task fixed and varies the budget. That design isolates the budget cleanly but
+leaves two questions open, and one experiment closes both. \textbf{E11 (crossed
+deadline design):} six questions spanning intrinsic effort, from a one-line
+factual lookup to an open generative task, each asked at every deadline in
+$\{10, 30, 60, 300, 900\}$\,s plus an unconstrained control, fully crossed, at
+$n \geq 8$ per cell. Two changes from the T1.3 run that this supersedes: the
+question and the deadline are crossed rather than confounded, so the effect of
+the deadline is identifiable within question; and the deadline is recorded on
+the trajectory as \texttt{budget} with \texttt{budget\_kind="wall"} together
+with a per-question $\tau_{\min}$ taken from the unconstrained control, so
+$\parkinson$ becomes computable rather than inferred. Removing the
+``\textit{do not stop early}'' instruction from half the cells additionally
+separates instructed budget-filling from the spontaneous expansion Parkinson
+described, which is the difference between an upper bound on L1 and a
+measurement of it. The run is roughly $10^3$ calls per agent and does not
+require new infrastructure.
+
 \paragraph{Contamination probe.}
 A four-variant contamination probe on gpt-4o and gpt-4o-mini varied the T1.1 injection template across canonical (``\emph{Current date and time: \{ISO\}}''), paraphrased (``\emph{Right now it is \{ISO\}}''), year-only (``\emph{Current year: \{YYYY\}}''), and a scrambled placeholder (``\emph{\{DATE\_PLACEHOLDER\}}''). Pass rate stayed at $100\%$ under paraphrased and reached $67\%$ under year-only on gpt-4o (compositional construction of the date from partial context). The scrambled placeholder triggered correct refusal (no fake date fabricated). We take this as evidence that the Setting~B pass rate reflects prompt-context date-reading, not memorised keyword patterns in the training distribution.
 

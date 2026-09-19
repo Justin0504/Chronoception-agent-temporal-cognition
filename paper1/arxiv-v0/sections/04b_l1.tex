@@ -1,0 +1,97 @@
+% Section 4b — L1 Agentic Parkinson, measured as a budget elasticity
+
+\section{The Wall Axis: L1 Measured, Not Assumed}
+\label{sec:l1}
+
+Of the three laws, L1 is the one we could most easily have left as an
+assertion. Parkinson's observation that ``work expands so as to fill the time
+available'' \citep{parkinson1955} is the folk theory of what a budgeted agent
+does, and an earlier draft of this paper stated its contrapositive --- that
+native agents simply do not exhibit it --- on the strength of the $\CAR$
+numbers in \S\ref{sec:l2}. That statement was wrong, and the corpus already
+contained the data to show it.
+
+\paragraph{Why not T1.3.} T1.3 is the sub-capability nominally assigned to
+L1, and it cannot answer the question. Its trajectories carry
+\texttt{budget\_kind="none"}, so the stated deadline lives only inside the
+prompt string and $\parkinson$ is not computable from them. More seriously,
+its ten prompts pair each deadline with a different question, and the pairing
+tracks intrinsic task size almost perfectly: the five-second item asks for the
+capital of Australia, the 180-second item asks for a short story. Deadline and
+task size are confounded, so a longer answer under a longer deadline is
+uninformative. No reanalysis repairs this; the design has to be re-run
+crossed, which we describe in \S\ref{sec:limitations}.
+
+\paragraph{The design L1 needs is already in T2.3.} The wall-budget
+capability holds the task fixed and varies the budget over
+$\budget \in \{60, 300, 900, 1800, 3600\}$\,s at $n = 30$ per cell per
+setting --- a $60\times$ range on a single factor. We therefore measure L1 as
+a \emph{budget elasticity},
+\[
+  e \;:=\; \frac{\mathrm{d}\,\log_{10} \twallstar}{\mathrm{d}\,\log_{10} \budget},
+\]
+fit per agent by least squares over all $(\budget, \twallstar)$ pairs with a
+$95\%$ bootstrap CI ($4{,}000$ resamples). Parkinson's law in its strong form
+is $e = 1$: the work expands to fill whatever it is given. Complete
+indifference to the budget is $e = 0$.
+
+\begin{table}[h]
+\centering\small
+\caption{L1 budget elasticity across the panel. $e = 1$ is Parkinson's law in
+full; $e = 0$ is no response to the budget at all. Pooled over both settings,
+$n = 60$ per agent.}
+\label{tab:l1-elasticity}
+\begin{tabular}{lcc|lcc}
+\toprule
+Agent & $e$ & 95\% CI & Agent & $e$ & 95\% CI \\
+\midrule
+Claude Haiku 4.5 & $+0.228$ & $[+0.170, +0.284]$ & MiniMax-M2.7   & $+0.089$ & $[+0.028, +0.147]$ \\
+GLM-5.2-FP8      & $+0.219$ & $[+0.166, +0.272]$ & gpt-4o-mini    & $+0.082$ & $[-0.141, +0.219]$ \\
+gpt-5.1          & $+0.149$ & $[+0.102, +0.202]$ & Sonnet $+$ thinking & $+0.074$ & $[-0.038, +0.185]$ \\
+o3               & $+0.127$ & $[+0.062, +0.196]$ & o4-mini        & $+0.072$ & $[+0.028, +0.131]$ \\
+gpt-4o           & $+0.103$ & $[+0.068, +0.139]$ & Qwen3.6-27B    & $+0.058$ & $[+0.036, +0.079]$ \\
+Kimi-K2.6        & $+0.092$ & $[+0.027, +0.156]$ & Claude Sonnet 4.6 & $+0.052$ & $[+0.021, +0.090]$ \\
+                 &          &                    & Qwen2.5-7B     & $-0.020$ & $[-0.099, +0.061]$ \\
+\midrule
+\multicolumn{6}{l}{\textbf{Panel median $e = 0.089$}; 10 of 13 agents have a CI strictly above zero.} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Result: present, and an order of magnitude too weak.}
+The panel median is $e = 0.089$, and ten of thirteen agents across seven
+vendors have a bootstrap CI strictly above zero (Table~\ref{tab:l1-elasticity}).
+A $60\times$ increase in the stated budget therefore buys $1.4\times$ more
+wall-clock, where Parkinson's law requires $60\times$. A single exponent
+describes each agent's ladder to between $3\%$ and $22\%$ (median ${\sim}12\%$),
+so the power-law summary is a reasonable description of the budget response and
+not a line drawn through noise.
+
+This is the narrative/action split of \S\ref{sec:l2}--\ref{sec:l3} visible on a
+single axis. The agent's response to the budget is \emph{directionally correct}
+--- it reads the number and moves the right way --- and it is roughly a tenth of
+the strength the instruction calls for. An agent that could not read the budget
+at all would give $e = 0$; an agent that could act on what it read would give
+$e = 1$. The panel sits an order of magnitude from the second and, for most
+agents, reliably away from the first.
+
+\paragraph{What this is not.} Two limits bound the claim, and both point at the
+same missing experiment. First, T2.3 is a \emph{single task}: $e$ is measured on
+one item, so we cannot say whether the elasticity is a property of the agent or
+of that item. Second, the T2.3 prompt explicitly instructs the agent to spend
+the budget (``\textit{work on this task for $\budget$ seconds; do not stop
+early}''), so $e$ measures compliance with an instruction, not the spontaneous
+expansion Parkinson described. That makes $e = 0.089$ an \emph{upper bound} on
+spontaneous L1 rather than a measurement of it --- which strengthens the
+direction of the finding while weakening its interpretation as Parkinson's law
+proper. The crossed design that would fix both, questions $\times$ deadlines
+fully crossed with the budget recorded as a field, is specified in
+\S\ref{sec:limitations}.
+
+\paragraph{Relation to $\CAR$.} Since $\CAR = \twallstar/\budget$, we have
+$\mathrm{d}\log \CAR / \mathrm{d}\log \budget = e - 1$ identically. The steep
+decay of $\CAR$ with budget reported in \S\ref{sec:l2} is therefore the same
+measurement in different coordinates, not independent corroboration of it, and
+we do not present it as such. What the two views jointly establish is that one
+exponent near zero governs both: the agent's wall-clock expenditure is nearly
+invariant to what it is told it has.
