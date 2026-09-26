@@ -22,7 +22,7 @@ Email: `aojieyua@usc.edu`
 
 **Comments** (arxiv "Comments" field — visible on the abstract page)
 ```
-36 pages, 7 figures, 13 tables. Position paper with layered evidence
+37 pages, 7 figures, 13 tables. Position paper with layered evidence
 (ChronoBench, Injection Atlas, positive control, HCAST). Code +
 trajectories + Docker + OSF pre-registration at
 https://github.com/Justin0504/Chronoception-agent-temporal-cognition.
