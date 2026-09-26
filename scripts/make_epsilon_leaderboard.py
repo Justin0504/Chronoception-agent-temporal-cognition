@@ -62,7 +62,7 @@ with open(_EPS_CSV) as _fh:
 _rows.sort(key=lambda r: _f(r["eps_A"]))
 for _r in _rows:
     ROWS.append((
-        _r["agent"], VENDOR_OF.get(_r["agent"], "REF"),
+        _r["agent"].replace("Claude ", ""), VENDOR_OF.get(_r["agent"], "REF"),
         _f(_r["eps_A"]), _f(_r["eps_B"]),
         _f(_r["car_A"]), _f(_r["rho_A"]),
         _f(_r["n_rho_A"]), False,
@@ -89,31 +89,38 @@ def get_logo(vk):
 
 BAR_MAX = 2.10  # right edge of bar area (epsilon units); must exceed max eps
 THRESHOLD = 0.20  # Augustine threshold ε*
-INK = "#1a1a1a"; INK2 = "#4a4a4a"; RULE = "#e6e6e6"; RULE_STRONG = "#c8c8c8"
+import sys as _sys
+_sys.path.insert(0, "scripts")
+from chronofig import C as _C, PT, textwidth   # one palette, one type scale
+INK, INK2 = _C.ink, _C.ink2
+RULE, RULE_STRONG = _C.rule, _C.rule_strong
 
 # =============================================================
 # 2. Figure geometry
 # =============================================================
+# Authored at ICLR \linewidth so every fontsize below is a literal printed
+# point size. The arXiv build displays it 18% wider, which only helps.
+# Previously 12.0 in wide displayed at 5.5 in: fontsize 10 printed at 4.4 pt.
 n_rows = len(ROWS)
-row_h  = 0.62  # inches per row
-fig_w  = 12.0
-fig_h  = 2.0 + n_rows * row_h
+row_h  = 0.32  # inches per row
+fig_w  = textwidth()
+fig_h  = 1.30 + n_rows * row_h
 fig, ax = plt.subplots(figsize=(fig_w, fig_h))
-fig.subplots_adjust(left=0.02, right=0.98, top=0.86, bottom=0.06)
+fig.subplots_adjust(left=0.02, right=0.99, top=0.87, bottom=0.04)
 
 ax.set_xlim(0, 100)
 ax.set_ylim(0, n_rows + 1)
 ax.axis("off")
 
 # Column x-positions (percent of canvas width)
-X_CHIP    = 3.5
-X_MODEL   = 9.0
-X_BAR0    = 32.5    # bar starts
-X_BAR1    = 62.5    # bar ends
-X_EPS     = 68.0
-X_SCORE_T1 = 76.5
-X_SCORE_T2 = 84.0
-X_SCORE_T3 = 91.5
+X_CHIP    = 3.0
+X_MODEL   = 8.0
+X_BAR0    = 40.0    # bar starts
+X_BAR1    = 62.0    # bar ends
+X_EPS     = 70.0
+X_SCORE_T1 = 80.0
+X_SCORE_T2 = 89.0
+X_SCORE_T3 = 98.0
 
 # =============================================================
 # 3. Header row
@@ -121,13 +128,13 @@ X_SCORE_T3 = 91.5
 head_y = n_rows + 0.35
 def head(x, txt, ha="right"):
     ax.text(x, head_y, txt, ha=ha, va="center",
-            fontsize=9.5, color=INK2, fontweight="500",
+            fontsize=PT.tick, color=INK2, fontweight="500",
             family="sans-serif")
 
 head(X_MODEL, "Model", ha="left")
 ax.text((X_BAR0+X_BAR1)/2, head_y,
         r"$\varepsilon$  (Setting A  $\rightarrow$  Setting B)",
-        ha="center", va="center", fontsize=9.5, color=INK2, style="italic")
+        ha="center", va="center", fontsize=PT.tick, color=INK2, style="italic")
 head(X_EPS,      r"$\varepsilon$(A)")
 head(X_SCORE_T1, r"$|\mathrm{CAR}-1|$")
 head(X_SCORE_T2, r"$|\rho|$")
@@ -153,7 +160,9 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
     # ---- vendor logo (real image) ----
     img = get_logo(vk)
     if img is not None:
-        oi = OffsetImage(img, zoom=0.10)
+        # zoom is in canvas units, so it must shrink with the canvas: 0.10 was set
+        # for a 12 in figure and overflowed the row at true print size.
+        oi = OffsetImage(img, zoom=0.030)
         ab = AnnotationBbox(oi, (X_CHIP, y), frameon=False, box_alignment=(0.5, 0.5),
                             xycoords=("data","data"), zorder=4, pad=0)
         ax.add_artist(ab)
@@ -171,11 +180,11 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
     weight = "600" if is_ref else "500"
     color = INK if not is_ref else "#3a3a3a"
     ax.text(X_MODEL, y, label, ha="left", va="center",
-            fontsize=11.5, color=color, fontweight=weight,
+            fontsize=PT.subtitle, color=color, fontweight=weight,
             fontstyle="italic" if is_ref else "normal")
     if is_ref:
         ax.text(X_MODEL + 12.5, y, "reference", ha="left", va="center",
-                fontsize=9, color="#8a8a8a", fontstyle="italic")
+                fontsize=PT.small, color="#8a8a8a", fontstyle="italic")
 
     # ---- bar ----
     if epsA is None:
@@ -185,7 +194,7 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
                                facecolor="#f5f5f5", edgecolor="#c8c8c8",
                                linestyle=(0, (2, 2)), lw=0.8, zorder=2))
         ax.text(X_BAR1 - 1.5, y, "grounded target",
-                ha="right", va="center", fontsize=9,
+                ha="right", va="center", fontsize=PT.small,
                 color="#8a8a8a", fontstyle="italic", zorder=3)
     else:
         bar_col = VENDOR[vk]["bar"]
@@ -208,32 +217,32 @@ for i, (label, vk, epsA, epsB, sT1, sT2, sT3, is_ref) in enumerate(ROWS):
         val_txt = f"{epsA:.2f}"
         if (xA - X_BAR0) > 6:
             ax.text((X_BAR0 + xA) / 2, y, val_txt, ha="center", va="center",
-                    fontsize=10, color="white", fontweight="600", zorder=4)
+                    fontsize=PT.tick, color="white", fontweight="600", zorder=4)
         # B value tag at bar end (light color)
         if epsB is not None:
             xB = eps_to_x(min(epsB, BAR_MAX))
             ax.text(xB + 0.6, y, f"{epsB:.2f}", ha="left", va="center",
-                    fontsize=9.5, color=INK2, fontweight="600", zorder=4)
+                    fontsize=PT.tick, color=INK2, fontweight="600", zorder=4)
 
     # ---- numeric columns ----
     def cell(x, val, best, is_ref):
         if val is None or is_ref:
             ax.text(x, y, "—", ha="right", va="center",
-                    fontsize=10, color="#9a9a9a")
+                    fontsize=PT.tick, color="#9a9a9a")
             return
         is_best = (best is not None and abs(val - best) < 1e-6)
         ax.text(x, y, f"{val:.2f}", ha="right", va="center",
-                fontsize=11, color=INK,
+                fontsize=PT.label, color=INK,
                 fontweight="700" if is_best else "500")
 
     cell(X_EPS,      epsA, best_eps, is_ref)
     cell(X_SCORE_T1, sT1,  best_T1,  is_ref)
     cell(X_SCORE_T2, sT2,  best_T2,  is_ref)
     if sT3 is None or is_ref:
-        ax.text(X_SCORE_T3, y, "\u2014", ha="right", va="center", fontsize=10, color="#9a9a9a")
+        ax.text(X_SCORE_T3, y, "\u2014", ha="right", va="center", fontsize=PT.tick, color="#9a9a9a")
     else:
         ax.text(X_SCORE_T3, y, f"{int(sT3)}", ha="right", va="center",
-                fontsize=11, color=INK if sT3 >= 15 else "#b03030",
+                fontsize=PT.label, color=INK if sT3 >= 15 else "#b03030",
                 fontweight="500")
 
     # thin row rule beneath
@@ -247,24 +256,27 @@ xT = eps_to_x(THRESHOLD)
 ax.plot([xT, xT], [0.05, n_rows + 0.1], color="#2a7a2a",
         ls=(0, (4, 3)), lw=1.1, zorder=5)
 ax.text(xT, 0.15, r"$\varepsilon^{\star} = 0.20$",
-        ha="center", va="top", fontsize=9,
+        ha="center", va="top", fontsize=PT.small,
         color="#2a7a2a", fontweight="600")
 
 # =============================================================
 # 6. Title
 # =============================================================
+_top = 1.0 - 0.16 / fig_h        # 0.16 in below the top edge
+_sub = 1.0 - 0.30 / fig_h
 fig.suptitle(
     r"Chronoceptive Calibration Error $\varepsilon$ — 13 scored agents (7 vendors, 4 Chinese labs)",
-    x=0.02, y=0.975, ha="left", fontsize=15,
+    x=0.02, y=_top, ha="left", fontsize=PT.title,
     fontweight="700", color=INK,
 )
-fig.text(0.02, 0.935,
-    "Solid bar = Setting A.  Hatched extension = Setting B.  Dashed rule = Augustine threshold "
-    r"$\varepsilon^{\star} = 0.20$.  $\varepsilon$ = mean of the two measured axes, each a median."
-    "\n"
-    r"No agent crosses $\varepsilon^{\star}$; the closest sits $2.7\times$ above it.  "
-    r"Red $n_\rho$ marks cells below $n{=}15$.  DeepSeek-R1-Distill-14B (14th configuration) is unscored.",
-    ha="left", fontsize=10, color=INK2, fontstyle="italic")
+fig.text(0.02, _sub,
+    "Solid bar = Setting A;  hatched extension = Setting B.   Dashed rule = Augustine\n"
+    "threshold " r"$\varepsilon^{\star}=0.20$" ";  no agent crosses it, the closest sits "
+    r"$2.7\times$" " above.\n"
+    r"$\varepsilon$" " = mean of the two measured axes, each a median.   Red "
+    r"$n_\rho$" " marks cells below " r"$n{=}15$" ".",
+    ha="left", va="top", fontsize=PT.small, color=INK2, fontstyle="italic",
+    linespacing=1.65)
 
 # Legend chip below title
 lg_y = 0.912

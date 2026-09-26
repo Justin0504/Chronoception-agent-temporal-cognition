@@ -51,7 +51,7 @@ with open(_CAL_CSV) as _fh:
 _rows.sort(key=lambda r: -float(r["coverage_pct"]))
 for _r in _rows:
     ROWS.append((
-        _r["agent"], VENDOR_OF.get(_r["agent"], "REF"),
+        _r["agent"].replace("Claude ", ""), VENDOR_OF.get(_r["agent"], "REF"),
         float(_r["coverage_pct"]),
         float(_r["median_ci_width_s"]),
         float(_r["median_tau_wall_s"]),
@@ -83,32 +83,39 @@ P11_THRESH = 50.0 # pre-registered P11 threshold
 
 # ---- Layout ----
 n_rows = len(ROWS)
-row_h  = 0.62
-fig_w  = 12.0
-fig_h  = 2.0 + n_rows * row_h
+# Authored at ICLR \linewidth: every fontsize below is a literal printed point
+# size. Previously 12.0 in wide displayed at 5.5 in, so fontsize 10 printed at
+# 4.4 pt against 10 pt body text.
+import sys as _sys
+_sys.path.insert(0, "scripts")
+from chronofig import PT, textwidth
+
+row_h  = 0.32
+fig_w  = textwidth()
+fig_h  = 1.85 + n_rows * row_h  # extra for the note box below the axes
 fig, ax = plt.subplots(figsize=(fig_w, fig_h))
-fig.subplots_adjust(left=0.02, right=0.98, top=0.86, bottom=0.07)
+fig.subplots_adjust(left=0.02, right=0.99, top=0.88, bottom=0.135)
 ax.set_xlim(0, 100); ax.set_ylim(0, n_rows + 1); ax.axis("off")
 
-X_CHIP    = 3.5
-X_MODEL   = 9.0
-X_BAR0    = 34.0
-X_BAR1    = 68.0
-X_COV     = 74.0
-X_WIDTH   = 82.0
-X_RATIO   = 90.0
-X_N       = 96.0
+X_CHIP    = 3.0
+X_MODEL   = 8.0
+X_BAR0    = 40.0
+X_BAR1    = 66.0
+X_COV     = 72.0
+X_WIDTH   = 79.0
+X_RATIO   = 91.0
+X_N       = 98.0
 
 # Header
 head_y = n_rows + 0.35
 def head(x, txt, ha="right"):
     ax.text(x, head_y, txt, ha=ha, va="center",
-            fontsize=9.5, color=INK2, fontweight="500")
+            fontsize=PT.tick, color=INK2, fontweight="500")
 
 head(X_MODEL, "Model", ha="left")
 ax.text((X_BAR0+X_BAR1)/2, head_y,
         "Actual coverage of nominal 90% CI",
-        ha="center", va="center", fontsize=9.5, color=INK2, style="italic")
+        ha="center", va="center", fontsize=PT.tick, color=INK2, style="italic")
 head(X_COV,   "cov")
 head(X_WIDTH, "CI width")
 head(X_RATIO, "width/actual")
@@ -131,7 +138,7 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
     # Real logo (or Oracle chip fallback)
     img = get_logo(vk)
     if img is not None:
-        oi = OffsetImage(img, zoom=0.10)
+        oi = OffsetImage(img, zoom=0.030)
         ab = AnnotationBbox(oi, (X_CHIP, y), frameon=False, box_alignment=(0.5, 0.5),
                             xycoords=("data","data"), zorder=4, pad=0)
         ax.add_artist(ab)
@@ -150,7 +157,7 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
     weight = "600" if is_ref else "500"
     style = "italic" if is_ref else "normal"
     ax.text(X_MODEL, y, label, ha="left", va="center",
-            fontsize=11.5, color=color, fontweight=weight, fontstyle=style)
+            fontsize=PT.subtitle, color=color, fontweight=weight, fontstyle=style)
 
     # Bar rail
     ax.add_patch(Rectangle((X_BAR0, y - 0.20), X_BAR1 - X_BAR0, 0.40,
@@ -163,7 +170,7 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
                                facecolor="none", edgecolor="#2a7a2a",
                                linestyle=(0, (3, 2)), lw=1.0, zorder=2))
         ax.text(cov_to_x(TARGET), y, "90%", ha="right", va="center",
-                fontsize=9.5, color="#2a7a2a", fontweight="700", zorder=4,
+                fontsize=PT.tick, color="#2a7a2a", fontweight="700", zorder=4,
                 bbox=dict(facecolor="white", edgecolor="none", pad=1))
     else:
         # Strictly above the P11 threshold, matching the text: P11 asks whether
@@ -175,18 +182,18 @@ for i, (label, vk, cov, width, actual, n) in enumerate(ROWS):
         val_txt = f"{cov:.0f}%"
         if (x_end - X_BAR0) > 6:
             ax.text((X_BAR0 + x_end) / 2, y, val_txt, ha="center", va="center",
-                    fontsize=10, color="white", fontweight="600", zorder=4)
+                    fontsize=PT.tick, color="white", fontweight="600", zorder=4)
         else:
             ax.text(x_end + 0.6, y, val_txt, ha="left", va="center",
-                    fontsize=10, color=INK, fontweight="600", zorder=4)
+                    fontsize=PT.tick, color=INK, fontweight="600", zorder=4)
 
     # Numeric columns
     def cell(x, val, fmt, bold=False):
         if val is None:
-            ax.text(x, y, "—", ha="right", va="center", fontsize=10, color="#9a9a9a")
+            ax.text(x, y, "—", ha="right", va="center", fontsize=PT.tick, color="#9a9a9a")
         else:
             ax.text(x, y, fmt.format(val), ha="right", va="center",
-                    fontsize=11, color=INK, fontweight="700" if bold else "500")
+                    fontsize=PT.label, color=INK, fontweight="700" if bold else "500")
 
     cell(X_COV, cov, "{:.0f}%", bold=(not is_ref and cov == best_cov))
     cell(X_WIDTH, width, "{:.0f}s")
@@ -203,7 +210,7 @@ xP = cov_to_x(P11_THRESH)
 ax.plot([xP, xP], [0.05, n_rows + 0.1], color="#c05d1e",
         ls=(0, (4, 3)), lw=0.9, zorder=5, alpha=0.7)
 ax.text(xP, 0.15, "P11 threshold  0.5",
-        ha="center", va="top", fontsize=8.5,
+        ha="center", va="top", fontsize=PT.small,
         color="#c05d1e", fontweight="600")
 
 # Target marker
@@ -212,24 +219,28 @@ ax.plot([xT, xT], [0.05, n_rows + 0.1], color="#2a7a2a",
         ls=(0, (4, 3)), lw=1.1, zorder=5)
 
 # Title / subtitle
+_top = 1.0 - 0.16 / fig_h
+_sub = 1.0 - 0.30 / fig_h
 fig.suptitle(
     "The Calibration Catastrophe: nominally-90% CIs on self-duration",
-    x=0.02, y=0.975, ha="left", fontsize=15,
+    x=0.02, y=_top, ha="left", fontsize=PT.title,
     fontweight="700", color=INK,
 )
-fig.text(0.02, 0.925,
-    "Bars = actual coverage of the agent's stated 90% CI containing $\\tau_{\\rm wall}$.  "
-    "Dashed green = 90% target.  Dashed orange = pre-registered P11 threshold (0.5).  "
-    "Every non-reasoning model under-covers by ≥40 percentage points; "
-    "GPT-4o achieves 0%.",
-    ha="left", fontsize=10, color=INK2, fontstyle="italic")
+fig.text(0.02, _sub,
+    "Bars = actual coverage of the agent's stated 90% CI containing "
+    "$\\tau_{\\rm wall}$.  Dashed green = the 90% target.\n"
+    "Dashed orange = the pre-registered P11 threshold of 0.5; only two cells cross it.\n"
+    "Every non-reasoning model under-covers by \u226540 percentage points; GPT-4o reaches 0%.",
+    ha="left", va="top", fontsize=PT.small, color=INK2, fontstyle="italic",
+    linespacing=1.65)
 
 # Sonnet-thinking annotation
 fig.text(0.995, 0.02,
-    r"Note: Sonnet 4.6 + thinking approaches the 90% target with 77% coverage, "
-    r"but the wider default CI (13 s vs 2–4 s baseline) reflects a broader vocabulary "
-    r"rather than actual chronoception. See §6.3.",
-    ha="right", va="bottom", fontsize=8.5, color="#7a3a1a", fontstyle="italic",
+    "Note: Sonnet 4.6 + thinking approaches the 90% target at 77% coverage, but its\n"
+    "wider default interval (13 s against a 2\u20134 s baseline) reflects a broader duration\n"
+    "vocabulary rather than chronoception. Both crossings rest on n = 30, under the\n"
+    "n \u2265 100 bar the pre-registered F4 sets for a falsification.",
+    ha="right", va="bottom", fontsize=PT.small, color="#7a3a1a", fontstyle="italic",
     wrap=True, transform=fig.transFigure,
     bbox=dict(boxstyle="round,pad=0.35", facecolor="#fffaf0",
               edgecolor="#c05d1e", alpha=0.95, lw=0.7))
