@@ -75,7 +75,7 @@ def med_sign(v):
 
 PANELS = [
     {
-        "title": "(a) Intra-model · o4-mini effort ladder",
+        "title": "(a) Intra-model · o4-mini effort",
         "logo": "openai.png",
         "vendor_bar": "#3182bd",
         "conditions": [
@@ -87,7 +87,7 @@ PANELS = [
         "y_metric": "abs",
     },
     {
-        "title": "(b) Cross-model · Sonnet 4.6 $\\pm$ extended thinking",
+        "title": "(b) Cross-model · Sonnet $\\pm$ thinking",
         "logo": "anthropic.png",
         "vendor_bar": "#cc785c",
         "conditions": [
@@ -98,7 +98,7 @@ PANELS = [
         "y_metric": "abs",
     },
     {
-        "title": "(c) Within-model · prospective vs.\\ retrospective (Sonnet + thinking)",
+        "title": "(c) Within-model · prospective vs. retrospective",
         "logo": "anthropic.png",
         "vendor_bar": "#cc785c",
         "conditions": [
@@ -109,7 +109,7 @@ PANELS = [
         "y_metric": "sign",  # show the sign flip
     },
     {
-        "title": "(d) Cross-vendor · GLM-5.2 $\\pm$ date injection",
+        "title": "(d) Cross-vendor · GLM-5.2 $\\pm$ injection",
         "logo": "zai.png",
         "vendor_bar": "#4a4a4a",
         "conditions": [
@@ -127,8 +127,15 @@ PANELS = [
 INK = "#1a1a1a"; INK2 = "#4a4a4a"; RULE = "#c8c8c8"
 AUGUSTINE_STAR = 0.20
 
-fig, axes = plt.subplots(2, 2, figsize=(11.0, 7.4))
-fig.subplots_adjust(left=0.06, right=0.98, top=0.90, bottom=0.08, wspace=0.28, hspace=0.55)
+# Authored at ICLR \linewidth so every fontsize below is a literal printed
+# point size. Previously 11.0 in wide displayed at 5.5 in: the panel
+# annotations printed at 3.7 pt.
+import sys as _sys
+_sys.path.insert(0, "scripts")
+from chronofig import PT, textwidth
+
+fig, axes = plt.subplots(2, 2, figsize=(textwidth(), textwidth() * 0.90))
+fig.subplots_adjust(left=0.10, right=0.985, top=0.81, bottom=0.09, wspace=0.34, hspace=0.62)
 
 for ax, panel in zip(axes.flat, PANELS):
     conds = panel["conditions"]
@@ -161,32 +168,32 @@ for ax, panel in zip(axes.flat, PANELS):
                 f"{v:+.2f}" if panel["y_metric"] == "sign" else f"{v:.2f}",
                 ha="center",
                 va="bottom" if v >= 0 else "top",
-                fontsize=10, fontweight="700", color=INK, zorder=4)
+                fontsize=PT.tick, fontweight="700", color=INK, zorder=4)
 
     ax.set_xticks(x)
     ax.set_xticklabels([f"{l}\n(n={nv})" for l, nv in zip(labels, ns)],
-                       fontsize=9.5, color=INK)
-    ax.set_xlabel(panel["x_label"], fontsize=9.5, color=INK2, labelpad=8)
+                       fontsize=PT.small, color=INK)
+    ax.set_xlabel(panel["x_label"], fontsize=PT.small, color=INK2, labelpad=8)
 
     if panel["y_metric"] == "abs":
-        ax.set_ylabel(r"median $|\rho|$", fontsize=10.5, color=INK)
+        ax.set_ylabel(r"median $|\rho|$", fontsize=PT.label, color=INK)
         ymax = max((v for v in values if v is not None), default=0) * 1.35
         ax.set_ylim(0, max(ymax, 0.4))
         ax.axhline(AUGUSTINE_STAR, ls=(0, (4, 3)), lw=1.0, color="#2a7a2a", zorder=1)
-        ax.text(-0.35, AUGUSTINE_STAR, r"$\varepsilon^\star$",
-                fontsize=9, color="#2a7a2a", ha="right", va="center",
+        ax.text(0.98, AUGUSTINE_STAR, r"$\varepsilon^\star$",
+                fontsize=PT.small, color="#2a7a2a", ha="right", va="center",
                 fontstyle="italic", fontweight="600")
     else:
-        ax.set_ylabel(r"median $\rho$", fontsize=10.5, color=INK)
+        ax.set_ylabel(r"median $\rho$", fontsize=PT.label, color=INK)
         vmax = max((abs(v) for v in values if v is not None), default=0) * 1.6
         ax.set_ylim(-max(vmax, 0.42), max(vmax, 0.42))
         ax.axhline(0, color=RULE, lw=0.8, zorder=1)
         ax.axhline(AUGUSTINE_STAR, ls=(0, (4, 3)), lw=0.7, color="#2a7a2a", alpha=0.6, zorder=1)
         ax.axhline(-AUGUSTINE_STAR, ls=(0, (4, 3)), lw=0.7, color="#2a7a2a", alpha=0.6, zorder=1)
-        ax.text(-0.35, AUGUSTINE_STAR, r"$+\varepsilon^\star$",
-                fontsize=8.5, color="#2a7a2a", ha="right", va="center", fontstyle="italic")
-        ax.text(-0.35, -AUGUSTINE_STAR, r"$-\varepsilon^\star$",
-                fontsize=8.5, color="#2a7a2a", ha="right", va="center", fontstyle="italic")
+        ax.text(0.98, AUGUSTINE_STAR, r"$+\varepsilon^\star$",
+                fontsize=PT.small, color="#2a7a2a", ha="right", va="center", fontstyle="italic")
+        ax.text(0.98, -AUGUSTINE_STAR, r"$-\varepsilon^\star$",
+                fontsize=PT.small, color="#2a7a2a", ha="right", va="center", fontstyle="italic")
 
     ax.tick_params(axis="y", labelsize=9, colors=INK2)
     for spine in ("top", "right"):
@@ -199,14 +206,14 @@ for ax, panel in zip(axes.flat, PANELS):
     logo_path = LOGO_DIR / panel["logo"]
     if logo_path.exists():
         img = mpimg.imread(logo_path)
-        oi = OffsetImage(img, zoom=0.09)
+        oi = OffsetImage(img, zoom=0.026)
         ab = AnnotationBbox(oi, (0.03, 0.94), frameon=False,
                             box_alignment=(0, 1), xycoords="axes fraction",
                             zorder=6, pad=0)
         ax.add_artist(ab)
 
     # Title inside axes, offset right of logo
-    ax.set_title(panel["title"], fontsize=11, loc="left", pad=8,
+    ax.set_title(panel["title"], fontsize=PT.label, loc="left", pad=8,
                  color=INK, fontweight="600", x=0.11)
 
 # =============================================================
@@ -214,18 +221,19 @@ for ax, panel in zip(axes.flat, PANELS):
 # =============================================================
 fig.suptitle(
     "Reverse-Scaling Theorem — four independent confirmations",
-    x=0.02, y=0.985, ha="left", fontsize=15.5, fontweight="700", color=INK,
+    x=0.02, y=1.0 - 0.16/fig.get_figheight(), ha="left", fontsize=PT.title, fontweight="700", color=INK,
 )
-fig.text(0.02, 0.945,
-    r"Under CIT, $\mathbb{E}[|\rho|\mid K]$ is monotone non-decreasing in reasoning-token expansion $K$.  "
-    r"Bars darken as $K$ (or the analogous scaling axis) grows.  "
-    r"Dashed green rule: Augustine threshold $\varepsilon^\star=0.20$.",
-    ha="left", fontsize=10, color=INK2, fontstyle="italic")
+fig.text(0.02, 1.0 - 0.30/fig.get_figheight(),
+    r"Under CIT, $\mathbb{E}[|\rho| \mid K]$ is monotone non-decreasing in reasoning-token"
+    "\n"
+    r"expansion $K$.  Bars darken as $K$ grows.  Dashed green rule: $\varepsilon^\star=0.20$.",
+    ha="left", va="top", fontsize=PT.small, color=INK2, fontstyle="italic",
+    linespacing=1.6)
 
 out_pdf = Path("paper1/arxiv-v0/figures/reverse_scaling.pdf")
 out_png = Path("paper1/arxiv-v0/figures/reverse_scaling.png")
-fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.18)
-fig.savefig(out_png, bbox_inches="tight", pad_inches=0.18, dpi=300)
+fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.03)
+fig.savefig(out_png, bbox_inches="tight", pad_inches=0.03, dpi=300)
 print(f"Wrote: {out_pdf}")
 print(f"Wrote: {out_png}")
 

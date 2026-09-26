@@ -5,8 +5,8 @@ Nothing on this figure is a measurement. epsilon_ST has never been measured:
 E10 in App. E proposes the experiment that would measure it. The benchmark
 (T, S) coordinates are order-of-magnitude readings of the qualitative table in
 App. E ("hours", "small (single repo)"), not extracted from benchmark runs.
-And C is a normalisation, fixed so that the epsilon_ST = 0.6 level set passes
-is centred on the benchmark cluster -- so the cluster's position relative to
+And C is a normalisation, fixed so that the epsilon_ST = 0.6 level set is
+centred on the benchmark cluster -- so the cluster's position relative to
 that curve is a normalisation choice, not evidence for the law.
 
 Keep the "schematic" label in the subtitle. An earlier caption described the
@@ -42,45 +42,51 @@ BENCHMARKS = [
 ]
 
 CONTOURS = [
-    (0.6,  BLUE,   "Assumed current frontier ($\\varepsilon_{ST} = 0.6$)"),
-    (0.2,  CORAL,  "ChronoStack$^+$ target ($\\varepsilon_{ST} \\approx 0.2$)"),
-    (0.05, GREEN,  "Grounded agent ($\\varepsilon_{ST} \\approx 0.05$)"),
+    (0.6,  BLUE,   "assumed current, $0.6$"),
+    (0.2,  CORAL,  "ChronoStack$^+$ target, $0.2$"),
+    (0.05, GREEN,  "grounded agent, $0.05$"),
 ]
 
-fig, ax = plt.subplots(figsize=(9.5, 6.6))
-fig.subplots_adjust(left=0.08, right=0.98, top=0.80, bottom=0.16)
+# Authored at ICLR \linewidth: fontsizes below are literal printed points.
+# Previously 9.5 in displayed at 5.5 in, so the smallest labels printed at 5.1 pt.
+import sys as _sys
+_sys.path.insert(0, "scripts")
+from chronofig import PT, textwidth
+
+fig, ax = plt.subplots(figsize=(textwidth(), textwidth() * 0.74))
+fig.subplots_adjust(left=0.13, right=0.985, top=0.72, bottom=0.19)
 
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(20, 3e5); ax.set_ylim(0.7, 2e3)
 ax.set_xlabel(r"Deployment horizon $T_{\max}$ (wall-clock seconds)",
-              fontsize=11.5, color=INK)
+              fontsize=PT.label, color=INK)
 ax.set_ylabel(r"Spatial reach $S_{\max}$ (distinct files / pages)",
-              fontsize=11.5, color=INK)
+              fontsize=PT.label, color=INK)
 ax.grid(True, which="major", ls=":", color=RULE, alpha=0.6)
 ax.grid(True, which="minor", ls=":", color=RULE, alpha=0.25)
 
 ax.set_xticks([60, 600, 3600, 36000, 3.6e5])
-ax.set_xticklabels(["1 min", "10 min", "1 h", "10 h", "100 h"], fontsize=10)
+ax.set_xticklabels(["1 min", "10 min", "1 h", "10 h", "100 h"], fontsize=PT.tick)
 ax.set_yticks([1, 10, 100, 1000])
-ax.set_yticklabels(["1", "10", "100", "1000"], fontsize=10)
+ax.set_yticklabels(["1", "10", "100", "1000"], fontsize=PT.tick)
 
 # Shaded regions
 xs = np.logspace(3.5, 5.5, 20)
 ax.fill_between(xs, 0.7, 15, color=PALE_RED, alpha=0.35, zorder=1)
 ax.text(6e4, 1.6, "Augustine binding\n(T-axis)",
-        ha="center", fontsize=9, color=CORAL,
+        ha="center", fontsize=PT.small, color=CORAL,
         fontstyle="italic", zorder=6, fontweight="600")
 
 xs = np.logspace(1.4, 2.6, 20)
 ax.fill_between(xs, 40, 2000, color=PALE_BLUE, alpha=0.4, zorder=1)
 ax.text(60, 800, "Cartographic binding\n(S-axis)",
-        ha="center", fontsize=9, color=BLUE,
+        ha="center", fontsize=PT.small, color=BLUE,
         fontstyle="italic", zorder=6, fontweight="600")
 
-# Contour curves — C chosen so ε_ST=0.6 frontier passes through current benchmark cluster
+# Contour curves. C is chosen so the eps_ST = 0.6 level set is centred on the cluster.
 C = 3e4  # NORMALISATION, not a fitted physical constant: chosen so the
-         # eps_ST = 0.6 level set passes through the benchmark cluster. The
-         # cluster therefore lies on that curve by construction.
+         # eps_ST = 0.6 level set is centred on the benchmark cluster, so the
+         # cluster's position relative to it is a choice, not evidence.
 xs_c = np.logspace(np.log10(30), np.log10(3e5), 200)
 for eps_st, colour, label in CONTOURS:
     ys_c = (C / eps_st) / xs_c
@@ -89,17 +95,18 @@ for eps_st, colour, label in CONTOURS:
             ls="-" if eps_st == 0.05 else ("--" if eps_st == 0.2 else ":"),
             zorder=3, alpha=0.90, label=label)
 
-ax.legend(loc="lower left", fontsize=9.2, frameon=True,
+ax.legend(loc="lower left", fontsize=PT.small, frameon=True,
+          borderpad=0.4, labelspacing=0.35, handlelength=1.8, handletextpad=0.5,
           facecolor="white", edgecolor=RULE, framealpha=0.95,
-          title="$T \\cdot S = C / \\varepsilon_{ST}$",
-          title_fontsize=9.5)
+          title="level sets of $T\\!\\cdot\\!S = C/\\varepsilon_{ST}$",
+          title_fontsize=PT.small)
 
 # Benchmark points
 for label, T, S, cat, colour in BENCHMARKS:
     ax.scatter([T], [S], s=180, color=colour, edgecolors="white",
                linewidths=1.5, zorder=5)
     dx, dy = (1.15, 1.15) if cat == "mixed" else (1.25, 1.20)
-    ax.text(T * dx, S * dy, label, fontsize=10.5,
+    ax.text(T * dx, S * dy, label, fontsize=PT.small,
             color=INK, fontweight="600", zorder=6)
 
 # Paper-arc line as bottom caption (not an inset box; avoids overlapping data points)
@@ -107,16 +114,16 @@ fig.text(0.5, 0.03,
     "Paper 1 bounds the $T$-axis (Augustine, CIT).   "
     "Paper 3 bounds the $S$-axis (Cartographic, SIT).   "
     "Together: the joint Agentic Frontier.",
-    fontsize=9.5, color=INK, ha="center", fontstyle="italic")
+    fontsize=PT.small, color=INK, ha="center", fontstyle="italic")
 
 fig.suptitle("The Agentic Frontier:  $T_{\\max}(A) \\cdot S_{\\max}(A) \\leq C / \\varepsilon_{ST}(A)$",
-             x=0.02, y=0.975, ha="left", fontsize=13.5, fontweight="700", color=INK)
+             x=0.02, y=0.975, ha="left", fontsize=PT.title, fontweight="700", color=INK)
 fig.text(0.02, 0.935,
     "SCHEMATIC \u2014 no quantity on this plot is measured.  Benchmarks sit at order-of-magnitude\n"
     "load read from the App. E classification, not at measured coordinates, and $\\varepsilon_{ST}$ has not\n"
     "been measured at all (experiment E10 is the one that would).  $C$ is a normalisation, chosen so\n"
     "the $\\varepsilon_{ST} = 0.6$ level set is centred on the benchmark cluster.",
-    ha="left", va="top", fontsize=8.8, color=INK2, fontstyle="italic", linespacing=1.5)
+    ha="left", va="top", fontsize=PT.small, color=INK2, fontstyle="italic", linespacing=1.5)
 
 for spine in ("top", "right"):
     ax.spines[spine].set_color(RULE)
@@ -127,8 +134,8 @@ for spine in ("left", "bottom"):
 
 out_pdf = Path("paper1/arxiv-v0/figures/agentic_frontier.pdf")
 out_png = Path("paper1/arxiv-v0/figures/agentic_frontier.png")
-fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.15)
-fig.savefig(out_png, bbox_inches="tight", pad_inches=0.15, dpi=300)
+fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.03)
+fig.savefig(out_png, bbox_inches="tight", pad_inches=0.03, dpi=300)
 print(f"Wrote: {out_pdf}\nWrote: {out_png}")
 
 import shutil

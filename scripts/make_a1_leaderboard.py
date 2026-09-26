@@ -36,8 +36,14 @@ INK  = "#1a1a1a"; INK2 = "#4a4a4a"; RULE = "#c8c8c8"
 BASELINE = "#c8c8c8"
 TUNED    = "#6a4c93"       # Qwen violet (matches leaderboard vendor colour)
 
-fig, axes = plt.subplots(1, 2, figsize=(12.2, 5.2))
-fig.subplots_adjust(left=0.06, right=0.98, top=0.85, bottom=0.10, wspace=0.28)
+# Authored at ICLR \linewidth: fontsizes below are literal printed points.
+# Previously 12.2 in displayed at 5.5 in, so annotations printed at 4.3 pt.
+import sys as _sys
+_sys.path.insert(0, "scripts")
+from chronofig import PT, textwidth
+
+fig, axes = plt.subplots(1, 2, figsize=(textwidth(), textwidth() * 0.56))
+fig.subplots_adjust(left=0.115, right=0.985, top=0.70, bottom=0.14, wspace=0.34)
 
 for ax, ys_base, ys_tuned, metric_lbl, ymax_hint in [
     (axes[0], base_abs,  tuned_abs, r"median $|\rho|$", 1.5),
@@ -51,11 +57,14 @@ for ax, ys_base, ys_tuned, metric_lbl, ymax_hint in [
     b2 = ax.bar(x + w/2, ys_tuned, w, color=TUNED,    edgecolor="none",
                 label="+ wall-clock LoRA SFT ($\\sim$60 s)", zorder=3)
 
-    for bars, ys in [(b1, ys_base), (b2, ys_tuned)]:
+    for bars, ys, is_tuned in [(b1, ys_base, False), (b2, ys_tuned, True)]:
         for b, v in zip(bars, ys):
-            ax.text(b.get_x() + b.get_width()/2, v + ymax_hint * 0.03,
-                    f"{v:.2f}", ha="center", va="bottom",
-                    fontsize=10, fontweight="700", color=INK, zorder=4)
+            # the reduction arrow terminates on the tuned bar, so shift that
+            # label right of the arrowhead instead of letting it sit under it
+            dx = b.get_width() * 0.42 if is_tuned else 0.0
+            ax.text(b.get_x() + b.get_width()/2 + dx, v + ymax_hint * 0.03,
+                    f"{v:.2f}", ha="left" if is_tuned else "center", va="bottom",
+                    fontsize=PT.small, fontweight="700", color=INK, zorder=6)
 
     # Reduction annotation
     for i in range(2):
@@ -67,19 +76,19 @@ for ax, ys_base, ys_tuned, metric_lbl, ymax_hint in [
                                     connectionstyle="arc3,rad=-0.18"),
                     zorder=5)
         ax.text(x[i], max(ys_base[i], ys_tuned[i]) + ymax_hint * 0.10,
-                f"−{pct:.0f}%", ha="center", fontsize=10,
+                f"−{pct:.0f}%", ha="center", fontsize=PT.small,
                 fontweight="700", color="#2a7a2a", zorder=6,
                 bbox=dict(boxstyle="round,pad=0.15",
                           facecolor="white", edgecolor="#2a7a2a", lw=0.6))
 
     ax.axhline(EPS_STAR, ls=(0, (4, 3)), lw=1.0, color="#2a7a2a", zorder=1)
     ax.text(-0.35, EPS_STAR, r"$\varepsilon^\star$",
-            fontsize=10, color="#2a7a2a", ha="right", va="center",
+            fontsize=PT.small, color="#2a7a2a", ha="right", va="center",
             fontstyle="italic", fontweight="600")
 
     ax.set_xticks(x)
-    ax.set_xticklabels(scales, fontsize=11, color=INK)
-    ax.set_ylabel(metric_lbl, fontsize=11, color=INK)
+    ax.set_xticklabels(scales, fontsize=PT.label, color=INK)
+    ax.set_ylabel(metric_lbl, fontsize=PT.label, color=INK)
     ax.set_ylim(0, max(max(ys_base), ymax_hint) * 1.35)
     ax.tick_params(axis="y", labelsize=9, colors=INK2)
     for spine in ("top", "right"):
@@ -88,14 +97,14 @@ for ax, ys_base, ys_tuned, metric_lbl, ymax_hint in [
         ax.spines[spine].set_color("#c0c0c0")
         ax.spines[spine].set_linewidth(0.8)
 
-    ax.legend(loc="upper right", frameon=False, fontsize=9.5)
+    ax.legend(loc="upper right", frameon=False, fontsize=PT.small)
 
 # Panel titles
-axes[0].set_title(r"(a) Median $|\rho|$ reduction from wall-clock-supported SFT",
-                  loc="left", fontsize=11.5, pad=8, color=INK, fontweight="600",
+axes[0].set_title(r"(a) Median $|\rho|$ reduction",
+                  loc="left", fontsize=PT.label, pad=8, color=INK, fontweight="600",
                   x=0.11)
-axes[1].set_title(r"(b) T3.1 axis score — 1.5B crosses $\varepsilon^\star$, 7B partial",
-                  loc="left", fontsize=11.5, pad=8, color=INK, fontweight="600",
+axes[1].set_title(r"(b) T3.1 axis score",
+                  loc="left", fontsize=PT.label, pad=8, color=INK, fontweight="600",
                   x=0.11)
 
 # Qwen logo chip in each panel (upper-left corner)
@@ -103,7 +112,7 @@ qwen_logo = LOGO_DIR / "qwen.png"
 if qwen_logo.exists():
     img = mpimg.imread(qwen_logo)
     for ax in axes:
-        oi = OffsetImage(img, zoom=0.09)
+        oi = OffsetImage(img, zoom=0.026)
         ab = AnnotationBbox(oi, (0.03, 0.94), frameon=False,
                             box_alignment=(0, 1), xycoords="axes fraction",
                             zorder=6, pad=0)
@@ -111,18 +120,16 @@ if qwen_logo.exists():
 
 fig.suptitle(
     "Toy positive control: wall-clock signal in the loss support installs chronoception",
-    x=0.02, y=0.975, ha="left", fontsize=15, fontweight="700", color=INK,
+    x=0.02, y=1.0 - 0.15/fig.get_figheight(), ha="left", fontsize=PT.title, fontweight="700", color=INK,
 )
-fig.text(0.02, 0.925,
-    r"Qwen2.5-{1.5B, 7B}, 30 held-out T3.1 instances each.  LoRA rank $16$, "
-    r"three epochs, wall-clock-grounded SFT targets.  "
-    r"Dashed green rule = Augustine threshold $\varepsilon^\star=0.20$.  "
-    r"The 1.5B fine-tuned agent crosses $\varepsilon^\star$ on the narrative axis.",
-    ha="left", fontsize=10, color=INK2, fontstyle="italic")
+fig.text(0.02, 1.0 - 0.30/fig.get_figheight(),
+    r"Qwen2.5-{1.5B, 7B}, 30 held-out T3.1 instances each.  LoRA rank $16$, three epochs," "\n"
+    r"wall-clock-grounded SFT targets.  Dashed rule = $\varepsilon^\star=0.20$; the 1.5B crosses it.",
+    ha="left", va="top", fontsize=PT.small, color=INK2, fontstyle="italic", linespacing=1.6)
 
 out_pdf = Path("paper1/arxiv-v0/figures/a1_positive_control.pdf")
 out_png = Path("paper1/arxiv-v0/figures/a1_positive_control.png")
-fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.15)
-fig.savefig(out_png, bbox_inches="tight", pad_inches=0.15, dpi=300)
+fig.savefig(out_pdf, bbox_inches="tight", pad_inches=0.03)
+fig.savefig(out_png, bbox_inches="tight", pad_inches=0.03, dpi=300)
 print(f"Wrote: {out_pdf}")
 print(f"Wrote: {out_png}")

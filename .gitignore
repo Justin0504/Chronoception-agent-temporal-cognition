@@ -29,3 +29,6 @@ e1-results/
 e2-results/
 e3-results/
 logs/
+
+# METR HCAST corpus (~15 MB, fetched by scripts/fetch_metr_hcast.sh)
+data/metr/*.jsonl

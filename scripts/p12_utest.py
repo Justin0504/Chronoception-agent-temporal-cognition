@@ -16,7 +16,7 @@ import random
 import numpy as np
 from scipy.stats import mannwhitneyu
 
-RUNS = "/tmp/metr-eval/runs.jsonl"
+RUNS = "data/metr/runs.jsonl"   # scripts/fetch_metr_hcast.sh
 
 
 def load_hcast(path):
