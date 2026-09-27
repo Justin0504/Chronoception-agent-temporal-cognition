@@ -86,21 +86,46 @@ $\{10, 30, 60, 300, 900\}$\,s, under both a neutral framing
 an unconstrained control, with $\budget$ recorded as a field.
 
 \emph{The instruction was not what produced the effect.} Moving from the
-neutral to the instructed framing changes the elasticity by $-0.084$ on
-gpt-4o-mini and $+0.012$ on gpt-4o --- in the first case the instruction makes
-the agent \emph{less} responsive to the budget, not more. So the T2.3 number is
-a measurement of spontaneous L1 rather than an upper bound on it, and we
-withdraw that caveat.
+neutral framing to T2.3's instructed framing changes the elasticity by $-0.084$
+on gpt-4o-mini, $+0.016$ on gpt-4o and $-0.088$ on o4-mini. On two of the three
+the instruction makes the agent \emph{less} responsive to the budget, not more.
+So the T2.3 number is a measurement of spontaneous L1 rather than an upper
+bound on it, and we withdraw that caveat. The neutral-framing elasticities
+themselves ($+0.234$, $+0.192$, $+0.138$) sit above the T2.3 panel median of
+$0.089$, which the next paragraph explains.
 
 \emph{The elasticity is a property of the task as much as the agent.} It is not
 one constant: across the six questions it runs from $+0.006$ (``\textit{What is
 the capital of Australia?}'') to $+0.359$ (``\textit{How does a transformer
 work?}''). What predicts it is the task's \emph{expansion headroom} --- the
-duration the agent takes when given no deadline at all. Spearman correlation
-between that control duration and the fitted elasticity is $+0.918$ over the
-$(\text{agent}, \text{question})$ cells. An agent cannot fill time it has
-nothing to fill with: a one-word answer shows no Parkinson at any budget, and a
-generative task shows the most.
+duration the agent takes when given no deadline at all (Fig.~\ref{fig:e11}).
+The rank correlation between that control duration and the fitted elasticity is
+positive on all four agents: $+1.000$ on o4-mini (permutation $p = 0.003$),
+$+0.943$ on gpt-4o-mini ($p = 0.015$), $+0.900$ on gpt-5.1 ($p = 0.082$) and
+$+0.714$ on gpt-4o ($p = 0.135$). Each test has only five or six questions
+behind it, so two do not clear $0.05$ alone; combining the four independent
+tests by Fisher's method gives $\chi^2_8 = 29.0$, $p = 3\times10^{-4}$.
+
+An agent cannot fill time it has nothing to fill with: a one-word answer shows
+no Parkinson at any budget, and a generative task shows the most.
+
+The relationship does \emph{not} transfer across agents. Correlating each panel
+agent's T2.3 elasticity against its own unconstrained output duration gives
+$-0.500$ over thirteen agents --- the opposite sign, and not significant at
+that $n$. The two are different constraints wearing the same word: within an
+agent, a task with more to say permits more expansion; across agents, one
+already generating for $140$\,s has little room left inside a single turn. We
+claim the within-agent law only.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/e11_headroom.pdf}
+\caption{E11. \textbf{(a)} The budget response itself: median $\twall$ against
+the stated deadline, one line per question, against the diagonal Parkinson's
+law would trace. \textbf{(b)} Why the lines differ: the fitted elasticity
+against the task's expansion headroom, across four agents.}
+\label{fig:e11}
+\end{figure}
 
 That is the mechanism behind the small panel median. L1 is real and
 spontaneous, its strength is set by how much the task can absorb, and even at
