@@ -21,13 +21,13 @@ Grounded spatiotemporal cognition requires both identities:
 \]
 The Augustine Problem is the failure of the first; the \emph{Cartographic Problem} is the failure of the second. We hypothesise they fail jointly and for the same structural reason.
 
-\subsection*{E.2 Theorem 3 (SIT) — assumption and proof sketch}
+\subsection*{E.2 SIT --- assumption and proof sketch}
 
 \paragraph{Assumption (token-only spatial support).}
 \label{ass:token-only-spatial}
 Strengthen Assumption~\ref{ass:token-only} to require additionally that $\mathcal{D}$ contains no field carrying a metric on the agent's environment (no file path graph, no page DOM coordinates, no distance metric on the embedding space). Pretraining and standard post-training pipelines satisfy this.
 
-\paragraph{Theorem~\ref{thm:sit} proof sketch.} The proof generalises CIT (Theorem~\ref{thm:cit}) directly. Under the strengthened assumption, neither $t(\cdot)$ nor any external metric $s(\cdot)$ on the environment appears in the support of token-only data, so $\loss$ is invariant under any pair of strictly monotone reparametrisations $(\phi_t, \phi_s)$ applied independently to wall-clock time and to the spatial coordinate. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level: solving one does not solve the other; installing chronoception via a wall-clock-supported loss does not install spatial perception unless the loss is extended along $\sworld$ separately.
+\paragraph{Observation~\ref{thm:sit} proof sketch.} The proof generalises CIT (Observation~\ref{thm:cit}) directly. Under the strengthened assumption, neither $t(\cdot)$ nor any external metric $s(\cdot)$ on the environment appears in the support of token-only data, so $\loss$ is invariant under any pair of strictly monotone reparametrisations $(\phi_t, \phi_s)$ applied independently to wall-clock time and to the spatial coordinate. The Augustine Problem and the Cartographic Problem are the same problem at the loss-function level: solving one does not solve the other; installing chronoception via a wall-clock-supported loss does not install spatial perception unless the loss is extended along $\sworld$ separately.
 
 \subsection*{E.3 Three Spatial Laws (mirror of L1/L2/L3)}
 
@@ -88,7 +88,7 @@ Paper 3 (provisional title: \emph{The Agentic Frontier: Spatiotemporal Cognition
 \begin{itemize}[leftmargin=*]
     \item Generalises \textsc{ChronoBench} to \textsc{ChronoCartoBench}, adding 9 spatial sub-capabilities (3 axes $\times$ 3 difficulty tiers).
     \item Establishes the Agentic Frontier hypothesis empirically on SWE-Bench Lite, WebArena, and GAIA (E6, E7, E10).
-    \item Proves SIT (Theorem~\ref{thm:sit}) as a generalisation of CIT.
+    \item Proves SIT (Observation~\ref{thm:sit}) as a generalisation of CIT.
     \item Connects to the world-models literature: agents lacking spatiotemporal cognition cannot acquire useful world models from token-only training --- a direct corollary of SIT. The standard world-model architectures of the deep-RL era \citep{ha2018worldmodels,hafner2019dreamer,schrittwieser2020muzero} install explicit latent state for both space and time, precisely because token-level training cannot. The recent foundation-world-model line \citep{bruce2024genie} extends the same architectural choice. Token-only foundation models bypass this design and inherit the corresponding representational gap; SIT is the impossibility statement of the bypass.
     \item Maps to \textsc{ChronoStack}$^{+}$ (Paper 2 extension): installation routes for joint spatiotemporal grounding.
 \end{itemize}

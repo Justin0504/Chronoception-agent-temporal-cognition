@@ -14,6 +14,9 @@
 \usepackage{natbib}
 
 \newtheorem{theorem}{Theorem}
+% CIT and SIT are observations about the support of the loss, not deep
+% results. Naming them as such is deliberate.
+\newtheorem{observation}{Observation}
 \newtheorem{definition}{Definition}
 \newtheorem{hypothesis}{Hypothesis}
 \newtheorem{proposition}{Proposition}
@@ -42,7 +45,7 @@ A frontier reasoning model, asked how long the next task will take, predicts ``\
 \paragraph{Contributions.}
 \begin{itemize}[leftmargin=1.4em, itemsep=1pt, topsep=2pt]
 \item \textbf{The Augustine Problem} as a named structural diagnosis with the Three Times $(\twall, \tstep, \tself)$ ontology (\S\ref{sec:three}).
-\item \textbf{Two theorems.} CIT (Theorem~\ref{thm:cit}): no token-only loss aligns $\twall$ with any internal representation. Reverse-Scaling (Theorem~\ref{thm:rs}): under CIT with budget-honoured reasoning $K$, $\mathbb{E}[|\confab|\mid K]$ is monotone non-decreasing in $K$. Confirmed four ways (\S\ref{sec:l3}).
+\item \textbf{Two theorems.} CIT (Observation~\ref{thm:cit}): no token-only loss aligns $\twall$ with any internal representation. Reverse-Scaling (Theorem~\ref{thm:rs}): under CIT with budget-honoured reasoning $K$, $\mathbb{E}[|\confab|\mid K]$ is monotone non-decreasing in $K$. Confirmed four ways (\S\ref{sec:l3}).
 \item \textbf{ChronoBench}: 9-cap $\times$ 14-agent $\times$ 2-setting diagnostic, $\sim$5{,}900 trajectories, first full $9\!\times\!2\!\times\!30$ panel of a reasoning model (\S\ref{sec:bench}).
 \item \textbf{The Injection Tell.} Cross-vendor natural experiment; toy positive control crossing $\ccestar$ (\S\ref{sec:injection}, \S\ref{sec:l3}).
 \item \textbf{Agentic Timeline} deployment bound $T_{\max} \propto 1/\cce$ with quantitative HCAST support (Mann--Whitney $p = 0.040$) and \textbf{spatial generalisation SIT} (\S\ref{sec:timeline}, App.).
@@ -67,12 +70,14 @@ Agent $A$ exhibits the Augustine Problem on task family $\tasks$ if $\mathbb{E}_
 \paragraph{Assumption (token-only loss support).}\label{ass:token}
 A training procedure is in the \emph{token-only regime} if $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<i}), x_i)]$ satisfies (i) $\mathcal{D}$ is a distribution over finite token sequences with no field carrying wall-clock duration and (ii) $\ell$ is a function of the model's output token distribution alone. Next-token CE, SFT, RLHF, RL with verifiable rewards, and reasoning supervision all satisfy this.
 
-\begin{theorem}[Chronoception Impossibility, CIT]\label{thm:cit}
+\begin{observation}[Chronoception Impossibility, CIT]\label{thm:cit}
 Let $\loss$ be a token-only loss. For any strictly increasing reparametrisation $\phi:\mathbb{R}_{>0}\!\to\!\mathbb{R}_{>0}$, $\loss(\theta)$ is invariant under $\twall \mapsto \phi(\twall)$ on the data manifold. Equivalently, $\nabla_\theta\loss$ carries zero gradient signal aligning $\twall$ with any internal representation.
-\end{theorem}
+\end{observation}
 
 \begin{proof}[Sketch] $\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor depends on the wall-clock time at which the sample was generated: tokens carry no timestamps; $\ell$ is a function of the output distribution alone. The gradient is invariant to any reparametrisation of $\twall$.
 \end{proof}
+
+\paragraph{On calling this an observation.} The argument is two lines and follows from the definition of the loss; we do not present it as a deep result and have named it accordingly. Its value is that it is rarely stated and its consequences almost never drawn --- the field expects longer context, more parameters or more reasoning tokens to improve an agent's handling of its own runtime, and none of them can, because none changes what the loss sees. What has to be earned is everything after it: that the gap is there, at what size, in which direction under reasoning expansion, and what it costs at deployment.
 
 \paragraph{Scope.} CIT does not claim there is \emph{no} representation of time inside the policy; it claims any such representation is not produced \emph{by the loss}. Explicitly out of scope: (a) harness-installed chronoception (the Injection Tell, \S\ref{sec:injection}); (b) tool-output-installed chronoception (a \texttt{date} tool call grounds the policy through the return value, not the loss); (c) future losses with $\twall$ as argument (Paper 2). CIT precludes the widely held inference that scale, longer reasoning, or larger context will close the gap.
 
@@ -137,7 +142,7 @@ Across five frontier non-reasoning generations $|\confab|$ falls $94\%$ ($+1.12 
 \paragraph{Assumption (budget-honoured reasoning).}\label{ass:bh} A reasoning-budget knob $K$ is \emph{honoured} if $\mathbb{E}[\twall \mid K]$ is strictly increasing in $K$. The o4-mini \texttt{reasoning\_effort} ladder, Anthropic extended-thinking budget, and Kimi/GLM reasoning modes satisfy this empirically; the DeepSeek-R1-Distill-14B \texttt{max\_completion\_tokens} sweep does not (App.: the model declines to spend the budget), and falls outside the assumption.
 
 \begin{theorem}[Reverse-Scaling]\label{thm:rs}
-For a fixed agent under Assumption~\ref{ass:token} (hence Theorem~\ref{thm:cit}) with a budget-honoured knob $K$, $\mathbb{E}[|\confab|\mid K]$ is monotone non-decreasing in $K$.
+For a fixed agent under Assumption~\ref{ass:token} (hence Observation~\ref{thm:cit}) with a budget-honoured knob $K$, $\mathbb{E}[|\confab|\mid K]$ is monotone non-decreasing in $K$.
 \end{theorem}
 
 \begin{proof}[Sketch] Under CIT, $p(\tself)$ is invariant to $\twall$: no gradient signal in training ties them. Inference-time $p(\tself \mid K) = p(\tself)$ for all $K$ in the trained range. By assumption, $\twall(K)$ is strictly increasing. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in $K$ in expectation. The sign of $\confab$ turns negative once hidden CoT dominates $\twall$, because $p(\tself)$ stays anchored to the surface output; the theorem constrains only $|\confab|$, and o3 is the panel cell that grows $|\confab|$ without flipping sign (App.). \end{proof}
@@ -151,7 +156,7 @@ For a fixed agent under Assumption~\ref{ass:token} (hence Theorem~\ref{thm:cit})
 
 \subsection{The Calibration Catastrophe}\label{ssec:cal}
 
-Asked to wrap self-duration in a $90\%$ CI, every non-reasoning panel agent under-covers by $\geq 40$\,pp; GPT-4o reaches $0\%$. Standard calibration tooling \citep{guo2017calibration,kadavath2022knowing} cannot apply because the calibration signal is not in the loss support (Theorem~\ref{thm:cit}). Two cells cross the pre-registered P11 threshold of $0.5$: Sonnet-thinking ($77\%$, $n = 30$, Wilson CI $[0.59, 0.88]$) and Kimi-K2.6 ($55\%$, $n = 29$, $[0.38, 0.71]$); o4-mini lands exactly on it at $15/30$ and so does not cross. All three are reasoning-mode, and all three have wider stated CIs relative to their own $\twall$ than the non-reasoning panel does. The mechanism is not learned chronoception but arithmetic: reasoning inflates $\twall$, $p(\tself)$ stays anchored to the default vocabulary, wider CI accidentally contains the wall-clock. Both cells rest on $n = 30$, below the $n \geq 100$ bar our pre-registered F4 sets for a falsification, so we report them as threshold crossings and not as refutations --- but we report them. They are CIT-consistent, and they sharpen P11's next revision into a proper scoring rule (Brier / CRPS) rather than raw coverage.
+Asked to wrap self-duration in a $90\%$ CI, every non-reasoning panel agent under-covers by $\geq 40$\,pp; GPT-4o reaches $0\%$. Standard calibration tooling \citep{guo2017calibration,kadavath2022knowing} cannot apply because the calibration signal is not in the loss support (Observation~\ref{thm:cit}). Two cells cross the pre-registered P11 threshold of $0.5$: Sonnet-thinking ($77\%$, $n = 30$, Wilson CI $[0.59, 0.88]$) and Kimi-K2.6 ($55\%$, $n = 29$, $[0.38, 0.71]$); o4-mini lands exactly on it at $15/30$ and so does not cross. All three are reasoning-mode, and all three have wider stated CIs relative to their own $\twall$ than the non-reasoning panel does. The mechanism is not learned chronoception but arithmetic: reasoning inflates $\twall$, $p(\tself)$ stays anchored to the default vocabulary, wider CI accidentally contains the wall-clock. Both cells rest on $n = 30$, below the $n \geq 100$ bar our pre-registered F4 sets for a falsification, so we report them as threshold crossings and not as refutations --- but we report them. They are CIT-consistent, and they sharpen P11's next revision into a proper scoring rule (Brier / CRPS) rather than raw coverage.
 
 \subsection{A positive control: CIT's constructive converse}\label{ssec:pc}
 
@@ -214,9 +219,9 @@ L2 does not scale with capability; Theorem~\ref{thm:rs} grows $|\confab|$ with r
 
 Long-horizon benchmarks (SWE-Bench, WebArena, GAIA, MLE-Bench) require the agent to navigate space as well as time. The CIT argument goes through unchanged on any external metric the loss does not see.
 
-\begin{theorem}[Spatiotemporal Impossibility, SIT]\label{thm:sit}
+\begin{observation}[Spatiotemporal Impossibility, SIT]\label{thm:sit}
 Strengthen Assumption~\ref{ass:token} to require $\mathcal{D}$ contains no field carrying a metric on the agent's environment. Then $\nabla_\theta\loss$ carries zero gradient signal aligning either $\twall$ or $\sworld$ with any internal representation.
-\end{theorem}
+\end{observation}
 
 The Agentic Timeline generalises to $T_{\max}\!\cdot\!S_{\max} \leq C / \ccestST(A)$ --- the \emph{Agentic Frontier}. Three spatial laws (SL1--SL3) mirror L1--L3; the classification of long-horizon benchmarks by $(T, S)$ load and five future experiments E6--E10 are in Appendix.
 

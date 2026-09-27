@@ -21,7 +21,25 @@ $\cce(A) := \frac{1}{|\mathcal{A}|}\sum_{k \in \mathcal{A}} \mathrm{score}_k$, w
 \label{fig:epsilon-panel}
 \end{figure}
 
-\paragraph{Two findings.} \textbf{(1) The action axis is binding.} $\mathrm{score}_{T_2}$ lies in $[0.92, 1.00]$ on every agent in the panel, Setting~A and Setting~B alike. Projecting $\mathrm{score}_{T_3} \to 0$ --- which would require crossing both Theorem~\ref{thm:cit} and Theorem~\ref{thm:reverse-scaling} --- still leaves $\cce \geq 0.46$, a factor of $2.3$ above $\ccestar$. No narrative-axis intervention can reach the threshold, because the narrative axis is not what is holding the agent back. \textbf{(2) Reverse-Scaling operates on the aggregate.} Adding extended thinking to Sonnet 4.6 moves $\cce$ the wrong way, $0.536 \to 0.566$ under Setting~A and $0.537 \to 0.585$ under Setting~B, so the thinking variant is no longer the best agent in the panel. The o4-mini effort ladder moves it further: on the $\confab$ axis, $1.23 \to 1.54 \to 1.67$ from low to high effort. More reasoning compute moves the agent away from the threshold on the aggregate, exactly as it does on the axis Theorem~\ref{thm:reverse-scaling} constrains.
+\paragraph{What $\cce$ is for, and what it is not.} A reader checking whether
+the composite earns its place will find that it ranks the panel almost exactly
+as $\mathrm{med}\,|\confab|$ alone does: the rank correlation between $\cce$ and
+the narrative axis is $0.99$. We state that plainly because it is not a defect
+in the aggregate --- it is the result. The two axes have very different
+spreads. $\mathrm{score}_{T_2}$ occupies $[0.918, 0.996]$ across thirteen
+agents, a range of $0.078$; $\mathrm{score}_{T_3}$ occupies $[0.12, 1.56]$, a
+range $18.6\times$ wider. The action axis does not discriminate between
+agents because \emph{every} agent fails it almost completely, and the narrative
+axis carries all of the cross-agent variation because it is the only axis
+capability scaling has touched.
+
+So $\cce$ should not be read as a ranking device. Read it as a decomposition:
+a near-constant floor of $\approx 0.46$ that the action axis puts under every
+agent, plus a narrative-axis term that is the only part anyone has moved.
+Ranking agents on the sum is then a way of ranking them on the part that
+varies, which is exactly what the correlation shows.
+
+\paragraph{Two findings.} \textbf{(1) The action axis is binding.} $\mathrm{score}_{T_2}$ lies in $[0.92, 1.00]$ on every agent in the panel, Setting~A and Setting~B alike. Projecting $\mathrm{score}_{T_3} \to 0$ --- which would require crossing both Observation~\ref{thm:cit} and Theorem~\ref{thm:reverse-scaling} --- still leaves $\cce \geq 0.46$, a factor of $2.3$ above $\ccestar$. No narrative-axis intervention can reach the threshold, because the narrative axis is not what is holding the agent back. \textbf{(2) Reverse-Scaling operates on the aggregate.} Adding extended thinking to Sonnet 4.6 moves $\cce$ the wrong way, $0.536 \to 0.566$ under Setting~A and $0.537 \to 0.585$ under Setting~B, so the thinking variant is no longer the best agent in the panel. The o4-mini effort ladder moves it further: on the $\confab$ axis, $1.23 \to 1.54 \to 1.67$ from low to high effort. More reasoning compute moves the agent away from the threshold on the aggregate, exactly as it does on the axis Theorem~\ref{thm:reverse-scaling} constrains.
 
 We flag the size of the first effect against the second. The $\pm$ thinking contrast is a $5.6\%$ move on Setting~A and rests on a thinking-variant $\confab$ cell with $n_\rho = 10$; it is consistent with Reverse-Scaling on the aggregate but is not on its own strong evidence for it. The effort ladder, at $n_\rho = 16/41/17$ across three tiers and a $36\%$ total move, is.
 

@@ -5,10 +5,10 @@
 
 Every long-horizon benchmark on which deployment claims are made --- SWE-Bench, WebArena, GAIA, MLE-Bench --- requires the agent to navigate space as well as time. The argument that produces CIT (\S\ref{sec:augustine-problem}) goes through unchanged on any external metric the loss does not see. We state the spatial half and defer the full derivation to App.~\ref{app:spatiotemporal}.
 
-\begin{theorem}[Spatiotemporal Impossibility, SIT]
+\begin{observation}[Spatiotemporal Impossibility, SIT]
 \label{thm:sit}
 Strengthen Assumption~\ref{ass:token-only} to exclude spatial metrics from $\mathcal{D}$'s support (Assumption~\ref{ass:token-only-spatial}). Then $\nabla_\theta \loss$ carries zero gradient signal aligning either $\twall$ or $\sworld$ with any internal representation.
-\end{theorem}
+\end{observation}
 
 The Augustine and Cartographic Problems are the same problem at the loss-function level. The Agentic Timeline (\S\ref{sec:agentic-timeline}) generalises to a joint deployment region:
 \[

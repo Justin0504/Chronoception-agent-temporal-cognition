@@ -18,14 +18,27 @@ A training procedure is in the \emph{token-only regime} if
 $\loss(\theta) = \mathbb{E}_{x \sim \mathcal{D}}[\ell(f_\theta(x_{<i}), x_i)]$
 satisfies (i) $\mathcal{D}$ is a distribution over finite token sequences with no field carrying wall-clock duration, and (ii) $\ell$ is a function of the output token distribution alone. Next-token cross-entropy, SFT, RLHF, RL with verifiable rewards, and reasoning supervision all satisfy this.
 
-\begin{theorem}[Chronoception Impossibility, CIT]
+\begin{observation}[Chronoception Impossibility, CIT]
 \label{thm:cit}
 Let $\loss$ be a token-only loss. For any strictly increasing $\phi: \mathbb{R}_{>0} \to \mathbb{R}_{>0}$, $\loss(\theta)$ is invariant under $\twall \mapsto \phi(\twall)$. Equivalently, $\nabla_\theta \loss$ carries zero gradient signal aligning $\twall$ with any internal representation.
-\end{theorem}
+\end{observation}
 
 \begin{proof}[Sketch]
 $\nabla_\theta\loss = \mathbb{E}[\partial\ell/\partial f_\theta \cdot \nabla_\theta f_\theta]$. Neither factor depends on the wall-clock time at which the sample was generated: tokens carry no timestamps, $\ell$ is a function of the output distribution alone. The gradient is therefore invariant to any reparametrisation of $\twall$. A policy from this gradient cannot distinguish one wall-clock duration from another.
 \end{proof}
+
+\paragraph{On calling this an observation.} The argument above is two lines
+long and follows from the definition of the loss. We do not present it as a
+deep result and have named it accordingly. Its value is not that it is hard to
+prove but that it is rarely stated and its consequences are almost never drawn:
+the field routinely expects longer context, more parameters or more reasoning
+tokens to improve an agent's handling of its own runtime, and Observation~1
+says none of them can, because none of them changes what the loss can see. A
+claim can be immediate and still be load-bearing. What has to be earned is not
+the observation but everything after it --- that the gap it predicts is
+actually there, at what size, in which direction under reasoning-token
+expansion, and what it costs at deployment. That is what the rest of this paper
+measures.
 
 \paragraph{Scope.} CIT does not claim there is \emph{no} internal representation of time; it claims any such representation is not produced \emph{by the loss}. Explicitly out of scope: harness-installed chronoception (\S\ref{sec:injection-tell}, a CIT workaround, not refutation), tool-output-installed chronoception (calling \texttt{date}), and future losses with $\twall$ as an explicit argument (\textsc{ChronoStack}). CIT precludes only the inference --- widely held, rarely defended --- that additional scale, longer reasoning, or larger context will close the gap.
 
