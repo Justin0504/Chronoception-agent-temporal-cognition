@@ -65,7 +65,7 @@ rows = load()
 agents = sorted({r[0] for r in rows})
 
 fig, (ax1, ax2) = figure(width_frac=1.0, aspect=0.50, ncols=2)
-fig.subplots_adjust(left=0.105, right=0.985, top=0.70, bottom=0.17, wspace=0.34)
+fig.subplots_adjust(left=0.105, right=0.965, top=0.70, bottom=0.19, wspace=0.36)
 
 # ---------------- left: budget response, one line per question -------------
 ramp = ["#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]
@@ -120,6 +120,7 @@ for agent in agents:
 ax2.axhline(0, color=C.rule_strong, lw=0.7, zorder=1)
 ax2.set_xscale("log")
 ax2.set_xlabel("expansion headroom: unconstrained $\\tau_{\\mathrm{wall}}$ (s)",
+               labelpad=2,
                fontsize=PT.label, color=C.ink)
 ax2.set_ylabel("fitted elasticity $e$", fontsize=PT.label, color=C.ink)
 ax2.set_title("(b) Headroom predicts the response", loc="left",

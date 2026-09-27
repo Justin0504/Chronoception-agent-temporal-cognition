@@ -12,7 +12,11 @@ gpt-4o-mini,q4_carbon,0.2365,2.95,5
 gpt-4o-mini,q5_transformer,0.3591,6.0,5
 gpt-4o-mini,q6_lighthouse,0.3231,5.58,5
 gpt-5.1,q1_capital,0.0086,0.6,5
-gpt-5.1,q2_ww1,,1.5,1
+gpt-5.1,q2_ww1,0.1244,1.54,5
+gpt-5.1,q3_rna,0.4871,3.39,5
+gpt-5.1,q4_carbon,0.2019,2.59,5
+gpt-5.1,q5_transformer,0.4098,9.07,5
+gpt-5.1,q6_lighthouse,0.3136,42.53,5
 o4-mini,q1_capital,0.0245,1.3,5
 o4-mini,q2_ww1,0.0379,2.95,5
 o4-mini,q3_rna,0.2081,4.51,5
