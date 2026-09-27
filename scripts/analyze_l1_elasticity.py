@@ -15,9 +15,16 @@ question. Two independent reasons:
    size are confounded, so a longer answer at a longer deadline says nothing.
    No reanalysis fixes this; the design would have to be re-run crossed.
 
-T2.3 already has the design L1 needs: one fixed task, budget varied over
-B in {60, 300, 900, 1800, 3600} s, n=30 per cell per setting. That is a 60x
-range on a single factor with the task held constant.
+T2.3 comes much closer. It varies the budget over B in {60, 300, 900, 1800,
+3600} s at n=30 per cell per setting -- a 60x range -- across ten tasks, nine
+of which appear at more than one budget. So unlike T1.3 the deadline is not
+perfectly confounded with the task. The crossing is unbalanced, though: no task
+spans all five budgets, so a pooled fit mixes the budget effect with a changing
+task mix. `within_task_elasticity()` refits inside each task and bounds that
+confound at about a tenth of the estimate (panel median 0.078 against 0.089).
+
+An earlier version of this docstring claimed T2.3 was "one fixed task". It is
+not, and the claim reached a draft of the paper before it was checked.
 
 What is measured
 ----------------
@@ -109,6 +116,58 @@ def elasticity(obs, n_boot: int = 4000):
     return e, float(np.percentile(boot, 2.5)), float(np.percentile(boot, 97.5))
 
 
+
+# --------------------------------------------------------------------------
+def within_task_elasticity():
+    """Refit inside each T2.3 task, removing the composition confound.
+
+    T2.3 draws on ten tasks and no task spans all five budgets, so a pooled fit
+    mixes the budget effect with a task mix that changes across budgets. Fitting
+    within task and taking the median bounds that confound. On the panel it
+    moves the median from 0.089 to 0.078, so the confound is worth about a tenth
+    of the estimate -- small, but it should be measured rather than assumed.
+    """
+    import re
+    from collections import defaultdict
+    from chronoception.bench.tasks.instances import generate_t2_3_instances
+
+    inst = {}
+    for x in generate_t2_3_instances():
+        b = re.search(r"for (\d+) seconds", x.prompt)
+        t = re.search(r"Task:\s*(.+)", x.prompt)
+        if b and t:
+            inst[x.instance_id] = t.group(1).strip()
+
+    out = {}
+    for name, pats in PANEL.items():
+        by_task = defaultdict(list)
+        for setting in ("no_injection", "with_injection"):
+            for pat in pats:
+                for fp in glob.glob(pat.format(s=setting), recursive=True):
+                    try:
+                        d = json.load(open(fp))
+                    except (OSError, json.JSONDecodeError):
+                        continue
+                    b = d.get("budget")
+                    if d.get("budget_kind") != "wall" or not b:
+                        continue
+                    steps = d.get("steps") or []
+                    if not steps:
+                        continue
+                    tw = float(steps[-1]["timestamp"]) - float(steps[0]["timestamp"])
+                    iid = d.get("metadata", {}).get("instance_id", "")
+                    if tw > 0 and iid in inst:
+                        by_task[inst[iid]].append((log10(b), log10(tw)))
+        es = []
+        for v in by_task.values():
+            if len({x for x, _ in v}) < 2 or len(v) < 4:
+                continue
+            es.append(float(np.polyfit([x for x, _ in v], [y for _, y in v], 1)[0]))
+        if es:
+            out[name] = (median(es), len(es))
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check-fit", action="store_true",
@@ -139,6 +198,12 @@ def main() -> int:
     print(f"\npanel median e = {med:.3f};  {npos}/{len(rows)} agents have a CI strictly above 0.")
     print(f"A 60x budget increase therefore buys {60**med:.2f}x more wall-clock, "
           f"where Parkinson's law requires 60x.")
+
+    wt = within_task_elasticity()
+    if wt:
+        wmed = median(v for v, _ in wt.values())
+        print(f"\nRefit within T2.3 task (removes the composition confound): "
+              f"panel median {wmed:.3f} against {med:.3f} pooled.")
 
     if args.check_fit:
         print("\n--- is one exponent enough? (log tau_wall linear in log B) ---")

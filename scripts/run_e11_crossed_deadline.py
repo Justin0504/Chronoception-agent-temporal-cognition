@@ -106,6 +106,7 @@ AGENTS = {
     "gpt-4o":      ("openai", "gpt-4o"),
     "o4-mini":     ("openai", "o4-mini"),
     "gpt-5.1":     ("openai", "gpt-5.1"),
+    "o3":          ("openai", "o3"),
     "glm-5.2":     ("vultr",  "glm-5.2"),
     "minimax-m3":  ("vultr",  "minimax-m3"),
 }

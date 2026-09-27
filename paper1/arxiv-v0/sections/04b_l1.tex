@@ -22,11 +22,17 @@ task size are confounded, so a longer answer under a longer deadline is
 uninformative. No reanalysis repairs this; the design has to be re-run
 crossed, which is what E11 below does.
 
-\paragraph{The design L1 needs is already in T2.3.} The wall-budget
-capability holds the task fixed and varies the budget over
-$\budget \in \{60, 300, 900, 1800, 3600\}$\,s at $n = 30$ per cell per
-setting --- a $60\times$ range on a single factor. We therefore measure L1 as
-a \emph{budget elasticity},
+\paragraph{The design L1 needs is mostly already in T2.3.} The wall-budget
+capability varies $\budget$ over $\{60, 300, 900, 1800, 3600\}$\,s at $n = 30$
+per cell per setting --- a $60\times$ range. It draws on ten tasks, nine of
+which appear at more than one budget, so unlike T1.3 the deadline is not
+perfectly confounded with the task. The crossing is unbalanced, though: no task
+spans all five budgets, so a pooled fit mixes the budget effect with a changing
+task composition. Fitting \emph{within} task and taking the median instead
+moves the panel from $0.089$ to $0.078$, which bounds that confound at about a
+tenth of the estimate. We report the pooled figure below and this within-task
+figure as its robustness check. We therefore measure L1 as a \emph{budget
+elasticity},
 \[
   e \;:=\; \frac{\mathrm{d}\,\log_{10} \twallstar}{\mathrm{d}\,\log_{10} \budget},
 \]
@@ -76,24 +82,25 @@ $e = 1$. The panel sits an order of magnitude from the second and, for most
 agents, reliably away from the first.
 
 \paragraph{E11: the same measurement on a design that can identify it.}
-Two caveats bound the T2.3 estimate, and both come from its design rather than
-its data: T2.3 is a single task, and its prompt instructs the agent to spend
-the budget, so $e$ could be compliance rather than the spontaneous expansion
-Parkinson described. We ran the crossed design that separates them (E11): six questions spanning a one-line factual lookup to
+Two things the T2.3 design cannot settle. Its ten tasks were not chosen to
+span expansion headroom and its crossing is unbalanced, so it cannot say how
+much of $e$ is a property of the task; and its prompt instructs the agent to
+spend the budget, so $e$ could be compliance rather than the spontaneous
+expansion Parkinson described. We ran a design that settles both (E11): six questions spanning a one-line factual lookup to
 an open generative task, each asked at every deadline in
 $\{10, 30, 60, 300, 900\}$\,s, under both a neutral framing
 (``\textit{You have $\budget$ seconds}'') and T2.3's instructed framing, plus
 an unconstrained control, with $\budget$ recorded as a field.
 
 \emph{The instruction was not what produced the effect.} Moving from the
-neutral framing to T2.3's instructed framing changes the elasticity by $-0.084$
-on gpt-4o-mini, $-0.088$ on o4-mini, $-0.012$ on gpt-5.1 and $+0.016$ on
-gpt-4o. On three of the four the instruction makes the agent \emph{less}
-responsive to the budget, not more. So the T2.3 number is a measurement of
-spontaneous L1 rather than an upper bound on it, and we withdraw that caveat.
-The neutral-framing elasticities themselves ($+0.258$, $+0.234$, $+0.192$,
-$+0.138$) sit above the T2.3 panel median of $0.089$, which the next paragraph
-explains.
+neutral framing to T2.3's instructed framing changes the elasticity by $-0.088$
+on o4-mini, $-0.084$ on gpt-4o-mini, $-0.066$ on o3, $-0.012$ on gpt-5.1 and
+$+0.016$ on gpt-4o. On four of the five the instruction makes the agent
+\emph{less} responsive to the budget, not more. So the T2.3 number is a
+measurement of spontaneous L1 rather than an upper bound on it, and we withdraw
+that caveat. The neutral-framing elasticities (median $+0.192$, range
+$+0.138$--$+0.258$) sit above the T2.3 panel median of $0.089$, which the next
+paragraph explains.
 
 \emph{The elasticity is a property of the task as much as the agent.} It is not
 one constant: across the six questions it runs from $+0.006$ (``\textit{What is
@@ -101,11 +108,11 @@ the capital of Australia?}'') to $+0.487$ (``\textit{How does a transformer
 work?}''). What predicts it is the task's \emph{expansion headroom} --- the
 duration the agent takes when given no deadline at all (Fig.~\ref{fig:e11}).
 The rank correlation between that control duration and the fitted elasticity is
-positive on all four agents: $+1.000$ on o4-mini (permutation $p = 0.003$),
-$+0.943$ on gpt-4o-mini ($p = 0.015$), $+0.771$ on gpt-5.1 ($p = 0.104$) and
-$+0.714$ on gpt-4o ($p = 0.135$). Each test rests on six questions, so two do
-not clear $0.05$ alone; combining the four independent tests by Fisher's method
-gives $\chi^2_8 = 28.6$, $p = 3.7\times10^{-4}$.
+positive on all five agents: $+1.000$ on o4-mini (permutation $p = 0.003$),
+$+0.943$ on gpt-4o-mini and on o3 ($p = 0.015$ each), $+0.771$ on gpt-5.1
+($p = 0.104$) and $+0.714$ on gpt-4o ($p = 0.135$). Each test rests on six
+questions, so two do not clear $0.05$ alone; combining the five independent
+tests by Fisher's method gives $\chi^2_{10} = 37.0$, $p = 5.7\times10^{-5}$.
 
 An agent cannot fill time it has nothing to fill with: a one-word answer shows
 no Parkinson at any budget, and a generative task shows the most.
@@ -124,15 +131,15 @@ claim the within-agent law only.
 \caption{E11. \textbf{(a)} The budget response itself: median $\twall$ against
 the stated deadline, one line per question, against the diagonal Parkinson's
 law would trace. \textbf{(b)} Why the lines differ: the fitted elasticity
-against the task's expansion headroom, across four agents.}
+against the task's expansion headroom, across five agents.}
 \label{fig:e11}
 \end{figure}
 
 That is the mechanism behind the small panel median. L1 is real and
 spontaneous, its strength is set by how much the task can absorb, and even at
-maximum headroom it reaches $e \approx 0.49$ --- still a third of what the law
-requires, and still an order of magnitude short at the low-headroom tasks that
-dominate agentic work.
+maximum headroom it reaches $e \approx 0.49$ --- about half what the law
+requires at the most absorbent task we posed, and an order of magnitude short
+at the low-headroom tasks that dominate agentic work.
 
 \paragraph{Relation to $\CAR$.} Since $\CAR = \twallstar/\budget$, we have
 $\mathrm{d}\log \CAR / \mathrm{d}\log \budget = e - 1$ identically. The steep
