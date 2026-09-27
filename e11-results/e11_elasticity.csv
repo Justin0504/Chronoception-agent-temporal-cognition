@@ -1,0 +1,12 @@
+agent,question,e_neutral,tau_min_control_s,n_control
+gpt-4o,q1_capital,0.0062,0.61,5
+gpt-4o,q2_ww1,0.1382,2.72,5
+gpt-4o,q3_rna,0.2753,3.99,5
+gpt-4o,q4_carbon,0.2414,3.39,5
+gpt-4o,q5_transformer,0.2395,4.93,2
+gpt-4o-mini,q1_capital,0.0074,0.77,5
+gpt-4o-mini,q2_ww1,0.1414,2.23,5
+gpt-4o-mini,q3_rna,0.3376,4.72,5
+gpt-4o-mini,q4_carbon,0.2365,2.95,5
+gpt-4o-mini,q5_transformer,0.3591,6.0,5
+gpt-4o-mini,q6_lighthouse,0.3231,5.58,5

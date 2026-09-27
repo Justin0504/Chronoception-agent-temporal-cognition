@@ -1,0 +1,14 @@
+agent,total,parsed,parsed_missed,zero,refused,silent
+gpt-4o-mini,60,60,0,0,0,0
+gpt-4o,60,60,0,0,0,0
+gpt-5.1,60,24,1,12,21,2
+o3,120,35,4,1,8,72
+o4-mini,120,75,1,5,15,24
+Haiku 4.5,60,58,2,0,0,0
+Sonnet 4.6,60,58,0,0,2,0
+Sonnet 4.6 + thinking,60,26,0,0,34,0
+Qwen2.5-7B,60,57,0,0,0,3
+GLM-5.2-FP8,60,57,0,0,3,0
+Kimi-K2.6,60,34,0,0,25,1
+MiniMax-M2.7,60,22,6,0,2,30
+Qwen3.6-27B,60,60,0,0,0,0
