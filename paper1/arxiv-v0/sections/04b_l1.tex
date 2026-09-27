@@ -20,7 +20,7 @@ tracks intrinsic task size almost perfectly: the five-second item asks for the
 capital of Australia, the 180-second item asks for a short story. Deadline and
 task size are confounded, so a longer answer under a longer deadline is
 uninformative. No reanalysis repairs this; the design has to be re-run
-crossed, which we describe in \S\ref{sec:limitations}.
+crossed, which is what E11 below does.
 
 \paragraph{The design L1 needs is already in T2.3.} The wall-budget
 capability holds the task fixed and varies the budget over
@@ -75,18 +75,38 @@ at all would give $e = 0$; an agent that could act on what it read would give
 $e = 1$. The panel sits an order of magnitude from the second and, for most
 agents, reliably away from the first.
 
-\paragraph{What this is not.} Two limits bound the claim, and both point at the
-same missing experiment. First, T2.3 is a \emph{single task}: $e$ is measured on
-one item, so we cannot say whether the elasticity is a property of the agent or
-of that item. Second, the T2.3 prompt explicitly instructs the agent to spend
-the budget (``\textit{work on this task for $\budget$ seconds; do not stop
-early}''), so $e$ measures compliance with an instruction, not the spontaneous
-expansion Parkinson described. That makes $e = 0.089$ an \emph{upper bound} on
-spontaneous L1 rather than a measurement of it --- which strengthens the
-direction of the finding while weakening its interpretation as Parkinson's law
-proper. The crossed design that would fix both, questions $\times$ deadlines
-fully crossed with the budget recorded as a field, is specified in
-\S\ref{sec:limitations}.
+\paragraph{E11: the same measurement on a design that can identify it.}
+Two caveats bound the T2.3 estimate, and both come from its design rather than
+its data: T2.3 is a single task, and its prompt instructs the agent to spend
+the budget, so $e$ could be compliance rather than the spontaneous expansion
+Parkinson described. We ran the crossed design that separates them (E11): six questions spanning a one-line factual lookup to
+an open generative task, each asked at every deadline in
+$\{10, 30, 60, 300, 900\}$\,s, under both a neutral framing
+(``\textit{You have $\budget$ seconds}'') and T2.3's instructed framing, plus
+an unconstrained control, with $\budget$ recorded as a field.
+
+\emph{The instruction was not what produced the effect.} Moving from the
+neutral to the instructed framing changes the elasticity by $-0.084$ on
+gpt-4o-mini and $+0.012$ on gpt-4o --- in the first case the instruction makes
+the agent \emph{less} responsive to the budget, not more. So the T2.3 number is
+a measurement of spontaneous L1 rather than an upper bound on it, and we
+withdraw that caveat.
+
+\emph{The elasticity is a property of the task as much as the agent.} It is not
+one constant: across the six questions it runs from $+0.006$ (``\textit{What is
+the capital of Australia?}'') to $+0.359$ (``\textit{How does a transformer
+work?}''). What predicts it is the task's \emph{expansion headroom} --- the
+duration the agent takes when given no deadline at all. Spearman correlation
+between that control duration and the fitted elasticity is $+0.918$ over the
+$(\text{agent}, \text{question})$ cells. An agent cannot fill time it has
+nothing to fill with: a one-word answer shows no Parkinson at any budget, and a
+generative task shows the most.
+
+That is the mechanism behind the small panel median. L1 is real and
+spontaneous, its strength is set by how much the task can absorb, and even at
+maximum headroom it reaches $e \approx 0.36$ --- still a third of what the law
+requires, and still an order of magnitude short at the low-headroom tasks that
+dominate agentic work.
 
 \paragraph{Relation to $\CAR$.} Since $\CAR = \twallstar/\budget$, we have
 $\mathrm{d}\log \CAR / \mathrm{d}\log \budget = e - 1$ identically. The steep

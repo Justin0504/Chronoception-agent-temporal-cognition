@@ -32,6 +32,48 @@ The four confirmations vary four independent things: reasoning effort within one
 
 It is not universal, and we say so: o3 grows $|\confab|$ to $0.45$ --- well above base Sonnet 4.6's $0.12$ on the same tasks --- while continuing to over-report (App.~\ref{app:full-panel-tables}). Theorem~\ref{thm:reverse-scaling} constrains the magnitude, and every cell confirms the magnitude. The sign flip is the mechanism's most visible symptom, not its definition: it appears when the hidden chain-of-thought comes to dominate $\twall$, and o3 is the configuration where it does not.
 
+\subsection{Who Declines to Answer}
+\label{ssec:refusal}
+
+The panel tables report an effective $n_\rho$ ``after parser drops''. That
+single number turns out to cover four behaviours which mean different things,
+and separating them changes how two of our own results should be read.
+Classifying all $900$ T3.1 trajectories (App.~\ref{app:l3-detail}): $626$ state
+a positive duration and are scored; of the $274$ that are not, $110$ ($40\%$)
+are an \emph{explicit refusal} to estimate, $132$ ($48\%$) never mention
+duration, $18$ ($7\%$) state a duration of exactly zero, and $14$ ($5\%$) are
+positive durations our scorer missed.
+
+\paragraph{Reasoning-mode agents refuse an order of magnitude more often.}
+Refusals are not spread evenly. Pooled over settings, reasoning-mode
+configurations decline on $21.9\%$ of trajectories ($n = 480$) against $1.2\%$
+for non-reasoning ($n = 420$) --- an $18\times$ gap. Sonnet 4.6 $+$ thinking
+declines on $57\%$, Kimi-K2.6 on $42\%$, gpt-5.1 on $35\%$, while gpt-4o,
+gpt-4o-mini, Haiku 4.5, Qwen2.5-7B and Qwen3.6-27B never once decline. This is
+the same object as the cross-lingual refusal asymmetry of
+\S\ref{sec:limitations}, seen on the narrative axis instead of the wall axis:
+declining to estimate is a surface disposition of post-training, distributed
+very unevenly across configurations, and not a representation of the
+underlying absence.
+
+\paragraph{Two consequences we report rather than absorb.}
+First, $\rho$ for the high-refusal agents is computed on a \emph{selected}
+subsample --- the trajectories where the agent chose to commit a number.
+Sonnet 4.6 $+$ thinking's $n_\rho = 10$ under Setting~A is not a parsing
+failure but a $57\%$ refusal rate, and its contribution to the cross-model
+sign flip (Fig.~\ref{fig:reverse-scaling}b) therefore rests on the $43\%$ where
+it answered. We cannot bound the direction of that selection from these data;
+the intra-model effort ladder and the cross-vendor comparison, whose agents
+refuse at $13\%$ and $5\%$, do not carry the same exposure, and the theorem's
+magnitude claim is confirmed on all of them.
+
+Second, the $18$ trajectories reporting \emph{exactly zero} seconds are
+excluded by the arithmetic rather than by choice: $\rho = \log_{10}(0/\twall)$
+is undefined. These are the most extreme under-reports the instrument can
+produce, so every $|\confab|$ we report is, by that much, an underestimate. The
+bias runs against our own claim, which is the direction we would rather it ran,
+but it should be stated.
+
 \subsection{The Calibration Catastrophe}
 \label{ssec:calibration}
 
