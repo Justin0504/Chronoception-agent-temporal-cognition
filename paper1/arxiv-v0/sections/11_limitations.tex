@@ -42,6 +42,38 @@ described, which is the difference between an upper bound on L1 and a
 measurement of it. The run is ${\sim}330$ calls per agent. What remains open after it is the
 spatial analogue and a task pool wider than six items.
 
+\paragraph{The cross-vendor arm is no longer reproducible as run.}
+The four Chinese-lab configurations were served through Vultr Serverless
+Inference between 2026-07-02 and 2026-07-05. Every one of those four endpoints
+has since been withdrawn from that provider. Checked on 2026-09-28,
+\texttt{glm-5.2-fp8}, \texttt{kimi-k2.6}, \texttt{minimax-m2.7} and
+\texttt{qwen3.6-27b} are all absent from its model list; what remains are a
+non-FP8 \texttt{glm-5.2} and a successor \texttt{minimax-m3}. Anyone running
+our scripts against that provider today will reproduce neither the numbers nor
+the error.
+
+We record the provenance so the results stay auditable even though the
+endpoints do not. Each trajectory carries the upstream identifier the provider
+reported --- \texttt{zai-org/GLM-5.2-FP8}, \texttt{moonshotai/Kimi-K2.6},
+\texttt{MiniMaxAI/MiniMax-M2.7}, \texttt{Qwen/Qwen3.6-27B} --- so the weights
+are named even where the hosting is gone, and the released trajectories contain
+every prompt and response the analysis consumes; \texttt{scripts/model\_provenance.py}
+regenerates that table from the trajectories and, with \texttt{--check-live},
+re-queries the provider so the withdrawal is checked rather than asserted.
+Reproduction therefore needs a
+different host for those weights, or the weights themselves; re-measurement on
+the successor models would be a different experiment and we would report it as
+one.
+
+This is not special to us. Any agent benchmark that runs on hosted endpoints
+inherits a shelf life set by the vendor rather than the experiment, and a
+twelve-week half-life is short enough that ``we release our code'' does not by
+itself mean ``you can run it''. Releasing the trajectories rather than only the
+runner is what keeps the claim checkable, and we would encourage the practice
+generally. It is also why we do not treat the four Chinese-lab agents as a
+replication we could repeat on demand: they are a snapshot, taken on a stated
+date, of models that were briefly reachable.
+
 \paragraph{Contamination probe.}
 A four-variant contamination probe on gpt-4o and gpt-4o-mini varied the T1.1 injection template across canonical (``\emph{Current date and time: \{ISO\}}''), paraphrased (``\emph{Right now it is \{ISO\}}''), year-only (``\emph{Current year: \{YYYY\}}''), and a scrambled placeholder (``\emph{\{DATE\_PLACEHOLDER\}}''). Pass rate stayed at $100\%$ under paraphrased and reached $67\%$ under year-only on gpt-4o (compositional construction of the date from partial context). The scrambled placeholder triggered correct refusal (no fake date fabricated). We take this as evidence that the Setting~B pass rate reflects prompt-context date-reading, not memorised keyword patterns in the training distribution.
 

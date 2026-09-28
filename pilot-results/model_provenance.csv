@@ -1,0 +1,29 @@
+provider,label,n,first_utc,last_utc,upstream_id
+Vultr Serverless Inference,glm-5.2-fp8,181,2026-07-02,2026-07-05,zai-org/GLM-5.2-FP8
+Vultr Serverless Inference,kimi-k2.6,239,2026-07-02,2026-07-05,moonshotai/Kimi-K2.6
+Vultr Serverless Inference,minimax-m2.7,240,2026-07-02,2026-07-05,MiniMaxAI/MiniMax-M2.7
+Vultr Serverless Inference,qwen3.6-27b,240,2026-07-02,2026-07-05,Qwen/Qwen3.6-27B
+first-party API,anthropic_claude-haiku-4-5,180,2026-05-31,2026-05-31,claude-haiku-4-5
+first-party API,anthropic_claude-sonnet-4-6,180,2026-06-01,2026-06-01,claude-sonnet-4-6
+first-party API,claude-haiku-4-5,360,2026-06-01,2026-06-01,claude-haiku-4-5
+first-party API,claude-sonnet-4-6,360,2026-06-01,2026-06-01,claude-sonnet-4-6
+first-party API,claude-sonnet-4-6-thinking,540,2026-06-01,2026-06-26,claude-sonnet-4-6
+first-party API,deepseek-r1-14b-brief,60,2026-06-21,2026-06-21,deepseek-r1-distill-qwen-14b
+first-party API,deepseek-r1-14b-high,60,2026-06-02,2026-06-02,deepseek-r1-distill-qwen-14b
+first-party API,deepseek-r1-14b-low,60,2026-06-02,2026-06-02,deepseek-r1-distill-qwen-14b
+first-party API,deepseek-r1-14b-med,60,2026-06-02,2026-06-02,deepseek-r1-distill-qwen-14b
+first-party API,deepseek-r1-14b-natural,60,2026-06-21,2026-06-21,deepseek-r1-distill-qwen-14b
+first-party API,deepseek-r1-14b-thorough,60,2026-06-21,2026-06-21,deepseek-r1-distill-qwen-14b
+first-party API,gpt-4o,690,2026-06-01,2026-09-27,gpt-4o
+first-party API,gpt-4o-mini,690,2026-06-01,2026-09-27,gpt-4o-mini
+first-party API,gpt-5.1,690,2026-06-01,2026-09-27,gpt-5.1
+first-party API,o3,870,2026-06-01,2026-09-27,o3
+first-party API,o4-mini,870,2026-06-01,2026-09-27,o4-mini
+first-party API,o4-mini-high,60,2026-06-01,2026-06-01,o4-mini
+first-party API,o4-mini-low,60,2026-06-01,2026-06-01,o4-mini
+first-party API,openai_gpt-4o,180,2026-05-31,2026-05-31,gpt-4o
+first-party API,openai_gpt-4o-mini,180,2026-05-30,2026-05-31,gpt-4o-mini
+first-party API,openai_gpt-5.1,180,2026-05-31,2026-05-31,gpt-5.1
+first-party API,openai_o3,180,2026-05-31,2026-06-01,o3
+first-party API,openai_o4-mini,60,2026-05-31,2026-05-31,o4-mini
+first-party API,oss_qwen2.5-7b-instruct-yuezhao,180,2026-06-01,2026-06-01,qwen2.5-7b-instruct
