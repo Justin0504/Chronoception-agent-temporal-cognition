@@ -1,0 +1,14 @@
+agent,reasoning,n,vs_tau_wall,vs_output_len
+gpt-4o-mini,no,60,0.7643,0.9089
+gpt-4o,no,60,0.6012,0.6101
+gpt-5.1,yes,24,0.4923,0.4581
+o3,yes,35,0.0898,0.4823
+o4-mini,yes,75,0.0576,0.3623
+Claude Haiku 4.5,no,58,0.4207,0.4773
+Claude Sonnet 4.6,no,58,0.5142,0.5442
+Sonnet 4.6 + thinking,yes,26,0.0818,0.06
+Qwen2.5-7B,no,57,0.1814,0.7354
+GLM-5.2-FP8,no,57,-0.2476,0.3903
+Kimi-K2.6,yes,34,0.4372,0.4412
+MiniMax-M2.7,yes,22,-0.5824,0.4753
+Qwen3.6-27B,no,60,0.3561,0.7185

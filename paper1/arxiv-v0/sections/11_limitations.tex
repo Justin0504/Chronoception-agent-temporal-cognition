@@ -12,6 +12,78 @@
 \item \emph{Not that $\ccestar = 0.20$ is unique.} The structural claim does not depend on the precise threshold.
 \end{itemize}
 
+\paragraph{Four objections we take seriously.}
+
+\emph{1. ``Give it a clock tool and the problem disappears.''} The strongest
+practitioner objection, and the one that decides whether any of this matters
+outside the lab. We ran the intervention it proposes. Setting~B injects the
+current time directly into the context, which is the tool's return value
+without the tool call: it lifts T1.1 accuracy to $\geq 96\%$ panel-wide and
+moves $\CAR$ by $|\Delta\CAR| \leq 0.01$. Reading a clock and honouring a
+budget are different capabilities, and the intervention buys the first only.
+
+A sharper version of the objection asks for a harness that polls a clock and
+interrupts. That works, and we concede it without reservation --- it is the
+Injection Tell generalised, and \S\ref{sec:injection-tell} documents three
+closed labs already doing it. But note where the perception then lives. An
+agent that is interrupted by a deadline is not an agent that plans under one:
+it cannot trade breadth against time, cannot decide to stop early, cannot tell
+you at minute four that thirty will not be enough. Our position is not that
+chronoception cannot be engineered. It is that every current workaround puts
+it outside the policy, and a policy that cannot perceive the budget cannot
+reason about it.
+
+\emph{2. ``$\twall$ belongs to the serving stack, not to the model.''} The
+sharpest objection, because its premise is correct. Wall-clock duration depends
+on batching, queue depth and hardware; asking a model how long it took can look
+like asking a function how much CPU its scheduler granted it. So we tested what
+$\tself$ is a readout \emph{of}, correlating it within each agent against
+$\twall$ and against the length of the model's own visible output --- a
+quantity the model does have access to (App.~\ref{app:l3-detail}).
+
+$\tself$ tracks the output, not the clock. Panel medians: Spearman $+0.356$
+against $\twall$ and $+0.477$ against output length. The split is where it
+becomes diagnostic. For non-reasoning agents, generation time is roughly
+proportional to tokens emitted, the two predictors are collinear, and both
+correlate ($+0.421$ and $+0.610$). For reasoning-mode agents, where hidden
+chain-of-thought inflates $\twall$ without touching the visible answer, the
+correlation with wall-clock collapses to $+0.086$ while the correlation with
+output holds at $+0.450$. Two agents invert outright: MiniMax-M2.7 at $-0.582$
+and GLM-5.2 at $-0.248$ report \emph{shorter} durations the longer they
+actually run.
+
+We therefore grant the premise and deny the conclusion. The self-report is
+indeed a faithful readout of something the model can observe --- how much it
+wrote. It is not a report of duration, and it stops resembling one exactly when
+the two come apart. This is also the mechanism \S\ref{ssec:reverse-scaling}
+posits for Reverse-Scaling, here measured directly rather than inferred. And
+the deployment argument is untouched by the ownership question: budgets are set
+in wall-clock seconds and overruns accrue in wall-clock seconds, whoever the
+clock belongs to.
+
+\emph{3. ``Sixty seconds of LoRA closes it, so how structural can it be?''}
+Our own positive control (\S\ref{ssec:a1-positive-control}) is the ammunition
+here, and the answer is that it demonstrates the thesis rather than denting it.
+The thesis is not that the gap is unfixable; it is that it must be
+\emph{installed}, because no token-only loss will produce it. A fine-tune on
+wall-clock-supported targets is an installation --- it requires having measured
+$\twall$ at training time and written it into the targets, which is precisely
+the outside-the-loss supervision Observation~\ref{thm:cit} says is necessary.
+What the control does not do is reach the action axis: it moves retrospective
+$\tself$ and leaves $\CAR$ where it was, exactly as \S\ref{sec:l2} predicts of
+any narrative-axis intervention. Cheap to install on one axis, still absent on
+the other, and installed by nobody in the deployed panel.
+
+\emph{4. ``Orchestration will route around it.''} The field is scaling out:
+a recent survey of the long-horizon literature counts hundreds of papers on
+multi-agent orchestration against a handful on hardening the single-agent loop.
+Orchestration does not install chronoception in any of the parts. A supervisor
+allocating deadlines across sub-agents is allocating a resource none of them
+can perceive, and collecting progress reports none of them can ground --- and
+our panel shows the failure is not a property of any one vendor's model to be
+routed around, but present on all fourteen configurations from seven vendors.
+Distributing a blind spot across more agents multiplies it.
+
 \paragraph{Empirical limitations.}
 Panel: 14 agents, $\sim$5{,}900 traj. Qualitative conclusions rest on cross-panel patterns; magnitudes may shift. Self-narration parsing: $3\%$ human-disagreement rate. All trajectories English. Within-trajectory drift (pre-registered P8, P9) not measured. GPT-5.1 provider-side M1 injection reported as confound.
 

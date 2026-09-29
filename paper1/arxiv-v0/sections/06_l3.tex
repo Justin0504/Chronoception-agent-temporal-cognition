@@ -18,7 +18,7 @@ For a fixed agent under Assumption~\ref{ass:token-only} (hence Observation~\ref{
 \end{theorem}
 
 \begin{proof}[Sketch]
-Under CIT, $p(\tself)$ is invariant to $\twall$: no gradient signal ties one to the other. The inference-time distribution $p(\tself \mid K) = p(\tself)$ for all $K$. By assumption, $\twall(K)$ is strictly increasing. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in $K$ in expectation. The sign of $\confab$ turns negative once hidden CoT comes to dominate $\twall$, because $p(\tself)$ stays anchored to the surface output; the theorem itself constrains only $|\confab|$.
+Under CIT, $p(\tself)$ is invariant to $\twall$: no gradient signal ties one to the other. The inference-time distribution $p(\tself \mid K) = p(\tself)$ for all $K$. By assumption, $\twall(K)$ is strictly increasing. Therefore $|\log_{10}(\tself/\twall)|$ is monotone non-decreasing in $K$ in expectation. The sign of $\confab$ turns negative once hidden CoT comes to dominate $\twall$, because $p(\tself)$ stays anchored to the surface output; the theorem itself constrains only $|\confab|$. That anchoring is measured rather than assumed: across the panel $\tself$ correlates $+0.477$ with the length of the model's visible output and only $+0.356$ with $\twall$, and among reasoning-mode agents --- where hidden CoT separates the two --- the clock correlation collapses to $+0.086$ while the output correlation holds at $+0.450$ (App.~\ref{app:l3-detail}).
 \end{proof}
 
 \begin{figure}[h]
