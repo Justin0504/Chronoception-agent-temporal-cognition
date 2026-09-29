@@ -92,24 +92,32 @@ $\{10, 30, 60, 300, 900\}$\,s, under both a neutral framing
 (``\textit{You have $\budget$ seconds}'') and T2.3's instructed framing, plus
 an unconstrained control, with $\budget$ recorded as a field.
 
-\emph{The instruction effect is vendor-dependent, and we ran the cross-vendor
-arm to find that out.} Moving from the neutral framing to T2.3's instructed
-framing changes the elasticity by $-0.088$ on o4-mini, $-0.084$ on gpt-4o-mini,
-$-0.066$ on o3, $-0.012$ on gpt-5.1 and $+0.016$ on gpt-4o: on four of the five
-OpenAI configurations the instruction makes the agent \emph{less} responsive to
-the budget, not more, so for those agents the T2.3 number measures spontaneous
-L1 rather than bounding it. Sonnet 4.6 does the opposite, and by the largest
-margin of any agent: $+0.123$, neutral $+0.216$ against instructed $+0.339$.
+\emph{The instruction effect is not a constant of the phenomenon.} Moving from
+the neutral framing to T2.3's instructed framing changes the elasticity by
+$-0.088$ on o4-mini, $-0.084$ on gpt-4o-mini, $-0.066$ on o3, $-0.012$ on
+gpt-5.1 and $+0.016$ on gpt-4o --- on four of the five OpenAI configurations
+the instruction makes the agent \emph{less} responsive to the budget, so for
+those agents the T2.3 number measures spontaneous L1 rather than bounding it.
+Both Sonnet 4.6 configurations go the other way and by larger margins:
+$+0.123$ without extended thinking and $+0.290$ with it, the largest effect in
+the panel.
 
-We flag this rather than average it away. An earlier draft of this section,
-written before the Anthropic arm was run, concluded that the instruction was
-not what produced the effect and withdrew the caveat outright. That
-generalisation does not survive its first test outside one vendor. The honest
-statement is narrower: for the OpenAI models the caveat is withdrawn, and for
-Sonnet 4.6 the instructed wording does inflate the response, so the T2.3 figure
-on the Anthropic rows of Table~\ref{tab:l1-elasticity} should still be read as
-an upper bound on spontaneous Parkinson. Which rows carry the caveat is now a
-measured question rather than an assumed one.
+The two groups do not overlap --- every OpenAI value is at or below $+0.016$
+and both Anthropic values at or above $+0.123$ --- and the exact one-sided
+rank test on that split gives $p = 0.048$. We decline to call this a vendor
+effect. The two Anthropic configurations are one base model with and without a
+thinking mode, so they are not independent draws; what the data support is that
+one model family responds to the instruction in the opposite direction from
+five configurations of another, not that the boundary follows the vendor.
+
+What this does settle is narrower and still useful. An earlier draft of this
+section, written before any non-OpenAI arm existed, concluded that the
+instruction was not what produced the budget response and withdrew the caveat
+outright. That generalisation does not survive contact with a second model
+family. The caveat is withdrawn for the OpenAI rows of
+Table~\ref{tab:l1-elasticity} and retained for the Anthropic ones, where the
+instructed T2.3 figure should still be read as an upper bound on spontaneous
+Parkinson --- and which rows carry it is now measured rather than assumed.
 
 \emph{The elasticity is a property of the task as much as the agent.} It is not
 one constant: across the six questions it runs from $+0.006$ (``\textit{What is
@@ -117,13 +125,18 @@ the capital of Australia?}'') to $+0.487$ (``\textit{How does a transformer
 work?}''). What predicts it is the task's \emph{expansion headroom} --- the
 duration the agent takes when given no deadline at all (Fig.~\ref{fig:e11}).
 The rank correlation between that control duration and the fitted elasticity is
-positive on all six agents across two vendors: $+1.000$ on o4-mini
-(permutation $p = 0.003$), $+0.943$ on gpt-4o-mini and on o3 ($p = 0.015$
-each), $+0.771$ on gpt-5.1 and on Sonnet 4.6 ($p = 0.104$ and $0.102$) and
-$+0.714$ on gpt-4o ($p = 0.135$). Each test rests on six questions, so three do
-not clear $0.05$ alone; combining the six independent tests by Fisher's method
-gives $\chi^2_{12} = 41.5$, $p = 4.0\times10^{-5}$. Unlike the instruction
-effect above, this one does cross the vendor boundary.
+positive on all seven configurations: $+1.000$ on o4-mini (permutation
+$p = 0.003$), $+0.943$ on gpt-4o-mini, o3 and Sonnet 4.6 $+$ thinking
+($p = 0.015$, $0.015$, $0.016$), $+0.771$ on gpt-5.1 and on base Sonnet 4.6
+($p = 0.104$, $0.102$) and $+0.714$ on gpt-4o ($p = 0.135$). Each test rests on
+six questions, so three do not clear $0.05$ alone; Fisher's method over the
+seven gives $\chi^2_{14} = 49.9$, $p = 6.5\times10^{-6}$.
+
+That the extended-thinking configuration obeys the law as tightly as any other
+is the part worth keeping. Reverse-Scaling's own exemplar is not exempt from
+it: how much the task can absorb governs the budget response whether or not a
+hidden chain-of-thought is running. The headroom constraint is the more basic
+of the two.
 
 An agent cannot fill time it has nothing to fill with: a one-word answer shows
 no Parkinson at any budget, and a generative task shows the most. The test has
@@ -147,7 +160,7 @@ claim the within-agent law only.
 \caption{E11. \textbf{(a)} The budget response itself: median $\twall$ against
 the stated deadline, one line per question, against the diagonal Parkinson's
 law would trace. \textbf{(b)} Why the lines differ: the fitted elasticity
-against the task's expansion headroom, across six agents from two vendors.}
+against the task's expansion headroom, across seven configurations from two vendors.}
 \label{fig:e11}
 \end{figure}
 

@@ -35,3 +35,9 @@ sonnet,q3_rna,0.2033,6.7,5
 sonnet,q4_carbon,0.2106,5.55,5
 sonnet,q5_transformer,0.3084,14.31,5
 sonnet,q6_lighthouse,0.3419,11.18,5
+sonnet-thinking,q1_capital,0.007,2.39,5
+sonnet-thinking,q2_ww1,0.1068,5.47,5
+sonnet-thinking,q3_rna,0.2561,7.88,5
+sonnet-thinking,q4_carbon,0.2129,6.92,5
+sonnet-thinking,q5_transformer,0.3074,14.88,5
+sonnet-thinking,q6_lighthouse,0.3294,10.51,5
