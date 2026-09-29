@@ -107,6 +107,8 @@ AGENTS = {
     "o4-mini":     ("openai", "o4-mini"),
     "gpt-5.1":     ("openai", "gpt-5.1"),
     "o3":          ("openai", "o3"),
+    "sonnet":          ("anthropic", "claude-sonnet-4-6"),
+    "sonnet-thinking": ("anthropic", "claude-sonnet-4-6"),
     "glm-5.2":     ("vultr",  "glm-5.2"),
     "minimax-m3":  ("vultr",  "minimax-m3"),
 }
@@ -127,6 +129,23 @@ def call_agent(label: str, prompt: str) -> tuple[str, float, dict]:
             body["temperature"] = 1.0
         url = "https://api.openai.com/v1/chat/completions"
         hdr = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    elif backend == "anthropic":
+        body = {"model": model, "max_tokens": 4096,
+                "system": SYSTEM,
+                "messages": [{"role": "user", "content": prompt}]}
+        if label.endswith("thinking"):
+            # Sonnet 4.6 takes adaptive thinking; budget_tokens is deprecated there
+            body["thinking"] = {"type": "adaptive"}
+        url = "https://api.anthropic.com/v1/messages"
+        hdr = {"x-api-key": os.environ["ANTHROPIC_API_KEY"],
+               "anthropic-version": "2023-06-01",
+               "content-type": "application/json"}
+        t0 = time.time()
+        d = _post(url, body, hdr)
+        elapsed = time.time() - t0
+        text = "".join(b.get("text", "") for b in d.get("content", [])
+                       if b.get("type") == "text")
+        return text, elapsed, d.get("usage", {})
     else:
         key = os.environ["VULTR_KEY_1"]
         base = os.environ.get("VULTR_BASE_URL", "https://api.vultrinference.com/v1")
@@ -183,7 +202,8 @@ def run_cell(agent: str, qid: str, budget: int | None, framing: str, rep: int) -
             "rep": rep,
             "prompt": prompt,
             "response_chars": len(text),
-            "completion_tokens": usage.get("completion_tokens"),
+            "completion_tokens": usage.get("completion_tokens") or usage.get("output_tokens"),
+            "prompt_tokens": usage.get("prompt_tokens") or usage.get("input_tokens"),
             "runner_uuid": uuid.uuid4().hex,
         },
     }

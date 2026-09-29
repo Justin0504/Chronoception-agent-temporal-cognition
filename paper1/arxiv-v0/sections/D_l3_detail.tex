@@ -151,3 +151,47 @@ $\mathrm{score}_{T_3}$ & 0.248 & 0.933 & \\
 \paragraph{Relation to the panel $\cce$.} The aggregate in this table, written $\cce_9$, is computed over all nine sub-capabilities with each sub-score normalised to $[0,1]$. It is not the same normalisation as the panel $\cce$ of \S\ref{sec:epsilon}, which averages two unbounded axis medians and is reported for cross-agent ranking; $\cce_9$ is reported to show \emph{which} sub-capabilities drive an agent's aggregate, and the two should not be read off against each other cell by cell. They do agree where it matters: $\cce_9(\text{Sonnet 4.6}) = 0.521$ against a panel $\cce$ of $0.536$. That agreement is itself a check --- under the superseded impute-zero convention the panel figure read $0.316$, which the nine-capability decomposition never supported.
 
 The decomposition makes the structural claim concrete: Sonnet 4.6 has used the narrative-axis closure (T3 row reads $0.068, 0.206, 0.470$) to drag its aggregate to the panel minimum, but the action axis (T2.1 $0.767$, T2.3 $0.950$) holds it above $\ccestar$. No amount of further narrative-axis training closes that gap.
+
+\subsection*{D.x E12 --- forcing an estimate}
+
+The panel's effective $n_\rho$ counts trajectories where a duration was
+parsed, which merges two behaviours. Separating them on $n = 50$ per arm
+(Sonnet 4.6, $\pm$ extended thinking):
+
+\begin{table}[h]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\caption{E12. \emph{Hedged} is refusal-shaped language; \emph{no number} is
+what actually costs the panel its $n$. Only the second is what the panel
+counts, and only the thinking variant exhibits it.}
+\label{tab:e12}
+\begin{tabular}{llccccc}
+\toprule
+Agent & Arm & hedged & no number & $n_\rho$ & median $\confab$ & 95\% CI \\
+\midrule
+\multirow{3}{*}{Sonnet 4.6}
+ & panel     & $66\%$ & $0\%$ & 50 & $+0.140$ & $[+0.080, +0.213]$ \\
+ & forced    & $4\%$  & $0\%$ & 50 & $+0.162$ & $[+0.074, +0.198]$ \\
+ & forced-CI & $8\%$  & $0\%$ & 50 & $+0.001$ & $[-0.055, +0.096]$ \\
+\midrule
+\multirow{3}{*}{\ $+$ thinking}
+ & panel     & $66\%$ & $24\%$ & 38 & $-0.087$ & $[-0.188, -0.029]$ \\
+ & forced    & $14\%$ & $0\%$  & 50 & $-0.245$ & $[-0.287, -0.211]$ \\
+ & forced-CI & $40\%$ & $0\%$  & 50 & $-0.248$ & $[-0.312, -0.146]$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three readings. Hedging is near-universal and almost orthogonal to answering:
+the base model hedges on two thirds of trajectories and supplies a number on
+all of them. Declining is confined to the thinking variant and is fully
+dissolved by one sentence of instruction, which is not how an inaccessible
+quantity behaves. And the recovered trajectories carry a \emph{more} negative
+$\confab$ than the volunteered ones ($-0.245$ against $-0.087$), so the
+selection in the panel understates the effect; the base model's $+0.022$ shift
+is the control.
+
+The forced-CI arm is reported for completeness and is not used in the paper's
+claims: asking for a range moves the base model's point estimate to $+0.001$,
+a $-0.139$ shift, which suggests the range request changes what is being
+estimated rather than only how it is expressed.
