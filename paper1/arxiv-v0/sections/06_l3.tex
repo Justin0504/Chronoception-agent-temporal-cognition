@@ -56,23 +56,45 @@ declining to estimate is a surface disposition of post-training, distributed
 very unevenly across configurations, and not a representation of the
 underlying absence.
 
-\paragraph{Two consequences we report rather than absorb.}
-First, $\rho$ for the high-refusal agents is computed on a \emph{selected}
+\paragraph{Two consequences, and what we did about the first.}
+First, $\confab$ for the high-refusal agents is computed on a \emph{selected}
 subsample --- the trajectories where the agent chose to commit a number.
 Sonnet 4.6 $+$ thinking's $n_\rho = 10$ under Setting~A is not a parsing
-failure but a $57\%$ refusal rate, and its contribution to the cross-model
-sign flip (Fig.~\ref{fig:reverse-scaling}b) therefore rests on the $43\%$ where
-it answered. We cannot bound the direction of that selection from these data;
-the intra-model effort ladder and the cross-vendor comparison, whose agents
-refuse at $13\%$ and $5\%$, do not carry the same exposure, and the theorem's
-magnitude claim is confirmed on all of them.
+failure but a $57\%$ refusal rate, and its contribution to the cross-model sign
+flip (Fig.~\ref{fig:reverse-scaling}b) therefore rests on the $43\%$ where it
+answered. Rather than leave the direction of that selection unbounded, we
+measured it (E12).
 
-Second, the $18$ trajectories reporting \emph{exactly zero} seconds are
-excluded by the arithmetic rather than by choice: $\rho = \log_{10}(0/\twall)$
-is undefined. These are the most extreme under-reports the instrument can
-produce, so every $|\confab|$ we report is, by that much, an underestimate. The
-bias runs against our own claim, which is the direction we would rather it ran,
-but it should be stated.
+\paragraph{E12: removing the option to decline.} Three arms on a common task
+pool, differing only in whether declining is available: the verbatim T3.1
+wording, a \emph{forced} arm adding ``\textit{an estimate is required;
+``I cannot tell'' is not an available answer}'', and a \emph{forced-CI} arm
+asking for a point estimate plus a range, $n = 50$ per arm on Sonnet 4.6 with
+and without extended thinking.
+
+Two things separate that the panel's single $n_\rho$ conflates. \emph{Hedging}
+--- refusal-shaped language --- is near-universal: base Sonnet 4.6 hedges on
+$66\%$ of trajectories while still supplying a number every time. \emph{Declining},
+supplying no number at all, is what costs the panel its $n$, and it is confined
+to the thinking variant: $24\%$ against $0\%$ for the base model on this pool.
+Forcing eliminates it outright, $24\% \to 0\%$, which already says something
+about its nature. A refusal that a single sentence of instruction dissolves is
+not a report of an inaccessible quantity; it is a disposition about answering.
+
+\emph{The selection is not benign, and it runs against us.} On the thinking
+variant, median $\confab$ moves from $-0.087$ on the self-selected subsample
+($n_\rho = 38$) to $-0.245$ once every trajectory is answered ($n_\rho = 50$),
+a shift of $-0.158$. The trajectories the agent declines are the ones on which
+it would have under-reported \emph{most}, so the panel figure understates the
+magnitude rather than manufacturing it. The base model, which never declines,
+moves by $+0.022$ --- the control behaves as a control should. We therefore
+report the sign flip as real and, by roughly this much, conservative.
+
+Second, the trajectories reporting \emph{exactly zero} seconds are excluded by
+the arithmetic rather than by choice: $\confab = \log_{10}(0/\twall)$ is
+undefined. Those are the most extreme under-reports the instrument can produce.
+Both biases point the same way: every $|\confab|$ we report is, by that much,
+an underestimate.
 
 \subsection{The Calibration Catastrophe}
 \label{ssec:calibration}

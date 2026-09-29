@@ -77,7 +77,7 @@ ARMS = ["panel", "forced", "forced_ci"]
 
 for agent in agents:
     print(f"\n=== {agent} ===")
-    print(f"  {'arm':<11} {'n':>4} {'refused':>9} {'zero-report':>12} {'parsed':>7} "
+    print(f"  {'arm':<11} {'n':>4} {'hedged':>8} {'no number':>10} {'parsed':>7} "
           f"{'median rho':>11}  {'95% CI':>18}")
     base = None
     for arm in ARMS:
@@ -85,7 +85,12 @@ for agent in agents:
         if not v:
             continue
         n = len(v)
-        ref = sum(x["refused"] for x in v)
+        # Two different things, and the panel means the second one. "hedged"
+        # is refusal-shaped language, which base Sonnet emits constantly while
+        # still giving a number; "no_number" is what the panel counts as a drop.
+        hedged = sum(x["refused"] for x in v)
+        no_num = sum(x["ts"] is None for x in v)
+        ref = no_num
         zero = sum(x["ts"] == 0.0 for x in v)
         rhos = [log10(x["ts"] / x["tau_wall"]) for x in v
                 if x["ts"] and x["ts"] > 0 and x["tau_wall"] > 0]
@@ -93,7 +98,7 @@ for agent in agents:
         lo, hi = boot_ci(rhos)
         if arm == "panel":
             base = med
-        print(f"  {arm:<11} {n:4d} {ref/n*100:8.1f}% {zero/n*100:11.1f}% {len(rhos):7d} "
+        print(f"  {arm:<11} {n:4d} {hedged/n*100:7.0f}% {no_num/n*100:9.0f}% {len(rhos):7d} "
               f"{med:+11.3f}  [{lo:+.3f}, {hi:+.3f}]")
     if base == base:
         for arm in ARMS[1:]:
