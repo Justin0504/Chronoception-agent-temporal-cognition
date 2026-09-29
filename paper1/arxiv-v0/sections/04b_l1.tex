@@ -92,15 +92,24 @@ $\{10, 30, 60, 300, 900\}$\,s, under both a neutral framing
 (``\textit{You have $\budget$ seconds}'') and T2.3's instructed framing, plus
 an unconstrained control, with $\budget$ recorded as a field.
 
-\emph{The instruction was not what produced the effect.} Moving from the
-neutral framing to T2.3's instructed framing changes the elasticity by $-0.088$
-on o4-mini, $-0.084$ on gpt-4o-mini, $-0.066$ on o3, $-0.012$ on gpt-5.1 and
-$+0.016$ on gpt-4o. On four of the five the instruction makes the agent
-\emph{less} responsive to the budget, not more. So the T2.3 number is a
-measurement of spontaneous L1 rather than an upper bound on it, and we withdraw
-that caveat. The neutral-framing elasticities (median $+0.192$, range
-$+0.138$--$+0.258$) sit above the T2.3 panel median of $0.089$, which the next
-paragraph explains.
+\emph{The instruction effect is vendor-dependent, and we ran the cross-vendor
+arm to find that out.} Moving from the neutral framing to T2.3's instructed
+framing changes the elasticity by $-0.088$ on o4-mini, $-0.084$ on gpt-4o-mini,
+$-0.066$ on o3, $-0.012$ on gpt-5.1 and $+0.016$ on gpt-4o: on four of the five
+OpenAI configurations the instruction makes the agent \emph{less} responsive to
+the budget, not more, so for those agents the T2.3 number measures spontaneous
+L1 rather than bounding it. Sonnet 4.6 does the opposite, and by the largest
+margin of any agent: $+0.123$, neutral $+0.216$ against instructed $+0.339$.
+
+We flag this rather than average it away. An earlier draft of this section,
+written before the Anthropic arm was run, concluded that the instruction was
+not what produced the effect and withdrew the caveat outright. That
+generalisation does not survive its first test outside one vendor. The honest
+statement is narrower: for the OpenAI models the caveat is withdrawn, and for
+Sonnet 4.6 the instructed wording does inflate the response, so the T2.3 figure
+on the Anthropic rows of Table~\ref{tab:l1-elasticity} should still be read as
+an upper bound on spontaneous Parkinson. Which rows carry the caveat is now a
+measured question rather than an assumed one.
 
 \emph{The elasticity is a property of the task as much as the agent.} It is not
 one constant: across the six questions it runs from $+0.006$ (``\textit{What is
@@ -108,11 +117,13 @@ the capital of Australia?}'') to $+0.487$ (``\textit{How does a transformer
 work?}''). What predicts it is the task's \emph{expansion headroom} --- the
 duration the agent takes when given no deadline at all (Fig.~\ref{fig:e11}).
 The rank correlation between that control duration and the fitted elasticity is
-positive on all five agents: $+1.000$ on o4-mini (permutation $p = 0.003$),
-$+0.943$ on gpt-4o-mini and on o3 ($p = 0.015$ each), $+0.771$ on gpt-5.1
-($p = 0.104$) and $+0.714$ on gpt-4o ($p = 0.135$). Each test rests on six
-questions, so two do not clear $0.05$ alone; combining the five independent
-tests by Fisher's method gives $\chi^2_{10} = 37.0$, $p = 5.7\times10^{-5}$.
+positive on all six agents across two vendors: $+1.000$ on o4-mini
+(permutation $p = 0.003$), $+0.943$ on gpt-4o-mini and on o3 ($p = 0.015$
+each), $+0.771$ on gpt-5.1 and on Sonnet 4.6 ($p = 0.104$ and $0.102$) and
+$+0.714$ on gpt-4o ($p = 0.135$). Each test rests on six questions, so three do
+not clear $0.05$ alone; combining the six independent tests by Fisher's method
+gives $\chi^2_{12} = 41.5$, $p = 4.0\times10^{-5}$. Unlike the instruction
+effect above, this one does cross the vendor boundary.
 
 An agent cannot fill time it has nothing to fill with: a one-word answer shows
 no Parkinson at any budget, and a generative task shows the most.
@@ -131,7 +142,7 @@ claim the within-agent law only.
 \caption{E11. \textbf{(a)} The budget response itself: median $\twall$ against
 the stated deadline, one line per question, against the diagonal Parkinson's
 law would trace. \textbf{(b)} Why the lines differ: the fitted elasticity
-against the task's expansion headroom, across five agents.}
+against the task's expansion headroom, across six agents from two vendors.}
 \label{fig:e11}
 \end{figure}
 

@@ -29,3 +29,9 @@ o4-mini,q3_rna,0.2081,4.51,5
 o4-mini,q4_carbon,0.1581,4.07,5
 o4-mini,q5_transformer,0.2779,6.84,5
 o4-mini,q6_lighthouse,0.1193,3.48,5
+sonnet,q1_capital,0.0822,1.8,5
+sonnet,q2_ww1,0.1466,5.61,5
+sonnet,q3_rna,0.2033,6.7,5
+sonnet,q4_carbon,0.2106,5.55,5
+sonnet,q5_transformer,0.3084,14.31,5
+sonnet,q6_lighthouse,0.3419,11.18,5
