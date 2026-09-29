@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{28}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -19,6 +19,11 @@ Jake Bruce, Michael~D. Dennis, Ashley Edwards, Jack Parker-Holder, Yuge Shi,
 \newblock In \emph{Proceedings of the 41st International Conference on Machine
   Learning (ICML)}, volume 235 of \emph{PMLR}, pages 4603--4623, 2024.
 
+\bibitem[Chen et~al.(2026)Chen, Wang, and Qu]{chen2026horizongap}
+Mingguang Chen, Licheng Wang, and Bo~Qu.
+\newblock The horizon gap: Planning, memory, execution, training, and
+  evaluation for long-horizon {LLM} agents, 2026.
+
 \bibitem[Cheng et~al.(2025)Cheng, Moakhar, Fan, Hosseini, Faghih, Sodagar,
   Wang, and Feizi]{cheng2025temporallyblind}
 Yize Cheng, Arshia~Soltani Moakhar, Chenrui Fan, Parsa Hosseini, Kazem Faghih,
@@ -35,6 +40,11 @@ Zheng Chu, Jingchang Chen, Qianglong Chen, Weijiang Yu, Tao He, Haotian Wang,
   abilities in large language models.
 \newblock In \emph{Proceedings of the 62nd Annual Meeting of the Association
   for Computational Linguistics (ACL)}, 2024.
+
+\bibitem[Ding et~al.(2026)Ding, Nannapaneni, Liu, and Zhang]{ding2026alwayson}
+Tianyu Ding, Aditya Nannapaneni, Bingfan Liu, and Ling Zhang.
+\newblock Always-on agents: A survey of persistent memory, state, and
+  governance in {LLM} agents, 2026.
 
 \bibitem[Eagleman(2008)]{eagleman2008time}
 David~M. Eagleman.
@@ -107,6 +117,11 @@ Saurav Kadavath, Tom Conerly, Amanda Askell, Tom Henighan, Dawn Drain, Ethan
 \newblock Language models (mostly) know what they know.
 \newblock \emph{arXiv preprint arXiv:2207.05221}, 2022.
 
+\bibitem[Khanal et~al.(2026)Khanal, Tao, and Zhou]{khanal2026reliability}
+Aaditya Khanal, Yangyang Tao, and Junxiu Zhou.
+\newblock Beyond pass@1: A reliability science framework for long-horizon {LLM}
+  agents, 2026.
+
 \bibitem[Kwa et~al.(2025)Kwa, West, Becker, Deng, Garcia, Hasin, Jawhar,
   Kinniment, Rush, Von~Arx, Bloom, Broadley, Du, Goodrich, Jurkovic, Miles,
   Nix, Lin, Parikh, Rein, Sato, Wijk, Ziegler, Barnes, and
@@ -123,6 +138,10 @@ Thomas Kwa, Ben West, Joel Becker, Amy Deng, Katharyn Garcia, Max Hasin, Sami
 Romain Lacombe, Kerrie Wu, and Eddie Dilworth.
 \newblock Don't think twice! over-reasoning impairs confidence calibration.
 \newblock \emph{arXiv preprint arXiv:2508.15050}, 2025.
+
+\bibitem[Liu and Li(2026)]{liu2026costutility}
+Dan Liu and Jian Li.
+\newblock Cost-utility alignment in {LLM} agent trajectories, 2026.
 
 \bibitem[Liu et~al.(2024)Liu, Yu, Zhang, Xu, Lei, Lai, Gu, Ding, Men, Yang,
   Zhang, Deng, Zeng, Du, Zhang, Shen, Zhang, Su, Sun, Huang, Dong, and

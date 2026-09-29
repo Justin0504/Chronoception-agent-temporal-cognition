@@ -15,6 +15,28 @@ Augustine's \emph{Confessions} XI \citep{augustine_confessions} names the centra
 \paragraph{Inverse scaling and calibration.}
 \citet{inversescalingttc2025} documents inverse scaling in test-time compute on unrelated tasks; Reverse-Scaling (Theorem~\ref{thm:reverse-scaling}) is the structural analogue for chronoception with the additional content that degradation is provably monotone. The calibration literature \citep{guo2017calibration,jiang2021calibration,kadavath2022knowing,dontthinktwice2025} closes token-level confidence gaps; none applies to wall-clock duration (Calibration Catastrophe, \S\ref{ssec:calibration}).
 
+\paragraph{The 2026 long-horizon programme, and the instrument it assumes.}
+Three lines of current work converge on duration without measuring it.
+\emph{Reliability science for agents} \citep{khanal2026reliability} imports
+reliability-engineering vocabulary and substitutes task duration for time and
+non-completion for failure --- a framing this paper supports and supplies a
+mechanism for, since $\cce$ is precisely a per-agent parameter governing how
+far that duration can extend. \emph{Process-level evaluation}
+\citep{chen2026horizongap} responds to the loss of information in binary
+outcomes at long horizons by scoring signals inside the trajectory; the
+self-report is the most natural such signal an agent could emit about itself,
+and \S\ref{sec:l3} shows it is not grounded in the quantity it appears to
+describe. \emph{Cost attribution over trajectories}
+\citep{liu2026costutility} and \emph{always-on agents}
+\citep{ding2026alwayson} both make elapsed time an operational variable: an
+agent that cannot perceive duration cannot report spend or know how long it
+has been running.
+
+We do not claim these programmes are mistaken. We claim they presuppose an
+instrument that does not exist in the policy, and that our panel locates the
+presupposition precisely --- reading the clock is patchable at the harness
+(\S\ref{sec:injection-tell}), honouring a budget is not (\S\ref{sec:l2}).
+
 \paragraph{Aggregate agent benchmarks.}
 Aggregate benchmarks \citep{agentbench,swebench,webarena,gaia,kwa2025metrhorizons} measure task success across many capabilities; ChronoBench is diagnostic, isolating chronoception. Aggregate benchmarks reveal that chronoceptive failures correlate with long-horizon task failure (P12 evidence, \S\ref{sec:agentic-timeline}); diagnostic benchmarks supply the mechanism.
 

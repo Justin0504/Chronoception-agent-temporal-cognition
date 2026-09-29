@@ -3,7 +3,14 @@
 \section{From Measurement to Deployment: The Agentic Timeline}
 \label{sec:agentic-timeline}
 
-Industry is moving from minute-scale chat to hour-scale coding agents to day-scale autonomous research agents. At each new horizon a different sub-capability becomes load-bearing: T1.1 at chat (harness-patchable, \S\ref{sec:injection-tell}), T2.3 and T3.1 at hour-scale (agent must honour a budget and report progress truthfully), the full profile $(\parkinson, \CAR, \confab)$ at day-scale. Required calibration grows tighter with the horizon.
+Industry is moving from minute-scale chat to hour-scale coding agents to
+day-scale autonomous research agents, and the research literature has followed
+by making duration the independent variable: reliability frameworks for agents
+now substitute task duration for time and non-completion for failure
+\citep{khanal2026reliability}, and long-horizon surveys report that outcome
+signals lose information as the horizon grows \citep{chen2026horizongap}. This
+section supplies the term those frameworks are missing --- what sets the
+horizon at which an agent stops being reliable. At each new horizon a different sub-capability becomes load-bearing: T1.1 at chat (harness-patchable, \S\ref{sec:injection-tell}), T2.3 and T3.1 at hour-scale (agent must honour a budget and report progress truthfully), the full profile $(\parkinson, \CAR, \confab)$ at day-scale. Required calibration grows tighter with the horizon.
 
 \begin{hypothesis}[Agentic Timeline]
 \label{hyp:agentic-timeline}
@@ -22,4 +29,21 @@ On any horizon-stratified benchmark with $\geq 5$ horizon tiers, slope of succes
 \label{fig:p12-hcast}
 \end{figure}
 
-\citet{kwa2025metrhorizons} document horizon saturation empirically; we supply a structural mechanism. The Reverse-Scaling Theorem says the corner-case fix (more reasoning) makes it worse; the constructive fix (wall-clock-supported loss) is the subject of Paper 2 (\textsc{ChronoStack}).
+\citet{kwa2025metrhorizons} document horizon saturation empirically; we supply
+a structural mechanism. Theorem~\ref{thm:reverse-scaling} says the corner-case
+fix (more reasoning) makes it worse; the constructive fix
+(wall-clock-supported loss) is the subject of Paper 2 (\textsc{ChronoStack}).
+
+\paragraph{Why scaling out does not substitute.} The field's dominant response
+to horizon limits is orchestration --- surveys of the long-horizon literature
+find multi-agent coordination papers outnumbering work on the single-agent
+loop by orders of magnitude \citep{chen2026horizongap}. Orchestration does not
+install chronoception in any of the parts. A supervisor apportioning deadlines
+across sub-agents is apportioning a resource none of them can perceive, and
+aggregating progress reports none of them can ground: our panel measures
+$\tself$ tracking the agent's own output length rather than the clock
+(\S\ref{sec:limitations}), so a sub-agent reporting ``about two seconds'' is
+reporting how much it wrote. Nor is there a model to route around the problem
+to --- $\CAR \ll 1$ on all fourteen configurations from seven vendors. The
+bound applies to the orchestrator as much as to the worker, and a blind spot
+distributed across more agents is a blind spot multiplied.

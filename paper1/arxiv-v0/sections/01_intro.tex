@@ -8,8 +8,29 @@ A frontier reasoning model, asked how long the next task will take, predicts ``\
 \paragraph{The Augustine Problem.}
 Every training loss in current practice --- next-token cross-entropy, SFT, RLHF, RL with verifiable rewards, reasoning supervision --- is a functional of token sequences. None contains wall-clock time in its support. The models are deployed as agents in continuous physical time. We call the resulting representational gap \emph{the Augustine Problem}, after Augustine's confession that he knew what time was until asked to explain it.\footnote{We use \emph{chronoception} in the cognitive-science sense \citep{wittmann2009chronoception,eagleman2008time}: perception of one's own work duration. Distinct from \citet{goel2025chronocept}'s use for RAG fact validity.} The gap is structural: we prove (Observation~\ref{thm:cit}) that under any token-only loss the policy gradient carries no signal aligning the wall-clock with any internal representation. \emph{Chronoception cannot be acquired from token-only training. It must be installed.}
 
+\paragraph{Why this matters now.} The field has converged on \emph{duration}
+as the variable that governs agent reliability. Work adapting reliability
+engineering to agents replaces ``time'' with task duration and ``failure'' with
+non-completion \citep{khanal2026reliability}; surveys of the long-horizon
+literature report that binary success signals stop being informative as
+horizons grow, pushing evaluation toward process-level signals inside the
+trajectory \citep{chen2026horizongap}; persistent and always-on agents make
+duration a first-class operational concern \citep{ding2026alwayson}; and cost
+attribution over agent trajectories is now its own subfield
+\citep{liu2026costutility}. All four programmes take for granted an instrument
+this paper shows does not exist. An agent that cannot perceive its own elapsed
+time cannot supply a process-level signal about itself, cannot honour a
+duration budget, and cannot report what it has spent. Duration is being treated
+as the reliability variable by a field whose agents cannot measure it.
+
 \paragraph{Position.}
-This paper makes that claim precise, measures the failure across the current frontier, audits the industry workaround, and specifies what closing the gap requires. The framework's spine is three theorems (CIT, Reverse-Scaling, SIT), three empirical laws (L1--L3), and three papers (this one, \textsc{ChronoStack}, the Agentic Frontier). The three Times $(\twall, \tstep, \tself)$ of \S\ref{sec:three-times}, illustrated in Fig.~\ref{fig:three-times}, are the framework's fundamental objects.
+This paper makes that claim precise, measures the failure across the current
+frontier, audits the industry workaround, and specifies what closing the gap
+requires. The framework's spine is two structural observations (CIT, SIT), one
+theorem derived from them (Reverse-Scaling), three empirical laws (L1--L3), and
+three papers (this one, \textsc{ChronoStack}, the Agentic Frontier). The three
+Times $(\twall, \tstep, \tself)$ of \S\ref{sec:three-times}, illustrated in
+Fig.~\ref{fig:three-times}, are the framework's fundamental objects.
 
 \paragraph{Layered evidence.}
 We support the position with four independent evidence layers: \textbf{(a)} \textsc{ChronoBench}, a 9-capability diagnostic across 14 agents from 7 vendors ($\sim$5{,}900 trajectories), \textbf{(b)} the Injection Atlas, an audit of 11 closed-lab harnesses via leaked system prompts, \textbf{(c)} a toy positive control demonstrating CIT's constructive converse via wall-clock-supported LoRA SFT (Qwen2.5-1.5B crosses $\ccestar$ on T3.1 after $\sim$1\,min of training), \textbf{(d)} horizon-scaling correlational evidence on 14{,}709 public METR HCAST runs.

@@ -1,101 +1,106 @@
 \contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
 \contentsline {paragraph}{The Augustine Problem.}{3}{section.1}%
+\contentsline {paragraph}{Why this matters now.}{3}{section.1}%
 \contentsline {paragraph}{Position.}{3}{section.1}%
 \contentsline {paragraph}{Layered evidence.}{3}{section.1}%
 \contentsline {paragraph}{Contributions.}{3}{section.1}%
 \contentsline {section}{\numberline {2}The Three Times of an Agent}{4}{section.2}%
 \contentsline {paragraph}{Why three, not two or four?}{4}{definition.1}%
-\contentsline {section}{\numberline {3}The Augustine Problem and Its Impossibility}{5}{section.3}%
+\contentsline {section}{\numberline {3}The Augustine Problem and Its Impossibility}{4}{section.3}%
 \contentsline {paragraph}{Assumption (token-only loss support).}{5}{definition.2}%
 \contentsline {paragraph}{On calling this an observation.}{5}{observation.1}%
-\contentsline {paragraph}{Scope.}{5}{observation.1}%
+\contentsline {paragraph}{Scope.}{6}{observation.1}%
 \contentsline {paragraph}{Empirical predictions.}{6}{observation.1}%
 \contentsline {paragraph}{Augustine Threshold.}{6}{observation.1}%
 \contentsline {section}{\numberline {4}ChronoBench: A Diagnostic Instrument for the Three Axes}{6}{section.4}%
-\contentsline {paragraph}{Settings.}{6}{table.1}%
-\contentsline {paragraph}{Panel.}{6}{table.1}%
+\contentsline {paragraph}{Settings.}{7}{table.1}%
+\contentsline {paragraph}{Panel.}{7}{table.1}%
 \contentsline {paragraph}{Implementation and release.}{7}{table.1}%
-\contentsline {section}{\numberline {5}The Wall Axis: L1 Measured, Not Assumed}{7}{section.5}%
-\contentsline {paragraph}{Why not T1.3.}{7}{section.5}%
+\contentsline {section}{\numberline {5}The Wall Axis: L1 Measured, Not Assumed}{8}{section.5}%
+\contentsline {paragraph}{Why not T1.3.}{8}{section.5}%
 \contentsline {paragraph}{The design L1 needs is mostly already in T2.3.}{8}{section.5}%
 \contentsline {paragraph}{Result: present, and an order of magnitude too weak.}{8}{table.2}%
-\contentsline {paragraph}{E11: the same measurement on a design that can identify it.}{8}{table.2}%
-\contentsline {paragraph}{Relation to $\mathrm {CAR}$.}{9}{figure.2}%
-\contentsline {section}{\numberline {6}The Action Axis: L2 Step-Clock Conflation}{9}{section.6}%
-\contentsline {paragraph}{Result.}{10}{definition.3}%
-\contentsline {paragraph}{The $60$\,s tier, where the sign flips.}{10}{table.3}%
+\contentsline {paragraph}{E11: the same measurement on a design that can identify it.}{9}{table.2}%
+\contentsline {paragraph}{Relation to $\mathrm {CAR}$.}{10}{figure.2}%
+\contentsline {section}{\numberline {6}The Action Axis: L2 Step-Clock Conflation}{11}{section.6}%
+\contentsline {paragraph}{Result.}{11}{definition.3}%
+\contentsline {paragraph}{The $60$\,s tier, where the sign flips.}{11}{table.3}%
 \contentsline {paragraph}{The narrative-vs-action split.}{11}{table.3}%
-\contentsline {section}{\numberline {7}The Narrative Axis: Closure, Ceiling, and Catastrophe}{11}{section.7}%
-\contentsline {subsection}{\numberline {7.1}The Reverse-Scaling Theorem}{11}{subsection.7.1}%
-\contentsline {paragraph}{Assumption (budget-honoured reasoning).}{11}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Who Declines to Answer}{12}{subsection.7.2}%
-\contentsline {paragraph}{Reasoning-mode agents refuse an order of magnitude more often.}{12}{subsection.7.2}%
-\contentsline {paragraph}{Two consequences we report rather than absorb.}{12}{subsection.7.2}%
-\contentsline {subsection}{\numberline {7.3}The Calibration Catastrophe}{13}{subsection.7.3}%
-\contentsline {paragraph}{Two P11 crossings, one mechanism.}{13}{figure.4}%
-\contentsline {subsection}{\numberline {7.4}A positive control: wall-clock SFT installs partial chronoception}{13}{subsection.7.4}%
-\contentsline {paragraph}{Construction.}{13}{subsection.7.4}%
-\contentsline {paragraph}{Result.}{13}{subsection.7.4}%
-\contentsline {paragraph}{What it shows and does not show.}{13}{figure.5}%
-\contentsline {section}{\numberline {8}The Injection Tell: A Cross-Vendor Natural Experiment}{14}{section.8}%
-\contentsline {paragraph}{Why this is decisive.}{14}{table.4}%
-\contentsline {paragraph}{What injection does not close.}{14}{table.4}%
-\contentsline {section}{\numberline {9}The Chronoceptive Calibration Error $\varepsilon $}{14}{section.9}%
-\contentsline {paragraph}{Which axes, and why medians.}{14}{definition.4}%
-\contentsline {paragraph}{A correction to the convention.}{15}{definition.4}%
-\contentsline {paragraph}{What $\varepsilon $ is for, and what it is not.}{15}{figure.6}%
-\contentsline {paragraph}{Two findings.}{15}{figure.6}%
-\contentsline {section}{\numberline {10}From Measurement to Deployment: The Agentic Timeline}{16}{section.10}%
-\contentsline {paragraph}{Pre-registered P12 and HCAST support.}{16}{hypothesis.1}%
-\contentsline {section}{\numberline {11}Related Work and Positioning}{16}{section.11}%
-\contentsline {paragraph}{Concurrent work on agent temporal cognition.}{16}{section.11}%
-\contentsline {paragraph}{Foundational lineage.}{16}{section.11}%
-\contentsline {paragraph}{Distinguished from external-timeline reasoning.}{17}{section.11}%
-\contentsline {paragraph}{Inverse scaling and calibration.}{17}{section.11}%
-\contentsline {paragraph}{Aggregate agent benchmarks.}{17}{section.11}%
-\contentsline {section}{\numberline {12}Scope, Objections, and Falsification}{17}{section.12}%
-\contentsline {paragraph}{What we do not claim.}{17}{section.12}%
-\contentsline {paragraph}{Empirical limitations.}{17}{section.12}%
-\contentsline {paragraph}{Cross-lingual replication.}{17}{section.12}%
-\contentsline {paragraph}{A refusal asymmetry the English panel hides.}{18}{section.12}%
-\contentsline {paragraph}{The L1 crossed design (E11), now run.}{18}{section.12}%
-\contentsline {paragraph}{The cross-vendor arm is no longer reproducible as run.}{18}{section.12}%
-\contentsline {paragraph}{Contamination probe.}{19}{section.12}%
-\contentsline {paragraph}{Falsification.}{19}{section.12}%
-\contentsline {section}{\numberline {13}From Time to Space: The Spatiotemporal Generalisation}{19}{section.13}%
-\contentsline {section}{\numberline {14}Toward Agents That Inhabit Time}{20}{section.14}%
-\contentsline {section}{\numberline {A}Annotation Protocol}{23}{appendix.A}%
-\contentsline {paragraph}{T1.1 parser.}{23}{appendix.A}%
-\contentsline {paragraph}{T2.3 measurement.}{23}{appendix.A}%
-\contentsline {paragraph}{T3.1 parser ($\Pi $).}{23}{appendix.A}%
-\contentsline {paragraph}{Settings A and B.}{23}{appendix.A}%
-\contentsline {paragraph}{Reasoning model handling.}{23}{appendix.A}%
-\contentsline {paragraph}{Open-source serving.}{23}{appendix.A}%
-\contentsline {section}{\numberline {B}Full Panel Tables}{24}{appendix.B}%
-\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{24}{appendix.B}%
-\contentsline {paragraph}{Reading the CIs.}{24}{table.5}%
-\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{24}{table.5}%
-\contentsline {paragraph}{Per-budget $\mathrm {CAR}$ curves.}{25}{table.6}%
-\contentsline {paragraph}{Trajectory release.}{25}{table.6}%
-\contentsline {paragraph}{Reasoning-panel completeness update (Route B-1).}{25}{table.6}%
-\contentsline {paragraph}{The prospective--retrospective sign flip within Sonnet-thinking.}{25}{table.7}%
-\contentsline {paragraph}{o3's structural asymmetry.}{26}{table.7}%
-\contentsline {section}{\numberline {C}Atlas Evidence (Verbatim)}{26}{appendix.C}%
-\contentsline {paragraph}{ChatGPT (web product, OpenAI).}{26}{appendix.C}%
-\contentsline {paragraph}{Claude.ai (web product, Anthropic).}{26}{appendix.C}%
-\contentsline {paragraph}{Gemini app (Google).}{27}{appendix.C}%
-\contentsline {paragraph}{Raw OpenAI API --- empirical contrast.}{27}{appendix.C}%
-\contentsline {paragraph}{Raw Anthropic API --- empirical contrast.}{27}{appendix.C}%
-\contentsline {paragraph}{Cursor agent (dev tool).}{27}{appendix.C}%
-\contentsline {paragraph}{GitHub Copilot CLI (dev tool).}{27}{appendix.C}%
-\contentsline {paragraph}{Perplexity Computer (dev tool).}{27}{appendix.C}%
-\contentsline {paragraph}{Summary.}{27}{appendix.C}%
-\contentsline {section}{\numberline {D}L3 Sub-Failure Detail}{27}{appendix.D}%
-\contentsline {paragraph}{Relation to the panel $\varepsilon $.}{30}{table.12}%
-\contentsline {section}{\numberline {E}Spatiotemporal Generalisation Full Sketch}{30}{appendix.E}%
-\contentsline {paragraph}{Assumption (token-only spatial support).}{31}{appendix.E}%
-\contentsline {paragraph}{Observation\nobreakspace {}\ref {thm:sit} proof sketch.}{31}{appendix.E}%
-\contentsline {section}{\numberline {F}Operational Chronoception Audit Checklist}{33}{appendix.F}%
-\contentsline {paragraph}{The audit, in seven steps.}{33}{appendix.F}%
-\contentsline {paragraph}{What to do when an agent fails the audit.}{34}{Item.7}%
-\contentsline {paragraph}{What this audit does not cover.}{34}{Item.7}%
+\contentsline {section}{\numberline {7}The Narrative Axis: Closure, Ceiling, and Catastrophe}{12}{section.7}%
+\contentsline {subsection}{\numberline {7.1}The Reverse-Scaling Theorem}{12}{subsection.7.1}%
+\contentsline {paragraph}{Assumption (budget-honoured reasoning).}{12}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Who Declines to Answer}{13}{subsection.7.2}%
+\contentsline {paragraph}{Reasoning-mode agents refuse an order of magnitude more often.}{13}{subsection.7.2}%
+\contentsline {paragraph}{Two consequences, and what we did about the first.}{13}{subsection.7.2}%
+\contentsline {paragraph}{E12: removing the option to decline.}{13}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}The Calibration Catastrophe}{14}{subsection.7.3}%
+\contentsline {paragraph}{Two P11 crossings, one mechanism.}{14}{figure.4}%
+\contentsline {subsection}{\numberline {7.4}A positive control: wall-clock SFT installs partial chronoception}{14}{subsection.7.4}%
+\contentsline {paragraph}{Construction.}{14}{subsection.7.4}%
+\contentsline {paragraph}{Result.}{14}{subsection.7.4}%
+\contentsline {paragraph}{What it shows and does not show.}{14}{figure.5}%
+\contentsline {section}{\numberline {8}The Injection Tell: A Cross-Vendor Natural Experiment}{15}{section.8}%
+\contentsline {paragraph}{Why this is decisive.}{15}{table.4}%
+\contentsline {paragraph}{What injection does not close.}{15}{table.4}%
+\contentsline {section}{\numberline {9}The Chronoceptive Calibration Error $\varepsilon $}{15}{section.9}%
+\contentsline {paragraph}{Which axes, and why medians.}{16}{definition.4}%
+\contentsline {paragraph}{A correction to the convention.}{16}{definition.4}%
+\contentsline {paragraph}{What $\varepsilon $ is for, and what it is not.}{16}{figure.6}%
+\contentsline {paragraph}{Two findings.}{16}{figure.6}%
+\contentsline {section}{\numberline {10}From Measurement to Deployment: The Agentic Timeline}{17}{section.10}%
+\contentsline {paragraph}{Pre-registered P12 and HCAST support.}{17}{hypothesis.1}%
+\contentsline {paragraph}{Why scaling out does not substitute.}{17}{figure.7}%
+\contentsline {section}{\numberline {11}Related Work and Positioning}{18}{section.11}%
+\contentsline {paragraph}{Concurrent work on agent temporal cognition.}{18}{section.11}%
+\contentsline {paragraph}{Foundational lineage.}{18}{section.11}%
+\contentsline {paragraph}{Distinguished from external-timeline reasoning.}{18}{section.11}%
+\contentsline {paragraph}{Inverse scaling and calibration.}{18}{section.11}%
+\contentsline {paragraph}{The 2026 long-horizon programme, and the instrument it assumes.}{18}{section.11}%
+\contentsline {paragraph}{Aggregate agent benchmarks.}{18}{section.11}%
+\contentsline {section}{\numberline {12}Scope, Objections, and Falsification}{19}{section.12}%
+\contentsline {paragraph}{What we do not claim.}{19}{section.12}%
+\contentsline {paragraph}{Four objections we take seriously.}{19}{section.12}%
+\contentsline {paragraph}{Empirical limitations.}{20}{section.12}%
+\contentsline {paragraph}{Cross-lingual replication.}{20}{section.12}%
+\contentsline {paragraph}{A refusal asymmetry the English panel hides.}{20}{section.12}%
+\contentsline {paragraph}{The L1 crossed design (E11), now run.}{21}{section.12}%
+\contentsline {paragraph}{The cross-vendor arm is no longer reproducible as run.}{21}{section.12}%
+\contentsline {paragraph}{Contamination probe.}{21}{section.12}%
+\contentsline {paragraph}{Falsification.}{22}{section.12}%
+\contentsline {section}{\numberline {13}From Time to Space: The Spatiotemporal Generalisation}{22}{section.13}%
+\contentsline {section}{\numberline {14}Toward Agents That Inhabit Time}{22}{section.14}%
+\contentsline {section}{\numberline {A}Annotation Protocol}{26}{appendix.A}%
+\contentsline {paragraph}{T1.1 parser.}{26}{appendix.A}%
+\contentsline {paragraph}{T2.3 measurement.}{26}{appendix.A}%
+\contentsline {paragraph}{T3.1 parser ($\Pi $).}{26}{appendix.A}%
+\contentsline {paragraph}{Settings A and B.}{26}{appendix.A}%
+\contentsline {paragraph}{Reasoning model handling.}{26}{appendix.A}%
+\contentsline {paragraph}{Open-source serving.}{27}{appendix.A}%
+\contentsline {section}{\numberline {B}Full Panel Tables}{27}{appendix.B}%
+\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{27}{appendix.B}%
+\contentsline {paragraph}{Reading the CIs.}{27}{table.5}%
+\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{28}{table.5}%
+\contentsline {paragraph}{Per-budget $\mathrm {CAR}$ curves.}{28}{table.6}%
+\contentsline {paragraph}{Trajectory release.}{28}{table.6}%
+\contentsline {paragraph}{Reasoning-panel completeness update (Route B-1).}{28}{table.6}%
+\contentsline {paragraph}{The prospective--retrospective sign flip within Sonnet-thinking.}{29}{table.7}%
+\contentsline {paragraph}{o3's structural asymmetry.}{29}{table.7}%
+\contentsline {section}{\numberline {C}Atlas Evidence (Verbatim)}{29}{appendix.C}%
+\contentsline {paragraph}{ChatGPT (web product, OpenAI).}{29}{appendix.C}%
+\contentsline {paragraph}{Claude.ai (web product, Anthropic).}{29}{appendix.C}%
+\contentsline {paragraph}{Gemini app (Google).}{30}{appendix.C}%
+\contentsline {paragraph}{Raw OpenAI API --- empirical contrast.}{30}{appendix.C}%
+\contentsline {paragraph}{Raw Anthropic API --- empirical contrast.}{30}{appendix.C}%
+\contentsline {paragraph}{Cursor agent (dev tool).}{30}{appendix.C}%
+\contentsline {paragraph}{GitHub Copilot CLI (dev tool).}{30}{appendix.C}%
+\contentsline {paragraph}{Perplexity Computer (dev tool).}{30}{appendix.C}%
+\contentsline {paragraph}{Summary.}{30}{appendix.C}%
+\contentsline {section}{\numberline {D}L3 Sub-Failure Detail}{31}{appendix.D}%
+\contentsline {paragraph}{Relation to the panel $\varepsilon $.}{33}{table.12}%
+\contentsline {section}{\numberline {E}Spatiotemporal Generalisation Full Sketch}{35}{appendix.E}%
+\contentsline {paragraph}{Assumption (token-only spatial support).}{35}{appendix.E}%
+\contentsline {paragraph}{Observation\nobreakspace {}\ref {thm:sit} proof sketch.}{35}{appendix.E}%
+\contentsline {section}{\numberline {F}Operational Chronoception Audit Checklist}{37}{appendix.F}%
+\contentsline {paragraph}{The audit, in seven steps.}{37}{appendix.F}%
+\contentsline {paragraph}{What to do when an agent fails the audit.}{38}{Item.7}%
+\contentsline {paragraph}{What this audit does not cover.}{38}{Item.7}%
