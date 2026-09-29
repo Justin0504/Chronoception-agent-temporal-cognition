@@ -126,7 +126,12 @@ gives $\chi^2_{12} = 41.5$, $p = 4.0\times10^{-5}$. Unlike the instruction
 effect above, this one does cross the vendor boundary.
 
 An agent cannot fill time it has nothing to fill with: a one-word answer shows
-no Parkinson at any budget, and a generative task shows the most.
+no Parkinson at any budget, and a generative task shows the most. The test has
+room to fail: unconstrained durations across the pool span $0.6$\,s to
+$42.5$\,s, a factor of $71$, so the ranking is not being read off a narrow
+band. We use a rank correlation rather than a product-moment one precisely
+because one question (a short story, on gpt-5.1) sits an order of magnitude
+above the rest and should contribute its position, not its magnitude.
 
 The relationship does \emph{not} transfer across agents. Correlating each panel
 agent's T2.3 elasticity against its own unconstrained output duration gives
