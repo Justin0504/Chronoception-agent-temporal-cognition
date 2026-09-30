@@ -17,6 +17,16 @@ decomposes it along three times an agent must keep aligned, measures it across
 14 agents from 7 vendors, audits the workaround industry has converged on, and
 turns it into a deployment bound.
 
+**Why the paper is positioned this way.** The field has converged on *duration*
+as the variable governing agent reliability — reliability frameworks for agents
+substitute task duration for time and non-completion for failure; long-horizon
+surveys report binary outcomes losing information as horizons grow, pushing
+evaluation toward process-level signals inside the trajectory; cost attribution
+over trajectories is its own subfield. Each of those programmes presupposes an
+instrument the policy does not have. A figure that lands this — duration being
+treated as the reliability variable by a field whose agents cannot measure it —
+is doing the paper's most important work.
+
 The three times are the framework's fundamental objects:
 
 | | symbol | what it is |
@@ -41,14 +51,14 @@ Problem is joint drift across all three.
 | `reverse_scaling` | four confirmations of the Reverse-Scaling theorem |
 | `p12_hcast` | horizon-decay evidence on METR HCAST |
 | `a1_positive_control` | LoRA fine-tune crossing the threshold |
-| `e11_headroom` | budget response and the headroom law |
+| `e11_headroom` | budget response and the headroom law (E11: 6 questions x 5 deadlines x 2 framings, 7 configurations, 2310 trajectories) |
 
 These read their numbers from CSVs at render time. Do not redraw them; if one
 looks wrong, say so and I will fix the generator.
 
 **Yours — conceptual figures.** Two exist and can be replaced if you can do
-better (`three_times`, `agentic_frontier`); three concepts currently have no
-figure at all and are the real opportunity. Section 5 lists all five.
+better (`three_times`, `agentic_frontier`); four concepts have no figure at all
+and are the real opportunity. Section 5 lists all six, ranked.
 
 ---
 
@@ -155,7 +165,29 @@ cutoff).
 Must not: depict the model as "knowing" the time after injection. The whole
 point is that the harness knows and the model reads.
 
-### (c) ChronoBench's design — **no figure, currently a 9-row table**
+Supporting evidence you may want on the face of it: tau_self correlates +0.477
+with the length of the model's own visible output and only +0.356 with
+wall-clock; among reasoning-mode agents, where hidden chain-of-thought
+separates the two, the clock correlation collapses to +0.086 while output holds
+at +0.450. The self-report is a readout of how much the model wrote.
+
+### (c) Orchestration does not route around it — **no figure, new claim**
+
+The field's response to horizon limits is to scale out; coordination papers
+outnumber single-agent work by orders of magnitude. The paper's answer: a
+supervisor apportioning deadlines across sub-agents is apportioning a resource
+none of them can perceive, and aggregating progress reports none of them can
+ground. There is no model to route to — CAR << 1 on all fourteen
+configurations from seven vendors.
+
+Must show: that the blind spot is *multiplied* rather than diluted by
+distribution. The supervisor is as blind as the workers, and it is now also
+making allocation decisions on their reports.
+
+Must not: suggest the workers are individually broken and a better one exists.
+The panel is the point — every configuration, every vendor.
+
+### (d) ChronoBench's design — **no figure, currently a 9-row table**
 
 9 sub-capabilities on 3 axes (T1.1–T1.3 wall, T2.1–T2.3 step, T3.1–T3.3 self).
 Design philosophy is single-axis isolation: every instance loads on exactly one
@@ -164,10 +196,10 @@ of the three times, so a failure is unambiguously attributable.
 Must show: the isolation property. This is what makes the benchmark diagnostic
 rather than aggregate. Reuse the glyph set for the three axes.
 
-Lower priority than (a) and (b) — the table is already adequate; a figure would
+Lower priority than (a)–(c) — the table is already adequate; a figure would
 be an upgrade, not a repair.
 
-### (d) `three_times` — exists, replaceable
+### (e) `three_times` — exists, replaceable
 
 Currently Figure 1: three horizontal tracks (continuous bar, discrete blocks,
 narration bar) with the grounded-chronoception identity above and the three law
@@ -175,7 +207,7 @@ labels. It is serviceable. Replace only if you can make the *drift* between the
 three tracks more legible — that drift is the Augustine Problem itself and the
 current figure states it rather than showing it.
 
-### (e) `agentic_frontier` — exists, replaceable, read the caveats first
+### (f) `agentic_frontier` — exists, replaceable, read the caveats first
 
 A log-log (T, S) plane with constant-ε_ST level sets and five benchmarks
 plotted. **Everything on it is schematic**: ε_ST has never been measured, the
@@ -204,7 +236,7 @@ cluster. If you redraw it, those four facts must survive on the figure face.
 
 ## 7. Context you may want
 
-- `paper1/arxiv-v0/main.pdf` — the current preprint, 41 pages
+- `paper1/arxiv-v0/main.pdf` — the current preprint, 44 pages, two authors
 - `scripts/chronofig.py` — the style module, with the reasoning in its docstring
 - `paper1/figures-style/style_proof.png` — palette, type scale, glyphs
 - `paper1/arxiv-v0/sections/` — the prose each figure would sit beside
