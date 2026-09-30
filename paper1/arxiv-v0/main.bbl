@@ -5,6 +5,11 @@
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
+\bibitem[osf(2026)]{osf-prereg-2026}
+The augustine problem: Pre-registration.
+\newblock Open Science Framework registration, 2026.
+\newblock Locked at repository commit \texttt{a6f20c3}.
+
 \bibitem[Bruce et~al.(2024)Bruce, Dennis, Edwards, Parker-Holder, Shi, Hughes,
   Lai, Mavalankar, Steigerwald, Apps, Aytar, Bechtle, Behbahani, Chan, Heess,
   Gonzalez, Osindero, Ozair, Reed, Zhang, Zolna, Clune, de~Freitas, Singh, and
@@ -198,12 +203,6 @@ Marc Wittmann.
 \newblock The inner experience of time.
 \newblock \emph{Philosophical Transactions of the Royal Society B},
   364\penalty0 (1525):\penalty0 1955--1967, 2009.
-
-\bibitem[Yuan and Zhao(2026)]{osf-prereg-2026}
-Aojie Yuan and Yue Zhao.
-\newblock The augustine problem: Pre-registration.
-\newblock Open Science Framework, 2026.
-\newblock Locked at repository commit \texttt{a6f20c3}.
 
 \bibitem[Zhou et~al.(2024)Zhou, Xu, Zhu, Zhou, Lo, Sridhar, Cheng, Bisk, Fried,
   Alon, and Neubig]{webarena}

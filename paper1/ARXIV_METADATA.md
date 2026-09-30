@@ -13,12 +13,13 @@ _Fill in the arxiv submission form with the fields below. Replace
 Chronoception Must Be Installed: The Augustine Problem in LLM Agents
 ```
 
-**Authors** (single-author submission at this stage)
+**Authors**
 ```
 Aojie Yuan
+Zijian Su
 ```
-Affiliation: `University of Southern California`
-Email: `aojieyua@usc.edu`
+Affiliations: `University of Southern California` (Yuan), `University of Michigan` (Su)
+Emails: `aojieyua@usc.edu`, `simoon@umich.edu`
 
 **Comments** (arxiv "Comments" field — visible on the abstract page)
 ```
@@ -108,7 +109,7 @@ released.
 ```bibtex
 @article{yuan2026augustine,
   title   = {Chronoception Must Be Installed: The Augustine Problem in LLM Agents},
-  author  = {Yuan, Aojie},
+  author  = {Yuan, Aojie and Su, Zijian},
   journal = {arXiv preprint arXiv:ARXIV_ID},
   year    = {2026},
   note    = {\url{https://arxiv.org/abs/ARXIV_ID}}
@@ -118,7 +119,7 @@ released.
 ### BibLaTeX
 ```biblatex
 @online{yuan2026augustine,
-  author  = {Yuan, Aojie},
+  author  = {Yuan, Aojie and Su, Zijian},
   title   = {{C}hronoception {M}ust {B}e {I}nstalled: {T}he {A}ugustine {P}roblem in {LLM} {A}gents},
   year    = {2026},
   eprint  = {ARXIV_ID},
@@ -130,19 +131,19 @@ released.
 
 ### Plain (arxiv "cite as" style)
 ```
-Aojie Yuan. Chronoception Must Be Installed: The Augustine Problem in
+Aojie Yuan and Zijian Su. Chronoception Must Be Installed: The Augustine Problem in
 LLM Agents. arXiv:ARXIV_ID [cs.AI], September 2026.
 ```
 
 ### APA 7
 ```
-Yuan, A. (2026). Chronoception must be installed: The Augustine
+Yuan, A., & Su, Z. (2026). Chronoception must be installed: The Augustine
 problem in LLM agents [Preprint]. arXiv. https://arxiv.org/abs/ARXIV_ID
 ```
 
 ### Chicago author-date
 ```
-Yuan, Aojie. 2026. "Chronoception Must Be Installed: The Augustine
+Yuan, Aojie, and Zijian Su. 2026. "Chronoception Must Be Installed: The Augustine
 Problem in LLM Agents." arXiv preprint arXiv:ARXIV_ID.
 ```
 

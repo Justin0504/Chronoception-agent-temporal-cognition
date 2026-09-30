@@ -75,11 +75,11 @@
 \contentsline {paragraph}{T3.1 parser ($\Pi $).}{26}{appendix.A}%
 \contentsline {paragraph}{Settings A and B.}{26}{appendix.A}%
 \contentsline {paragraph}{Reasoning model handling.}{26}{appendix.A}%
-\contentsline {paragraph}{Open-source serving.}{27}{appendix.A}%
-\contentsline {section}{\numberline {B}Full Panel Tables}{27}{appendix.B}%
-\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{27}{appendix.B}%
+\contentsline {paragraph}{Open-source serving.}{26}{appendix.A}%
+\contentsline {section}{\numberline {B}Full Panel Tables}{26}{appendix.B}%
+\contentsline {paragraph}{Aggregated panel results with effective sample sizes and bootstrap CIs.}{26}{appendix.B}%
 \contentsline {paragraph}{Reading the CIs.}{27}{table.5}%
-\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{28}{table.5}%
+\contentsline {paragraph}{Generation-wise progression (non-reasoning).}{27}{table.5}%
 \contentsline {paragraph}{Per-budget $\mathrm {CAR}$ curves.}{28}{table.6}%
 \contentsline {paragraph}{Trajectory release.}{28}{table.6}%
 \contentsline {paragraph}{Reasoning-panel completeness update (Route B-1).}{28}{table.6}%
@@ -88,16 +88,16 @@
 \contentsline {section}{\numberline {C}Atlas Evidence (Verbatim)}{29}{appendix.C}%
 \contentsline {paragraph}{ChatGPT (web product, OpenAI).}{29}{appendix.C}%
 \contentsline {paragraph}{Claude.ai (web product, Anthropic).}{29}{appendix.C}%
-\contentsline {paragraph}{Gemini app (Google).}{30}{appendix.C}%
+\contentsline {paragraph}{Gemini app (Google).}{29}{appendix.C}%
 \contentsline {paragraph}{Raw OpenAI API --- empirical contrast.}{30}{appendix.C}%
 \contentsline {paragraph}{Raw Anthropic API --- empirical contrast.}{30}{appendix.C}%
 \contentsline {paragraph}{Cursor agent (dev tool).}{30}{appendix.C}%
 \contentsline {paragraph}{GitHub Copilot CLI (dev tool).}{30}{appendix.C}%
 \contentsline {paragraph}{Perplexity Computer (dev tool).}{30}{appendix.C}%
 \contentsline {paragraph}{Summary.}{30}{appendix.C}%
-\contentsline {section}{\numberline {D}L3 Sub-Failure Detail}{31}{appendix.D}%
+\contentsline {section}{\numberline {D}L3 Sub-Failure Detail}{30}{appendix.D}%
 \contentsline {paragraph}{Relation to the panel $\varepsilon $.}{33}{table.12}%
-\contentsline {section}{\numberline {E}Spatiotemporal Generalisation Full Sketch}{35}{appendix.E}%
+\contentsline {section}{\numberline {E}Spatiotemporal Generalisation Full Sketch}{34}{appendix.E}%
 \contentsline {paragraph}{Assumption (token-only spatial support).}{35}{appendix.E}%
 \contentsline {paragraph}{Observation\nobreakspace {}\ref {thm:sit} proof sketch.}{35}{appendix.E}%
 \contentsline {section}{\numberline {F}Operational Chronoception Audit Checklist}{37}{appendix.F}%
