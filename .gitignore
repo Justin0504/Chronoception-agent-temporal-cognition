@@ -32,3 +32,6 @@ logs/
 
 # METR HCAST corpus (~15 MB, fetched by scripts/fetch_metr_hcast.sh)
 data/metr/*.jsonl
+
+# Codex handoff bundle (rebuild with scripts/build_codex_bundle.sh)
+paper1/codex_figures.zip
