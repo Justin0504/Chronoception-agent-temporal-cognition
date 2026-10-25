@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite the preprint below."
+title: "Agent Chronoception: Temporal Validity and Useful Persistence"
+authors:
+  - family-names: "Yuan"
+    given-names: "Aojie"
+    orcid: "https://orcid.org/0009-0007-4643-230X"
+    affiliation: "University of Southern California"
+    website: "https://aojieyuan.com"
+  - family-names: "Su"
+    given-names: "Zijian"
+    affiliation: "University of Michigan"
+repository-code: "https://github.com/Justin0504/Chronoception-agent-temporal-cognition"
+url: "https://aojieyuan.com/papers/agent-chronoception"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23484052"
+keywords: ["agent chronoception", "temporal validity", "useful persistence", "AI agents"]
+preferred-citation:
+  type: report
+  title: "Agent Chronoception: Temporal Validity and Useful Persistence"
+  authors:
+    - family-names: "Yuan"
+      given-names: "Aojie"
+      orcid: "https://orcid.org/0009-0007-4643-230X"
+    - family-names: "Su"
+      given-names: "Zijian"
+  year: 2026
+  month: 10
+  publisher:
+    name: "Zenodo"
+  doi: "10.5281/zenodo.23484052"
+  url: "https://doi.org/10.5281/zenodo.23484052"
