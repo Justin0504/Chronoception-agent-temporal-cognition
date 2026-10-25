@@ -1,5 +1,8 @@
 # Chronoception — Agent Temporal Cognition
 
+<!-- aojieyuan-paper-section -->
+> **Paper:** [*Agent Chronoception: Temporal Validity and Useful Persistence*](https://doi.org/10.5281/zenodo.23484052) — Aojie Yuan & Zijian Su, Zenodo preprint (Oct 2026, not peer reviewed). Paper page with PDF and BibTeX: https://aojieyuan.com/papers/agent-chronoception · Plain-language explainer: https://aojieyuan.com/blog/when-should-an-ai-agent-keep-working · [中文解读](https://aojieyuan.com/zh/blog/when-should-an-ai-agent-keep-working)
+
 > **TL;DR.** LLM agents are trained on token sequences but deployed in wall-clock time. We prove that under the standard suite of token-only losses they cannot perceive their own time (the **Chronoception Impossibility Theorem**), and that reasoning-token expansion — the dominant frontier scaling strategy — **strictly degrades** chronoception (the **Reverse-Scaling Theorem**, now empirically confirmed). Across a 10-agent panel from 3 vendors and ~4{,}000 trajectories, no agent crosses the Augustine threshold $\varepsilon^* = 0.20$.
 
 ## Status (2026-06-02)
