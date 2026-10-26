@@ -1,11 +1,13 @@
 # Chronoception — Agent Temporal Cognition
 
 <!-- aojieyuan-paper-section -->
-> **Paper:** [*Agent Chronoception: Temporal Validity and Useful Persistence*](https://doi.org/10.5281/zenodo.23484052) — Aojie Yuan & Zijian Su, Zenodo preprint (Oct 2026, not peer reviewed). Paper page with PDF and BibTeX: https://aojieyuan.com/papers/agent-chronoception · Plain-language explainer: https://aojieyuan.com/blog/when-should-an-ai-agent-keep-working · [中文解读](https://aojieyuan.com/zh/blog/when-should-an-ai-agent-keep-working)
+> **Status update (October 2026).** The first public paper from this project is [*Agent Chronoception: Temporal Validity and Useful Persistence*](https://doi.org/10.5281/zenodo.23484052) (Aojie Yuan & Zijian Su, Zenodo preprint, October 2026, not peer reviewed). Paper page with PDF and BibTeX: https://aojieyuan.com/papers/agent-chronoception · Plain-language explainer: https://aojieyuan.com/blog/when-should-an-ai-agent-keep-working · [中文解读](https://aojieyuan.com/zh/blog/when-should-an-ai-agent-keep-working)
+>
+> The TL;DR, theorems, and findings below come from the **June 2026 working draft of Paper 1 (ChronoBench)**. That paper is unpublished and has not been peer reviewed, and those statements are **not** results of the Zenodo preprint above. Cite the Zenodo preprint for published claims.
 
 > **TL;DR.** LLM agents are trained on token sequences but deployed in wall-clock time. We prove that under the standard suite of token-only losses they cannot perceive their own time (the **Chronoception Impossibility Theorem**), and that reasoning-token expansion — the dominant frontier scaling strategy — **strictly degrades** chronoception (the **Reverse-Scaling Theorem**, now empirically confirmed). Across a 10-agent panel from 3 vendors and ~4{,}000 trajectories, no agent crosses the Augustine threshold $\varepsilon^* = 0.20$.
 
-## Status (2026-06-02)
+## Status (2026-06-02, historical working-draft notes)
 
 - **Framework v2.0** locked — see [`FRAMING.md`](FRAMING.md). Two theorems (CIT, Reverse-Scaling), three named empirical laws, twelve pre-registered predictions.
 - **Paper 1 draft v2** complete — full LaTeX in [`paper1/arxiv-v0/`](paper1/arxiv-v0/) (15 sections, 3 figures).
@@ -140,14 +142,21 @@ To re-run the experiments (requires OpenAI + Anthropic API keys in `.env`):
 
 ## Citation
 
-```
-@article{yuan2026augustine,
-  title  = {The Augustine Problem: Evaluating Whether LLM Agents Can Perceive Their Own Time},
-  author = {Yuan, Aojie (Justin) and Zhao, Yue and ...},
-  journal = {arXiv preprint (forthcoming)},
-  year   = {2026}
+Published preprint:
+
+```bibtex
+@misc{yuan2026chronoception,
+  title     = {Agent Chronoception: Temporal Validity and Useful Persistence},
+  author    = {Yuan, Aojie and Su, Zijian},
+  year      = {2026},
+  publisher = {Zenodo},
+  note      = {Preprint},
+  doi       = {10.5281/zenodo.23484052},
+  url       = {https://doi.org/10.5281/zenodo.23484052}
 }
 ```
+
+Paper 1 (*The Augustine Problem*, ChronoBench) is in preparation and not yet public; a citation will be added when it is released.
 
 ## Acknowledgements
 
